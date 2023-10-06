@@ -64,6 +64,10 @@
 //   }
 // }
 import 'package:flutter/material.dart';
+import 'package:nocoffeenocure/screens/home_screen.dart';
+import 'package:nocoffeenocure/screens/menu.dart';
+import 'package:nocoffeenocure/widgets/top_banner.dart';
+//import 'package:nocoffeenocure/screens/top_banner.dart';
 import 'screens/splash_screen.dart'; // Import your splash screen file.
 
 void main() {
@@ -75,18 +79,29 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // return MaterialApp(
+    //   title: 'Your App Title',
+    //   theme: ThemeData(
+    //       colorScheme: ColorScheme.
+    //       fromSwatch(primarySwatch: Colors.orange).
+    //       copyWith(background: Colors.white)
+    //   ),
+    //   initialRoute: '/splash', // Set the initial route to your splash screen.
+    //   routes: {
+    //     '/splash': (context) => const SplashScreen(), // Define the route for the splash screen.
+    //     // Define other routes for your app as needed.
+    //   },
+    // );
     return MaterialApp(
-      title: 'Your App Title',
+      title:'No Cofee No Cure',
       theme: ThemeData(
-          colorScheme: ColorScheme.
-          fromSwatch(primarySwatch: Colors.orange).
-          copyWith(background: Colors.white)
+            colorScheme: ColorScheme.
+            fromSwatch(primarySwatch: Colors.orange).
+            copyWith(background: Colors.white)
       ),
-      initialRoute: '/splash', // Set the initial route to your splash screen.
-      routes: {
-        '/splash': (context) => const SplashScreen(), // Define the route for the splash screen.
-        // Define other routes for your app as needed.
-      },
+      //home: const SplashScreen()
+        //test layouts and screens here
+      home:HomeScreen()
     );
   }
 }

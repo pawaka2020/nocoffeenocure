@@ -5,6 +5,7 @@
 import 'package:flutter/material.dart';
 
 import '../dummy_screen.dart';
+import 'onboarding_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -17,13 +18,14 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
+    //navigate to next screen after 3 seconds delay
     Future.delayed(const Duration(seconds: 3), () {
-      //Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const OnboardingScreen()));
       //Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const DummyScreen()));
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const DummyScreen()));
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => OnboardingScreen()));
     });
   }
 
+  //the actual screen
   @override
   Widget build(BuildContext context) {
     return Scaffold(

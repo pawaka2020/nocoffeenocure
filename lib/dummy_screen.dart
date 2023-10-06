@@ -6,9 +6,6 @@ class DummyScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Dummy Screen'), // Set the screen title here.
-      ),
       body: const Center(
         child: Text(
           'Hello World',
