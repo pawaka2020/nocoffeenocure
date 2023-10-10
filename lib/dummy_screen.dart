@@ -1,3 +1,7 @@
+/*
+This is just a dummy screen for quick testing.
+*/
+
 import 'package:flutter/material.dart';
 
 class DummyScreen extends StatelessWidget {

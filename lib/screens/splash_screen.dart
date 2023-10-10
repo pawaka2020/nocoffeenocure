@@ -1,26 +1,22 @@
-// Displays the app's logo and a loading animation during app initialization.
-// TODO: Replace image and text with an actual single image that displays store
-// TODO: logo and the catchphrase 'NO COFFEE NO CURE'.
-
 import 'package:flutter/material.dart';
-
-import '../dummy_screen.dart';
 import 'onboarding_screen.dart';
 
+/*
+Shows No Coffee No Cure's company logo for 3 seconds before moving to the next
+screen.
+*/
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
-
   @override
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  //navigate to next screen after 3 seconds delay
   @override
   void initState() {
     super.initState();
-    //navigate to next screen after 3 seconds delay
     Future.delayed(const Duration(seconds: 3), () {
-      //Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const DummyScreen()));
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => OnboardingScreen()));
     });
   }
