@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../menu.dart';
+import '../menu_detail.dart';
 
 class HomePage extends StatelessWidget {
 
@@ -15,22 +16,85 @@ class HomePage extends StatelessWidget {
     MenuItem('assets/images/coffeesample.png', 'Sweet Cappuccino7', 'RM 5.00'),
     // Add more menu items here
   ];
+  final List<MenuItem> menuItems2 = [
+    MenuItem('assets/images/coffeesample.png', 'Juice1', 'RM 5.00'),
+    MenuItem('assets/images/coffeesample.png', 'Juice2', 'RM 5.00'),
+    MenuItem('assets/images/coffeesample.png', 'Juice3', 'RM 5.00'),
+    MenuItem('assets/images/coffeesample.png', 'Juice4', 'RM 5.00'),
+    MenuItem('assets/images/coffeesample.png', 'Juice5', 'RM 5.00'),
+    MenuItem('assets/images/coffeesample.png', 'Juice6', 'RM 5.00'),
+    MenuItem('assets/images/coffeesample.png', 'Juice7', 'RM 5.00'),
+    // Add more menu items here
+  ];
 
+  // @override
+  // Widget build(BuildContext context) {
+  //   return GridView.builder(
+  //     padding: EdgeInsets.all(30.0),
+  //     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+  //       childAspectRatio:150/250,
+  //       crossAxisCount : 2,
+  //     ),
+  //     itemCount: menuItems.length,
+  //     itemBuilder: (ctx, index) {
+  //       return MenuCard(menuItems[index]);
+  //     },
+  //   );
+  //}
+
+  // @override
+  // Widget build(BuildContext context) {
+  //   return Column(
+  //     crossAxisAlignment: CrossAxisAlignment.start,
+  //     children: [
+  //       Padding(
+  //         padding: EdgeInsets.only(top: 10.0, left: 30.0, bottom: 10.0), // Add padding above and to the left of the text
+  //         child: Text(
+  //           "Coffee items",
+  //           style: TextStyle(
+  //             fontSize: 20,
+  //             fontWeight: FontWeight.bold,
+  //           ),
+  //         ),
+  //       ),
+  //       Expanded(
+  //         child: Padding(
+  //           padding: EdgeInsets.only(left: 30, right: 30), // Apply padding to the grid
+  //           child: CustomScrollView(
+  //             slivers: <Widget>[
+  //               SliverGrid(
+  //                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+  //                   childAspectRatio: 150 / 250,
+  //                   crossAxisCount: 2,
+  //                 ),
+  //                 delegate: SliverChildBuilderDelegate(
+  //                       (BuildContext context, int index) {
+  //                     return MenuCard(menuItems[index]);
+  //                   },
+  //                   childCount: menuItems.length,
+  //                 ),
+  //               ),
+  //             ],
+  //           ),
+  //         ),
+  //       ),
+  //     ],
+  //   );
+  // }
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
-      padding: EdgeInsets.all(30.0),
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        childAspectRatio:150/250,
-        crossAxisCount : 2,
-      ),
-      itemCount: menuItems.length,
-      itemBuilder: (ctx, index) {
-        return MenuCard(menuItems[index]);
-      },
+      //return MenuGrid3(menuItems);
+    return Column(
+      children:[
+        SizedBox(height: 25),
+        MenuGrid4(menuItems, menuItems2),
+      ]
     );
   }
 }
+
+
+
 
 //this one is usable
 class MyCard extends StatelessWidget {
@@ -212,15 +276,265 @@ class MenuCard extends StatelessWidget {
   }
 }
 
-class Empty extends StatelessWidget{
+class MenuGrid extends StatelessWidget {
+  final List<MenuItem> menuItems;
+
+  MenuGrid(this.menuItems);
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 150,
-      height: 250,
-      child: Card(
-        color: Colors.grey
-      )
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: EdgeInsets.only(top: 10.0, left: 30.0, bottom: 10.0),
+          child: Text(
+            "Coffee items",
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        Expanded(
+          child: Padding(
+            padding: EdgeInsets.only(left: 30, right: 30),
+            child: CustomScrollView(
+              slivers: <Widget>[
+                SliverGrid(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    childAspectRatio: 150 / 250,
+                    crossAxisCount: 2,
+                  ),
+                  delegate: SliverChildBuilderDelegate(
+                        (BuildContext context, int index) {
+                      return MenuCard(menuItems[index]);
+                    },
+                    childCount: menuItems.length,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class MenuGrid2 extends StatelessWidget {
+  final List<MenuItem> menuItems;
+
+  MenuGrid2(this.menuItems);
+
+  @override
+  Widget build(BuildContext context) {
+    return CustomScrollView(
+      slivers: [
+        SliverToBoxAdapter(
+          child: Padding(
+            padding: EdgeInsets.only(left: 30.0, right: 30.0, top: 10.0, bottom: 10.0),
+            child: Text(
+              "Coffee items",
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ),
+        SliverGrid(
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            childAspectRatio: 150 / 250,
+            crossAxisCount: 2,
+          ),
+          delegate: SliverChildBuilderDelegate(
+                (BuildContext context, int index) {
+              return MenuCard(menuItems[index]);
+            },
+            childCount: menuItems.length,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class MenuGrid3 extends StatelessWidget {
+  final List<MenuItem> menuItems;
+
+  MenuGrid3(this.menuItems);
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Padding(
+        padding: EdgeInsets.only(left: 30, right: 30),
+        child:CustomScrollView(
+          slivers: [
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: EdgeInsets.only(left: 10.0, right: 30.0, top: 10.0, bottom: 10.0),
+                child: Text(
+                  "Coffee items",
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+            SliverGrid(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                childAspectRatio: 150 / 250,
+                crossAxisCount: 2,
+              ),
+              delegate: SliverChildBuilderDelegate(
+                    (BuildContext context, int index) {
+                  return MenuCard(menuItems[index]);
+                },
+                childCount: menuItems.length,
+              ),
+            ),
+          ],
+        )
+      ),
+    );
+  }
+}
+
+class MenuGrid4 extends StatelessWidget {
+  final List<MenuItem> menuItems;
+  final List<MenuItem> menuItems2;
+  MenuGrid4(this.menuItems, this.menuItems2);
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Padding(
+          padding: EdgeInsets.only(left: 30, right: 30),
+          child:CustomScrollView(
+            slivers: [
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: EdgeInsets.only(left: 10.0, right: 30.0, top: 10.0, bottom: 10.0),
+                  child: Text(
+                    "Coffee items",
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+              SliverGrid(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  childAspectRatio: 150 / 250,
+                  crossAxisCount: 2,
+                ),
+                delegate: SliverChildBuilderDelegate(
+                      (BuildContext context, int index) {
+                        return MenuCard(menuItems[index]);
+                      },
+                  childCount: menuItems.length,
+                ),
+              ),
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: EdgeInsets.only(left: 10.0, right: 30.0, top: 10.0, bottom: 10.0),
+                  child: Text(
+                    "Non-Coffee items",
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+              SliverGrid(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  childAspectRatio: 150 / 250,
+                  crossAxisCount: 2,
+                ),
+                delegate: SliverChildBuilderDelegate(
+                      (BuildContext context, int index) {
+                        return MenuCard(menuItems2[index]);
+                      },
+                  childCount: menuItems2.length,
+                ),
+              ),
+            ],
+          )
+      ),
+    );
+  }
+}
+
+class MenuGrid5 extends StatelessWidget {
+  final List<MenuItem> menuItems;
+  final List<MenuItem> menuItems2;
+
+  MenuGrid5(this.menuItems, this.menuItems2);
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Padding(
+        padding: EdgeInsets.only(left: 30, right: 30),
+        child: CustomScrollView(
+          slivers: [
+            // ... Existing Slivers ...
+
+            // Wrap MenuCard with GestureDetector
+            SliverGrid(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                childAspectRatio: 150 / 250,
+                crossAxisCount: 2,
+              ),
+              delegate: SliverChildBuilderDelegate(
+                    (BuildContext context, int index) {
+                  final menuItem = menuItems[index];
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => MenuDetailsPage(menuItem),
+                        ),
+                      );
+                    },
+                    child: MenuCard(menuItem),
+                  );
+                },
+                childCount: menuItems.length,
+              ),
+            ),
+
+            // ... Non-Coffee items ...
+
+            // Wrap MenuCard with GestureDetector for non-coffee items
+            SliverGrid(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                childAspectRatio: 150 / 250,
+                crossAxisCount: 2,
+              ),
+              delegate: SliverChildBuilderDelegate(
+                    (BuildContext context, int index) {
+                  final menuItem = menuItems2[index];
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => MenuDetailsPage(menuItem),
+                        ),
+                      );
+                    },
+                    child: MenuCard(menuItem),
+                  );
+                },
+                childCount: menuItems2.length,
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
