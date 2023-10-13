@@ -124,3 +124,8 @@ my_coffee_app/
 │   ├── logo.png
 │   ├── news_images/
 ├── fonts/
+
+
+
+
+TODO: Use Orbitron from Google Font, medium type (600)

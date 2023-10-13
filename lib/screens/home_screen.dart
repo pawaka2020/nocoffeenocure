@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:nocoffeenocure/widgets/top_banner.dart';
 import '../widgets/bottom_nav_bar.dart';
+import 'home/home.dart';
 import 'menu.dart';
 import 'package:nocoffeenocure/screens/me/me.dart';
 
@@ -30,6 +31,8 @@ Column bannermenu = Column(
     )
   ],
 );
+
+//bannermenu = MenuWidget();
 
 class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0; // Current selected tab index
@@ -62,7 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget buildBottomNavigationBar() {
     return BottomNavyBar(
       selectedIndex: _currentIndex,
-      backgroundColor: Colors.orange, // Set the background color
+      backgroundColor: Colors.white, // Set the background color
       onItemSelected: (int index) {
         setState(() {
           _currentIndex = index;
@@ -76,22 +79,22 @@ class _HomeScreenState extends State<HomeScreen> {
       items: [
         BottomNavyBarItem(
           icon: Icon(Icons.home),
-          title: Text('Home', style: TextStyle(color: Colors.white)), // Set text color
-          activeColor: Colors.white, // Set active tab text color
+          title: Text('Home', style: TextStyle(color: Colors.black)), // Set text color
+          activeColor: Colors.orange, // Set active tab text color
           textAlign: TextAlign.center,
         ),
         BottomNavyBarItem(
           icon: Icon(Icons.local_offer),
-          title: Text('Vouchers', style: TextStyle(color: Colors.white)), // Set text color
-          activeColor: Colors.white, // Set active tab text color
+          title: Text('Vouchers', style: TextStyle(color: Colors.black)), // Set text color
+          activeColor: Colors.orange, // Set active tab text color
           textAlign: TextAlign.center,
         ),
         cart,
         track,
         BottomNavyBarItem(
           icon: Icon(Icons.person),
-          title: Text('Me', style: TextStyle(color: Colors.white)), // Set text color
-          activeColor: Colors.white, // Set active tab text color
+          title: Text('Me', style: TextStyle(color: Colors.black)), // Set text color
+          activeColor: Colors.orange, // Set active tab text color
           textAlign: TextAlign.center,
         ),
       ],
@@ -99,12 +102,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-class HomePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return bannermenu;
-  }
-}
+
 
 class VouchersPage extends StatelessWidget {
   @override

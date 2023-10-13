@@ -5,59 +5,75 @@ import 'help.dart';
 Leads users to other screens 'help', 'talk to us', 'terms of service',
 'privacy policy', 'about us'.
 Log in card at the top.
+According to website: 'About', 'Our Bean', 'Locations', Contact Us', 'Settings'
 */
 class Me extends StatelessWidget {
+  // @override
+  // Widget build(BuildContext context) {
+  //   return Scaffold(
+  //     body:ListView(
+  //       padding:EdgeInsets.all(16),
+  //       children:[
+  //         SizedBox(height: 16.0),
+  //         logcard,
+  //         buildMeCard(context, 'Help', Icons.help_outline, HelpScreen()),
+  //         buildMeCard(context, 'Contact Us', Icons.chat_bubble_outline),
+  //         buildMeCard(context, 'Terms of Service', Icons.description),
+  //         buildMeCard(context, 'Privacy Policy', Icons.privacy_tip),
+  //         buildMeCard(context, 'About Us', Icons.info_outline),
+  //         buildMeCard(context, 'Our Bean', Icons.local_cafe),
+  //         buildMeCard(context, 'Locations', Icons.location_on),
+  //         buildMeCard(context, 'Settings', Icons.settings),
+  //       ]
+  //     ),
+  //   );
+  // }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body:ListView(
-        padding:EdgeInsets.all(16),
-        children:[
-          SizedBox(height: 16.0),
-          logcard,
-          MeCard(
-            title: 'Help',
-            icon: Icons.help_outline,
-            onTap: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => HelpScreen(),
-                ),
-              );
-            },
+      body: Column(
+        children: <Widget>[
+          //SizedBox(height: 16.0),
+          Padding(
+            padding: EdgeInsets.only(top: 28.0, left: 16.0, right: 16.0), // Add top padding here
+            child: logcard,
           ),
-          MeCard(
-            title: 'Talk to Us',
-            icon: Icons.chat_bubble_outline,
-            onTap: () {
-              //Navigator.pushNamed(context, '/talk_to_us');
-            },
+          Expanded(
+            child: ListView(
+              padding: EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0),
+              children: [
+                buildMeCard(context, 'Help', Icons.help_outline, HelpScreen()),
+                buildMeCard(context, 'Contact Us', Icons.chat_bubble_outline),
+                buildMeCard(context, 'Terms of Service', Icons.description),
+                buildMeCard(context, 'Privacy Policy', Icons.privacy_tip),
+                buildMeCard(context, 'About Us', Icons.info_outline),
+                buildMeCard(context, 'Our Bean', Icons.local_cafe),
+                buildMeCard(context, 'Locations', Icons.location_on),
+                buildMeCard(context, 'Settings', Icons.settings),
+              ],
+            ),
           ),
-          MeCard(
-            title: 'Terms of Service',
-            icon: Icons.description,
-            onTap: () {
-              //Navigator.pushNamed(context, '/terms_of_service');
-            },
-          ),
-          MeCard(
-            title: 'Privacy Policy',
-            icon: Icons.privacy_tip,
-            onTap: () {
-              //Navigator.pushNamed(context, '/privacy_policy');
-            },
-          ),
-          MeCard(
-            title: 'About Us',
-            icon: Icons.info_outline,
-            onTap: () {
-              //Navigator.pushNamed(context, '/about_maxi_coffee');
-            },
-          ),
-        ]
+        ],
       ),
     );
   }
+
+  Widget buildMeCard(BuildContext context, String title, IconData icon, [Widget? screen]) {
+    return MeCard(
+      title: title,
+      icon: icon,
+      onTap: () {
+        if (screen != null) {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => screen,
+            ),
+          );
+        }
+      },
+    );
+  }
+
 }
 
 /*
@@ -79,18 +95,18 @@ class MeCard extends StatelessWidget {
           onTap();
         },
         child: Padding(
-          padding: EdgeInsets.all(16.0),
+          padding: EdgeInsets.all(12.0), //default 16
           child: Row(
             children: [
               Icon(
                 icon,
-                size: 36.0,
+                size: 27.0, //default 36
               ),
-              SizedBox(width: 16.0),
+              SizedBox(width: 12.0), //default 16
               Text(
                 title,
                 style: TextStyle(
-                  fontSize: 20.0,
+                  fontSize: 15.0, //default 20
                 ),
               ),
             ],
@@ -109,7 +125,7 @@ live updates of log in and log out.
 Card logcard = Card(
   elevation: 4.0,
   margin: EdgeInsets.symmetric(vertical: 8.0),
-  color: Colors.blue, // Card background color
+  color: Colors.orange, // Card background color
   child: Padding(
     padding: EdgeInsets.all(16.0),
     child: Column(
@@ -144,3 +160,5 @@ Card logcard = Card(
     ),
   ),
 );
+
+

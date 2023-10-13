@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nocoffeenocure/provider/cart_count_notifier.dart';
+import 'package:nocoffeenocure/screens/home/home.dart';
 import 'package:provider/provider.dart';
 import 'screens/splash_screen.dart'; // Import your splash screen file.
 
@@ -30,6 +31,7 @@ class MyApp extends StatelessWidget {
             copyWith(background: Colors.white)
       ),
       home: const SplashScreen()
+      //home: HomePage()
     );
   }
 }

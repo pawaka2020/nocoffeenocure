@@ -7,8 +7,8 @@ import 'package:provider/provider.dart';
 BottomNavyBarItem buildNavyBarItem(IconData icondata, String title){
   return BottomNavyBarItem(
     icon: Icon(icondata),
-    title: Text(title, style: TextStyle(color:Colors.white)),
-    activeColor: Colors.white,
+    title: Text(title, style: TextStyle(color:Colors.black)),
+    activeColor: Colors.orange,
     textAlign: TextAlign.center,
   );
 }
@@ -44,8 +44,8 @@ BottomNavyBarItem cart = BottomNavyBarItem(
       ), //the badge
     ],
   ),
-  title: Text('Cart', style: TextStyle(color: Colors.white)),
-  activeColor: Colors.white,
+  title: Text('Cart', style: TextStyle(color: Colors.black)),
+  activeColor: Colors.orange,
   textAlign: TextAlign.center,
 );
 
@@ -78,11 +78,10 @@ BottomNavyBarItem track = BottomNavyBarItem(
       ), //the badge
     ],
   ),
-  title: Text('Track', style: TextStyle(color: Colors.white)),
-  activeColor: Colors.white,
+  title: Text('Track', style: TextStyle(color: Colors.black)),
+  activeColor: Colors.orange,
   textAlign: TextAlign.center,
 );
-
 
 class ShoppingCartCountNotifier extends ChangeNotifier {
   int _count = 0;
