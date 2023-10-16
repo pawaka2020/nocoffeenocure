@@ -29,12 +29,13 @@ BottomNavyBarItem cart = BottomNavyBarItem(
             color: Colors.red, // Set the background color of the badge
           ),
           child: CircleAvatar(
-            radius: 4, // Adjust the size of the badge, default 10
+            radius: 4, // Adjust the size of the badge, default 4
             backgroundColor: Colors.transparent,
             child: Text(
-              '3', // Replace with the actual number of items in the cart
+              '9', // Replace with the actual number of items in the cart
               style: TextStyle(
                 fontSize: 8,
+                fontFamily: 'Roboto',
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
               ),
@@ -68,7 +69,8 @@ BottomNavyBarItem track = BottomNavyBarItem(
             child: Text(
               '!',
               style: TextStyle(
-                fontSize:8, //default 10
+                fontSize:8,
+                fontFamily: 'Roboto',//default 10
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
               ),
@@ -123,7 +125,7 @@ class ShoppingCartWidget extends StatelessWidget {
                     color: Colors.red, // Set the background color of the badge
                   ),
                   child: CircleAvatar(
-                    radius: 10, // Adjust the size of the badge
+                    radius: 4, // Adjust the size of the badge, 10
                     backgroundColor: Colors.transparent,
                     child: Text(
                       countNotifier.count.toString(),

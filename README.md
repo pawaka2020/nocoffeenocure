@@ -129,3 +129,12 @@ my_coffee_app/
 
 
 TODO: Use Orbitron from Google Font, medium type (600)
+
+
+menu item
+- 12, 16 size
+
+Follow ZUS for 'me'
+just beneath log in, show wallet, then 'order history', also put 'vouchers' even though vouchers is
+already at bottom nav bar
+https://fontawesome.com/

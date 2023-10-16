@@ -28,7 +28,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
             colorScheme: ColorScheme.
             fromSwatch(primarySwatch: Colors.orange).
-            copyWith(background: Colors.white)
+            copyWith(background: Colors.white),
+            fontFamily: 'Orbitron',
       ),
       home: const SplashScreen()
       //home: HomePage()

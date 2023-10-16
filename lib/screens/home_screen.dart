@@ -19,20 +19,18 @@ class HomeScreen extends StatefulWidget {
 }
 
 //Display [news] items
-Column bannermenu = Column(
-  children: [
-    Expanded(
-        flex: 3,
-        child: TopBanner()
-    ),
-    Expanded(
-        flex: 7,
-        child: MenuWidget()
-    )
-  ],
-);
-
-//bannermenu = MenuWidget();
+// Column bannermenu = Column(
+//   children: [
+//     Expanded(
+//         flex: 3,
+//         child: TopBanner()
+//     ),
+//     Expanded(
+//         flex: 7,
+//         child: MenuWidget()
+//     )
+//   ],
+// );
 
 class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0; // Current selected tab index
@@ -101,8 +99,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
-
-
 
 class VouchersPage extends StatelessWidget {
   @override
