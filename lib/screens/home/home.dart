@@ -29,8 +29,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children:[
-        //SizedBox(height: 25),
-        TopBanner2(),
+        TopBanner(),
         SizedBox(height: 5),
         MenuGrid(myMenuItems),
       ],
