@@ -34,10 +34,7 @@ class _TopBannerState extends State<TopBanner> {
   @override
   void initState() {
     super.initState();
-
     _pageController = PageController(initialPage: _currentPage);
-
-    // Set up a timer to automatically scroll the PageView
     _timer = Timer.periodic(Duration(seconds: widget.interval), (timer) {
       if (_currentPage < widget.news.length - 1) {
         _currentPage++;
