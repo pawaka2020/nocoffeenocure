@@ -138,3 +138,12 @@ Follow ZUS for 'me'
 just beneath log in, show wallet, then 'order history', also put 'vouchers' even though vouchers is
 already at bottom nav bar
 https://fontawesome.com/
+'missions and rewards'
+
+
+
+//login or sign up process
+//use phone no
+//then if the registration, full in first name, last name, email address, DOB, then register button
+//ask permission to share contact
+//include picking image

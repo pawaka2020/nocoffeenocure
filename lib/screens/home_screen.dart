@@ -18,20 +18,6 @@ class HomeScreen extends StatefulWidget {
   _HomeScreenState createState() => _HomeScreenState();
 }
 
-//Display [news] items
-// Column bannermenu = Column(
-//   children: [
-//     Expanded(
-//         flex: 3,
-//         child: TopBanner()
-//     ),
-//     Expanded(
-//         flex: 7,
-//         child: MenuWidget()
-//     )
-//   ],
-// );
-
 class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0; // Current selected tab index
   PageController _pageController = PageController(initialPage: 0);
@@ -69,7 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
           _currentIndex = index;
           _pageController.animateToPage(
             index,
-            duration: Duration(milliseconds: 300),
+            duration: Duration(milliseconds: 1), //default 300
             curve: Curves.ease,
           );
         });
