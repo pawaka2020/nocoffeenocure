@@ -21,7 +21,13 @@ class MenuDetailsPage extends StatelessWidget {
             Description(menuItem.description),
             PartialDivider(32, 10),
             Reviews(menuItem.userReviews),
-            PartialDivider(32, 20),
+            PartialDivider(32, 10),
+            //SizedBox(height: 5),
+            Column(
+              children: menuItem.additions.map((addition) {
+                return AdditionMenu3(addition);
+              }).toList(),
+            ),
           ],
         ),
       ),
@@ -71,7 +77,7 @@ class Reviews extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 32.0), // Add horizontal padding
       child: Container(
-        height: 80.0,
+        height: 80.0, //80
         child: ListView.builder(
           scrollDirection: Axis.horizontal,
           itemCount: userReviews.length,
@@ -188,18 +194,257 @@ class Message extends StatelessWidget {
   }
 }
 
-// class PartialDivider extends StatelessWidget{
-//   final double pad;
-//   PartialDivider(this.pad);
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Padding(
-//       padding: const EdgeInsets.symmetric(horizontal: 32.0), // Adjust the padding as needed
-//       child: Divider(height: pad),
-//     );
-//   }
-// }
+class AdditionMenu extends StatelessWidget {
+  final Addition addition;
+  AdditionMenu(this.addition);
 
-//bottommost container with buttons to adjust quantity, then button 'add to cart'
-//container does not scroll down
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children:[
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 32.0),
+          child: Align(
+              alignment:Alignment.centerLeft,
+              child: Text(addition.title),
+          ),
+        ),
+        Column(
+          children: addition.additionDetails.map((additionDetail) {
+            return Column(
+              children:[
+                SizedBox(height: 25), //15
+                AdditionMenuDetail(additionDetail)
+              ]
+            );
+          }).toList(),
+        ),
+        PartialDivider(32, 20),
+      ]
+    );
+  }
+}
+
+//TODO: set icon to 'radio_button_checked' when this widget is selected and
+//the other widgets set icon to 'radio_button_unchecked'
+class AdditionMenuDetail extends StatelessWidget {
+  final AdditionDetail additionDetail;
+  AdditionMenuDetail(this.additionDetail);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 32.0),
+      child: Row(
+        children:[
+          Icon(
+            Icons.radio_button_unchecked, // Circle icon (unchecked)
+            color: Colors.grey, // Initial color
+            size: 18, // Adjust the size as needed
+          ),
+          SizedBox(width: 8), // Add some space between the icon and text
+          Text(
+            additionDetail.name, // Text from additionDetail.name
+            style: TextStyle(
+              fontSize: 12, // Adjust the font size as needed
+            ),
+          ),
+          Spacer(), // Adds flexible space between text and price
+          Text(
+            additionDetail.price, // Text from additionDetail.price
+            style: TextStyle(
+              fontSize: 12, // Adjust the font size as needed
+              fontWeight: FontWeight.bold, // Optional: Make the price bold
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/////
+
+class AdditionMenu2 extends StatefulWidget {
+  final Addition addition;
+  AdditionMenu2(this.addition);
+
+  @override
+  _AdditionMenuState2 createState() => _AdditionMenuState2();
+}
+
+class _AdditionMenuState2 extends State<AdditionMenu2> {
+  int selectedDetailIndex = -1;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 32.0),
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: Text(widget.addition.title),
+          ),
+        ),
+        Column(
+          children: widget.addition.additionDetails
+              .asMap()
+              .entries
+              .map((entry) {
+            final index = entry.key;
+            final additionDetail = entry.value;
+            return AdditionMenuDetail2(
+              additionDetail,
+              isSelected: index == selectedDetailIndex,
+              onTap: () {
+                setState(() {
+                  selectedDetailIndex = index;
+                });
+              },
+            );
+          }).toList(),
+        ),
+        PartialDivider(32, 10),
+      ],
+    );
+  }
+}
+
+class AdditionMenuDetail2 extends StatelessWidget {
+  final AdditionDetail additionDetail;
+  final bool isSelected;
+  final VoidCallback onTap;
+
+  AdditionMenuDetail2(this.additionDetail, {required this.isSelected, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 32.0),
+      child: Row(
+        children: [
+          IconButton(
+            icon: Icon(
+              isSelected
+                  ? Icons.radio_button_checked
+                  : Icons.radio_button_unchecked,
+              color: isSelected ? Colors.blue : Colors.grey,
+              size: 18,
+            ),
+            onPressed: onTap,
+          ),
+          SizedBox(width: 8),
+          Text(
+            additionDetail.name,
+            style: TextStyle(
+              fontSize: 12,
+            ),
+          ),
+          Spacer(),
+          Text(
+            additionDetail.price,
+            style: TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+
+///////
+
+class AdditionMenu3 extends StatefulWidget {
+  final Addition addition;
+  AdditionMenu3(this.addition);
+
+  @override
+  _AdditionMenuState3 createState() => _AdditionMenuState3();
+}
+
+class _AdditionMenuState3 extends State<AdditionMenu3> {
+  int selectedDetailIndex = 0; // Set the first detail as the default
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 32.0),
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: Text(widget.addition.title),
+          ),
+        ),
+        Column(
+          children: widget.addition.additionDetails
+              .asMap()
+              .entries
+              .map((entry) {
+            final index = entry.key;
+            final additionDetail = entry.value;
+            return AdditionMenuDetail3(
+              additionDetail,
+              isSelected: index == selectedDetailIndex,
+              onTap: () {
+                setState(() {
+                  selectedDetailIndex = index;
+                });
+              },
+            );
+          })
+              .toList(),
+        ),
+        PartialDivider(32, 20),
+      ],
+    );
+  }
+}
+
+class AdditionMenuDetail3 extends StatelessWidget {
+  final AdditionDetail additionDetail;
+  final bool isSelected;
+  final VoidCallback onTap;
+
+  AdditionMenuDetail3(this.additionDetail, {required this.isSelected, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 32.0),
+      child: Row(
+        children: [
+          IconButton(
+            icon: Icon(
+              isSelected
+                  ? Icons.radio_button_checked
+                  : Icons.radio_button_unchecked,
+              color: isSelected ? Colors.blue : Colors.grey,
+              size: 18,
+            ),
+            onPressed: onTap,
+          ),
+          SizedBox(width: 8),
+          Text(
+            additionDetail.name,
+            style: TextStyle(
+              fontSize: 12,
+            ),
+          ),
+          Spacer(),
+          Text(
+            additionDetail.price,
+            style: TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
