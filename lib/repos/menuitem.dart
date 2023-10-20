@@ -1,7 +1,8 @@
 class MenuItem {
   final String imagePath;
   final String title;
-  final String price;
+  //final String price;
+  final double price;
   final String category;
   final String description;
   final List<UserReview> userReviews;
@@ -25,16 +26,18 @@ class UserReview {
 
 //additions to customize the menu item ie 'beans', 'sugar', 'honey', 'serving size'
 class Addition {
-  final String title;
-  final List<AdditionDetail> additionDetails;
+    final String title;
+    final List<AdditionDetail> additionDetails;
+    double selectedPrice = 0; // Change the type to double
 
-  Addition(this.title, this.additionDetails);
+
+    Addition(this.title, this.additionDetails);
 }
 
 //more detail to an addtion ie if 'beans' under Addition class it was nested in, then 'soya beans' with 'USD 4.00'
 class AdditionDetail {
   final String name;
-  final String price;
+  final double price;
 
   AdditionDetail(this.name, this.price);
 }

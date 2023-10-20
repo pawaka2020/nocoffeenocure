@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:nocoffeenocure/dummy_screen.dart';
 import 'package:nocoffeenocure/screens/menu_detail.dart';
 import '../../repos/dummy/menuitem.dart';
+//import '../../repos/menuitem.dart';
 import '../../repos/menuitem.dart';
 import '../../widgets/partial_divider.dart';
 import '../../widgets/selection_bar.dart';
@@ -71,7 +73,27 @@ class MyMenuItem {
 }
 
 //here
+
+class MenuItem2 {
+  final String imagePath;
+  final String title;
+  final String price;
+  final double _price2;
+  final String category;
+  final String description;
+  final List<UserReview> userReviews;
+  final List<Addition> additions;
+  final List<Ingredient> ingredients;
+  final bool available;
+
+  MenuItem2(this.imagePath, this.title, this.price, this._price2, this.category,
+      this.description,this.userReviews, this.additions, this.ingredients,
+      this.available);
+}
+
 class MyMenuCard extends StatelessWidget {
+  
+  
   final MenuItem menuItem;
 
   MyMenuCard(this.menuItem);
@@ -114,7 +136,7 @@ class MyMenuCard extends StatelessWidget {
                 height: 15, //25
                 alignment: Alignment.center,
                 child: Text(
-                  menuItem.price,
+                  'RM ${menuItem.price.toStringAsFixed(2)}',
                   style: TextStyle(
                     fontSize: 12,
                   ),
@@ -163,6 +185,7 @@ class MenuGrid extends StatelessWidget {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) => MenuDetailsPage(menuItem),
+                  //builder: (context) => DummyScreen()
                 ),
               );
             },

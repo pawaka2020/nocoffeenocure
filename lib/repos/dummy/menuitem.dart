@@ -4,7 +4,7 @@ final List<MenuItem> menuItemDummy = [
   MenuItem(
     'assets/images/coffeesample.png',
     'I DONT SLEEP',
-    'RM 10.00',
+    10.00,
     'Coffee',
     'A rich and bold blend that promises to keep you wide awake and invigorated. '
         'Crafted from premium, handpicked coffee beans, this dark roast boasts '
@@ -15,19 +15,19 @@ final List<MenuItem> menuItemDummy = [
     ],
     [
       Addition(
-        "Beans",
-        [
-          AdditionDetail("Supremo", ""),
-          AdditionDetail("Yirgacheffe", "RM 5.30"),
-          AdditionDetail("Mandheling", "RM 8.00")
-        ]
+          "Beans",
+          [
+            AdditionDetail("Supremo", 0.00),
+            AdditionDetail("Yirgacheffe", 5.30),
+            AdditionDetail("Mandheling", 8.00)
+          ]
       ),
       Addition(
-        "Sweetness",
-        [
-          AdditionDetail("Less sugar", ""),
-          AdditionDetail("More sugar", "RM 1.00"),
-        ]
+          "Sweetness",
+          [
+            AdditionDetail("Less sugar", 0),
+            AdditionDetail("More sugar", 1.00),
+          ]
       ),
     ],
     [
@@ -40,7 +40,7 @@ final List<MenuItem> menuItemDummy = [
   MenuItem(
       'assets/images/coffeesample.png',
       'I DONT SLEEP2',
-      'RM 10.00',
+      10.00,
       'Coffee',
       'A rich and bold blend that promises to keep you wide awake and invigorated. '
           'Crafted from premium, handpicked coffee beans, this dark roast boasts '
@@ -53,16 +53,16 @@ final List<MenuItem> menuItemDummy = [
         Addition(
             "Beans",
             [
-              AdditionDetail("Supremo", ""),
-              AdditionDetail("Yirgacheffe", "RM 5.30"),
-              AdditionDetail("Mandheling", "RM 8.00")
+              AdditionDetail("Supremo", 0.00),
+              AdditionDetail("Yirgacheffe", 5.30),
+              AdditionDetail("Mandheling", 8.00)
             ]
         ),
         Addition(
             "Sweetness",
             [
-              AdditionDetail("Less sugar", ""),
-              AdditionDetail("More sugar", "RM 1.00"),
+              AdditionDetail("Less sugar", 0),
+              AdditionDetail("More sugar", 1.00),
             ]
         ),
       ],
@@ -76,7 +76,7 @@ final List<MenuItem> menuItemDummy = [
   MenuItem(
       'assets/images/coffeesample.png',
       'I DONT SLEEP3',
-      'RM 10.00',
+      10.00,
       'Coffee',
       'A rich and bold blend that promises to keep you wide awake and invigorated. '
           'Crafted from premium, handpicked coffee beans, this dark roast boasts '
@@ -89,16 +89,16 @@ final List<MenuItem> menuItemDummy = [
         Addition(
             "Beans",
             [
-              AdditionDetail("Supremo", ""),
-              AdditionDetail("Yirgacheffe", "RM 5.30"),
-              AdditionDetail("Mandheling", "RM 8.00")
+              AdditionDetail("Supremo", 0.00),
+              AdditionDetail("Yirgacheffe", 5.30),
+              AdditionDetail("Mandheling", 8.00)
             ]
         ),
         Addition(
             "Sweetness",
             [
-              AdditionDetail("Less sugar", ""),
-              AdditionDetail("More sugar", "RM 1.00"),
+              AdditionDetail("Less sugar", 0),
+              AdditionDetail("More sugar", 1.00),
             ]
         ),
       ],
@@ -112,7 +112,8 @@ final List<MenuItem> menuItemDummy = [
   MenuItem(
       'assets/images/coffeesample.png',
       'I DONT SLEEP4',
-      'RM 10.00',
+
+      10.00,
       'Coffee',
       'A rich and bold blend that promises to keep you wide awake and invigorated. '
           'Crafted from premium, handpicked coffee beans, this dark roast boasts '
@@ -125,16 +126,16 @@ final List<MenuItem> menuItemDummy = [
         Addition(
             "Beans",
             [
-              AdditionDetail("Supremo", ""),
-              AdditionDetail("Yirgacheffe", "RM 5.30"),
-              AdditionDetail("Mandheling", "RM 8.00")
+              AdditionDetail("Supremo", 0.00),
+              AdditionDetail("Yirgacheffe", 5.30),
+              AdditionDetail("Mandheling", 8.00)
             ]
         ),
         Addition(
             "Sweetness",
             [
-              AdditionDetail("Less sugar", ""),
-              AdditionDetail("More sugar", "RM 1.00"),
+              AdditionDetail("Less sugar", 0),
+              AdditionDetail("More sugar", 1.00),
             ]
         ),
       ],
@@ -148,7 +149,8 @@ final List<MenuItem> menuItemDummy = [
   MenuItem(
       'assets/images/coffeesample.png',
       'I DONT SLEEP',
-      'RM 10.00',
+
+      10.00,
       'Non-Coffee',
       'A rich and bold blend that promises to keep you wide awake and invigorated. '
           'Crafted from premium, handpicked coffee beans, this dark roast boasts '
@@ -161,16 +163,16 @@ final List<MenuItem> menuItemDummy = [
         Addition(
             "Beans",
             [
-              AdditionDetail("Supremo", ""),
-              AdditionDetail("Yirgacheffe", "RM 5.30"),
-              AdditionDetail("Mandheling", "RM 8.00")
+              AdditionDetail("Supremo", 0.00),
+              AdditionDetail("Yirgacheffe", 5.30),
+              AdditionDetail("Mandheling", 8.00)
             ]
         ),
         Addition(
             "Sweetness",
             [
-              AdditionDetail("Less sugar", ""),
-              AdditionDetail("More sugar", "RM 1.00"),
+              AdditionDetail("Less sugar", 0),
+              AdditionDetail("More sugar", 1.00),
             ]
         ),
       ],
