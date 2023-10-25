@@ -74,6 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
           textAlign: TextAlign.center,
         ),
         cart,
+        //ShoppingCardWidget,
         track,
         BottomNavyBarItem(
           icon: Icon(Icons.person),

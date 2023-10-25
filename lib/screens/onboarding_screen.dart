@@ -5,37 +5,42 @@ item, etc.
 We should use a larger [news] image that fits the whole screen of the phone.
 Show for 3 seconds only before moving to HomeScreen.
 */
-
 import 'package:flutter/material.dart';
 import 'package:nocoffeenocure/screens/home_screen.dart';
 
+import '../main.dart';
+import '../repos/dummy/newsfull.dart';
+
 class OnboardingScreen extends StatelessWidget {
-  // The actual screen
+
+
+  String image = 'assets/images/news1.png';
+  //String image = objectbox.newsFullBox.get(1).name;
   @override
   Widget build(BuildContext context) {
+    print("onboarding screen started");
     Future.delayed(const Duration(seconds: 3), () {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (context) => HomeScreen()),
       );
     });
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            displayImage(),
+            Expanded(
+              child:Image.asset(
+                image,
+              fit: BoxFit.fill, // Stretch the image to fill the entire screen
+              width: double.infinity, // Ensure it takes up the full width
+              height: double.infinity, // Ensure it takes up the full height
+            ),
+            ),
           ],
         ),
       ),
-    );
-  }
-  // Function to display the image.
-  Widget displayImage() {
-    return Image.asset(
-      'assets/images/newsbanner1.png', // Path to your dummy image.
-      width: 400, // Customize the width as needed.
-      height: 300, // Customize the height as needed.
-      fit: BoxFit.contain, // Adjust the fit as needed.
     );
   }
 }

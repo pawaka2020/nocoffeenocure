@@ -182,7 +182,13 @@ class ReviewCard extends StatelessWidget {
             children: [
               Stars(review.stars),
               Name(review.name),
-              Message(review.message),
+              Expanded(
+                child: SingleChildScrollView( // Use a SingleChildScrollView to allow scrolling if text is too large
+                  child: Message(review.message),
+                ),
+              ),
+
+              //Message(review.message),
             ],
           ),
         ),
@@ -202,10 +208,8 @@ class Stars extends StatelessWidget {
     List<Widget> starIcons = [];
     for (int i = 0; i < 5; i++) {
       if (i < stars) {
-        // Filled star icon with a specified size
         starIcons.add(Icon(Icons.star, color: Colors.yellow, size: starSize));
       } else {
-        // Empty star icon with a specified size
         starIcons.add(Icon(Icons.star_border, color: Colors.grey, size: starSize));
       }
     }

@@ -1,7 +1,6 @@
 class MenuItem {
   final String imagePath;
   final String title;
-  //final String price;
   final double price;
   final String category;
   final String description;
@@ -30,11 +29,10 @@ class Addition {
     final List<AdditionDetail> additionDetails;
     double selectedPrice = 0; // Change the type to double
 
-
     Addition(this.title, this.additionDetails);
 }
 
-//more detail to an addtion ie if 'beans' under Addition class it was nested in, then 'soya beans' with 'USD 4.00'
+//more detail to an addtion ie if 'beans' under Addition class it was nested in, then 'soy' with 'USD 4.00'
 class AdditionDetail {
   final String name;
   final double price;
