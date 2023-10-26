@@ -4,6 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nocoffeenocure/dummy_screen.dart';
 
+import '../main.dart';
+
 class News {
   final int id;
   final String imageUrl;
@@ -19,7 +21,8 @@ final List<News> newsDummy = [
 //with auto-slide, the one currently in use
 class TopBanner extends StatefulWidget {
   final double bannerHeight = 180; // Size of the banner
-  final List<News> news = newsDummy; // Data source
+  //final List<News> news = newsDummy; // Data source
+  final news = objectbox.topBannerNewsBox.getAll();
   final int interval = 3; // seconds for banner to auto-slide.
 
   @override
@@ -74,7 +77,8 @@ class _TopBannerState extends State<TopBanner> {
             child: Container(
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage(news_.imageUrl),
+                  //image: AssetImage(news_.imageUrl),
+                  image: AssetImage(news_.image),
                   fit: BoxFit.cover,
                 ),
               ),

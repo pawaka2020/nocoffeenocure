@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../main.dart';
 import '../model.dart';
+import '../repos/topbannernewsrepo.dart';
 import 'onboarding_screen.dart';
 
 /*
@@ -64,6 +65,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
 Future<void> preLoadFromBackend() async {
   await updateNewsFullBox(BackendSource.dummy);
+  await TopBannerNewsRepo().update(BackendSource.dummy);
   print ("data pre-loaded");// You may need to make updateNewsFullBox async
 }
 

@@ -7,9 +7,11 @@ import 'objectbox.g.dart'; // created by `flutter pub run build_runner build`
 class ObjectBox {
   late final Store store;
   late final newsFullBox;
+  late final topBannerNewsBox;
 
   ObjectBox._create(this.store) {
     newsFullBox = store.box<NewsFull>();
+    topBannerNewsBox = store.box<TopBannerNews>();
   }
 
   static Future<ObjectBox> create() async {
@@ -27,6 +29,4 @@ class NewsFullRepo {
   NewsFullRepo(){
     newsFullBox = objectbox.store.box<NewsFull>();
   }
-
-
 }

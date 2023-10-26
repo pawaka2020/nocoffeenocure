@@ -8,6 +8,15 @@ class NewsFull {
   String? name;
 }
 
+@Entity()
+class TopBannerNews {
+  @Id()
+  int id = 0;
+
+  String? image;
+  String? article;
+}
+
 Future<NewsFull> getNewsFullDummy() async {
   int delay = 2;
   await Future.delayed(Duration(seconds: delay)); // Simulate a 2-second delay

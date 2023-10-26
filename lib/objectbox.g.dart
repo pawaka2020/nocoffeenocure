@@ -37,6 +37,30 @@ final _entities = <ModelEntity>[
             flags: 0)
       ],
       relations: <ModelRelation>[],
+      backlinks: <ModelBacklink>[]),
+  ModelEntity(
+      id: const IdUid(2, 1629771521425256600),
+      name: 'TopBannerNews',
+      lastPropertyId: const IdUid(3, 3215544481237852102),
+      flags: 0,
+      properties: <ModelProperty>[
+        ModelProperty(
+            id: const IdUid(1, 1715983393606849435),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        ModelProperty(
+            id: const IdUid(2, 5899158864016677619),
+            name: 'image',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(3, 3215544481237852102),
+            name: 'article',
+            type: 9,
+            flags: 0)
+      ],
+      relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[])
 ];
 
@@ -67,7 +91,7 @@ Future<Store> openStore(
 ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
-      lastEntityId: const IdUid(1, 7436886197857190181),
+      lastEntityId: const IdUid(2, 1629771521425256600),
       lastIndexId: const IdUid(0, 0),
       lastRelationId: const IdUid(0, 0),
       lastSequenceId: const IdUid(0, 0),
@@ -107,6 +131,39 @@ ModelDefinition getObjectBoxModel() {
                 .vTableGetNullable(buffer, rootOffset, 6);
 
           return object;
+        }),
+    TopBannerNews: EntityDefinition<TopBannerNews>(
+        model: _entities[1],
+        toOneRelations: (TopBannerNews object) => [],
+        toManyRelations: (TopBannerNews object) => {},
+        getId: (TopBannerNews object) => object.id,
+        setId: (TopBannerNews object, int id) {
+          object.id = id;
+        },
+        objectToFB: (TopBannerNews object, fb.Builder fbb) {
+          final imageOffset =
+              object.image == null ? null : fbb.writeString(object.image!);
+          final articleOffset =
+              object.article == null ? null : fbb.writeString(object.article!);
+          fbb.startTable(4);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, imageOffset);
+          fbb.addOffset(2, articleOffset);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+
+          final object = TopBannerNews()
+            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0)
+            ..image = const fb.StringReader(asciiOptimization: true)
+                .vTableGetNullable(buffer, rootOffset, 6)
+            ..article = const fb.StringReader(asciiOptimization: true)
+                .vTableGetNullable(buffer, rootOffset, 8);
+
+          return object;
         })
   };
 
@@ -120,4 +177,19 @@ class NewsFull_ {
 
   /// see [NewsFull.name]
   static final name = QueryStringProperty<NewsFull>(_entities[0].properties[1]);
+}
+
+/// [TopBannerNews] entity fields to define ObjectBox queries.
+class TopBannerNews_ {
+  /// see [TopBannerNews.id]
+  static final id =
+      QueryIntegerProperty<TopBannerNews>(_entities[1].properties[0]);
+
+  /// see [TopBannerNews.image]
+  static final image =
+      QueryStringProperty<TopBannerNews>(_entities[1].properties[1]);
+
+  /// see [TopBannerNews.article]
+  static final article =
+      QueryStringProperty<TopBannerNews>(_entities[1].properties[2]);
 }
