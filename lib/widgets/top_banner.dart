@@ -6,17 +6,17 @@ import 'package:nocoffeenocure/dummy_screen.dart';
 
 import '../main.dart';
 
-class News {
-  final int id;
-  final String imageUrl;
-
-  News(this.id, this.imageUrl);
-}
-
-final List<News> newsDummy = [
-  News(1, "assets/images/bannerimage1.png"),
-  News(2, "assets/images/bannerimage2.png"),
-];
+// class News {
+//   final int id;
+//   final String imageUrl;
+//
+//   News(this.id, this.imageUrl);
+// }
+//
+// final List<News> newsDummy = [
+//   News(1, "assets/images/bannerimage1.png"),
+//   News(2, "assets/images/bannerimage2.png"),
+// ];
 
 //with auto-slide, the one currently in use
 class TopBanner extends StatefulWidget {
