@@ -12,13 +12,12 @@ import '../main.dart';
 import '../repos/dummy/newsfull.dart';
 
 class OnboardingScreen extends StatelessWidget {
+  String image = objectbox.fullNewsBox.getAll()[0].name;
 
-
-  String image = 'assets/images/news1.png';
-  //String image = objectbox.newsFullBox.get(1).name;
   @override
   Widget build(BuildContext context) {
     print("onboarding screen started");
+
     Future.delayed(const Duration(seconds: 3), () {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (context) => HomeScreen()),

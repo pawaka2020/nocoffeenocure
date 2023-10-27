@@ -15,6 +15,8 @@ import 'package:objectbox/objectbox.dart';
 import 'package:objectbox_flutter_libs/objectbox_flutter_libs.dart';
 
 import 'model.dart';
+import 'models/bannernews.dart';
+import 'models/fullnews.dart';
 
 export 'package:objectbox/objectbox.dart'; // so that callers only have to import this file
 
@@ -61,6 +63,68 @@ final _entities = <ModelEntity>[
             flags: 0)
       ],
       relations: <ModelRelation>[],
+      backlinks: <ModelBacklink>[]),
+  ModelEntity(
+      id: const IdUid(3, 2897391873509332869),
+      name: 'MenuItemMap',
+      lastPropertyId: const IdUid(2, 4654279378717876603),
+      flags: 0,
+      properties: <ModelProperty>[
+        ModelProperty(
+            id: const IdUid(1, 100303502472173014),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        ModelProperty(
+            id: const IdUid(2, 4654279378717876603),
+            name: 'map',
+            type: 9,
+            flags: 0)
+      ],
+      relations: <ModelRelation>[],
+      backlinks: <ModelBacklink>[]),
+  ModelEntity(
+      id: const IdUid(5, 2233927649910431469),
+      name: 'FullNewsOB',
+      lastPropertyId: const IdUid(2, 7715956713455378040),
+      flags: 0,
+      properties: <ModelProperty>[
+        ModelProperty(
+            id: const IdUid(1, 6188503905232759776),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        ModelProperty(
+            id: const IdUid(2, 7715956713455378040),
+            name: 'name',
+            type: 9,
+            flags: 0)
+      ],
+      relations: <ModelRelation>[],
+      backlinks: <ModelBacklink>[]),
+  ModelEntity(
+      id: const IdUid(6, 5510275982018042304),
+      name: 'BannerNewsOB',
+      lastPropertyId: const IdUid(3, 5105894957054602084),
+      flags: 0,
+      properties: <ModelProperty>[
+        ModelProperty(
+            id: const IdUid(1, 1428098114543984777),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        ModelProperty(
+            id: const IdUid(2, 1462186012595256539),
+            name: 'image',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(3, 5105894957054602084),
+            name: 'article',
+            type: 9,
+            flags: 0)
+      ],
+      relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[])
 ];
 
@@ -91,13 +155,13 @@ Future<Store> openStore(
 ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
-      lastEntityId: const IdUid(2, 1629771521425256600),
+      lastEntityId: const IdUid(6, 5510275982018042304),
       lastIndexId: const IdUid(0, 0),
       lastRelationId: const IdUid(0, 0),
       lastSequenceId: const IdUid(0, 0),
-      retiredEntityUids: const [],
+      retiredEntityUids: const [2203044326659519525],
       retiredIndexUids: const [],
-      retiredPropertyUids: const [],
+      retiredPropertyUids: const [3504729010156614603, 3048272364630595352],
       retiredRelationUids: const [],
       modelVersion: 5,
       modelVersionParserMinimum: 5,
@@ -164,6 +228,95 @@ ModelDefinition getObjectBoxModel() {
                 .vTableGetNullable(buffer, rootOffset, 8);
 
           return object;
+        }),
+    MenuItemMap: EntityDefinition<MenuItemMap>(
+        model: _entities[2],
+        toOneRelations: (MenuItemMap object) => [],
+        toManyRelations: (MenuItemMap object) => {},
+        getId: (MenuItemMap object) => object.id,
+        setId: (MenuItemMap object, int id) {
+          object.id = id;
+        },
+        objectToFB: (MenuItemMap object, fb.Builder fbb) {
+          final mapOffset =
+              object.map == null ? null : fbb.writeString(object.map!);
+          fbb.startTable(3);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, mapOffset);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+
+          final object = MenuItemMap()
+            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0)
+            ..map = const fb.StringReader(asciiOptimization: true)
+                .vTableGetNullable(buffer, rootOffset, 6);
+
+          return object;
+        }),
+    FullNewsOB: EntityDefinition<FullNewsOB>(
+        model: _entities[3],
+        toOneRelations: (FullNewsOB object) => [],
+        toManyRelations: (FullNewsOB object) => {},
+        getId: (FullNewsOB object) => object.id,
+        setId: (FullNewsOB object, int id) {
+          object.id = id;
+        },
+        objectToFB: (FullNewsOB object, fb.Builder fbb) {
+          final nameOffset =
+              object.name == null ? null : fbb.writeString(object.name!);
+          fbb.startTable(3);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, nameOffset);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+
+          final object = FullNewsOB()
+            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0)
+            ..name = const fb.StringReader(asciiOptimization: true)
+                .vTableGetNullable(buffer, rootOffset, 6);
+
+          return object;
+        }),
+    BannerNewsOB: EntityDefinition<BannerNewsOB>(
+        model: _entities[4],
+        toOneRelations: (BannerNewsOB object) => [],
+        toManyRelations: (BannerNewsOB object) => {},
+        getId: (BannerNewsOB object) => object.id,
+        setId: (BannerNewsOB object, int id) {
+          object.id = id;
+        },
+        objectToFB: (BannerNewsOB object, fb.Builder fbb) {
+          final imageOffset =
+              object.image == null ? null : fbb.writeString(object.image!);
+          final articleOffset =
+              object.article == null ? null : fbb.writeString(object.article!);
+          fbb.startTable(4);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, imageOffset);
+          fbb.addOffset(2, articleOffset);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+
+          final object = BannerNewsOB()
+            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0)
+            ..image = const fb.StringReader(asciiOptimization: true)
+                .vTableGetNullable(buffer, rootOffset, 6)
+            ..article = const fb.StringReader(asciiOptimization: true)
+                .vTableGetNullable(buffer, rootOffset, 8);
+
+          return object;
         })
   };
 
@@ -192,4 +345,41 @@ class TopBannerNews_ {
   /// see [TopBannerNews.article]
   static final article =
       QueryStringProperty<TopBannerNews>(_entities[1].properties[2]);
+}
+
+/// [MenuItemMap] entity fields to define ObjectBox queries.
+class MenuItemMap_ {
+  /// see [MenuItemMap.id]
+  static final id =
+      QueryIntegerProperty<MenuItemMap>(_entities[2].properties[0]);
+
+  /// see [MenuItemMap.map]
+  static final map =
+      QueryStringProperty<MenuItemMap>(_entities[2].properties[1]);
+}
+
+/// [FullNewsOB] entity fields to define ObjectBox queries.
+class FullNewsOB_ {
+  /// see [FullNewsOB.id]
+  static final id =
+      QueryIntegerProperty<FullNewsOB>(_entities[3].properties[0]);
+
+  /// see [FullNewsOB.name]
+  static final name =
+      QueryStringProperty<FullNewsOB>(_entities[3].properties[1]);
+}
+
+/// [BannerNewsOB] entity fields to define ObjectBox queries.
+class BannerNewsOB_ {
+  /// see [BannerNewsOB.id]
+  static final id =
+      QueryIntegerProperty<BannerNewsOB>(_entities[4].properties[0]);
+
+  /// see [BannerNewsOB.image]
+  static final image =
+      QueryStringProperty<BannerNewsOB>(_entities[4].properties[1]);
+
+  /// see [BannerNewsOB.article]
+  static final article =
+      QueryStringProperty<BannerNewsOB>(_entities[4].properties[2]);
 }

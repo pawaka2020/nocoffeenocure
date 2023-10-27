@@ -22,7 +22,7 @@ import '../main.dart';
 class TopBanner extends StatefulWidget {
   final double bannerHeight = 180; // Size of the banner
   //final List<News> news = newsDummy; // Data source
-  final news = objectbox.topBannerNewsBox.getAll();
+  final news = objectbox.bannerNewsBox.getAll();
   final int interval = 3; // seconds for banner to auto-slide.
 
   @override

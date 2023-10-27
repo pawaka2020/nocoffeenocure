@@ -17,6 +17,14 @@ class TopBannerNews {
   String? article;
 }
 
+@Entity()
+class MenuItemMap {
+  @Id()
+  int id = 0;
+
+  String? map;
+}
+
 Future<NewsFull> getNewsFullDummy() async {
   int delay = 2;
   await Future.delayed(Duration(seconds: delay)); // Simulate a 2-second delay

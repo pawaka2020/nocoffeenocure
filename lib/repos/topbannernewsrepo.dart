@@ -11,9 +11,8 @@ import '../model.dart';
 //   String? article;
 // }
 
-
 class TopBannerNewsRepo {
-  Future<void> update(BackendSource source) async{
+  Future<void> update(BackendSource source) async {
     final box = objectbox.topBannerNewsBox;
     late final newData;
     late final currentData;
