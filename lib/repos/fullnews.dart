@@ -1,5 +1,6 @@
 import '../backend/dummy/fullnews.dart';
 import '../main.dart';
+import '../models/fullnews.dart';
 
 class FullNewsRepo {
   final box = objectbox.fullNewsBox;
@@ -24,5 +25,9 @@ class FullNewsRepo {
     }
 
     //print("current = " + currentData[0].name);
+  }
+
+  List<FullNewsOB> getAll() {
+    return box.getAll();
   }
 }

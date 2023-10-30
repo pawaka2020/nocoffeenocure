@@ -83,7 +83,7 @@ BottomNavyBarItem track = BottomNavyBarItem(
     children: [
       Icon(Icons.directions_bike), //the icon
       Positioned(
-        left: 12,
+        left: 12, //12
         child: Container(
           padding: EdgeInsets.all(2),
           decoration: BoxDecoration(
@@ -93,13 +93,16 @@ BottomNavyBarItem track = BottomNavyBarItem(
           child: CircleAvatar(
             radius: 4,
             backgroundColor: Colors.transparent,
-            child: Text(
-              '!',
-              style: TextStyle(
-                fontSize:8,
-                fontFamily: 'Roboto',//default 10
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
+            child: Padding(
+              padding: EdgeInsets.only(left: 1), // Adjust the left padding as needed
+              child: Text(
+                '!',
+                style: TextStyle(
+                  fontSize: 8,
+                  fontFamily: 'Roboto',
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
           ), //'number'

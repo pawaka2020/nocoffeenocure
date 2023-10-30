@@ -10,9 +10,11 @@ import 'package:nocoffeenocure/screens/home_screen.dart';
 
 import '../main.dart';
 import '../repos/dummy/newsfull.dart';
+import '../repos/fullnews.dart';
 
 class OnboardingScreen extends StatelessWidget {
-  String image = objectbox.fullNewsBox.getAll()[0].name;
+  //String image = objectbox.fullNewsBox.getAll()[0].name;
+  final image = FullNewsRepo().getAll()[0].name!;
 
   @override
   Widget build(BuildContext context) {
@@ -32,10 +34,10 @@ class OnboardingScreen extends StatelessWidget {
             Expanded(
               child:Image.asset(
                 image,
-              fit: BoxFit.fill, // Stretch the image to fill the entire screen
-              width: double.infinity, // Ensure it takes up the full width
-              height: double.infinity, // Ensure it takes up the full height
-            ),
+                fit: BoxFit.fill, // Stretch the image to fill the entire screen
+                width: double.infinity, // Ensure it takes up the full width
+                height: double.infinity, // Ensure it takes up the full height
+              ),
             ),
           ],
         ),

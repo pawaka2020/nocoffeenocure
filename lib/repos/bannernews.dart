@@ -1,5 +1,6 @@
 import '../backend/dummy/bannernews.dart';
 import '../main.dart';
+import '../models/bannernews.dart';
 
 class BannerNewsRepo {
   final box = objectbox.bannerNewsBox;
@@ -21,5 +22,9 @@ class BannerNewsRepo {
       print("adding for FullNewsOB");
       box.putMany(newData);
     }
+  }
+
+  List<BannerNewsOB> getAll() {
+    return box.getAll();
   }
 }

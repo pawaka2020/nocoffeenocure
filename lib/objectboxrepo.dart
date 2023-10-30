@@ -4,6 +4,7 @@ import 'main.dart';
 import 'model.dart';
 import 'models/bannernews.dart';
 import 'models/fullnews.dart';
+import 'models/menuitem.dart';
 import 'objectbox.g.dart'; // created by `flutter pub run build_runner build`
 
 class ObjectBox {
@@ -14,6 +15,7 @@ class ObjectBox {
   //new ones
   late final fullNewsBox;
   late final bannerNewsBox;
+  late final menuItemBox;
 
   ObjectBox._create(this.store) {
     newsFullBox = store.box<NewsFull>();
@@ -22,6 +24,7 @@ class ObjectBox {
     //new ones
     fullNewsBox = store.box<FullNewsOB>();
     bannerNewsBox = store.box<BannerNewsOB>();
+    menuItemBox = store.box<MenuItemOB>();
   }
 
   static Future<ObjectBox> create() async {

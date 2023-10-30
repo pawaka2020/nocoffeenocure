@@ -107,10 +107,187 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "7:8520225248177609433",
+      "lastPropertyId": "4:8835554883321975355",
+      "name": "AdditionDetailOB",
+      "properties": [
+        {
+          "id": "1:7447594663688936812",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:1554850855461411695",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "3:5162454649465947450",
+          "name": "price",
+          "type": 8
+        },
+        {
+          "id": "4:8835554883321975355",
+          "name": "additionId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "1:6399289456110412113",
+          "relationTarget": "AdditionOB"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "8:7833806798342725161",
+      "lastPropertyId": "4:660055670441986083",
+      "name": "AdditionOB",
+      "properties": [
+        {
+          "id": "1:5725147911301061928",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:9209705376093723719",
+          "name": "title",
+          "type": 9
+        },
+        {
+          "id": "3:6903636301366207274",
+          "name": "selectedPrice",
+          "type": 8
+        },
+        {
+          "id": "4:660055670441986083",
+          "name": "menuItemId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "2:9149820165032547205",
+          "relationTarget": "MenuItemOB"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "9:3725869045066890860",
+      "lastPropertyId": "4:5241177170435113868",
+      "name": "IngredientOB",
+      "properties": [
+        {
+          "id": "1:5636916387655438282",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:2123898016131721823",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "3:4074765776421269074",
+          "name": "imagePath",
+          "type": 9
+        },
+        {
+          "id": "4:5241177170435113868",
+          "name": "menuItemId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "3:3539021135857203128",
+          "relationTarget": "MenuItemOB"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "10:2706068186038482142",
+      "lastPropertyId": "7:380297471824909108",
+      "name": "MenuItemOB",
+      "properties": [
+        {
+          "id": "1:3968308799936506832",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:6934498969459973799",
+          "name": "imagePath",
+          "type": 9
+        },
+        {
+          "id": "3:7484307875708624359",
+          "name": "title",
+          "type": 9
+        },
+        {
+          "id": "4:5084564747788596945",
+          "name": "price",
+          "type": 8
+        },
+        {
+          "id": "5:8669383043965553925",
+          "name": "category",
+          "type": 9
+        },
+        {
+          "id": "6:2937418500178822669",
+          "name": "description",
+          "type": 9
+        },
+        {
+          "id": "7:380297471824909108",
+          "name": "available",
+          "type": 1
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "11:2564477860352583731",
+      "lastPropertyId": "5:388836284630429389",
+      "name": "UserReviewOB",
+      "properties": [
+        {
+          "id": "1:7496314304006346298",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:4068407573045791850",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "3:7119787009544846742",
+          "name": "message",
+          "type": 9
+        },
+        {
+          "id": "4:568488990683770149",
+          "name": "stars",
+          "type": 6
+        },
+        {
+          "id": "5:388836284630429389",
+          "name": "menuItemId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "4:1668199129613032845",
+          "relationTarget": "MenuItemOB"
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "6:5510275982018042304",
-  "lastIndexId": "0:0",
+  "lastEntityId": "11:2564477860352583731",
+  "lastIndexId": "4:1668199129613032845",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,

@@ -2,7 +2,7 @@ import '../../models/bannernews.dart';
 
 class BannerNewsDummy {
   Future<List<BannerNewsOB>> get() async {
-    int delay = 3;
+    int delay = 0;
     await Future.delayed(Duration(seconds: delay));
 
     List<BannerNewsOB> result = [

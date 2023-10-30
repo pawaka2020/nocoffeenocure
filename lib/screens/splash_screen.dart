@@ -3,6 +3,7 @@ import '../main.dart';
 import '../model.dart';
 import '../repos/bannernews.dart';
 import '../repos/fullnews.dart';
+import '../repos/menuitem.dart';
 import '../repos/topbannernewsrepo.dart';
 import 'onboarding_screen.dart';
 
@@ -21,24 +22,16 @@ int delay = 3;
 
 class _SplashScreenState extends State<SplashScreen> {
   String imageFile = 'assets/images/splashimage.png';
-  int delay = 3;
+  int delay = 5;
 
   @override
   void initState() {
     super.initState();
 
-    // preLoadFromBackend().then((_) {
-    //   Future.delayed(Duration(seconds: delay), () {
-    //     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => OnboardingScreen()));
-    //   });
-    // });
-
-    // Future.delayed(Duration(seconds: delay), () {
-    //   Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => OnboardingScreen()));
-    // });
-
-    preLoadFromBackend().then((_) {
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => OnboardingScreen()));
+    Future.delayed(Duration(seconds: delay), () {
+      preLoadFromBackend().then((_) {
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => OnboardingScreen()));
+      });
     });
   }
 
@@ -66,11 +59,12 @@ class _SplashScreenState extends State<SplashScreen> {
 }
 
 Future<void> preLoadFromBackend() async {
-  await updateNewsFullBox(BackendSource.dummy);
-  await TopBannerNewsRepo().update(BackendSource.dummy);
+  //await updateNewsFullBox(BackendSource.dummy);
+  //await TopBannerNewsRepo().update(BackendSource.dummy);
   await FullNewsRepo().update(BackendSource.dummy);
   await BannerNewsRepo().update(BackendSource.dummy);
-  print ("data pre-loaded");// You may need to make updateNewsFullBox async
+  await MenuItemRepo().update(BackendSource.dummy);
+  print ("data pre-loaded");
 }
 
 Future<void> updateNewsFullBox(BackendSource source) async {
