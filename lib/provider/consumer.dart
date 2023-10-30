@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../widgets/bottom_nav_bar.dart';
+import '../screens/bottom_nav_bar/bottom_nav_bar.dart';
 
 // class ShoppingCartWidget extends StatelessWidget {
 //   @override

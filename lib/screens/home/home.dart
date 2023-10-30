@@ -1,16 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:nocoffeenocure/dummy_screen.dart';
-import 'package:nocoffeenocure/screens/menu_detail.dart';
-import '../../backend/dummy/menuitem.dart';
-import '../../main.dart';
+import 'package:nocoffeenocure/screens/menu_detail/menu_detail.dart';
 import '../../models/menuitem.dart';
-import '../../repos/menuitem.dart'; //correct
+import '../../repos/menuitem.dart';
 import '../../widgets/partial_divider.dart';
-import '../../widgets/selection_bar.dart';
-import '../../widgets/top_banner.dart';
+import '../home_screen/selection_bar.dart';
+import '../home_screen/top_banner.dart';
 
-class HomePage extends StatefulWidget   {
+class HomePage extends StatefulWidget {
 
   var menuItems = MenuItemRepo().getAll();
 
@@ -62,15 +59,6 @@ class _HomePageState extends State<HomePage> {
       ],
     );
   }
-}
-
-class MyMenuItem {
-  final String imagePath;
-  final String title;
-  final String price;
-  final String category;
-
-  MyMenuItem(this.imagePath, this.title, this.price, this.category);
 }
 
 class MyMenuCard extends StatelessWidget {

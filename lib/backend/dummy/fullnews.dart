@@ -1,4 +1,3 @@
-import '../../model.dart';
 import '../../models/fullnews.dart';
 
 class FullNewsDummy {

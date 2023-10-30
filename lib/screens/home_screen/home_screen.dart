@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
-import 'package:nocoffeenocure/widgets/top_banner.dart';
-import '../widgets/bottom_nav_bar.dart';
-import 'home/home.dart';
-import 'menu.dart';
+import 'package:nocoffeenocure/screens/home_screen/top_banner.dart';
+import '../bottom_nav_bar/bottom_nav_bar.dart';
+import '../home/home.dart';
 import 'package:nocoffeenocure/screens/me/me.dart';
 
 /*

@@ -1,10 +1,9 @@
 import 'dart:async';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nocoffeenocure/dummy_screen.dart';
-import '../main.dart';
-import '../repos/bannernews.dart';
+import '../../main.dart';
+import '../../repos/bannernews.dart';
 
 //with auto-slide, the one currently in use
 class TopBanner extends StatefulWidget {

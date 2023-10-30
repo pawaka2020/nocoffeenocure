@@ -6,14 +6,13 @@ We should use a larger [news] image that fits the whole screen of the phone.
 Show for 3 seconds only before moving to HomeScreen.
 */
 import 'package:flutter/material.dart';
-import 'package:nocoffeenocure/screens/home_screen.dart';
+import 'package:nocoffeenocure/screens/home_screen/home_screen.dart';
 
-import '../main.dart';
-import '../repos/dummy/newsfull.dart';
-import '../repos/fullnews.dart';
+import '../../main.dart';
+import '../../repos/dummy/newsfull.dart';
+import '../../repos/fullnews.dart';
 
 class OnboardingScreen extends StatelessWidget {
-  //String image = objectbox.fullNewsBox.getAll()[0].name;
   final image = FullNewsRepo().getAll()[0].name!;
 
   @override

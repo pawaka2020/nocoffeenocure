@@ -14,7 +14,6 @@ import 'package:objectbox/internal.dart'; // generated code can access "internal
 import 'package:objectbox/objectbox.dart';
 import 'package:objectbox_flutter_libs/objectbox_flutter_libs.dart';
 
-import 'model.dart';
 import 'models/bannernews.dart';
 import 'models/fullnews.dart';
 import 'models/menuitem.dart';
@@ -22,68 +21,6 @@ import 'models/menuitem.dart';
 export 'package:objectbox/objectbox.dart'; // so that callers only have to import this file
 
 final _entities = <ModelEntity>[
-  ModelEntity(
-      id: const IdUid(1, 7436886197857190181),
-      name: 'NewsFull',
-      lastPropertyId: const IdUid(2, 4993169361151491599),
-      flags: 0,
-      properties: <ModelProperty>[
-        ModelProperty(
-            id: const IdUid(1, 5532487186583170030),
-            name: 'id',
-            type: 6,
-            flags: 1),
-        ModelProperty(
-            id: const IdUid(2, 4993169361151491599),
-            name: 'name',
-            type: 9,
-            flags: 0)
-      ],
-      relations: <ModelRelation>[],
-      backlinks: <ModelBacklink>[]),
-  ModelEntity(
-      id: const IdUid(2, 1629771521425256600),
-      name: 'TopBannerNews',
-      lastPropertyId: const IdUid(3, 3215544481237852102),
-      flags: 0,
-      properties: <ModelProperty>[
-        ModelProperty(
-            id: const IdUid(1, 1715983393606849435),
-            name: 'id',
-            type: 6,
-            flags: 1),
-        ModelProperty(
-            id: const IdUid(2, 5899158864016677619),
-            name: 'image',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(3, 3215544481237852102),
-            name: 'article',
-            type: 9,
-            flags: 0)
-      ],
-      relations: <ModelRelation>[],
-      backlinks: <ModelBacklink>[]),
-  ModelEntity(
-      id: const IdUid(3, 2897391873509332869),
-      name: 'MenuItemMap',
-      lastPropertyId: const IdUid(2, 4654279378717876603),
-      flags: 0,
-      properties: <ModelProperty>[
-        ModelProperty(
-            id: const IdUid(1, 100303502472173014),
-            name: 'id',
-            type: 6,
-            flags: 1),
-        ModelProperty(
-            id: const IdUid(2, 4654279378717876603),
-            name: 'map',
-            type: 9,
-            flags: 0)
-      ],
-      relations: <ModelRelation>[],
-      backlinks: <ModelBacklink>[]),
   ModelEntity(
       id: const IdUid(5, 2233927649910431469),
       name: 'FullNewsOB',
@@ -344,106 +281,32 @@ ModelDefinition getObjectBoxModel() {
       lastIndexId: const IdUid(4, 1668199129613032845),
       lastRelationId: const IdUid(0, 0),
       lastSequenceId: const IdUid(0, 0),
-      retiredEntityUids: const [2203044326659519525],
+      retiredEntityUids: const [
+        2203044326659519525,
+        7436886197857190181,
+        1629771521425256600,
+        2897391873509332869
+      ],
       retiredIndexUids: const [],
-      retiredPropertyUids: const [3504729010156614603, 3048272364630595352],
+      retiredPropertyUids: const [
+        3504729010156614603,
+        3048272364630595352,
+        5532487186583170030,
+        4993169361151491599,
+        1715983393606849435,
+        5899158864016677619,
+        3215544481237852102,
+        100303502472173014,
+        4654279378717876603
+      ],
       retiredRelationUids: const [],
       modelVersion: 5,
       modelVersionParserMinimum: 5,
       version: 1);
 
   final bindings = <Type, EntityDefinition>{
-    NewsFull: EntityDefinition<NewsFull>(
-        model: _entities[0],
-        toOneRelations: (NewsFull object) => [],
-        toManyRelations: (NewsFull object) => {},
-        getId: (NewsFull object) => object.id,
-        setId: (NewsFull object, int id) {
-          object.id = id;
-        },
-        objectToFB: (NewsFull object, fb.Builder fbb) {
-          final nameOffset =
-              object.name == null ? null : fbb.writeString(object.name!);
-          fbb.startTable(3);
-          fbb.addInt64(0, object.id);
-          fbb.addOffset(1, nameOffset);
-          fbb.finish(fbb.endTable());
-          return object.id;
-        },
-        objectFromFB: (Store store, ByteData fbData) {
-          final buffer = fb.BufferContext(fbData);
-          final rootOffset = buffer.derefObject(0);
-
-          final object = NewsFull()
-            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0)
-            ..name = const fb.StringReader(asciiOptimization: true)
-                .vTableGetNullable(buffer, rootOffset, 6);
-
-          return object;
-        }),
-    TopBannerNews: EntityDefinition<TopBannerNews>(
-        model: _entities[1],
-        toOneRelations: (TopBannerNews object) => [],
-        toManyRelations: (TopBannerNews object) => {},
-        getId: (TopBannerNews object) => object.id,
-        setId: (TopBannerNews object, int id) {
-          object.id = id;
-        },
-        objectToFB: (TopBannerNews object, fb.Builder fbb) {
-          final imageOffset =
-              object.image == null ? null : fbb.writeString(object.image!);
-          final articleOffset =
-              object.article == null ? null : fbb.writeString(object.article!);
-          fbb.startTable(4);
-          fbb.addInt64(0, object.id);
-          fbb.addOffset(1, imageOffset);
-          fbb.addOffset(2, articleOffset);
-          fbb.finish(fbb.endTable());
-          return object.id;
-        },
-        objectFromFB: (Store store, ByteData fbData) {
-          final buffer = fb.BufferContext(fbData);
-          final rootOffset = buffer.derefObject(0);
-
-          final object = TopBannerNews()
-            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0)
-            ..image = const fb.StringReader(asciiOptimization: true)
-                .vTableGetNullable(buffer, rootOffset, 6)
-            ..article = const fb.StringReader(asciiOptimization: true)
-                .vTableGetNullable(buffer, rootOffset, 8);
-
-          return object;
-        }),
-    MenuItemMap: EntityDefinition<MenuItemMap>(
-        model: _entities[2],
-        toOneRelations: (MenuItemMap object) => [],
-        toManyRelations: (MenuItemMap object) => {},
-        getId: (MenuItemMap object) => object.id,
-        setId: (MenuItemMap object, int id) {
-          object.id = id;
-        },
-        objectToFB: (MenuItemMap object, fb.Builder fbb) {
-          final mapOffset =
-              object.map == null ? null : fbb.writeString(object.map!);
-          fbb.startTable(3);
-          fbb.addInt64(0, object.id);
-          fbb.addOffset(1, mapOffset);
-          fbb.finish(fbb.endTable());
-          return object.id;
-        },
-        objectFromFB: (Store store, ByteData fbData) {
-          final buffer = fb.BufferContext(fbData);
-          final rootOffset = buffer.derefObject(0);
-
-          final object = MenuItemMap()
-            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0)
-            ..map = const fb.StringReader(asciiOptimization: true)
-                .vTableGetNullable(buffer, rootOffset, 6);
-
-          return object;
-        }),
     FullNewsOB: EntityDefinition<FullNewsOB>(
-        model: _entities[3],
+        model: _entities[0],
         toOneRelations: (FullNewsOB object) => [],
         toManyRelations: (FullNewsOB object) => {},
         getId: (FullNewsOB object) => object.id,
@@ -471,7 +334,7 @@ ModelDefinition getObjectBoxModel() {
           return object;
         }),
     BannerNewsOB: EntityDefinition<BannerNewsOB>(
-        model: _entities[4],
+        model: _entities[1],
         toOneRelations: (BannerNewsOB object) => [],
         toManyRelations: (BannerNewsOB object) => {},
         getId: (BannerNewsOB object) => object.id,
@@ -504,7 +367,7 @@ ModelDefinition getObjectBoxModel() {
           return object;
         }),
     AdditionDetailOB: EntityDefinition<AdditionDetailOB>(
-        model: _entities[5],
+        model: _entities[2],
         toOneRelations: (AdditionDetailOB object) => [object.addition],
         toManyRelations: (AdditionDetailOB object) => {},
         getId: (AdditionDetailOB object) => object.id,
@@ -538,7 +401,7 @@ ModelDefinition getObjectBoxModel() {
           return object;
         }),
     AdditionOB: EntityDefinition<AdditionOB>(
-        model: _entities[6],
+        model: _entities[3],
         toOneRelations: (AdditionOB object) => [object.menuItem],
         toManyRelations: (AdditionOB object) => {
               RelInfo<AdditionDetailOB>.toOneBacklink(4, object.id,
@@ -581,7 +444,7 @@ ModelDefinition getObjectBoxModel() {
           return object;
         }),
     IngredientOB: EntityDefinition<IngredientOB>(
-        model: _entities[7],
+        model: _entities[4],
         toOneRelations: (IngredientOB object) => [object.menuItem],
         toManyRelations: (IngredientOB object) => {},
         getId: (IngredientOB object) => object.id,
@@ -618,7 +481,7 @@ ModelDefinition getObjectBoxModel() {
           return object;
         }),
     MenuItemOB: EntityDefinition<MenuItemOB>(
-        model: _entities[8],
+        model: _entities[5],
         toOneRelations: (MenuItemOB object) => [],
         toManyRelations: (MenuItemOB object) => {
               RelInfo<UserReviewOB>.toOneBacklink(5, object.id,
@@ -694,7 +557,7 @@ ModelDefinition getObjectBoxModel() {
           return object;
         }),
     UserReviewOB: EntityDefinition<UserReviewOB>(
-        model: _entities[9],
+        model: _entities[6],
         toOneRelations: (UserReviewOB object) => [object.menuItem],
         toManyRelations: (UserReviewOB object) => {},
         getId: (UserReviewOB object) => object.id,
@@ -737,174 +600,139 @@ ModelDefinition getObjectBoxModel() {
   return ModelDefinition(model, bindings);
 }
 
-/// [NewsFull] entity fields to define ObjectBox queries.
-class NewsFull_ {
-  /// see [NewsFull.id]
-  static final id = QueryIntegerProperty<NewsFull>(_entities[0].properties[0]);
-
-  /// see [NewsFull.name]
-  static final name = QueryStringProperty<NewsFull>(_entities[0].properties[1]);
-}
-
-/// [TopBannerNews] entity fields to define ObjectBox queries.
-class TopBannerNews_ {
-  /// see [TopBannerNews.id]
-  static final id =
-      QueryIntegerProperty<TopBannerNews>(_entities[1].properties[0]);
-
-  /// see [TopBannerNews.image]
-  static final image =
-      QueryStringProperty<TopBannerNews>(_entities[1].properties[1]);
-
-  /// see [TopBannerNews.article]
-  static final article =
-      QueryStringProperty<TopBannerNews>(_entities[1].properties[2]);
-}
-
-/// [MenuItemMap] entity fields to define ObjectBox queries.
-class MenuItemMap_ {
-  /// see [MenuItemMap.id]
-  static final id =
-      QueryIntegerProperty<MenuItemMap>(_entities[2].properties[0]);
-
-  /// see [MenuItemMap.map]
-  static final map =
-      QueryStringProperty<MenuItemMap>(_entities[2].properties[1]);
-}
-
 /// [FullNewsOB] entity fields to define ObjectBox queries.
 class FullNewsOB_ {
   /// see [FullNewsOB.id]
   static final id =
-      QueryIntegerProperty<FullNewsOB>(_entities[3].properties[0]);
+      QueryIntegerProperty<FullNewsOB>(_entities[0].properties[0]);
 
   /// see [FullNewsOB.name]
   static final name =
-      QueryStringProperty<FullNewsOB>(_entities[3].properties[1]);
+      QueryStringProperty<FullNewsOB>(_entities[0].properties[1]);
 }
 
 /// [BannerNewsOB] entity fields to define ObjectBox queries.
 class BannerNewsOB_ {
   /// see [BannerNewsOB.id]
   static final id =
-      QueryIntegerProperty<BannerNewsOB>(_entities[4].properties[0]);
+      QueryIntegerProperty<BannerNewsOB>(_entities[1].properties[0]);
 
   /// see [BannerNewsOB.image]
   static final image =
-      QueryStringProperty<BannerNewsOB>(_entities[4].properties[1]);
+      QueryStringProperty<BannerNewsOB>(_entities[1].properties[1]);
 
   /// see [BannerNewsOB.article]
   static final article =
-      QueryStringProperty<BannerNewsOB>(_entities[4].properties[2]);
+      QueryStringProperty<BannerNewsOB>(_entities[1].properties[2]);
 }
 
 /// [AdditionDetailOB] entity fields to define ObjectBox queries.
 class AdditionDetailOB_ {
   /// see [AdditionDetailOB.id]
   static final id =
-      QueryIntegerProperty<AdditionDetailOB>(_entities[5].properties[0]);
+      QueryIntegerProperty<AdditionDetailOB>(_entities[2].properties[0]);
 
   /// see [AdditionDetailOB.name]
   static final name =
-      QueryStringProperty<AdditionDetailOB>(_entities[5].properties[1]);
+      QueryStringProperty<AdditionDetailOB>(_entities[2].properties[1]);
 
   /// see [AdditionDetailOB.price]
   static final price =
-      QueryDoubleProperty<AdditionDetailOB>(_entities[5].properties[2]);
+      QueryDoubleProperty<AdditionDetailOB>(_entities[2].properties[2]);
 
   /// see [AdditionDetailOB.addition]
   static final addition = QueryRelationToOne<AdditionDetailOB, AdditionOB>(
-      _entities[5].properties[3]);
+      _entities[2].properties[3]);
 }
 
 /// [AdditionOB] entity fields to define ObjectBox queries.
 class AdditionOB_ {
   /// see [AdditionOB.id]
   static final id =
-      QueryIntegerProperty<AdditionOB>(_entities[6].properties[0]);
+      QueryIntegerProperty<AdditionOB>(_entities[3].properties[0]);
 
   /// see [AdditionOB.title]
   static final title =
-      QueryStringProperty<AdditionOB>(_entities[6].properties[1]);
+      QueryStringProperty<AdditionOB>(_entities[3].properties[1]);
 
   /// see [AdditionOB.selectedPrice]
   static final selectedPrice =
-      QueryDoubleProperty<AdditionOB>(_entities[6].properties[2]);
+      QueryDoubleProperty<AdditionOB>(_entities[3].properties[2]);
 
   /// see [AdditionOB.menuItem]
   static final menuItem =
-      QueryRelationToOne<AdditionOB, MenuItemOB>(_entities[6].properties[3]);
+      QueryRelationToOne<AdditionOB, MenuItemOB>(_entities[3].properties[3]);
 }
 
 /// [IngredientOB] entity fields to define ObjectBox queries.
 class IngredientOB_ {
   /// see [IngredientOB.id]
   static final id =
-      QueryIntegerProperty<IngredientOB>(_entities[7].properties[0]);
+      QueryIntegerProperty<IngredientOB>(_entities[4].properties[0]);
 
   /// see [IngredientOB.name]
   static final name =
-      QueryStringProperty<IngredientOB>(_entities[7].properties[1]);
+      QueryStringProperty<IngredientOB>(_entities[4].properties[1]);
 
   /// see [IngredientOB.imagePath]
   static final imagePath =
-      QueryStringProperty<IngredientOB>(_entities[7].properties[2]);
+      QueryStringProperty<IngredientOB>(_entities[4].properties[2]);
 
   /// see [IngredientOB.menuItem]
   static final menuItem =
-      QueryRelationToOne<IngredientOB, MenuItemOB>(_entities[7].properties[3]);
+      QueryRelationToOne<IngredientOB, MenuItemOB>(_entities[4].properties[3]);
 }
 
 /// [MenuItemOB] entity fields to define ObjectBox queries.
 class MenuItemOB_ {
   /// see [MenuItemOB.id]
   static final id =
-      QueryIntegerProperty<MenuItemOB>(_entities[8].properties[0]);
+      QueryIntegerProperty<MenuItemOB>(_entities[5].properties[0]);
 
   /// see [MenuItemOB.imagePath]
   static final imagePath =
-      QueryStringProperty<MenuItemOB>(_entities[8].properties[1]);
+      QueryStringProperty<MenuItemOB>(_entities[5].properties[1]);
 
   /// see [MenuItemOB.title]
   static final title =
-      QueryStringProperty<MenuItemOB>(_entities[8].properties[2]);
+      QueryStringProperty<MenuItemOB>(_entities[5].properties[2]);
 
   /// see [MenuItemOB.price]
   static final price =
-      QueryDoubleProperty<MenuItemOB>(_entities[8].properties[3]);
+      QueryDoubleProperty<MenuItemOB>(_entities[5].properties[3]);
 
   /// see [MenuItemOB.category]
   static final category =
-      QueryStringProperty<MenuItemOB>(_entities[8].properties[4]);
+      QueryStringProperty<MenuItemOB>(_entities[5].properties[4]);
 
   /// see [MenuItemOB.description]
   static final description =
-      QueryStringProperty<MenuItemOB>(_entities[8].properties[5]);
+      QueryStringProperty<MenuItemOB>(_entities[5].properties[5]);
 
   /// see [MenuItemOB.available]
   static final available =
-      QueryBooleanProperty<MenuItemOB>(_entities[8].properties[6]);
+      QueryBooleanProperty<MenuItemOB>(_entities[5].properties[6]);
 }
 
 /// [UserReviewOB] entity fields to define ObjectBox queries.
 class UserReviewOB_ {
   /// see [UserReviewOB.id]
   static final id =
-      QueryIntegerProperty<UserReviewOB>(_entities[9].properties[0]);
+      QueryIntegerProperty<UserReviewOB>(_entities[6].properties[0]);
 
   /// see [UserReviewOB.name]
   static final name =
-      QueryStringProperty<UserReviewOB>(_entities[9].properties[1]);
+      QueryStringProperty<UserReviewOB>(_entities[6].properties[1]);
 
   /// see [UserReviewOB.message]
   static final message =
-      QueryStringProperty<UserReviewOB>(_entities[9].properties[2]);
+      QueryStringProperty<UserReviewOB>(_entities[6].properties[2]);
 
   /// see [UserReviewOB.stars]
   static final stars =
-      QueryIntegerProperty<UserReviewOB>(_entities[9].properties[3]);
+      QueryIntegerProperty<UserReviewOB>(_entities[6].properties[3]);
 
   /// see [UserReviewOB.menuItem]
   static final menuItem =
-      QueryRelationToOne<UserReviewOB, MenuItemOB>(_entities[9].properties[4]);
+      QueryRelationToOne<UserReviewOB, MenuItemOB>(_entities[6].properties[4]);
 }

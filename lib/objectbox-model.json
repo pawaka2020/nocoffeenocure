@@ -4,68 +4,6 @@
   "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
   "entities": [
     {
-      "id": "1:7436886197857190181",
-      "lastPropertyId": "2:4993169361151491599",
-      "name": "NewsFull",
-      "properties": [
-        {
-          "id": "1:5532487186583170030",
-          "name": "id",
-          "type": 6,
-          "flags": 1
-        },
-        {
-          "id": "2:4993169361151491599",
-          "name": "name",
-          "type": 9
-        }
-      ],
-      "relations": []
-    },
-    {
-      "id": "2:1629771521425256600",
-      "lastPropertyId": "3:3215544481237852102",
-      "name": "TopBannerNews",
-      "properties": [
-        {
-          "id": "1:1715983393606849435",
-          "name": "id",
-          "type": 6,
-          "flags": 1
-        },
-        {
-          "id": "2:5899158864016677619",
-          "name": "image",
-          "type": 9
-        },
-        {
-          "id": "3:3215544481237852102",
-          "name": "article",
-          "type": 9
-        }
-      ],
-      "relations": []
-    },
-    {
-      "id": "3:2897391873509332869",
-      "lastPropertyId": "2:4654279378717876603",
-      "name": "MenuItemMap",
-      "properties": [
-        {
-          "id": "1:100303502472173014",
-          "name": "id",
-          "type": 6,
-          "flags": 1
-        },
-        {
-          "id": "2:4654279378717876603",
-          "name": "map",
-          "type": 9
-        }
-      ],
-      "relations": []
-    },
-    {
       "id": "5:2233927649910431469",
       "lastPropertyId": "2:7715956713455378040",
       "name": "FullNewsOB",
@@ -293,12 +231,22 @@
   "modelVersion": 5,
   "modelVersionParserMinimum": 5,
   "retiredEntityUids": [
-    2203044326659519525
+    2203044326659519525,
+    7436886197857190181,
+    1629771521425256600,
+    2897391873509332869
   ],
   "retiredIndexUids": [],
   "retiredPropertyUids": [
     3504729010156614603,
-    3048272364630595352
+    3048272364630595352,
+    5532487186583170030,
+    4993169361151491599,
+    1715983393606849435,
+    5899158864016677619,
+    3215544481237852102,
+    100303502472173014,
+    4654279378717876603
   ],
   "retiredRelationUids": [],
   "version": 1

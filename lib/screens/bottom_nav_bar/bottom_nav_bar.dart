@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../provider/cart_count_notifier.dart';
+import '../../provider/cart_count_notifier.dart';
 
 BottomNavyBarItem buildNavyBarItem(IconData icondata, String title){
   return BottomNavyBarItem(
@@ -51,31 +50,6 @@ BottomNavyBarItem cart = BottomNavyBarItem(
   activeColor: Colors.orange,
   textAlign: TextAlign.center,
 );
-
-// BottomNavyBarItem cart2 = BottomNavyBarItem(
-//   icon: Stack(
-//     children: [
-//       Icon(Icons.shopping_cart), // The icon
-//       Positioned(
-//         left: 12,
-//         child: Consumer<CartCountNotifier>(
-//           builder: (context, notifier, child) {
-//             return Container(
-//               padding: EdgeInsets.all(2),
-//               decoration: BoxDecoration(
-//                 shape: BoxShape.circle,
-//                 color: Colors.red, // Set the background color of the badge
-//               ),
-//             );
-//           },
-//         ),
-//       ), // The badge
-//     ],
-//   ),
-//   title: Text('Cart', style: TextStyle(color: Colors.black)),
-//   activeColor: Colors.orange,
-//   textAlign: TextAlign.center,
-// );
 
 //also integrate with 'Consumer' widget later.
 BottomNavyBarItem track = BottomNavyBarItem(

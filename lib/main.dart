@@ -5,9 +5,8 @@ import 'package:nocoffeenocure/provider/cart_count_notifier.dart';
 import 'package:nocoffeenocure/repos/offline/newsfull.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
-import 'model.dart';
 import 'objectboxrepo.dart';
-import 'screens/splash_screen.dart'; // Import your splash screen file.
+import 'screens/splash/splash_screen.dart'; // Import your splash screen file.
 
 late ObjectBox objectbox;
 

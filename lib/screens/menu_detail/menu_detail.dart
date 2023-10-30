@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../models/menuitem.dart';
-import '../repos/menuitem.dart';
-import '../widgets/partial_divider.dart';
+import '../../models/menuitem.dart';
+import '../../repos/menuitem.dart';
+import '../../widgets/partial_divider.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 /*stateful widget version*/
@@ -359,15 +359,6 @@ class AdditionMenuDetail extends StatelessWidget {
   }
 }
 
-
-
-/*after adding price adjustment feature*/
-
-
-/*
-Rm 9.00 (-) 2 (+)
-Add to Card
-*/
 class Finalize extends StatelessWidget {
   final double price;
   final int factor;// Pass the adjusted price as a parameter
