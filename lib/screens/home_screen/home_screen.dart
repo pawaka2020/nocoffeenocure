@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:nocoffeenocure/screens/home_screen/top_banner.dart';
 import '../bottom_nav_bar/bottom_nav_bar.dart';
+import '../cart/cart_screen.dart';
 import '../home/home.dart';
 import 'package:nocoffeenocure/screens/me/me.dart';
 
@@ -27,9 +28,10 @@ class _HomeScreenState extends State<HomeScreen> {
       body: PageView(
         controller: _pageController,
         children: [
-          HomePage(), // Default page shown on app launch
-          VouchersPage(), // Vouchers page
-          CartPage(), // Cart page
+          HomePage(),
+          VouchersPage(),
+          CartScreen(),
+          //CartPage(),
           TrackPage(),
           Me()
         ],
@@ -72,7 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
           activeColor: Colors.orange, // Set active tab text color
           textAlign: TextAlign.center,
         ),
-        cart,
+        cart2,
         //ShoppingCardWidget,
         track,
         BottomNavyBarItem(

@@ -1,8 +1,8 @@
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import '../../provider/cart_count_notifier.dart';
 
 BottomNavyBarItem buildNavyBarItem(IconData icondata, String title){
@@ -51,13 +51,53 @@ BottomNavyBarItem cart = BottomNavyBarItem(
   textAlign: TextAlign.center,
 );
 
+///sadsadsad
+  BottomNavyBarItem cart2 = BottomNavyBarItem(
+    icon: Stack(
+      children: [
+        Icon(Icons.shopping_cart), //the icon
+        Consumer<CartCountNotifier>(
+            builder: (context, countNotifier, child) {
+              return Positioned(
+                left: 12,
+                child: Container(
+                  padding: EdgeInsets.all(2),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.red, // Set the background color of the badge
+                  ),
+                  child: CircleAvatar(
+                    radius: 4, // Adjust the size of the badge, default 4
+                    backgroundColor: Colors.transparent,
+                    child: Text(
+                      //'9',// Replace with the actual number of items in the cart
+                      countNotifier.count.toString(),
+                      style: TextStyle(
+                        fontSize: 8,
+                        fontFamily: 'Roboto',
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ), //'number'
+                ),
+              );
+            }
+        ),//the badge
+      ],
+    ),
+    title: Text('Cart', style: TextStyle(color: Colors.black)),
+    activeColor: Colors.orange,
+    textAlign: TextAlign.center,
+  );
+
 //also integrate with 'Consumer' widget later.
 BottomNavyBarItem track = BottomNavyBarItem(
   icon: Stack(
     children: [
       Icon(Icons.directions_bike), //the icon
       Positioned(
-        left: 12, //12
+        left: 12,
         child: Container(
           padding: EdgeInsets.all(2),
           decoration: BoxDecoration(

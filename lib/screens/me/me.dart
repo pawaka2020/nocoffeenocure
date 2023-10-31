@@ -103,44 +103,44 @@ Sole card template just for logging in.
 Another Consumer and Provider implementiation will be used here to handle
 live updates of log in and log out.
 */
-Card logcard = Card(
-  elevation: 4.0,
-  margin: EdgeInsets.symmetric(vertical: 8.0),
-  color: Colors.orange, // Card background color
-  child: Padding(
-    padding: EdgeInsets.all(16.0),
-    child: Column(
-      children: [
-        Align(
-          alignment: Alignment.centerLeft,
-          child: Container(
-            child: Text(
-              'Welcome, Guest',
-              style: TextStyle(
-                fontSize: 20.0,
-                fontWeight: FontWeight.bold,
-                color: Colors.white, // Text color
-              ),
-            ),
-          ),
-        ),
-        SizedBox(height: 8.0),
-        Align(
-          alignment: Alignment.centerRight,
-          child: Container(
-            child: Text(
-              'Log in or Sign Up',
-              style: TextStyle(
-                fontSize: 16.0, // Smaller text size
-                color: Colors.white, // Text color
-              ),
-            ),
-          ),
-        ),
-      ],
-    ),
-  ),
-);
+// Card logcard = Card(
+//   elevation: 4.0,
+//   margin: EdgeInsets.symmetric(vertical: 8.0),
+//   color: Colors.orange, // Card background color
+//   child: Padding(
+//     padding: EdgeInsets.all(16.0),
+//     child: Column(
+//       children: [
+//         Align(
+//           alignment: Alignment.centerLeft,
+//           child: Container(
+//             child: Text(
+//               'Welcome, Guest',
+//               style: TextStyle(
+//                 fontSize: 20.0,
+//                 fontWeight: FontWeight.bold,
+//                 color: Colors.white, // Text color
+//               ),
+//             ),
+//           ),
+//         ),
+//         SizedBox(height: 8.0),
+//         Align(
+//           alignment: Alignment.centerRight,
+//           child: Container(
+//             child: Text(
+//               'Log in or Sign Up',
+//               style: TextStyle(
+//                 fontSize: 16.0, // Smaller text size
+//                 color: Colors.white, // Text color
+//               ),
+//             ),
+//           ),
+//         ),
+//       ],
+//     ),
+//   ),
+// );
 
 class LoginCard extends StatelessWidget {
   @override

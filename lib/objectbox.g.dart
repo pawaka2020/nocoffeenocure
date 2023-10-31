@@ -17,6 +17,7 @@ import 'package:objectbox_flutter_libs/objectbox_flutter_libs.dart';
 import 'models/bannernews.dart';
 import 'models/fullnews.dart';
 import 'models/menuitem.dart';
+import 'models/user.dart';
 
 export 'package:objectbox/objectbox.dart'; // so that callers only have to import this file
 
@@ -247,6 +248,40 @@ final _entities = <ModelEntity>[
             relationTarget: 'MenuItemOB')
       ],
       relations: <ModelRelation>[],
+      backlinks: <ModelBacklink>[]),
+  ModelEntity(
+      id: const IdUid(12, 4530192993071638560),
+      name: 'UserOB',
+      lastPropertyId: const IdUid(5, 301378820354053017),
+      flags: 0,
+      properties: <ModelProperty>[
+        ModelProperty(
+            id: const IdUid(1, 1772969239402912101),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        ModelProperty(
+            id: const IdUid(2, 1699615406421456723),
+            name: 'userId',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(3, 653484881005465406),
+            name: 'name',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(4, 6214153821840455891),
+            name: 'email',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(5, 301378820354053017),
+            name: 'address',
+            type: 9,
+            flags: 0)
+      ],
+      relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[])
 ];
 
@@ -277,7 +312,7 @@ Future<Store> openStore(
 ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
-      lastEntityId: const IdUid(11, 2564477860352583731),
+      lastEntityId: const IdUid(12, 4530192993071638560),
       lastIndexId: const IdUid(4, 1668199129613032845),
       lastRelationId: const IdUid(0, 0),
       lastSequenceId: const IdUid(0, 0),
@@ -594,6 +629,49 @@ ModelDefinition getObjectBoxModel() {
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0);
           object.menuItem.attach(store);
           return object;
+        }),
+    UserOB: EntityDefinition<UserOB>(
+        model: _entities[7],
+        toOneRelations: (UserOB object) => [],
+        toManyRelations: (UserOB object) => {},
+        getId: (UserOB object) => object.id,
+        setId: (UserOB object, int id) {
+          object.id = id;
+        },
+        objectToFB: (UserOB object, fb.Builder fbb) {
+          final userIdOffset =
+              object.userId == null ? null : fbb.writeString(object.userId!);
+          final nameOffset =
+              object.name == null ? null : fbb.writeString(object.name!);
+          final emailOffset =
+              object.email == null ? null : fbb.writeString(object.email!);
+          final addressOffset =
+              object.address == null ? null : fbb.writeString(object.address!);
+          fbb.startTable(6);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, userIdOffset);
+          fbb.addOffset(2, nameOffset);
+          fbb.addOffset(3, emailOffset);
+          fbb.addOffset(4, addressOffset);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+
+          final object = UserOB()
+            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0)
+            ..userId = const fb.StringReader(asciiOptimization: true)
+                .vTableGetNullable(buffer, rootOffset, 6)
+            ..name = const fb.StringReader(asciiOptimization: true)
+                .vTableGetNullable(buffer, rootOffset, 8)
+            ..email = const fb.StringReader(asciiOptimization: true)
+                .vTableGetNullable(buffer, rootOffset, 10)
+            ..address = const fb.StringReader(asciiOptimization: true)
+                .vTableGetNullable(buffer, rootOffset, 12);
+
+          return object;
         })
   };
 
@@ -735,4 +813,23 @@ class UserReviewOB_ {
   /// see [UserReviewOB.menuItem]
   static final menuItem =
       QueryRelationToOne<UserReviewOB, MenuItemOB>(_entities[6].properties[4]);
+}
+
+/// [UserOB] entity fields to define ObjectBox queries.
+class UserOB_ {
+  /// see [UserOB.id]
+  static final id = QueryIntegerProperty<UserOB>(_entities[7].properties[0]);
+
+  /// see [UserOB.userId]
+  static final userId = QueryStringProperty<UserOB>(_entities[7].properties[1]);
+
+  /// see [UserOB.name]
+  static final name = QueryStringProperty<UserOB>(_entities[7].properties[2]);
+
+  /// see [UserOB.email]
+  static final email = QueryStringProperty<UserOB>(_entities[7].properties[3]);
+
+  /// see [UserOB.address]
+  static final address =
+      QueryStringProperty<UserOB>(_entities[7].properties[4]);
 }

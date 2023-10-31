@@ -1,9 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../models/menuitem.dart';
+import '../../provider/cart_count_notifier.dart';
 import '../../repos/menuitem.dart';
 import '../../widgets/partial_divider.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+
+import '../home/home.dart';
 
 /*stateful widget version*/
 class MenuDetailsPage extends StatefulWidget {
@@ -383,44 +387,11 @@ class Finalize extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   QuantityDisplay(price, factor, decreaseFactor, increaseFactor),
-                  AddToCartButton(addToCart),
+                  AddToCartButton(context)
                 ],
               ),
             ),
           )
-      ),
-    );
-  }
-}
-
-class AddToCartButton extends StatelessWidget {
-  final VoidCallback addToCart;
-  AddToCartButton(this.addToCart);
-
-  @override
-  Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: () {
-        addToCart();
-        // Add your action when the button is pressed
-      },
-      style: ElevatedButton.styleFrom(
-        primary: Colors.orange, // Button background color
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0), // Rounded button edges
-        ),
-      ),
-      child: Container(
-        width: double.infinity, // Occupy the maximum available width
-        child: Center(
-          child: Text(
-            "Add To Cart",
-            style: TextStyle(
-              color: Colors.white, // Text color
-              fontSize: 16, // Text size
-            ),
-          ),
-        ),
       ),
     );
   }
@@ -470,4 +441,42 @@ class QuantityDisplay extends StatelessWidget {
       ],
     );
   }
+}
+
+class AddToCartButton extends StatelessWidget {
+  final BuildContext context;
+  AddToCartButton(this.context);
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: () {
+        AddToCart(context);
+      },
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Colors.orange, ///Button background color
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0), // Rounded button edges
+        ),
+      ),
+      child: Container(
+        width: double.infinity, // Occupy the maximum available width
+        child: Center(
+          child: Text(
+            "Add To Cart",
+            style: TextStyle(
+              color: Colors.white, // Text color
+              fontSize: 16, // Text size
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+void AddToCart(BuildContext context) {
+
+  Provider.of<CartCountNotifier>(context, listen: false).addToCart();
+  Navigator.of(context).pop();
 }

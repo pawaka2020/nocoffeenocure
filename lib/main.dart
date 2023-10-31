@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
-//import 'package:isar/isar.dart';
-
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:nocoffeenocure/provider/cart_count_notifier.dart';
 import 'package:nocoffeenocure/repos/offline/newsfull.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'objectboxrepo.dart';
-import 'screens/splash/splash_screen.dart'; // Import your splash screen file.
+import 'screens/splash/splash_screen.dart';
 
+// Import your splash screen file.
+
+/*
+Singletons
+*/
 late ObjectBox objectbox;
-
+late FlutterSecureStorage storage;
 enum BackendSource {
   backend,
   dummy,
@@ -20,11 +24,22 @@ enum BackendSource {
 Implement CartCountNotifier to allow changes to cart icon's badge display in
 HomeScreen.
 Launches the app as usual afterwards starting with SplashScreen as first screen.
- */
+*/
 Future<void> main() async {
-
   WidgetsFlutterBinding.ensureInitialized();
   objectbox = await ObjectBox.create();
+  //auth initialization goes here
+  storage = FlutterSecureStorage();
+  // storage.write(key: 'token', value: 'asdads');
+  // final token = storage.read(key: 'token');
+
+  // final String token = await secureStorage.read(key: 'token');
+  // final String userType = await secureStorage.read(key: 'user_type');
+  // Generate a guest token and store it with the user_type flag
+  // final guestToken = generateGuestToken();
+  // secureStorage.write(key: 'token', value: guestToken);
+  // secureStorage.write(key: 'user_type', value: 'guest');
+
 
   runApp(
     ChangeNotifierProvider(
@@ -39,7 +54,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dir = getApplicationDocumentsDirectory();
     return MaterialApp(
       title:'No Coffee No Cure',
       theme: ThemeData(
@@ -49,7 +63,6 @@ class MyApp extends StatelessWidget {
             fontFamily: 'Orbitron',
       ),
       home: const SplashScreen()
-      //home: HomePage()
     );
   }
 }

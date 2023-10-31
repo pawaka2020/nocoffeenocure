@@ -154,7 +154,6 @@ class MenuGrid extends StatelessWidget {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) => MenuDetailsPage(menuItem),
-                  //builder: (context) => DummyScreen()
                 ),
               );
             },
