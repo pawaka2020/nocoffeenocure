@@ -28,7 +28,7 @@ class MenuItemDummy {
                 "Beans",
                 [
                   AdditionDetail("Supremo", 0.00),
-                  AdditionDetail("Yirgacheffe", 5.30),
+                  AdditionDetail("Yirgaaaaaaaaaaacheffe", 5.30),
                   AdditionDetail("Mandheling", 8.00)
                 ]
             ),
@@ -244,7 +244,7 @@ class MenuItemDummy {
                 "Beans",
                 [
                   AdditionDetail("Supremo", 0.00),
-                  AdditionDetail("Yirgacheffe", 5.30),
+                  AdditionDetail("Yir", 5.45),
                   AdditionDetail("Mandheling", 8.00)
                 ]
             ),

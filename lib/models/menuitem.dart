@@ -57,7 +57,6 @@ class MenuItem {
     menuItemOB.additions.addAll(this.additions.map((addition) => convertAddition(addition, menuItemOB)));
 
     menuItemOB.ingredients.addAll(this.ingredients.map((ingredient) => convertIngredient(ingredient, menuItemOB)));
-
         return menuItemOB;
     }
 

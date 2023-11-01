@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 
 class OrderSubmit extends StatelessWidget {
+  final double finalPrice;
+  final VoidCallback func;
+  OrderSubmit(this.finalPrice, this.func);
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -23,14 +27,14 @@ class OrderSubmit extends StatelessWidget {
                                   fontSize: 16,
                                 ),
                               ),
-                              Text("RM 10.00",
+                              Text('\RM ${finalPrice.toStringAsFixed(2)}',
                                 style: TextStyle(
                                   fontSize: 16,
                                 ),
                               ),
                             ]
                         ),
-                        PlaceOrderButton(context)
+                        PlaceOrderButton(context, func)
                       ]
                   )
               )
@@ -41,14 +45,15 @@ class OrderSubmit extends StatelessWidget {
 }
 
 class PlaceOrderButton extends StatelessWidget {
+  final VoidCallback func;
   final BuildContext context;
-  PlaceOrderButton(this.context);
+  PlaceOrderButton(this.context, this.func);
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: () {
-        //AddToCart(context);
+        func();
       },
       style: ElevatedButton.styleFrom(
         backgroundColor: Colors.orange, ///Button background color
@@ -71,21 +76,3 @@ class PlaceOrderButton extends StatelessWidget {
     );
   }
 }
-
-class PriceDisplay extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Column (
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        Text("RM 10.00"),
-      ]
-    );
-  }
-
-}
-
-
-Text placeholder = Text(
-  "placeholder"
-);

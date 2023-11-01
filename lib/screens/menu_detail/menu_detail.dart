@@ -372,6 +372,7 @@ class Finalize extends StatelessWidget {
 
   Finalize(this.price, this.factor, this.decreaseFactor, this.increaseFactor,
       this.addToCart);
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
