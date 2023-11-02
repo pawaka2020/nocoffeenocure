@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+//TODO: replace PaymentMethods UI with cards later.
+//TODO: cards lead user to another screen, then after finishing details, the card shows tick sign.
 class PaymentMethods extends StatefulWidget {
   @override
   _PaymentMethodsState createState() => _PaymentMethodsState();

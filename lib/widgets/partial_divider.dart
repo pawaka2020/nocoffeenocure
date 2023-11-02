@@ -9,8 +9,8 @@ class PartialDivider extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: pad), // Adjust the padding as needed
-      child: Divider(height: dividerHeight), //2
+      padding: EdgeInsets.symmetric(horizontal: pad),
+      child: Divider(height: dividerHeight),
     );
   }
 }

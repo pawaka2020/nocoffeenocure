@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:nocoffeenocure/screens/cart/packaging.dart';
+import 'package:nocoffeenocure/screens/cart/paymentdetails.dart';
 import 'package:nocoffeenocure/screens/cart/paymentmethods.dart';
 import 'package:nocoffeenocure/screens/cart/specialrequest.dart';
 import 'package:nocoffeenocure/screens/cart/voucherselection.dart';
-
 import '../../widgets/partial_divider.dart';
 import 'cartitemcard.dart';
+import 'deliveryaddress.dart';
 import 'ordersubmit.dart';
 //TODO: maybe change CartScreen to a stateless widget.
 
@@ -73,6 +74,9 @@ class _CartDisplayState extends State<CartDisplay> {
                     PaymentMethods(),
                     PartialDivider(40, 10),
                     VoucherSelection(),
+                    PartialDivider(40, 10),
+                    DeliveryAddress(),
+                    PaymentDetails(),
                     SizedBox(height: 5),//payment methods (wallet (topup), e-wallet, credit card, online banking)
                     //vouchers (buttons to add voucher)
                     //payment details
