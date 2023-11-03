@@ -12,34 +12,26 @@ import 'deliveryaddress.dart';
 import 'ordersubmit.dart';
 //TODO: maybe change CartScreen to a stateless widget.
 
-class CartScreen extends StatelessWidget {
-  //bool empty = false;
+// class CartScreen extends StatelessWidget {
+//   //bool empty = false;
+//   var cartItems = CartItemRepo().getAll();
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return CartDisplay(cartItems);
+//   }
+// }
+
+class CartScreen extends StatefulWidget {
   var cartItems = CartItemRepo().getAll();
 
+  //CartDisplay(this.cartItems);
 
   @override
-  Widget build(BuildContext context) {
-    if (cartItems.isEmpty) {
-      return placeholder2;
-    }
-    else {
-      return CartDisplay(cartItems);
-    }
-    //return CartDisplay(cartItems);
-  }
+  State<StatefulWidget> createState() => _CartScreenState();
 }
 
-class CartDisplay extends StatefulWidget {
-
-  var cartItems;
-
-  CartDisplay(this.cartItems);
-
-  @override
-  State<StatefulWidget> createState() => _CartDisplayState();
-}
-
-class _CartDisplayState extends State<CartDisplay> {
+class _CartScreenState extends State<CartScreen> {
   //state variables
   double _finalPrice = 10.00;
   late var _cartItems;
@@ -48,6 +40,7 @@ class _CartDisplayState extends State<CartDisplay> {
   void initState() {
     _cartItems = widget.cartItems;
   }
+
 
   Future<void> deleteCartItem(BuildContext context, int id) async {
     bool confirmation = await showDeleteConfirmationDialog(context);
@@ -68,35 +61,28 @@ class _CartDisplayState extends State<CartDisplay> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Column(
-            children: [
-              Expanded(
-                child: ListView(
-                  children: [
-                    ...widget.cartItems.map((item) => CartItemCard(item, deleteCartItem)),
-                  ],
+      body: widget.cartItems.isEmpty
+          ? Center(
+              child: Text('Cart is Empty'),
+            )
+          : Column(
+              children: [
+                Expanded(
+                  child: ListView(
+                    children:[
+                      ...widget.cartItems.map((item) => CartItemCard(item, deleteCartItem)),
+                      //other widgets go here next
+                    ]
+                  )
                 ),
-              ),
-              OrderSubmit(_finalPrice, adjustPrice)
-            ]
-        )
+                OrderSubmit(_finalPrice, adjustPrice)
+              ]
+            )
     );
   }
 }
 
-Center placeholder = Center(
-    child: Text(
-      'Cart page',
-      style: TextStyle(fontSize: 24),
-    )
-);
 
-Center placeholder2 = Center(
-    child: Text(
-      'Cart is empty',
-      style: TextStyle(fontSize: 24),
-    )
-);
 
 // class _CartDisplayState extends State<CartDisplay> {
 //   //state variables
