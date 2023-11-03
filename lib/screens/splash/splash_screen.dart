@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import '../../main.dart';
 import '../../repos/bannernews.dart';
+import '../../repos/cartitem.dart';
 import '../../repos/fullnews.dart';
 import '../../repos/menuitem.dart';
-import '../../repos/topbannernewsrepo.dart';
 import '../onboarding/onboarding_screen.dart';
 
 /*
@@ -58,44 +58,9 @@ class _SplashScreenState extends State<SplashScreen> {
 }
 
 Future<void> preLoadFromBackend() async {
-  //await updateNewsFullBox(BackendSource.dummy);
-  //await TopBannerNewsRepo().update(BackendSource.dummy);
   await FullNewsRepo().update(BackendSource.dummy);
   await BannerNewsRepo().update(BackendSource.dummy);
   await MenuItemRepo().update(BackendSource.dummy);
+  await CartItemRepo().update(BackendSource.dummy);
   print ("data pre-loaded");
 }
-
-// Future<void> updateNewsFullBox(BackendSource source) async {
-//
-//   late NewsFull newsFull;
-//   if (source == BackendSource.dummy) {
-//     newsFull = await getNewsFullDummy();
-//   }
-//
-//   final newsFullBox = objectbox.newsFullBox;
-//   final existingNewsFull = newsFullBox.get(1); // Assuming you want to work with an entry with ID 1.
-//
-//   if (existingNewsFull != null) {
-//     // An entry with ID 1 exists; update its values
-//     existingNewsFull.name = 'assets/images/splashimage.png';
-//     newsFullBox.put(existingNewsFull); // Update the existing entry
-//     print('Data updated for existing entry with ID 1.');
-//   }
-//   else {
-//     // Entry with ID 1 doesn't exist; create a new one
-//     var newsfull = NewsFull()..name = 'assets/images/splashimage.png';
-//     final id = newsFullBox.put(newsfull); // Add a new entry
-//     print('Data pre-loaded for new entry, id = $id');
-//   }
-// }
-//
-// void emptyNewsFullBox() {
-//   final box = objectbox.newsFullBox;
-//   final allNewsFull = box.getAll(); // Get all objects in the box
-//
-//   for (final newsFull in allNewsFull) {
-//     box.remove(newsFull.id); // Remove each object by its ID
-//   }
-//   print('newsFullBox has been emptied.');
-// }

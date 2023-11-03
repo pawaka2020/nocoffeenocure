@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../models/cartitem.dart';
+
 String lorem = """
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
 Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
@@ -10,8 +12,14 @@ Proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 """;
 
 class CartItemCard extends StatelessWidget {
+  CartItemOB cartItem;
+  final void Function(BuildContext, int) deleteCallback;
+
+  CartItemCard(this.cartItem, this.deleteCallback);
+
   @override
   Widget build(BuildContext context) {
+
     return Padding(
       padding: EdgeInsets.only(left: 16, right: 16, top: 8, bottom: 8),
       child: Container(
@@ -25,23 +33,21 @@ class CartItemCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(12.0),
             child: Stack(
               children: [
-                // Your card content here
                 Container(
                   width: 80, // Adjust the width as needed
                   height: double.infinity,
                   child: Image.asset(
-                    'assets/images/coffeesample.png', // Provide the image path
+                    cartItem.image!,
                     fit: BoxFit.cover,
                   ),
                 ),
-                // Content in the remaining space
                 Padding(
                   padding: EdgeInsets.only(left: 90, top: 8, right: 16, bottom: 8),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Monster Milkshake",
+                        cartItem.name!,
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -51,7 +57,7 @@ class CartItemCard extends StatelessWidget {
                       SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
                         child: Text(
-                          lorem,
+                          cartItem.content!,
                           style: TextStyle(
                             fontSize: 12,
                           ),
@@ -61,7 +67,8 @@ class CartItemCard extends StatelessWidget {
                       ),
                       SizedBox(height: 10),
                       Text(
-                        "Qty: 3",
+                        //"Qty: 3",
+                        "Qty: ${cartItem.quantity}!",
                         style: TextStyle(
                           fontSize: 12,
                         ),
@@ -69,8 +76,6 @@ class CartItemCard extends StatelessWidget {
                     ],
                   ),
                 ),
-
-                // Edit text at the bottom right corner
                 Positioned(
                   bottom: 8, // Adjust the position as needed
                   right: 16, // Adjust the position as needed
@@ -88,14 +93,13 @@ class CartItemCard extends StatelessWidget {
                     ),
                   ),
                 ),
-
-                // Delete text at the bottom right corner
                 Positioned(
                   bottom: 8, // Adjust the position as needed
                   right: 70, // Adjust the position as needed
                   child: GestureDetector(
                     onTap: () {
                       // Implement delete functionality
+                      deleteCallback(context, cartItem.id);
                     },
                     child: Text(
                       "Delete",

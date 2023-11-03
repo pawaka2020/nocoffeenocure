@@ -7,6 +7,7 @@ import '../../widgets/partial_divider.dart';
 import '../home_screen/selection_bar.dart';
 import '../home_screen/top_banner.dart';
 
+//load the repos here.
 class HomePage extends StatefulWidget {
 
   var menuItems = MenuItemRepo().getAll();

@@ -2,6 +2,7 @@ import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import 'main.dart';
 import 'models/bannernews.dart';
+import 'models/cartitem.dart';
 import 'models/fullnews.dart';
 import 'models/menuitem.dart';
 import 'models/user.dart';
@@ -14,6 +15,7 @@ class ObjectBox {
   late final bannerNewsBox;
   late final menuItemBox;
   late final userBox;
+  late final cartItemBox;
 
   ObjectBox._create(this.store) {
     //new ones
@@ -21,6 +23,7 @@ class ObjectBox {
     bannerNewsBox = store.box<BannerNewsOB>();
     menuItemBox = store.box<MenuItemOB>();
     userBox = store.box<UserOB>();
+    cartItemBox = store.box<CartItemOB>();
   }
 
   static Future<ObjectBox> create() async {

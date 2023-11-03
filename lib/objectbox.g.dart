@@ -15,6 +15,7 @@ import 'package:objectbox/objectbox.dart';
 import 'package:objectbox_flutter_libs/objectbox_flutter_libs.dart';
 
 import 'models/bannernews.dart';
+import 'models/cartitem.dart';
 import 'models/fullnews.dart';
 import 'models/menuitem.dart';
 import 'models/user.dart';
@@ -282,6 +283,45 @@ final _entities = <ModelEntity>[
             flags: 0)
       ],
       relations: <ModelRelation>[],
+      backlinks: <ModelBacklink>[]),
+  ModelEntity(
+      id: const IdUid(13, 3833050479341648882),
+      name: 'CartItemOB',
+      lastPropertyId: const IdUid(6, 3307856776703096138),
+      flags: 0,
+      properties: <ModelProperty>[
+        ModelProperty(
+            id: const IdUid(1, 6678729505156874727),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        ModelProperty(
+            id: const IdUid(2, 5071892958926488448),
+            name: 'image',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(3, 7884979855067482469),
+            name: 'content',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(4, 7429239753616127297),
+            name: 'quantity',
+            type: 6,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(5, 5639624088004575433),
+            name: 'menuItem_id',
+            type: 6,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(6, 3307856776703096138),
+            name: 'name',
+            type: 9,
+            flags: 0)
+      ],
+      relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[])
 ];
 
@@ -312,7 +352,7 @@ Future<Store> openStore(
 ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
-      lastEntityId: const IdUid(12, 4530192993071638560),
+      lastEntityId: const IdUid(13, 3833050479341648882),
       lastIndexId: const IdUid(4, 1668199129613032845),
       lastRelationId: const IdUid(0, 0),
       lastSequenceId: const IdUid(0, 0),
@@ -672,6 +712,50 @@ ModelDefinition getObjectBoxModel() {
                 .vTableGetNullable(buffer, rootOffset, 12);
 
           return object;
+        }),
+    CartItemOB: EntityDefinition<CartItemOB>(
+        model: _entities[8],
+        toOneRelations: (CartItemOB object) => [],
+        toManyRelations: (CartItemOB object) => {},
+        getId: (CartItemOB object) => object.id,
+        setId: (CartItemOB object, int id) {
+          object.id = id;
+        },
+        objectToFB: (CartItemOB object, fb.Builder fbb) {
+          final imageOffset =
+              object.image == null ? null : fbb.writeString(object.image!);
+          final contentOffset =
+              object.content == null ? null : fbb.writeString(object.content!);
+          final nameOffset =
+              object.name == null ? null : fbb.writeString(object.name!);
+          fbb.startTable(7);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, imageOffset);
+          fbb.addOffset(2, contentOffset);
+          fbb.addInt64(3, object.quantity);
+          fbb.addInt64(4, object.menuItem_id);
+          fbb.addOffset(5, nameOffset);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+
+          final object = CartItemOB()
+            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0)
+            ..image = const fb.StringReader(asciiOptimization: true)
+                .vTableGetNullable(buffer, rootOffset, 6)
+            ..content = const fb.StringReader(asciiOptimization: true)
+                .vTableGetNullable(buffer, rootOffset, 8)
+            ..quantity =
+                const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 10)
+            ..menuItem_id =
+                const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 12)
+            ..name = const fb.StringReader(asciiOptimization: true)
+                .vTableGetNullable(buffer, rootOffset, 14);
+
+          return object;
         })
   };
 
@@ -832,4 +916,31 @@ class UserOB_ {
   /// see [UserOB.address]
   static final address =
       QueryStringProperty<UserOB>(_entities[7].properties[4]);
+}
+
+/// [CartItemOB] entity fields to define ObjectBox queries.
+class CartItemOB_ {
+  /// see [CartItemOB.id]
+  static final id =
+      QueryIntegerProperty<CartItemOB>(_entities[8].properties[0]);
+
+  /// see [CartItemOB.image]
+  static final image =
+      QueryStringProperty<CartItemOB>(_entities[8].properties[1]);
+
+  /// see [CartItemOB.content]
+  static final content =
+      QueryStringProperty<CartItemOB>(_entities[8].properties[2]);
+
+  /// see [CartItemOB.quantity]
+  static final quantity =
+      QueryIntegerProperty<CartItemOB>(_entities[8].properties[3]);
+
+  /// see [CartItemOB.menuItem_id]
+  static final menuItem_id =
+      QueryIntegerProperty<CartItemOB>(_entities[8].properties[4]);
+
+  /// see [CartItemOB.name]
+  static final name =
+      QueryStringProperty<CartItemOB>(_entities[8].properties[5]);
 }

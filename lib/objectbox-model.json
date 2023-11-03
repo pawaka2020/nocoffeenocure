@@ -256,9 +256,48 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "13:3833050479341648882",
+      "lastPropertyId": "6:3307856776703096138",
+      "name": "CartItemOB",
+      "properties": [
+        {
+          "id": "1:6678729505156874727",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:5071892958926488448",
+          "name": "image",
+          "type": 9
+        },
+        {
+          "id": "3:7884979855067482469",
+          "name": "content",
+          "type": 9
+        },
+        {
+          "id": "4:7429239753616127297",
+          "name": "quantity",
+          "type": 6
+        },
+        {
+          "id": "5:5639624088004575433",
+          "name": "menuItem_id",
+          "type": 6
+        },
+        {
+          "id": "6:3307856776703096138",
+          "name": "name",
+          "type": 9
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "12:4530192993071638560",
+  "lastEntityId": "13:3833050479341648882",
   "lastIndexId": "4:1668199129613032845",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",

@@ -7,9 +7,7 @@ Show for 3 seconds only before moving to HomeScreen.
 */
 import 'package:flutter/material.dart';
 import 'package:nocoffeenocure/screens/home_screen/home_screen.dart';
-
 import '../../main.dart';
-import '../../repos/dummy/newsfull.dart';
 import '../../repos/fullnews.dart';
 
 class OnboardingScreen extends StatelessWidget {

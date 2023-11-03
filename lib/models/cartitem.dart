@@ -5,7 +5,9 @@ class CartItemOB {
   @Id()
   int id = 0;
 
-  //image
-  //name of item
-  //additions (scroll down
+  String? image;
+  String? name;
+  String? content;
+  int? quantity;
+  int? menuItem_id;
 }

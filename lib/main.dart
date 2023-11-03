@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:nocoffeenocure/provider/cart_count_notifier.dart';
-import 'package:nocoffeenocure/repos/offline/newsfull.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'objectboxrepo.dart';
