@@ -100,7 +100,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(8, 7833806798342725161),
       name: 'AdditionOB',
-      lastPropertyId: const IdUid(4, 660055670441986083),
+      lastPropertyId: const IdUid(5, 8793101266284054583),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -124,7 +124,12 @@ final _entities = <ModelEntity>[
             type: 11,
             flags: 520,
             indexId: const IdUid(2, 9149820165032547205),
-            relationTarget: 'MenuItemOB')
+            relationTarget: 'MenuItemOB'),
+        ModelProperty(
+            id: const IdUid(5, 8793101266284054583),
+            name: 'selectedIndex',
+            type: 6,
+            flags: 0)
       ],
       relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[
@@ -167,7 +172,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(10, 2706068186038482142),
       name: 'MenuItemOB',
-      lastPropertyId: const IdUid(7, 380297471824909108),
+      lastPropertyId: const IdUid(10, 3605565198160151343),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -204,7 +209,14 @@ final _entities = <ModelEntity>[
             id: const IdUid(7, 380297471824909108),
             name: 'available',
             type: 1,
-            flags: 0)
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(10, 3605565198160151343),
+            name: 'cartItemId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(11, 6218316149259164835),
+            relationTarget: 'CartItemOB')
       ],
       relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[
@@ -285,44 +297,51 @@ final _entities = <ModelEntity>[
       relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[]),
   ModelEntity(
-      id: const IdUid(13, 3833050479341648882),
+      id: const IdUid(15, 1006185654449316480),
       name: 'CartItemOB',
-      lastPropertyId: const IdUid(6, 3307856776703096138),
+      lastPropertyId: const IdUid(9, 2168617179162901087),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
-            id: const IdUid(1, 6678729505156874727),
+            id: const IdUid(1, 607542634026497203),
             name: 'id',
             type: 6,
             flags: 1),
         ModelProperty(
-            id: const IdUid(2, 5071892958926488448),
+            id: const IdUid(2, 8956817120214946804),
             name: 'image',
             type: 9,
             flags: 0),
         ModelProperty(
-            id: const IdUid(3, 7884979855067482469),
+            id: const IdUid(3, 4707725828917944486),
+            name: 'name',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(4, 7792100973053689060),
             name: 'content',
             type: 9,
             flags: 0),
         ModelProperty(
-            id: const IdUid(4, 7429239753616127297),
+            id: const IdUid(5, 4830930863182247232),
             name: 'quantity',
             type: 6,
             flags: 0),
         ModelProperty(
-            id: const IdUid(5, 5639624088004575433),
+            id: const IdUid(6, 3322425435458119493),
             name: 'menuItem_id',
             type: 6,
             flags: 0),
         ModelProperty(
-            id: const IdUid(6, 3307856776703096138),
-            name: 'name',
-            type: 9,
+            id: const IdUid(9, 2168617179162901087),
+            name: 'price',
+            type: 8,
             flags: 0)
       ],
       relations: <ModelRelation>[],
-      backlinks: <ModelBacklink>[])
+      backlinks: <ModelBacklink>[
+        ModelBacklink(name: 'menuItemOB', srcEntity: 'MenuItemOB', srcField: '')
+      ])
 ];
 
 /// Shortcut for [Store.new] that passes [getObjectBoxModel] and for Flutter
@@ -352,17 +371,24 @@ Future<Store> openStore(
 ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
-      lastEntityId: const IdUid(13, 3833050479341648882),
-      lastIndexId: const IdUid(4, 1668199129613032845),
+      lastEntityId: const IdUid(15, 1006185654449316480),
+      lastIndexId: const IdUid(11, 6218316149259164835),
       lastRelationId: const IdUid(0, 0),
       lastSequenceId: const IdUid(0, 0),
       retiredEntityUids: const [
         2203044326659519525,
         7436886197857190181,
         1629771521425256600,
-        2897391873509332869
+        2897391873509332869,
+        3833050479341648882,
+        6271963573804352264
       ],
-      retiredIndexUids: const [],
+      retiredIndexUids: const [
+        8717456330994247813,
+        25080071583396621,
+        5804734188308448853,
+        3033352460847545794
+      ],
       retiredPropertyUids: const [
         3504729010156614603,
         3048272364630595352,
@@ -372,7 +398,25 @@ ModelDefinition getObjectBoxModel() {
         5899158864016677619,
         3215544481237852102,
         100303502472173014,
-        4654279378717876603
+        4654279378717876603,
+        6678729505156874727,
+        5071892958926488448,
+        7884979855067482469,
+        7429239753616127297,
+        5639624088004575433,
+        3307856776703096138,
+        6041882886099907544,
+        8859555464405278357,
+        6046988613028087476,
+        1398901508034614234,
+        4990317961778830372,
+        7440020238711035706,
+        1559631669320103970,
+        5461736064610447156,
+        6540512523523767474,
+        4815532763688013353,
+        6326357589974304834,
+        5764899181912741906
       ],
       retiredRelationUids: const [],
       modelVersion: 5,
@@ -490,11 +534,12 @@ ModelDefinition getObjectBoxModel() {
         objectToFB: (AdditionOB object, fb.Builder fbb) {
           final titleOffset =
               object.title == null ? null : fbb.writeString(object.title!);
-          fbb.startTable(5);
+          fbb.startTable(6);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, titleOffset);
           fbb.addFloat64(2, object.selectedPrice);
           fbb.addInt64(3, object.menuItem.targetId);
+          fbb.addInt64(4, object.selectedIndex);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -507,7 +552,9 @@ ModelDefinition getObjectBoxModel() {
             ..title = const fb.StringReader(asciiOptimization: true)
                 .vTableGetNullable(buffer, rootOffset, 6)
             ..selectedPrice =
-                const fb.Float64Reader().vTableGet(buffer, rootOffset, 8, 0);
+                const fb.Float64Reader().vTableGet(buffer, rootOffset, 8, 0)
+            ..selectedIndex =
+                const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0);
           object.menuItem.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0);
           object.menuItem.attach(store);
@@ -557,7 +604,7 @@ ModelDefinition getObjectBoxModel() {
         }),
     MenuItemOB: EntityDefinition<MenuItemOB>(
         model: _entities[5],
-        toOneRelations: (MenuItemOB object) => [],
+        toOneRelations: (MenuItemOB object) => [object.cartItem],
         toManyRelations: (MenuItemOB object) => {
               RelInfo<UserReviewOB>.toOneBacklink(5, object.id,
                       (UserReviewOB srcObject) => srcObject.menuItem):
@@ -585,7 +632,7 @@ ModelDefinition getObjectBoxModel() {
           final descriptionOffset = object.description == null
               ? null
               : fbb.writeString(object.description!);
-          fbb.startTable(8);
+          fbb.startTable(11);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, imagePathOffset);
           fbb.addOffset(2, titleOffset);
@@ -593,6 +640,7 @@ ModelDefinition getObjectBoxModel() {
           fbb.addOffset(4, categoryOffset);
           fbb.addOffset(5, descriptionOffset);
           fbb.addBool(6, object.available);
+          fbb.addInt64(9, object.cartItem.targetId);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -614,6 +662,9 @@ ModelDefinition getObjectBoxModel() {
                 .vTableGetNullable(buffer, rootOffset, 14)
             ..available =
                 const fb.BoolReader().vTableGetNullable(buffer, rootOffset, 16);
+          object.cartItem.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 22, 0);
+          object.cartItem.attach(store);
           InternalToManyAccess.setRelInfo<MenuItemOB>(
               object.userReviews,
               store,
@@ -716,7 +767,11 @@ ModelDefinition getObjectBoxModel() {
     CartItemOB: EntityDefinition<CartItemOB>(
         model: _entities[8],
         toOneRelations: (CartItemOB object) => [],
-        toManyRelations: (CartItemOB object) => {},
+        toManyRelations: (CartItemOB object) => {
+              RelInfo<MenuItemOB>.toOneBacklink(10, object.id,
+                      (MenuItemOB srcObject) => srcObject.cartItem):
+                  object.menuItemOB
+            },
         getId: (CartItemOB object) => object.id,
         setId: (CartItemOB object, int id) {
           object.id = id;
@@ -724,17 +779,18 @@ ModelDefinition getObjectBoxModel() {
         objectToFB: (CartItemOB object, fb.Builder fbb) {
           final imageOffset =
               object.image == null ? null : fbb.writeString(object.image!);
-          final contentOffset =
-              object.content == null ? null : fbb.writeString(object.content!);
           final nameOffset =
               object.name == null ? null : fbb.writeString(object.name!);
-          fbb.startTable(7);
+          final contentOffset =
+              object.content == null ? null : fbb.writeString(object.content!);
+          fbb.startTable(10);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, imageOffset);
-          fbb.addOffset(2, contentOffset);
-          fbb.addInt64(3, object.quantity);
-          fbb.addInt64(4, object.menuItem_id);
-          fbb.addOffset(5, nameOffset);
+          fbb.addOffset(2, nameOffset);
+          fbb.addOffset(3, contentOffset);
+          fbb.addInt64(4, object.quantity);
+          fbb.addInt64(5, object.menuItem_id);
+          fbb.addFloat64(8, object.price);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -746,15 +802,21 @@ ModelDefinition getObjectBoxModel() {
             ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0)
             ..image = const fb.StringReader(asciiOptimization: true)
                 .vTableGetNullable(buffer, rootOffset, 6)
-            ..content = const fb.StringReader(asciiOptimization: true)
-                .vTableGetNullable(buffer, rootOffset, 8)
-            ..quantity =
-                const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 10)
-            ..menuItem_id =
-                const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 12)
             ..name = const fb.StringReader(asciiOptimization: true)
-                .vTableGetNullable(buffer, rootOffset, 14);
-
+                .vTableGetNullable(buffer, rootOffset, 8)
+            ..content = const fb.StringReader(asciiOptimization: true)
+                .vTableGetNullable(buffer, rootOffset, 10)
+            ..quantity =
+                const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 12)
+            ..menuItem_id =
+                const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 14)
+            ..price =
+                const fb.Float64Reader().vTableGet(buffer, rootOffset, 20, 0);
+          InternalToManyAccess.setRelInfo<CartItemOB>(
+              object.menuItemOB,
+              store,
+              RelInfo<MenuItemOB>.toOneBacklink(
+                  10, object.id, (MenuItemOB srcObject) => srcObject.cartItem));
           return object;
         })
   };
@@ -824,6 +886,10 @@ class AdditionOB_ {
   /// see [AdditionOB.menuItem]
   static final menuItem =
       QueryRelationToOne<AdditionOB, MenuItemOB>(_entities[3].properties[3]);
+
+  /// see [AdditionOB.selectedIndex]
+  static final selectedIndex =
+      QueryIntegerProperty<AdditionOB>(_entities[3].properties[4]);
 }
 
 /// [IngredientOB] entity fields to define ObjectBox queries.
@@ -874,6 +940,10 @@ class MenuItemOB_ {
   /// see [MenuItemOB.available]
   static final available =
       QueryBooleanProperty<MenuItemOB>(_entities[5].properties[6]);
+
+  /// see [MenuItemOB.cartItem]
+  static final cartItem =
+      QueryRelationToOne<MenuItemOB, CartItemOB>(_entities[5].properties[7]);
 }
 
 /// [UserReviewOB] entity fields to define ObjectBox queries.
@@ -928,19 +998,23 @@ class CartItemOB_ {
   static final image =
       QueryStringProperty<CartItemOB>(_entities[8].properties[1]);
 
+  /// see [CartItemOB.name]
+  static final name =
+      QueryStringProperty<CartItemOB>(_entities[8].properties[2]);
+
   /// see [CartItemOB.content]
   static final content =
-      QueryStringProperty<CartItemOB>(_entities[8].properties[2]);
+      QueryStringProperty<CartItemOB>(_entities[8].properties[3]);
 
   /// see [CartItemOB.quantity]
   static final quantity =
-      QueryIntegerProperty<CartItemOB>(_entities[8].properties[3]);
+      QueryIntegerProperty<CartItemOB>(_entities[8].properties[4]);
 
   /// see [CartItemOB.menuItem_id]
   static final menuItem_id =
-      QueryIntegerProperty<CartItemOB>(_entities[8].properties[4]);
+      QueryIntegerProperty<CartItemOB>(_entities[8].properties[5]);
 
-  /// see [CartItemOB.name]
-  static final name =
-      QueryStringProperty<CartItemOB>(_entities[8].properties[5]);
+  /// see [CartItemOB.price]
+  static final price =
+      QueryDoubleProperty<CartItemOB>(_entities[8].properties[6]);
 }

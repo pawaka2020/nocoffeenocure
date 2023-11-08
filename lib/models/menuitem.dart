@@ -1,6 +1,9 @@
 import 'package:objectbox/objectbox.dart';
 
+import 'cartitem.dart';
+
 //default class
+//make your changes here.
 class MenuItem {
   final String imagePath;
   final String title;
@@ -28,19 +31,19 @@ class MenuItem {
     return data;
   }
 
-  factory MenuItem.fromJson(Map<String, dynamic> json) {
-    return MenuItem(
-      json['imagePath'],
-      json['title'],
-      json['price'].toDouble(),
-      json['category'],
-      json['description'],
-      (json['userReviews'] as List).map((review) => UserReview.fromJson(review)).toList(),
-      (json['additions'] as List).map((addition) => Addition.fromJson(addition)).toList(),
-      (json['ingredients'] as List).map((ingredient) => Ingredient.fromJson(ingredient)).toList(),
-      json['available'],
-    );
-  }
+  // factory MenuItem.fromJson(Map<String, dynamic> json) {
+  //   return MenuItem(
+  //     json['imagePath'],
+  //     json['title'],
+  //     json['price'].toDouble(),
+  //     json['category'],
+  //     json['description'],
+  //     (json['userReviews'] as List).map((review) => UserReview.fromJson(review)).toList(),
+  //     (json['additions'] as List).map((addition) => Addition.fromJson(addition)).toList(),
+  //     (json['ingredients'] as List).map((ingredient) => Ingredient.fromJson(ingredient)).toList(),
+  //     json['available'],
+  //   );
+  // }
 
   //conversion functions
   MenuItemOB toMenuItemOB() {
@@ -74,8 +77,9 @@ class MenuItem {
     final additionOB = AdditionOB()
       ..title = addition.title
       ..selectedPrice = addition.selectedPrice
-      ..menuItem.target = menuItemOB;
-
+      ..selectedIndex = addition.selectedIndex
+      ..menuItem.target = menuItemOB
+    ;
     additionOB.additionDetails.addAll(addition.additionDetails.map((detail) => convertAdditionDetail(detail, additionOB)));
 
     return additionOB;
@@ -122,10 +126,15 @@ class UserReview {
 
 class Addition {
   final String title;
+  //double selectedPrice = 0; //change this one
+  double selectedPrice;
+  int selectedIndex;
   final List<AdditionDetail> additionDetails;
-  double selectedPrice = 0; // Change the type to double
 
-  Addition(this.title, this.additionDetails);
+  //new variable. Let's see if adding this variable won't change things.
+
+
+  Addition(this.title, this.selectedIndex, this.selectedPrice, this.additionDetails);
 
   Map<String, dynamic> toJson() {
     return {
@@ -134,9 +143,9 @@ class Addition {
     };
   }
 
-  factory Addition.fromJson(Map<String, dynamic> json) {
-    return Addition(json['title'], (json['additionDetails'] as List).map((detail) => AdditionDetail.fromJson(detail)).toList());
-  }
+  // factory Addition.fromJson(Map<String, dynamic> json) {
+  //   return Addition(json['title'], (json['additionDetails'] as List).map((detail) => AdditionDetail.fromJson(detail)).toList());
+  // }
 }
 
 class AdditionDetail {
@@ -195,6 +204,8 @@ class MenuItemOB {
   @Backlink()
   final ingredients = ToMany<IngredientOB>();
 
+  var cartItem = ToOne<CartItemOB>();
+
   //conversion functions
   MenuItem toMenuItem() {
     return MenuItem(
@@ -237,7 +248,8 @@ class AdditionOB {
   int id = 0;
 
   String? title;
-  double selectedPrice = 0;
+  double? selectedPrice;
+  int? selectedIndex;
 
   final menuItem = ToOne<MenuItemOB>();
   @Backlink()
@@ -246,6 +258,8 @@ class AdditionOB {
   Addition toAddition() {
     return Addition(
       this.title ?? '',
+      this.selectedIndex ?? 0,
+      this.selectedPrice ?? 0,
       this.additionDetails.map((detail) => detail.toAdditionDetail()).toList(),
     );
   }
@@ -286,3 +300,46 @@ class IngredientOB {
     );
   }
 }
+
+void printMenuItemOB(MenuItemOB menuItem) {
+  print('MenuItemOB:');
+  print('ID: ${menuItem.id}');
+  print('Image Path: ${menuItem.imagePath ?? 'N/A'}');
+  print('Title: ${menuItem.title ?? 'N/A'}');
+  print('Price: ${menuItem.price ?? 0.0}');
+  print('Category: ${menuItem.category ?? 'N/A'}');
+  print('Description: ${menuItem.description ?? 'N/A'}');
+  print('Available: ${menuItem.available ?? false}');
+
+  // Print UserReviews
+  print('User Reviews:');
+  for (var review in menuItem.userReviews) {
+    print('Name: ${review.name ?? 'N/A'}');
+    print('Message: ${review.message ?? 'N/A'}');
+    print('Stars: ${review.stars ?? 0}');
+  }
+
+  // Print Additions
+  print('Additions:');
+  for (var addition in menuItem.additions) {
+    print('Title: ${addition.title ?? 'N/A'}');
+    print('Selected Price: ${addition.selectedPrice}');
+    print('Selected Index: ${addition.selectedIndex}');
+
+    // Print AdditionDetails
+    print('Addition Details:');
+    for (var detail in addition.additionDetails) {
+      print('Name: ${detail.name ?? 'N/A'}');
+      print('Price: ${detail.price ?? 0.0}');
+    }
+  }
+
+  // Print Ingredients
+  print('Ingredients:');
+  for (var ingredient in menuItem.ingredients) {
+    print('Name: ${ingredient.name ?? 'N/A'}');
+    print('Image Path: ${ingredient.imagePath ?? 'N/A'}');
+  }
+}
+
+

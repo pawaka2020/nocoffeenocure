@@ -6,7 +6,7 @@ import '../../repos/menuitem.dart';
 import '../../widgets/partial_divider.dart';
 import '../home_screen/selection_bar.dart';
 import '../home_screen/top_banner.dart';
-
+//line 157 for navigation
 //load the repos here.
 class HomePage extends StatefulWidget {
 
@@ -154,7 +154,7 @@ class MenuGrid extends StatelessWidget {
             onTap: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => MenuDetailsPage(menuItem),
+                  builder: (context) => MenuDetailsPage(menuItem, false, 1, 0),
                 ),
               );
             },

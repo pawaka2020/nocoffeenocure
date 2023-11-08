@@ -5,27 +5,17 @@ import 'package:nocoffeenocure/screens/cart/paymentmethods.dart';
 import 'package:nocoffeenocure/screens/cart/specialrequest.dart';
 import 'package:nocoffeenocure/screens/cart/voucherselection.dart';
 import '../../models/cartitem.dart';
+import '../../models/menuitem.dart';
 import '../../repos/cartitem.dart';
+import '../../repos/menuitem.dart';
 import '../../widgets/partial_divider.dart';
+import '../menu_detail/menu_detail.dart';
 import 'cartitemcard.dart';
 import 'deliveryaddress.dart';
 import 'ordersubmit.dart';
-//TODO: maybe change CartScreen to a stateless widget.
-
-// class CartScreen extends StatelessWidget {
-//   //bool empty = false;
-//   var cartItems = CartItemRepo().getAll();
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return CartDisplay(cartItems);
-//   }
-// }
 
 class CartScreen extends StatefulWidget {
   var cartItems = CartItemRepo().getAll();
-
-  //CartDisplay(this.cartItems);
 
   @override
   State<StatefulWidget> createState() => _CartScreenState();
@@ -33,33 +23,72 @@ class CartScreen extends StatefulWidget {
 
 class _CartScreenState extends State<CartScreen> {
   //state variables
-  double _finalPrice = 10.00;
-  late var _cartItems;
+  double _finalPrice = 0.00;
 
-  @override
-  void initState() {
-    _cartItems = widget.cartItems;
-  }
-
-
+  //state functions
   Future<void> deleteCartItem(BuildContext context, int id) async {
     bool confirmation = await showDeleteConfirmationDialog(context);
     if (confirmation) {
       CartItemRepo().remove(id);
       setState(() {
         widget.cartItems = CartItemRepo().getAll();
+        adjustPrice();
       });
     }
   }
 
-  void adjustPrice() {
-    setState(() {
-      _finalPrice += 20.00;
-    });
+  Future<void> editCartItem(BuildContext context, int id) async {
+    List<CartItemOB> cartItems = widget.cartItems;
+    int targetId = id;
+
+    CartItemOB? cartItem = cartItems.firstWhere(
+          (item) => item.id == targetId,
+      orElse: () => CartItemOB(),
+    );
+
+    if (cartItem != null) {
+      print('Found item: ${cartItem.menuItemOB[0].title}');
+    }
+    else {
+      print('Item with id $targetId not found.');
+    }
+    final updatedCartItem = await Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) => MenuDetailsPage(cartItem.menuItemOB[0].toMenuItem(), true, cartItem.quantity!, cartItem.id),
+    ));
+
+    if (updatedCartItem != null){
+      CartItemRepo().box.put(updatedCartItem);
+      setState(() {
+        widget.cartItems = CartItemRepo().getAll();
+        adjustPrice();
+      });
+    }
+    else
+      print("Error: Cart item not received");
   }
 
+  void adjustPrice() {
+
+    double newFinalPrice = 0;
+    for (var cartItem in widget.cartItems) {
+      newFinalPrice += cartItem.price;
+    }
+    _finalPrice = newFinalPrice;
+  }
+
+  //this doesn't get called after editing cart item
+  @override
+  initState() {
+    adjustPrice();
+  }
+
+  void placeOrder() {}
+
+  //this doesn't get called after editing cart item either.
   @override
   Widget build(BuildContext context) {
+    adjustPrice();
+
     return Scaffold(
       body: widget.cartItems.isEmpty
           ? Center(
@@ -69,13 +98,12 @@ class _CartScreenState extends State<CartScreen> {
               children: [
                 Expanded(
                   child: ListView(
-                    children:[
-                      ...widget.cartItems.map((item) => CartItemCard(item, deleteCartItem)),
-                      //other widgets go here next
+                    children: [
+                      ...widget.cartItems.map((item) => CartItemCard(item, deleteCartItem, editCartItem)),
                     ]
                   )
                 ),
-                OrderSubmit(_finalPrice, adjustPrice)
+                OrderSubmit(_finalPrice, placeOrder)
               ]
             )
     );

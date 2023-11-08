@@ -35,16 +35,22 @@ class CartItemRepo {
     return box.getAll();
   }
 
+  void put(CartItemOB cartItem){
+    box.put(cartItem);
+  }
+
   void testPrint() {
     List<CartItemOB> list = getAll();
     for (var item in list) {
       print('Cart Item ID: ${item.id}');
-      print('Image: ${item.image ?? 'N/A'}');
-      print('Name: ${item.name ?? 'N/A'}');
-      print('Content: ${item.content ?? 'N/A'}');
+      // print('Image: ${item.menuItemOB[0].imagePath ?? 'N/A'}');
+      // print('Name: ${item.menuItemOB[0]. ?? 'N/A'}');
+      // print('Content: ${item.content ?? 'N/A'}');
       print('Quantity: ${item.quantity ?? 0}');
-      print('MenuItem ID: ${item.menuItem_id ?? 0}');
+      // print('MenuItem ID: ${item.menuItem_id ?? 0}');
       print('---------------------------');
     }
   }
+
+
 }

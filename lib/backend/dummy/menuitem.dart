@@ -26,6 +26,8 @@ class MenuItemDummy {
           [
             Addition(
                 "Beans",
+                0,
+                0,
                 [
                   AdditionDetail("Supremo", 0.00),
                   AdditionDetail("Yirgaaaaaaaaaaacheffe", 5.30),
@@ -34,6 +36,8 @@ class MenuItemDummy {
             ),
             Addition(
                 "Sweetness",
+                0,
+                0,
                 [
                   AdditionDetail("Less sugar", 0),
                   AdditionDetail("More sugar", 1.00),
@@ -65,6 +69,8 @@ class MenuItemDummy {
           [
             Addition(
                 "Beans",
+                0,
+                0,
                 [
                   AdditionDetail("Supremo", 0.00),
                   AdditionDetail("Yirgacheffe", 5.30),
@@ -73,6 +79,8 @@ class MenuItemDummy {
             ),
             Addition(
                 "Sweetness",
+                0,
+                0,
                 [
                   AdditionDetail("Less sugar", 0),
                   AdditionDetail("More sugar", 1.00),
@@ -80,6 +88,8 @@ class MenuItemDummy {
             ),
             Addition(
                 "Cup size",
+                0,
+                0,
                 [
                   AdditionDetail("Normal", 0),
                   AdditionDetail("Large", 3.00),
@@ -109,6 +119,8 @@ class MenuItemDummy {
           [
             Addition(
                 "Beans",
+                0,
+                0,
                 [
                   AdditionDetail("Supremo", 0.00),
                   AdditionDetail("Yirgacheffe", 5.30),
@@ -117,6 +129,8 @@ class MenuItemDummy {
             ),
             Addition(
                 "Sweetness",
+                0,
+                0,
                 [
                   AdditionDetail("Less sugar", 0),
                   AdditionDetail("More sugar", 1.00),
@@ -146,6 +160,8 @@ class MenuItemDummy {
           [
             Addition(
                 "Beans",
+                0,
+                0,
                 [
                   AdditionDetail("Supremo", 0.00),
                   AdditionDetail("Yirgacheffe", 5.30),
@@ -154,6 +170,8 @@ class MenuItemDummy {
             ),
             Addition(
                 "Sweetness",
+                0,
+                0,
                 [
                   AdditionDetail("Less sugar", 0),
                   AdditionDetail("More sugar", 1.00),
@@ -183,6 +201,8 @@ class MenuItemDummy {
           [
             Addition(
                 "Beans",
+                0,
+                0,
                 [
                   AdditionDetail("Supremo", 0.00),
                   AdditionDetail("Yirgacheffe", 5.30),
@@ -191,6 +211,8 @@ class MenuItemDummy {
             ),
             Addition(
                 "Sweetness",
+                0,
+                0,
                 [
                   AdditionDetail("Less sugar", 0),
                   AdditionDetail("More sugar", 1.00),
@@ -242,6 +264,8 @@ class MenuItemDummy {
           [
             Addition(
                 "Beans",
+                0,
+                0,
                 [
                   AdditionDetail("Supremo", 0.00),
                   AdditionDetail("Yir", 5.45),
@@ -250,6 +274,8 @@ class MenuItemDummy {
             ),
             Addition(
                 "Sweetness",
+                0,
+                0,
                 [
                   AdditionDetail("Less sugar", 0),
                   AdditionDetail("More sugar", 1.00),
@@ -281,6 +307,8 @@ class MenuItemDummy {
           [
             Addition(
                 "Beans",
+                0,
+                0,
                 [
                   AdditionDetail("Supremo", 0.00),
                   AdditionDetail("Yirgacheffe", 5.30),
@@ -289,6 +317,8 @@ class MenuItemDummy {
             ),
             Addition(
                 "Sweetness",
+                0,
+                0,
                 [
                   AdditionDetail("Less sugar", 0),
                   AdditionDetail("More sugar", 1.00),
@@ -296,6 +326,8 @@ class MenuItemDummy {
             ),
             Addition(
                 "Cup size",
+                0,
+                0,
                 [
                   AdditionDetail("Normal", 0),
                   AdditionDetail("Large", 3.00),
@@ -325,6 +357,8 @@ class MenuItemDummy {
           [
             Addition(
                 "Beans",
+                0,
+                0,
                 [
                   AdditionDetail("Supremo", 0.00),
                   AdditionDetail("Yirgacheffe", 5.30),
@@ -333,6 +367,8 @@ class MenuItemDummy {
             ),
             Addition(
                 "Sweetness",
+                0,
+                0,
                 [
                   AdditionDetail("Less sugar", 0),
                   AdditionDetail("More sugar", 1.00),
@@ -362,6 +398,8 @@ class MenuItemDummy {
           [
             Addition(
                 "Beans",
+                0,
+                0,
                 [
                   AdditionDetail("Supremo", 0.00),
                   AdditionDetail("Yirgacheffe", 5.30),
@@ -370,6 +408,8 @@ class MenuItemDummy {
             ),
             Addition(
                 "Sweetness",
+                0,
+                0,
                 [
                   AdditionDetail("Less sugar", 0),
                   AdditionDetail("More sugar", 1.00),
@@ -399,6 +439,8 @@ class MenuItemDummy {
           [
             Addition(
                 "Beans",
+                0,
+                0,
                 [
                   AdditionDetail("Supremo", 0.00),
                   AdditionDetail("Yirgacheffe", 5.30),
@@ -407,6 +449,8 @@ class MenuItemDummy {
             ),
             Addition(
                 "Sweetness",
+                0,
+                0,
                 [
                   AdditionDetail("Less sugar", 0),
                   AdditionDetail("More sugar", 1.00),
@@ -421,6 +465,8 @@ class MenuItemDummy {
           true
       ).toMenuItemOB(),
     ];
+
+    //MenuItemOB asdas = MenuItemOB()..additions = AdditionOB();
     return result;
   }
 }
@@ -445,6 +491,8 @@ class MenuItemDummyOld{
           [
             Addition(
                 "Beans",
+                0,
+                0,
                 [
                   AdditionDetail("Supremo", 0.00),
                   AdditionDetail("Yirgacheffe", 5.30),
@@ -453,6 +501,8 @@ class MenuItemDummyOld{
             ),
             Addition(
                 "Sweetness",
+                0,
+                0,
                 [
                   AdditionDetail("Less sugar", 0),
                   AdditionDetail("More sugar", 1.00),
@@ -484,6 +534,8 @@ class MenuItemDummyOld{
           [
             Addition(
                 "Beans",
+                0,
+                0,
                 [
                   AdditionDetail("Supremo", 0.00),
                   AdditionDetail("Yirgacheffe", 5.30),
@@ -492,6 +544,8 @@ class MenuItemDummyOld{
             ),
             Addition(
                 "Sweetness",
+                0,
+                0,
                 [
                   AdditionDetail("Less sugar", 0),
                   AdditionDetail("More sugar", 1.00),
@@ -499,6 +553,8 @@ class MenuItemDummyOld{
             ),
             Addition(
                 "Cup size",
+                0,
+                0,
                 [
                   AdditionDetail("Normal", 0),
                   AdditionDetail("Large", 3.00),
@@ -528,6 +584,8 @@ class MenuItemDummyOld{
           [
             Addition(
                 "Beans",
+                0,
+                0,
                 [
                   AdditionDetail("Supremo", 0.00),
                   AdditionDetail("Yirgacheffe", 5.30),
@@ -536,6 +594,8 @@ class MenuItemDummyOld{
             ),
             Addition(
                 "Sweetness",
+                0,
+                0,
                 [
                   AdditionDetail("Less sugar", 0),
                   AdditionDetail("More sugar", 1.00),
@@ -565,6 +625,8 @@ class MenuItemDummyOld{
           [
             Addition(
                 "Beans",
+                0,
+                0,
                 [
                   AdditionDetail("Supremo", 0.00),
                   AdditionDetail("Yirgacheffe", 5.30),
@@ -573,6 +635,8 @@ class MenuItemDummyOld{
             ),
             Addition(
                 "Sweetness",
+                0,
+                0,
                 [
                   AdditionDetail("Less sugar", 0),
                   AdditionDetail("More sugar", 1.00),
@@ -602,6 +666,8 @@ class MenuItemDummyOld{
           [
             Addition(
                 "Beans",
+                0,
+                0,
                 [
                   AdditionDetail("Supremo", 0.00),
                   AdditionDetail("Yirgacheffe", 5.30),
@@ -610,6 +676,8 @@ class MenuItemDummyOld{
             ),
             Addition(
                 "Sweetness",
+                0,
+                0,
                 [
                   AdditionDetail("Less sugar", 0),
                   AdditionDetail("More sugar", 1.00),

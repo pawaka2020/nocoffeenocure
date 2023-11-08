@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../models/cartitem.dart';
+import '../../models/menuitem.dart';
 
 String lorem = """
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
@@ -14,11 +15,28 @@ Proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 class CartItemCard extends StatelessWidget {
   CartItemOB cartItem;
   final void Function(BuildContext, int) deleteCallback;
+  final void Function(BuildContext, int) editCallback;
 
-  CartItemCard(this.cartItem, this.deleteCallback);
+  CartItemCard(this.cartItem, this.deleteCallback, this.editCallback);
+
+  String getContent(List<AdditionOB> additions) {
+
+    final List<String> contentList = [];
+    for (var addition in additions) {
+      contentList.add(
+          addition.title! + ': ' + addition.additionDetails[addition.selectedIndex!].name!
+      );
+    }
+    final String content = contentList.join(', ');
+    return content;
+  }
 
   @override
   Widget build(BuildContext context) {
+
+    String image = cartItem.menuItemOB[0].imagePath!;
+    String name = cartItem.menuItemOB[0].title!;
+    String content = getContent(cartItem.menuItemOB[0].additions);
 
     return Padding(
       padding: EdgeInsets.only(left: 16, right: 16, top: 8, bottom: 8),
@@ -37,7 +55,8 @@ class CartItemCard extends StatelessWidget {
                   width: 80, // Adjust the width as needed
                   height: double.infinity,
                   child: Image.asset(
-                    cartItem.image!,
+                    //cartItem.image!,
+                    image,
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -47,7 +66,8 @@ class CartItemCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        cartItem.name!,
+                        //cartItem.name!,
+                        name,
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -57,7 +77,8 @@ class CartItemCard extends StatelessWidget {
                       SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
                         child: Text(
-                          cartItem.content!,
+                          //cartItem.content!,
+                          content,
                           style: TextStyle(
                             fontSize: 12,
                           ),
@@ -67,8 +88,13 @@ class CartItemCard extends StatelessWidget {
                       ),
                       SizedBox(height: 10),
                       Text(
-                        //"Qty: 3",
-                        "Qty: ${cartItem.quantity}!",
+                        "Qty: ${cartItem.quantity}",
+                        style: TextStyle(
+                          fontSize: 12,
+                        ),
+                      ),
+                      Text(
+                        "Price: RM${cartItem.price.toStringAsFixed(2)}",
                         style: TextStyle(
                           fontSize: 12,
                         ),
@@ -81,7 +107,7 @@ class CartItemCard extends StatelessWidget {
                   right: 16, // Adjust the position as needed
                   child: GestureDetector(
                     onTap: () {
-                      // Implement edit functionality
+                      editCallback(context, cartItem.id);
                     },
                     child: Text(
                       "Edit",
@@ -98,7 +124,6 @@ class CartItemCard extends StatelessWidget {
                   right: 70, // Adjust the position as needed
                   child: GestureDetector(
                     onTap: () {
-                      // Implement delete functionality
                       deleteCallback(context, cartItem.id);
                     },
                     child: Text(

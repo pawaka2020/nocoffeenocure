@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../main.dart';
+import '../../models/cartitem.dart';
 import '../../models/menuitem.dart';
 import '../../provider/cart_count_notifier.dart';
+import '../../repos/cartitem.dart';
 import '../../repos/menuitem.dart';
 import '../../widgets/partial_divider.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -10,10 +13,13 @@ import 'package:fluttertoast/fluttertoast.dart';
 import '../home/home.dart';
 
 /*stateful widget version*/
+//load data from repos here.
 class MenuDetailsPage extends StatefulWidget {
   final MenuItem menuItem;
-
-  MenuDetailsPage(this.menuItem);
+  final bool editMode;
+  final int quantity;
+  final int cartItemId;
+  MenuDetailsPage(this.menuItem, this.editMode, this.quantity, this.cartItemId);
 
   @override
   _MenuDetailsPageState createState() => _MenuDetailsPageState();
@@ -22,46 +28,73 @@ class MenuDetailsPage extends StatefulWidget {
 class _MenuDetailsPageState extends State<MenuDetailsPage> {
   late double price;
   late double basePrice;
-  int factor = 1;
+  late int quantity;
+
+  void adjustPrice() {
+    setState(() {
+      price = widget.menuItem.price;
+      for (var addition in widget.menuItem.additions) {
+        price += addition.selectedPrice;
+      }
+      basePrice = price;
+      price = basePrice * quantity;
+    });
+  }
+
+  void increaseQuantity() {
+    setState(() {
+      quantity = quantity + 1;
+      price = basePrice * quantity;
+    });
+  }
+
+  void decreaseQuantity() {
+    setState(() {
+      if (quantity > 1) {
+        quantity = quantity - 1;
+        price = basePrice * quantity;
+      }
+    });
+  }
+
+  void addToCart() {
+    CartItemOB newcart = CartItemOB()
+      ..image = 'assets/images/coffeesample.png'
+      ..name = 'Test add'
+      ..content = 'Beans: Supremo | Sweetness: Less sugar | Cup size: Regular'
+      ..quantity = quantity
+      ..price = price
+      ..menuItemOB.add(widget.menuItem.toMenuItemOB())
+    ;
+    CartItemRepo().put(newcart);
+    Navigator.of(context).pop();
+  }
+
+  void updateCart() {
+    CartItemOB updatedCartItem = CartItemRepo().box.get(widget.cartItemId);
+    updatedCartItem.menuItemOB[0] = widget.menuItem.toMenuItemOB();
+    updatedCartItem.quantity = quantity;
+    updatedCartItem.price = price;
+
+    Navigator.of(context).pop(updatedCartItem);
+  }
 
   @override
   void initState() {
     super.initState();
+
     price = widget.menuItem.price;
     basePrice = price;
+    quantity = widget.quantity;
+    adjustPrice();
+    print("Before loading menu_detail:    ");
+    MenuItemRepo().printMenuItem(widget.menuItem);
   }
-
-  void adjustPrice(AdditionDetail selectedDetail) {
-    setState(() {
-      price = widget.menuItem.price;
-      for (var addition in widget.menuItem.additions){
-        price += addition.selectedPrice;
-      }
-      basePrice = price;
-      price = basePrice * factor;
-    });
-  }
-
-  void increaseFactor() {
-    setState(() {
-      factor = factor + 1;
-      price = basePrice * factor;
-    });
-  }
-
-  void decreaseFactor() {
-    setState(() {
-      if (factor > 1){
-        factor = factor - 1;
-        price = basePrice * factor;
-      }
-    });
-  }
-
-  void addToCart() {}
 
   @override
   Widget build(BuildContext context) {
+    //see first
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -96,7 +129,7 @@ class _MenuDetailsPageState extends State<MenuDetailsPage> {
               ],
             ),
           ),
-          Finalize(price, factor, decreaseFactor, increaseFactor, addToCart), // Step 3: Pass the adjusted price to Finalize
+          Finalize(price, quantity, decreaseQuantity, increaseQuantity, addToCart, updateCart, widget.editMode), // Step 3: Pass the adjusted price to Finalize
         ],
       ),
     );
@@ -204,9 +237,9 @@ class ReviewCard extends StatelessWidget {
 
 class Stars extends StatelessWidget {
   final int stars;
-  final double starSize; // Add a parameter for the star size
+  final double starSize;
 
-  Stars(this.stars, {this.starSize = 12.0}); // Default size is 24.0
+  Stars(this.stars, {this.starSize = 12.0});
 
   @override
   Widget build(BuildContext context) {
@@ -214,7 +247,8 @@ class Stars extends StatelessWidget {
     for (int i = 0; i < 5; i++) {
       if (i < stars) {
         starIcons.add(Icon(Icons.star, color: Colors.yellow, size: starSize));
-      } else {
+      }
+      else {
         starIcons.add(Icon(Icons.star_border, color: Colors.grey, size: starSize));
       }
     }
@@ -237,7 +271,7 @@ class Name extends StatelessWidget {
         "$name",
         style: TextStyle(
           fontWeight: FontWeight.bold,
-          fontSize: 10, // Adjust the font size as needed
+          fontSize: 10,
           color: Colors.blue,
         ),
       ),
@@ -257,18 +291,17 @@ class Message extends StatelessWidget {
         child: Text(
           '"$text"',
           style: TextStyle(
-            fontSize: 10, // Adjust the font size as needed
-            fontStyle: FontStyle.italic, // Italicize the text
+            fontSize: 10,
+            fontStyle: FontStyle.italic,
           ),
         )
     );
   }
 }
 
-/*before adding price adjustment feature*/
 class AdditionMenu extends StatefulWidget {
   final Addition addition;
-  final Function(AdditionDetail) adjustPrice;
+  final Function() adjustPrice;
   AdditionMenu(this.addition, this.adjustPrice);
 
   @override
@@ -276,10 +309,12 @@ class AdditionMenu extends StatefulWidget {
 }
 
 class _AdditionMenuState extends State<AdditionMenu> {
-  int selectedDetailIndex = 0; // Set the first detail as the default
+  late int selectedDetailIndex;
 
   @override
   Widget build(BuildContext context) {
+    //selectedDetailIndex = 1; //0
+    selectedDetailIndex = widget.addition.selectedIndex;
     return Column(
       children: [
         Padding(
@@ -300,10 +335,15 @@ class _AdditionMenuState extends State<AdditionMenu> {
               additionDetail,
               isSelected: index == selectedDetailIndex,
               onTap: () {
+                //change here.
                 setState(() {
                   widget.addition.selectedPrice = additionDetail.price;
                   selectedDetailIndex = index;
-                  widget.adjustPrice(additionDetail);
+                  //new change.
+                  widget.addition.selectedIndex = selectedDetailIndex;
+                  print(widget.addition.title + " index " + widget.addition.selectedIndex.toString() + " selected");
+                  //widget.adjustPrice(additionDetail);
+                  widget.adjustPrice();
                 });
               },
             );
@@ -365,13 +405,16 @@ class AdditionMenuDetail extends StatelessWidget {
 
 class Finalize extends StatelessWidget {
   final double price;
-  final int factor;// Pass the adjusted price as a parameter
-  final VoidCallback decreaseFactor;
-  final VoidCallback increaseFactor;
-  final VoidCallback addToCart;
+  final int quantity;
+  final VoidCallback decreaseQuantity;
+  final VoidCallback increaseQuantity;
+  final void Function() addToCart;
+  final void Function() updateCart;
+  //final VoidCallback updateCart;
+  final bool editMode;
 
-  Finalize(this.price, this.factor, this.decreaseFactor, this.increaseFactor,
-      this.addToCart);
+  Finalize(this.price, this.quantity, this.decreaseQuantity, this.increaseQuantity,
+      this.addToCart, this.updateCart, this.editMode);
 
   @override
   Widget build(BuildContext context) {
@@ -387,8 +430,10 @@ class Finalize extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  QuantityDisplay(price, factor, decreaseFactor, increaseFactor),
-                  AddToCartButton(context)
+                  QuantityDisplay(price, quantity, decreaseQuantity, increaseQuantity),
+                  editMode
+                      ? AddToCartButton(context, updateCart, "Update")
+                      : AddToCartButton(context, addToCart, "Place Order")
                 ],
               ),
             ),
@@ -400,10 +445,10 @@ class Finalize extends StatelessWidget {
 
 class QuantityDisplay extends StatelessWidget {
   final double price;
-  final int factor;// Pass the adjusted price as a parameter
-  final VoidCallback decreaseFactor;
-  final VoidCallback increaseFactor;
-  QuantityDisplay(this.price, this.factor, this.decreaseFactor, this.increaseFactor);
+  final int quantity;// Pass the adjusted price as a parameter
+  final VoidCallback decreaseQuantity;
+  final VoidCallback increaseQuantity;
+  QuantityDisplay(this.price, this.quantity, this.decreaseQuantity, this.increaseQuantity);
 
   @override
   Widget build(BuildContext context) {
@@ -422,18 +467,18 @@ class QuantityDisplay extends StatelessWidget {
               icon: Icon(Icons.remove),
               onPressed: () {
                 print("button remove pressed");
-                decreaseFactor();
+                decreaseQuantity();
               }
             ),
             Text(
-              factor.toString(),
+              quantity.toString(),
               style: TextStyle(fontSize: 16),
             ),
             IconButton(
               icon: Icon(Icons.add),
               onPressed: () {
                 print("button add pressed");
-                increaseFactor();
+                increaseQuantity();
                 // decreaseFactor();
               } // Call the onIncrease function when the button is pressed
             ),
@@ -446,13 +491,15 @@ class QuantityDisplay extends StatelessWidget {
 
 class AddToCartButton extends StatelessWidget {
   final BuildContext context;
-  AddToCartButton(this.context);
+  final void Function() func;
+  final String buttonLabel;
+  AddToCartButton(this.context, this.func, this.buttonLabel);
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: () {
-        AddToCart(context);
+        func();
       },
       style: ElevatedButton.styleFrom(
         backgroundColor: Colors.orange, ///Button background color
@@ -464,7 +511,7 @@ class AddToCartButton extends StatelessWidget {
         width: double.infinity, // Occupy the maximum available width
         child: Center(
           child: Text(
-            "Add To Cart",
+            buttonLabel,
             style: TextStyle(
               color: Colors.white, // Text color
               fontSize: 16, // Text size
@@ -476,8 +523,3 @@ class AddToCartButton extends StatelessWidget {
   }
 }
 
-void AddToCart(BuildContext context) {
-
-  Provider.of<CartCountNotifier>(context, listen: false).addToCart();
-  Navigator.of(context).pop();
-}
