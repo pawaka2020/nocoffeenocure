@@ -105,7 +105,7 @@ class CartItemCard extends StatelessWidget {
                 Positioned(
                   bottom: 8, // Adjust the position as needed
                   right: 16, // Adjust the position as needed
-                  child: GestureDetector(
+                  child: InkWell(
                     onTap: () {
                       editCallback(context, cartItem.id);
                     },
@@ -118,11 +118,11 @@ class CartItemCard extends StatelessWidget {
                       ),
                     ),
                   ),
-                ),
+                ), //edit
                 Positioned(
                   bottom: 8, // Adjust the position as needed
                   right: 70, // Adjust the position as needed
-                  child: GestureDetector(
+                  child: InkWell(
                     onTap: () {
                       deleteCallback(context, cartItem.id);
                     },
@@ -135,7 +135,7 @@ class CartItemCard extends StatelessWidget {
                       ),
                     ),
                   ),
-                ),
+                ), //delete
               ],
             ),
           ),
@@ -143,4 +143,8 @@ class CartItemCard extends StatelessWidget {
       ),
     );
   }
+
+
+
+
 }

@@ -433,7 +433,7 @@ class Finalize extends StatelessWidget {
                   QuantityDisplay(price, quantity, decreaseQuantity, increaseQuantity),
                   editMode
                       ? AddToCartButton(context, updateCart, "Update")
-                      : AddToCartButton(context, addToCart, "Place Order")
+                      : AddToCartButton(context, addToCart, "Add To Cart")
                 ],
               ),
             ),

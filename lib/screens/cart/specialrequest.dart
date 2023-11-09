@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class SpecialRequest extends StatelessWidget {
-  final String specialRequest;
+
   final Function(String) onSpecialRequestChanged;
 
-  SpecialRequest({required this.specialRequest, required this.onSpecialRequestChanged});
+  SpecialRequest(this.onSpecialRequestChanged);
 
   @override
   Widget build(BuildContext context) {

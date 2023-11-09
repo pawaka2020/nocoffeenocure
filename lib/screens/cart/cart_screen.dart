@@ -24,6 +24,14 @@ class CartScreen extends StatefulWidget {
 class _CartScreenState extends State<CartScreen> {
   //state variables
   double _finalPrice = 0.00;
+  double _packagePrice = 0.00;
+  List _packagePrices = [0, 0];
+  String _specialRequest = "";
+
+  final packaging = {
+    "Straw": 0.50,
+    "Paperbag": 10.00,
+  };
 
   //state functions
   Future<void> deleteCartItem(BuildContext context, int id) async {
@@ -68,22 +76,42 @@ class _CartScreenState extends State<CartScreen> {
   }
 
   void adjustPrice() {
-
     double newFinalPrice = 0;
     for (var cartItem in widget.cartItems) {
       newFinalPrice += cartItem.price;
+
     }
+    newFinalPrice += _packagePrice;
     _finalPrice = newFinalPrice;
   }
 
-  //this doesn't get called after editing cart item
+  void updateSpecialRequest(String newSpecialRequest) {
+    _specialRequest = newSpecialRequest;
+  }
+
+  void onSelectionChanged(int index, bool toggle, double price) {
+    _packagePrice = 0;
+    double _price = toggle ? price : 0;
+    _packagePrices[index] = _price;
+    for (var price in _packagePrices) {
+      _packagePrice += price;
+    }
+    adjustPrice();
+  }
+
+  //use for now to test
+  //_updateSpecialRequest working as expected
+  void placeOrder() {
+    print("item name = ${packaging.keys.elementAt(0)}");
+    print("item price = ${packaging['Straw']}");
+    print("special request = $_specialRequest");
+    print("final price = RM ${_finalPrice.toStringAsFixed(2)}");
+  }
+
   @override
   initState() {
     adjustPrice();
   }
-
-  void placeOrder() {}
-
   //this doesn't get called after editing cart item either.
   @override
   Widget build(BuildContext context) {
@@ -100,6 +128,18 @@ class _CartScreenState extends State<CartScreen> {
                   child: ListView(
                     children: [
                       ...widget.cartItems.map((item) => CartItemCard(item, deleteCartItem, editCartItem)),
+                    PartialDivider(40, 10),
+                    SpecialRequest(updateSpecialRequest),
+                    PartialDivider(40, 10),//special requests (textfield)
+                    Packaging(onSelectionChanged),
+                    PartialDivider(40, 10),//packaging (need straws, need paper bag, etc)
+                    PaymentMethods(),
+                    PartialDivider(40, 10),
+                    VoucherSelection(),
+                    PartialDivider(40, 10),
+                    DeliveryAddress(),
+                    PaymentDetails(),
+                    SizedBox(height: 5),//payment methods (wallet (topup), e-wallet, credit card, online banking)
                     ]
                   )
                 ),
@@ -109,77 +149,6 @@ class _CartScreenState extends State<CartScreen> {
     );
   }
 }
-
-
-
-// class _CartDisplayState extends State<CartDisplay> {
-//   //state variables
-//   late double _finalPrice;
-//   late String _specialRequest;
-//   late List<CartItemOB> _cartItems;
-//
-//   //use constructor to set starting values for state variables
-//   _CartDisplayState() {
-//     _finalPrice = 10.00;
-//     _specialRequest = '';
-//     _cartItems = widget.cartItems;
-//   }
-//
-//   //state functions
-//   void deleteCartItem(int id) {
-//     CartItemRepo().remove(id);
-//     setState(() {
-//       _cartItems = CartItemRepo().getAll();
-//     });
-//   }
-//
-//   void adjustPrice() {
-//     setState(() {
-//       _finalPrice += 20.00;
-//     });
-//   }
-//
-//   void updateSpecialRequest(String newText) {
-//     setState(() {
-//       _specialRequest = newText;
-//     });
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//         body: Column(
-//             children: [
-//               Expanded(
-//                 child: ListView(
-//                   children: [
-//                     //create as many CartItemCart() widgets as elements of 'cartItems'
-//                     //each CartItemCard() widget uses fields from each respective element of 'cartItems'
-//                     ...widget.cartItems.map((item) => CartItemCard(item)),
-//                     PartialDivider(40, 10),
-//                     SpecialRequest(
-//                       specialRequest: _specialRequest,
-//                       onSpecialRequestChanged: updateSpecialRequest,
-//                     ),
-//                     PartialDivider(40, 10),//special requests (textfield)
-//                     Packaging(),
-//                     PartialDivider(40, 10),//packaging (need straws, need paper bag, etc)
-//                     PaymentMethods(),
-//                     PartialDivider(40, 10),
-//                     VoucherSelection(),
-//                     PartialDivider(40, 10),
-//                     DeliveryAddress(),
-//                     PaymentDetails(),
-//                     SizedBox(height: 5),//payment methods (wallet (topup), e-wallet, credit card, online banking)
-//                   ],
-//                 ),
-//               ),
-//               OrderSubmit(_finalPrice, adjustPrice)
-//             ]
-//         )
-//     );
-//   }
-// }
 
 Future<bool> showDeleteConfirmationDialog(BuildContext context) async {
   return await showDialog(
