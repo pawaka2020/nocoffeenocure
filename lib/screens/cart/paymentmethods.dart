@@ -44,7 +44,7 @@ class _PaymentMethodsState extends State<PaymentMethods> {
       children: [
         Radio<String>(
           activeColor:Colors.blue,
-          value: "Company Wallet",
+          value: "NCNC Wallet",
           groupValue: _selectedPaymentMethod,
           onChanged: (String? value) {
             setState(() {

@@ -47,11 +47,11 @@ class _PackagingState extends State<Packaging> {
               }
             });
           }),
-          buildSelectionRow("Paperbag", 10.00, _paperbagSelected, (bool? value) {
+          buildSelectionRow("Paperbag", 1.00, _paperbagSelected, (bool? value) {
             setState(() {
               if (value != null) {
                 _paperbagSelected = value;
-                widget. onSelectionChanged(1, value, 10.00);
+                widget. onSelectionChanged(1, value, 1.00);
               }
             });
           }),

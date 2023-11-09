@@ -96,11 +96,12 @@ class _CartScreenState extends State<CartScreen> {
     for (var price in _packagePrices) {
       _packagePrice += price;
     }
-    adjustPrice();
+    setState(() {
+      adjustPrice();
+    });
+
   }
 
-  //use for now to test
-  //_updateSpecialRequest working as expected
   void placeOrder() {
     print("item name = ${packaging.keys.elementAt(0)}");
     print("item price = ${packaging['Straw']}");
@@ -112,7 +113,7 @@ class _CartScreenState extends State<CartScreen> {
   initState() {
     adjustPrice();
   }
-  //this doesn't get called after editing cart item either.
+
   @override
   Widget build(BuildContext context) {
     adjustPrice();
@@ -128,27 +129,40 @@ class _CartScreenState extends State<CartScreen> {
                   child: ListView(
                     children: [
                       ...widget.cartItems.map((item) => CartItemCard(item, deleteCartItem, editCartItem)),
-                    PartialDivider(40, 10),
-                    SpecialRequest(updateSpecialRequest),
-                    PartialDivider(40, 10),//special requests (textfield)
-                    Packaging(onSelectionChanged),
-                    PartialDivider(40, 10),//packaging (need straws, need paper bag, etc)
-                    PaymentMethods(),
-                    PartialDivider(40, 10),
-                    VoucherSelection(),
-                    PartialDivider(40, 10),
-                    DeliveryAddress(),
-                    PaymentDetails(),
-                    SizedBox(height: 5),//payment methods (wallet (topup), e-wallet, credit card, online banking)
+                      PartialDivider(40, 10),
+                      SpecialRequest(updateSpecialRequest),
+                      PartialDivider(40, 10),
+                      Packaging(onSelectionChanged),
+                      PartialDivider(40, 10),
+                      VoucherSelection(),
+                      PartialDivider(40, 10),
+                      DeliveryAddress(),
+                      PartialDivider(40, 10),
+                      PaymentMethods(),
+                      SizedBox(height: 5),
+                      PaymentDetails(),
+                      SizedBox(height: 5),//payment methods (wallet (topup), e-wallet, credit card, online banking)
                     ]
                   )
                 ),
-                OrderSubmit(_finalPrice, placeOrder)
+                //OrderSubmit(_finalPrice, placeOrder)
+                buildSubmitOrder(_finalPrice, placeOrder)
               ]
             )
     );
   }
 }
+
+
+
+
+
+
+
+
+
+
+
 
 Future<bool> showDeleteConfirmationDialog(BuildContext context) async {
   return await showDialog(
