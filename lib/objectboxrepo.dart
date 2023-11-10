@@ -6,6 +6,7 @@ import 'models/cartitem.dart';
 import 'models/fullnews.dart';
 import 'models/menuitem.dart';
 import 'models/user.dart';
+import 'models/voucher.dart';
 import 'objectbox.g.dart'; // created by `flutter pub run build_runner build`
 
 class ObjectBox {
@@ -16,6 +17,8 @@ class ObjectBox {
   late final menuItemBox;
   late final userBox;
   late final cartItemBox;
+  //
+  late final voucherBox;
 
   ObjectBox._create(this.store) {
     //new ones
@@ -24,6 +27,7 @@ class ObjectBox {
     menuItemBox = store.box<MenuItemOB>();
     userBox = store.box<UserOB>();
     cartItemBox = store.box<CartItemOB>();
+    voucherBox = store.box<VoucherOB>();
   }
 
   static Future<ObjectBox> create() async {

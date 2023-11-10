@@ -6,8 +6,10 @@ import 'package:nocoffeenocure/screens/cart/specialrequest.dart';
 import 'package:nocoffeenocure/screens/cart/voucherselection.dart';
 import '../../models/cartitem.dart';
 import '../../models/menuitem.dart';
+import '../../models/voucher.dart';
 import '../../repos/cartitem.dart';
 import '../../repos/menuitem.dart';
+import '../../repos/voucher.dart';
 import '../../widgets/partial_divider.dart';
 import '../menu_detail/menu_detail.dart';
 import 'cartitemcard.dart';
@@ -16,6 +18,7 @@ import 'ordersubmit.dart';
 
 class CartScreen extends StatefulWidget {
   var cartItems = CartItemRepo().getAll();
+  var vouchers = VoucherRepo().getAll();
 
   @override
   State<StatefulWidget> createState() => _CartScreenState();
@@ -26,6 +29,8 @@ class _CartScreenState extends State<CartScreen> {
   double _finalPrice = 0.00;
   double _packagePrice = 0.00;
   List _packagePrices = [0, 0];
+  List<VoucherOB> _selectedVouchers = [];
+  List<int> _selectedVoucherIds = [];
   String _specialRequest = "";
 
   final packaging = {
@@ -79,7 +84,6 @@ class _CartScreenState extends State<CartScreen> {
     double newFinalPrice = 0;
     for (var cartItem in widget.cartItems) {
       newFinalPrice += cartItem.price;
-
     }
     newFinalPrice += _packagePrice;
     _finalPrice = newFinalPrice;
@@ -99,7 +103,6 @@ class _CartScreenState extends State<CartScreen> {
     setState(() {
       adjustPrice();
     });
-
   }
 
   void placeOrder() {
@@ -107,6 +110,10 @@ class _CartScreenState extends State<CartScreen> {
     print("item price = ${packaging['Straw']}");
     print("special request = $_specialRequest");
     print("final price = RM ${_finalPrice.toStringAsFixed(2)}");
+  }
+
+  void updateSelectedVouchers(List<int> _selectedVoucherIds) {
+
   }
 
   @override
@@ -134,7 +141,7 @@ class _CartScreenState extends State<CartScreen> {
                       PartialDivider(40, 10),
                       Packaging(onSelectionChanged),
                       PartialDivider(40, 10),
-                      VoucherSelection(),
+                      buildVoucherSelection(_selectedVoucherIds, widget.vouchers, context, updateSelectedVouchers),
                       PartialDivider(40, 10),
                       DeliveryAddress(),
                       PartialDivider(40, 10),

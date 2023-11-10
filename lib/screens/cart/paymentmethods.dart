@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 
-//TODO: replace PaymentMethods UI with cards later.
-//TODO: cards lead user to another screen, then after finishing details, the card shows tick sign.
+//make sure the widget starts with
 class PaymentMethods extends StatefulWidget {
   @override
   _PaymentMethodsState createState() => _PaymentMethodsState();
 }
 
 class _PaymentMethodsState extends State<PaymentMethods> {
-  String _selectedPaymentMethod = 'Company Wallet';
+  String _selectedPaymentMethod = 'NCNC Wallet';
 
   final List<PaymentMethod> paymentMethods = [
     PaymentMethod('E-wallet',  Icons.account_balance_wallet),

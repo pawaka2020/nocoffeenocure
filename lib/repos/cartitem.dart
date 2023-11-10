@@ -1,5 +1,3 @@
-
-
 import '../backend/dummy/cartitem.dart';
 import '../main.dart';
 import '../models/cartitem.dart';

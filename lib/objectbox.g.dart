@@ -19,6 +19,7 @@ import 'models/cartitem.dart';
 import 'models/fullnews.dart';
 import 'models/menuitem.dart';
 import 'models/user.dart';
+import 'models/voucher.dart';
 
 export 'package:objectbox/objectbox.dart'; // so that callers only have to import this file
 
@@ -341,7 +342,46 @@ final _entities = <ModelEntity>[
       relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[
         ModelBacklink(name: 'menuItemOB', srcEntity: 'MenuItemOB', srcField: '')
-      ])
+      ]),
+  ModelEntity(
+      id: const IdUid(17, 8024934109289736930),
+      name: 'VoucherOB',
+      lastPropertyId: const IdUid(8, 7914782462890144178),
+      flags: 0,
+      properties: <ModelProperty>[
+        ModelProperty(
+            id: const IdUid(1, 2682460253525748060),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        ModelProperty(
+            id: const IdUid(2, 2770601193349403257),
+            name: 'image',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(4, 250808917950605590),
+            name: 'priceDeduct',
+            type: 8,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(5, 8174651932668460398),
+            name: 'expiryDate',
+            type: 10,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(7, 7128996266376415974),
+            name: 'activated',
+            type: 1,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(8, 7914782462890144178),
+            name: 'priceDiscount',
+            type: 8,
+            flags: 0)
+      ],
+      relations: <ModelRelation>[],
+      backlinks: <ModelBacklink>[])
 ];
 
 /// Shortcut for [Store.new] that passes [getObjectBoxModel] and for Flutter
@@ -371,7 +411,7 @@ Future<Store> openStore(
 ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
-      lastEntityId: const IdUid(15, 1006185654449316480),
+      lastEntityId: const IdUid(17, 8024934109289736930),
       lastIndexId: const IdUid(11, 6218316149259164835),
       lastRelationId: const IdUid(0, 0),
       lastSequenceId: const IdUid(0, 0),
@@ -381,7 +421,8 @@ ModelDefinition getObjectBoxModel() {
         1629771521425256600,
         2897391873509332869,
         3833050479341648882,
-        6271963573804352264
+        6271963573804352264,
+        6749911841847507853
       ],
       retiredIndexUids: const [
         8717456330994247813,
@@ -416,7 +457,14 @@ ModelDefinition getObjectBoxModel() {
         6540512523523767474,
         4815532763688013353,
         6326357589974304834,
-        5764899181912741906
+        5764899181912741906,
+        1961751733340565930,
+        3794642363970175032,
+        6669303306245559547,
+        5141375944316396741,
+        383743847163415760,
+        1057079585257430136,
+        843305828425272101
       ],
       retiredRelationUids: const [],
       modelVersion: 5,
@@ -551,10 +599,10 @@ ModelDefinition getObjectBoxModel() {
             ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0)
             ..title = const fb.StringReader(asciiOptimization: true)
                 .vTableGetNullable(buffer, rootOffset, 6)
-            ..selectedPrice =
-                const fb.Float64Reader().vTableGet(buffer, rootOffset, 8, 0)
-            ..selectedIndex =
-                const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0);
+            ..selectedPrice = const fb.Float64Reader()
+                .vTableGetNullable(buffer, rootOffset, 8)
+            ..selectedIndex = const fb.Int64Reader()
+                .vTableGetNullable(buffer, rootOffset, 12);
           object.menuItem.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0);
           object.menuItem.attach(store);
@@ -818,6 +866,48 @@ ModelDefinition getObjectBoxModel() {
               RelInfo<MenuItemOB>.toOneBacklink(
                   10, object.id, (MenuItemOB srcObject) => srcObject.cartItem));
           return object;
+        }),
+    VoucherOB: EntityDefinition<VoucherOB>(
+        model: _entities[9],
+        toOneRelations: (VoucherOB object) => [],
+        toManyRelations: (VoucherOB object) => {},
+        getId: (VoucherOB object) => object.id,
+        setId: (VoucherOB object, int id) {
+          object.id = id;
+        },
+        objectToFB: (VoucherOB object, fb.Builder fbb) {
+          final imageOffset =
+              object.image == null ? null : fbb.writeString(object.image!);
+          fbb.startTable(9);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, imageOffset);
+          fbb.addFloat64(3, object.priceDeduct);
+          fbb.addInt64(4, object.expiryDate?.millisecondsSinceEpoch);
+          fbb.addBool(6, object.activated);
+          fbb.addFloat64(7, object.priceDiscount);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final expiryDateValue =
+              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 12);
+          final object = VoucherOB()
+            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0)
+            ..image = const fb.StringReader(asciiOptimization: true)
+                .vTableGetNullable(buffer, rootOffset, 6)
+            ..priceDeduct = const fb.Float64Reader()
+                .vTableGetNullable(buffer, rootOffset, 10)
+            ..expiryDate = expiryDateValue == null
+                ? null
+                : DateTime.fromMillisecondsSinceEpoch(expiryDateValue)
+            ..activated =
+                const fb.BoolReader().vTableGetNullable(buffer, rootOffset, 16)
+            ..priceDiscount = const fb.Float64Reader()
+                .vTableGetNullable(buffer, rootOffset, 18);
+
+          return object;
         })
   };
 
@@ -1017,4 +1107,30 @@ class CartItemOB_ {
   /// see [CartItemOB.price]
   static final price =
       QueryDoubleProperty<CartItemOB>(_entities[8].properties[6]);
+}
+
+/// [VoucherOB] entity fields to define ObjectBox queries.
+class VoucherOB_ {
+  /// see [VoucherOB.id]
+  static final id = QueryIntegerProperty<VoucherOB>(_entities[9].properties[0]);
+
+  /// see [VoucherOB.image]
+  static final image =
+      QueryStringProperty<VoucherOB>(_entities[9].properties[1]);
+
+  /// see [VoucherOB.priceDeduct]
+  static final priceDeduct =
+      QueryDoubleProperty<VoucherOB>(_entities[9].properties[2]);
+
+  /// see [VoucherOB.expiryDate]
+  static final expiryDate =
+      QueryIntegerProperty<VoucherOB>(_entities[9].properties[3]);
+
+  /// see [VoucherOB.activated]
+  static final activated =
+      QueryBooleanProperty<VoucherOB>(_entities[9].properties[4]);
+
+  /// see [VoucherOB.priceDiscount]
+  static final priceDiscount =
+      QueryDoubleProperty<VoucherOB>(_entities[9].properties[5]);
 }

@@ -1,7 +1,7 @@
 import 'package:objectbox/objectbox.dart';
 
 /*
-
+Class for user login, profile info.
 */
 @Entity()
 class UserOB
