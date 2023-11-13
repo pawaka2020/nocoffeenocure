@@ -86,7 +86,7 @@ SizedBox buildSubmitOrder(double finalPrice, VoidCallback func) {
         child: Padding(
             padding: EdgeInsets.only(left: 32, right: 32),
             child: Container(
-                height: 100, //100
+                height: 100,
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.center, //spaceEvenly
                     children: [

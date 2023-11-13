@@ -71,6 +71,7 @@ Widget buildSelectVoucherCard(VoucherOB voucher, BuildContext context, List<int>
                 padding: EdgeInsets.all(16),
                 child: Icon(Icons.add),
               ),
+              //Icon(Icons.add)
             ],
           ),
         ),
@@ -82,7 +83,8 @@ void SelectVoucher(BuildContext context, VoucherOB voucher, List<int> selectedVo
   print("Voucher selected");
   print("Voucher id = ${voucher.id.toString()}");
   selectedVoucherIds.add(voucher.id);
-  Navigator.of(context).pop(selectedVoucherIds);
+  //Navigator.of(context).pop(selectedVoucherIds);
+  Navigator.of(context).pop(true);
 }
 
 

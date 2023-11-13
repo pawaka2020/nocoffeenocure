@@ -14,7 +14,7 @@ Proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
 class CartItemCard extends StatelessWidget {
   CartItemOB cartItem;
-  final void Function(BuildContext, int) deleteCallback;
+  final void Function(int) deleteCallback;
   final void Function(BuildContext, int) editCallback;
 
   CartItemCard(this.cartItem, this.deleteCallback, this.editCallback);
@@ -52,10 +52,9 @@ class CartItemCard extends StatelessWidget {
             child: Stack(
               children: [
                 Container(
-                  width: 80, // Adjust the width as needed
+                  width: 80,
                   height: double.infinity,
                   child: Image.asset(
-                    //cartItem.image!,
                     image,
                     fit: BoxFit.cover,
                   ),
@@ -77,7 +76,6 @@ class CartItemCard extends StatelessWidget {
                       SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
                         child: Text(
-                          //cartItem.content!,
                           content,
                           style: TextStyle(
                             fontSize: 12,
@@ -124,7 +122,7 @@ class CartItemCard extends StatelessWidget {
                   right: 70, // Adjust the position as needed
                   child: InkWell(
                     onTap: () {
-                      deleteCallback(context, cartItem.id);
+                      deleteCallback(cartItem.id);
                     },
                     child: Text(
                       "Delete",

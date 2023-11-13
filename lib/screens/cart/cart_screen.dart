@@ -12,6 +12,7 @@ import '../../repos/menuitem.dart';
 import '../../repos/voucher.dart';
 import '../../widgets/partial_divider.dart';
 import '../menu_detail/menu_detail.dart';
+import '../selectunusedvoucher/selectunusedvoucher.dart';
 import 'cartitemcard.dart';
 import 'deliveryaddress.dart';
 import 'ordersubmit.dart';
@@ -29,7 +30,7 @@ class _CartScreenState extends State<CartScreen> {
   double _finalPrice = 0.00;
   double _packagePrice = 0.00;
   List _packagePrices = [0, 0];
-  List<VoucherOB> _selectedVouchers = [];
+  List<VoucherOB> _usedList = [];
   List<int> _selectedVoucherIds = [];
   String _specialRequest = "";
 
@@ -39,11 +40,12 @@ class _CartScreenState extends State<CartScreen> {
   };
 
   //state functions
-  Future<void> deleteCartItem(BuildContext context, int id) async {
-    bool confirmation = await showDeleteConfirmationDialog(context);
+  Future<void> deleteCartItem(int id) async {
+    bool confirmation = await showDeleteConfirmationDialog(
+        context, 'Confirm Deletion', 'Are you sure you want to delete this item?');
     if (confirmation) {
-      CartItemRepo().remove(id);
       setState(() {
+        CartItemRepo().remove(id);
         widget.cartItems = CartItemRepo().getAll();
         adjustPrice();
       });
@@ -70,8 +72,10 @@ class _CartScreenState extends State<CartScreen> {
     ));
 
     if (updatedCartItem != null){
-      CartItemRepo().box.put(updatedCartItem);
+      //CartItemRepo().box.put(updatedCartItem);
       setState(() {
+        print("SetState2!!!!!!!!!!!");
+        CartItemRepo().box.put(updatedCartItem);
         widget.cartItems = CartItemRepo().getAll();
         adjustPrice();
       });
@@ -112,8 +116,29 @@ class _CartScreenState extends State<CartScreen> {
     print("final price = RM ${_finalPrice.toStringAsFixed(2)}");
   }
 
-  void updateSelectedVouchers(List<int> _selectedVoucherIds) {
+  void addVoucher() async {
+    final activated = await Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) => SelectUnusedVoucherScreen(widget.vouchers, _selectedVoucherIds, context),
+    ));
+    if (activated) {
+      setState(() {
+        _usedList = VoucherRepo()
+            .getFromIdList(widget.vouchers, _selectedVoucherIds);
+      });
+    }
+    else print("Error in adding new voucher");
+  }
 
+  void removeVoucher(int id) async {
+    bool confirmation = await showDeleteConfirmationDialog(
+        context, 'Confirm Deletion', 'Are you sure you want to remove this voucher?');
+    if (confirmation) {
+      setState(() {
+        _selectedVoucherIds.remove(id);
+        _usedList = VoucherRepo()
+            .getFromIdList(widget.vouchers, _selectedVoucherIds);
+      });
+    }
   }
 
   @override
@@ -123,6 +148,8 @@ class _CartScreenState extends State<CartScreen> {
 
   @override
   Widget build(BuildContext context) {
+    _usedList = VoucherRepo()
+        .getFromIdList(widget.vouchers, _selectedVoucherIds);
     adjustPrice();
 
     return Scaffold(
@@ -141,18 +168,17 @@ class _CartScreenState extends State<CartScreen> {
                       PartialDivider(40, 10),
                       Packaging(onSelectionChanged),
                       PartialDivider(40, 10),
-                      buildVoucherSelection(_selectedVoucherIds, widget.vouchers, context, updateSelectedVouchers),
+                      buildVoucherSelection(_usedList, _selectedVoucherIds, widget.vouchers, context, addVoucher, removeVoucher),
                       PartialDivider(40, 10),
                       DeliveryAddress(),
                       PartialDivider(40, 10),
                       PaymentMethods(),
                       SizedBox(height: 5),
                       PaymentDetails(),
-                      SizedBox(height: 5),//payment methods (wallet (topup), e-wallet, credit card, online banking)
+                      SizedBox(height: 5),
                     ]
                   )
                 ),
-                //OrderSubmit(_finalPrice, placeOrder)
                 buildSubmitOrder(_finalPrice, placeOrder)
               ]
             )
@@ -160,24 +186,13 @@ class _CartScreenState extends State<CartScreen> {
   }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-Future<bool> showDeleteConfirmationDialog(BuildContext context) async {
+Future<bool> showDeleteConfirmationDialog(BuildContext context, String text1, String text2) async {
   return await showDialog(
     context: context,
     builder: (context) {
       return AlertDialog(
-        title: Text('Confirm Deletion'),
-        content: Text('Are you sure you want to delete this item?'),
+        title: Text(text1),
+        content: Text(text2),
         actions: [
           TextButton(
             child: Text('Cancel'),
