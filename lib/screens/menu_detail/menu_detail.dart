@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../common.dart';
 import '../../main.dart';
 import '../../models/cartitem.dart';
 import '../../models/menuitem.dart';
@@ -9,8 +10,7 @@ import '../../repos/cartitem.dart';
 import '../../repos/menuitem.dart';
 import '../../widgets/partial_divider.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-
-import '../home/home.dart';
+import '../menu/menu.dart';
 
 /*stateful widget version*/
 //load data from repos here.
@@ -19,7 +19,8 @@ class MenuDetailsPage extends StatefulWidget {
   final bool editMode;
   final int quantity;
   final int cartItemId;
-  MenuDetailsPage(this.menuItem, this.editMode, this.quantity, this.cartItemId);
+  void Function(int) updateCartCount;
+  MenuDetailsPage(this.menuItem, this.editMode, this.quantity, this.cartItemId, this.updateCartCount);
 
   @override
   _MenuDetailsPageState createState() => _MenuDetailsPageState();
@@ -67,6 +68,8 @@ class _MenuDetailsPageState extends State<MenuDetailsPage> {
       ..menuItemOB.add(widget.menuItem.toMenuItemOB())
     ;
     CartItemRepo().put(newcart);
+    widget.updateCartCount(1);
+    printToast("Item added to cart");
     Navigator.of(context).pop();
   }
 

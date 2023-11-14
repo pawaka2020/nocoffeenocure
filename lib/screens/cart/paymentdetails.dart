@@ -3,23 +3,9 @@ import 'package:flutter/material.dart';
 
 import 'cart_screen.dart';
 
-Widget buildPaymentDetails(Price price, double amount, double voucherDeduction, BuildContext context) {
-  double tax = 0.06;
-  double deliveryFee = 4.00;
+Widget buildPaymentDetails(Price price, BuildContext context) {
 
   //state functions
-  double getTax(double amount, double tax) {
-    return (amount * tax);
-  }
-
-  double getSubTotal() {
-    return (amount + getTax(amount, tax) - voucherDeduction);
-  }
-
-  int getPoints() {
-    return 5;
-  }
-
   return Padding(
     padding: EdgeInsets.only(left: 32, right: 32, top: 0, bottom: 8),
     child: Column(
@@ -30,11 +16,9 @@ Widget buildPaymentDetails(Price price, double amount, double voucherDeduction, 
           ),
           buildDivider(),
           detailsRow("Amount (Incl. 6% SST)", 'RM ${price.amount.toStringAsFixed(2)}'),
-          //detailsRow("SST (${(tax * 100).toStringAsFixed(0)}%)", 'RM ${getTax(price.amount, tax).toStringAsFixed(2)}'),
-          detailsRow("Vouchers", '- RM ${voucherDeduction.toStringAsFixed(2)}'),
-          detailsRow("Subtotal", 'RM ${getSubTotal().toStringAsFixed(2)}'),
-          detailsRowInfo("Delivery fee", "RM ${deliveryFee.toStringAsFixed(2)}", "Delivery fee", "Loren ipsum", context),
-          //detailsRow("Rounding adjustment", 'RM ${0.00.toStringAsFixed(2)}'),
+          detailsRow("Vouchers", '- RM ${price.voucherDeduction.toStringAsFixed(2)}'),
+          detailsRow("Subtotal", 'RM ${price.subtotal.toStringAsFixed(2)}'),
+          detailsRowInfo("Delivery fee", "RM ${price.deliveryFee.toStringAsFixed(2)}", "Delivery fee", "Loren ipsum", context),
         ]
     ),
   );

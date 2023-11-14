@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:nocoffeenocure/screens/home_screen/top_banner.dart';
+import 'package:nocoffeenocure/screens/home_screen/tracknavybaritem.dart';
+import '../../common.dart';
+import '../../models/cartitem.dart';
+import '../../repos/cartitem.dart';
 import '../bottom_nav_bar/bottom_nav_bar.dart';
 import '../cart/cart_screen.dart';
-import '../home/home.dart';
+import '../menu/menu.dart';
 import 'package:nocoffeenocure/screens/me/me.dart';
+
+import 'cartnavybaritem.dart';
 
 /*
 Main screen of app.
@@ -19,8 +25,43 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int _currentIndex = 0; // Current selected tab index
+  int _currentIndex = 0;
+  int _cartCount = 0;
+  bool _tracking = false;
   PageController _pageController = PageController(initialPage: 0);
+
+  void changePage(int index) {
+    setState(() {
+      _currentIndex = index;
+      _pageController.animateToPage(
+        index,
+        duration: Duration(milliseconds: 1), //default 300
+        curve: Curves.ease,
+      );
+    });
+  }
+
+  void updateCartCount(int adjustment) {
+    setState(() {
+      _cartCount = _cartCount + adjustment;
+      if (_cartCount < 0) _cartCount = 0;
+    });
+  }
+
+  void setTracking() {
+    //add OrderItem
+    _tracking = true;
+    printToast("Order placed");
+    changePage(0);
+    // if (_tracking == false) {
+    //   setState(() {
+    //
+    //   });
+    // }
+    // else {
+    //   printToast("Error: existing order already present");
+    // }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,9 +69,9 @@ class _HomeScreenState extends State<HomeScreen> {
       body: PageView(
         controller: _pageController,
         children: [
-          HomePage(),
+          MenuPage(updateCartCount), //put updateCartCount here
           VouchersPage(),
-          CartScreen(),
+          CartScreen(updateCartCount, setTracking, changePage, _tracking), //put updateCartCount here
           TrackPage(),
           Me()
         ],
@@ -40,51 +81,41 @@ class _HomeScreenState extends State<HomeScreen> {
           });
         },
       ),
-      //bottom nav bar, using a custom library instead of Flutter's default
-      //only 'track' and 'cart' are coded, others will be coded later.
-      bottomNavigationBar:buildBottomNavigationBar(),
+      bottomNavigationBar: buildBottomNavigationBar(_currentIndex, _cartCount, _tracking, changePage),
     );
   }
+}
 
-  Widget buildBottomNavigationBar() {
-    return BottomNavyBar(
-      selectedIndex: _currentIndex,
-      backgroundColor: Colors.white, // Set the background color
-      onItemSelected: (int index) {
-        setState(() {
-          _currentIndex = index;
-          _pageController.animateToPage(
-            index,
-            duration: Duration(milliseconds: 1), //default 300
-            curve: Curves.ease,
-          );
-        });
-      },
-      items: [
-        BottomNavyBarItem(
-          icon: Icon(Icons.home),
-          title: Text('Home', style: TextStyle(color: Colors.black)), // Set text color
-          activeColor: Colors.orange, // Set active tab text color
-          textAlign: TextAlign.center,
-        ),
-        BottomNavyBarItem(
-          icon: Icon(Icons.local_offer),
-          title: Text('Vouchers', style: TextStyle(color: Colors.black)), // Set text color
-          activeColor: Colors.orange, // Set active tab text color
-          textAlign: TextAlign.center,
-        ),
-        cart2,
-        //ShoppingCardWidget,
-        track,
-        BottomNavyBarItem(
-          icon: Icon(Icons.person),
-          title: Text('Me', style: TextStyle(color: Colors.black)), // Set text color
-          activeColor: Colors.orange, // Set active tab text color
-          textAlign: TextAlign.center,
-        ),
-      ],
-    );
-  }
+Widget buildBottomNavigationBar(int currentIndex, int cartCount, bool tracking, void Function(int) changePage) {
+  return BottomNavyBar(
+    selectedIndex: currentIndex,
+    backgroundColor: Colors.white, // Set the background color
+    onItemSelected: (int index) {
+      changePage(index);
+    },
+    items: [
+      BottomNavyBarItem(
+        icon: Icon(Icons.restaurant_menu),
+        title: Text('Menu', style: TextStyle(color: Colors.black)), // Set text color
+        activeColor: Colors.orange, // Set active tab text color
+        textAlign: TextAlign.center,
+      ),
+      BottomNavyBarItem(
+        icon: Icon(Icons.local_offer),
+        title: Text('Vouchers', style: TextStyle(color: Colors.black)), // Set text color
+        activeColor: Colors.orange, // Set active tab text color
+        textAlign: TextAlign.center,
+      ),
+      buildCartNavyBarItem(cartCount),
+      buildTrackNavyBarItem(tracking),
+      BottomNavyBarItem(
+        icon: Icon(Icons.person),
+        title: Text('Me', style: TextStyle(color: Colors.black)), // Set text color
+        activeColor: Colors.orange, // Set active tab text color
+        textAlign: TextAlign.center,
+      ),
+    ],
+  );
 }
 
 class VouchersPage extends StatelessWidget {
@@ -92,15 +123,6 @@ class VouchersPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Text('Vouchers Page'),
-    );
-  }
-}
-
-class CartPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text('Cart Page'),
     );
   }
 }

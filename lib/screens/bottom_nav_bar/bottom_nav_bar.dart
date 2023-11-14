@@ -70,7 +70,6 @@ BottomNavyBarItem cart = BottomNavyBarItem(
                     radius: 4, // Adjust the size of the badge, default 4
                     backgroundColor: Colors.transparent,
                     child: Text(
-                      //'9',// Replace with the actual number of items in the cart
                       countNotifier.count.toString(),
                       style: TextStyle(
                         fontSize: 8,
@@ -91,6 +90,47 @@ BottomNavyBarItem cart = BottomNavyBarItem(
     textAlign: TextAlign.center,
   );
 
+BottomNavyBarItem cart3 = BottomNavyBarItem(
+  icon: Stack(
+    children: [
+      Icon(Icons.shopping_cart), //the icon
+      Consumer<CartCountNotifier>(
+        builder: (context, countNotifier, child) {
+          return Visibility(
+            visible: countNotifier.count > 0, // Only show when countNotifier is more than 0
+            child: Positioned(
+              left: 12,
+              child: Container(
+                padding: EdgeInsets.all(2),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.red, // Set the background color of the badge
+                ),
+                child: CircleAvatar(
+                  radius: 4, // Adjust the size of the badge, default 4
+                  backgroundColor: Colors.transparent,
+                  child: Text(
+                    countNotifier.count.toString(),
+                    style: TextStyle(
+                      fontSize: 8,
+                      fontFamily: 'Roboto',
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ), //'number'
+              ),
+            ),
+          );
+        },
+      ), //the badge
+    ],
+  ),
+  title: Text('Cart', style: TextStyle(color: Colors.black)),
+  activeColor: Colors.orange,
+  textAlign: TextAlign.center,
+);
+
 //also integrate with 'Consumer' widget later.
 BottomNavyBarItem track = BottomNavyBarItem(
   icon: Stack(
@@ -108,7 +148,7 @@ BottomNavyBarItem track = BottomNavyBarItem(
             radius: 4,
             backgroundColor: Colors.transparent,
             child: Padding(
-              padding: EdgeInsets.only(left: 1), // Adjust the left padding as needed
+              padding: EdgeInsets.only(left: 1),
               child: Text(
                 '!',
                 style: TextStyle(

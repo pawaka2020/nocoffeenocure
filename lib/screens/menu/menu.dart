@@ -8,7 +8,9 @@ import '../home_screen/selection_bar.dart';
 import '../home_screen/top_banner.dart';
 //line 157 for navigation
 //load the repos here.
-class HomePage extends StatefulWidget {
+class MenuPage extends StatefulWidget {
+  void Function(int) updateCartCount;
+  MenuPage(this.updateCartCount);
 
   var menuItems = MenuItemRepo().getAll();
 
@@ -19,22 +21,22 @@ class HomePage extends StatefulWidget {
   }
 
   @override
-  _HomePageState createState() => _HomePageState();
+  _MenuPageState createState() => _MenuPageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _MenuPageState extends State<MenuPage> {
   String selectedCategory = 'All';
   ScrollController scrollController = ScrollController();
 
   void handleCategorySelected(String category) {
     setState(() {
       selectedCategory = category;
-      double offset = 0.0;
+      //double offset = 0.0;
       for (final category in widget.categories) {
         if (category == selectedCategory) break;
-        offset += getSliverListHeight(widget.menuItems, category);
+        //offset += getSliverListHeight(widget.menuItems, category);
       }
-      scrollController.animateTo(offset, duration: Duration(milliseconds: 500), curve: Curves.easeInOut);
+      //scrollController.animateTo(offset, duration: Duration(milliseconds: 500), curve: Curves.easeInOut);
     });
   }
 
@@ -56,7 +58,7 @@ class _HomePageState extends State<HomePage> {
         TopBanner(),
         SelectionBar(widget.categories, handleCategorySelected),
         PartialDivider(32, 2),
-        MenuGrid(filteredMenuItems, scrollController), // Pass the controller
+        MenuGrid(filteredMenuItems, scrollController, widget.updateCartCount), // Pass the controller
       ],
     );
   }
@@ -123,8 +125,9 @@ class MyMenuCard extends StatelessWidget {
 class MenuGrid extends StatelessWidget {
   final List<MenuItem> menuItems;
   final ScrollController scrollController;
+  void Function(int) updateCartCount;
 
-  MenuGrid(this.menuItems, this.scrollController);
+  MenuGrid(this.menuItems, this.scrollController, this.updateCartCount);
 
   SliverToBoxAdapter buildGridTitle(String title) {
     return SliverToBoxAdapter(
@@ -154,7 +157,7 @@ class MenuGrid extends StatelessWidget {
             onTap: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => MenuDetailsPage(menuItem, false, 1, 0),
+                  builder: (context) => MenuDetailsPage(menuItem, false, 1, 0, updateCartCount),
                 ),
               );
             },

@@ -4,9 +4,11 @@ import 'package:nocoffeenocure/screens/cart/paymentdetails.dart';
 import 'package:nocoffeenocure/screens/cart/paymentmethods.dart';
 import 'package:nocoffeenocure/screens/cart/specialrequest.dart';
 import 'package:nocoffeenocure/screens/cart/voucherselection.dart';
+import '../../common.dart';
 import '../../models/cartitem.dart';
 import '../../models/menuitem.dart';
 import '../../models/voucher.dart';
+import '../../provider/cart_count_notifier.dart';
 import '../../repos/cartitem.dart';
 import '../../repos/menuitem.dart';
 import '../../repos/voucher.dart';
@@ -29,6 +31,11 @@ class Price {
 }
 
 class CartScreen extends StatefulWidget {
+  void Function(int) updateCartCount;
+  void Function() setTracking;
+  void Function(int) changePage;
+  bool tracking;
+  CartScreen(this.updateCartCount, this.setTracking, this.changePage, this.tracking);
   var cartItems = CartItemRepo().getAll();
   var vouchers = VoucherRepo().getAll();
 
@@ -38,7 +45,6 @@ class CartScreen extends StatefulWidget {
 
 class _CartScreenState extends State<CartScreen> {
   //state variables
-  double _amount = 0.00;
   double _finalPrice = 0.00;
   double _packagePrice = 0.00;
   List _packagePrices = [0, 0];
@@ -101,7 +107,8 @@ class _CartScreenState extends State<CartScreen> {
       setState(() {
         CartItemRepo().remove(id);
         widget.cartItems = CartItemRepo().getAll();
-        adjustPrice();
+        widget.updateCartCount(-1);
+        printToast("Item removed from cart");
       });
     }
   }
@@ -122,7 +129,7 @@ class _CartScreenState extends State<CartScreen> {
       print('Item with id $targetId not found.');
     }
     final updatedCartItem = await Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) => MenuDetailsPage(cartItem.menuItemOB[0].toMenuItem(), true, cartItem.quantity!, cartItem.id),
+      builder: (context) => MenuDetailsPage(cartItem.menuItemOB[0].toMenuItem(), true, cartItem.quantity!, cartItem.id, widget.updateCartCount),
     ));
 
     if (updatedCartItem != null){
@@ -153,10 +160,17 @@ class _CartScreenState extends State<CartScreen> {
   }
 
   void placeOrder() {
-    print("item name = ${packaging.keys.elementAt(0)}");
-    print("item price = ${packaging['Straw']}");
-    print("special request = $_specialRequest");
-    print("final price = RM ${_finalPrice.toStringAsFixed(2)}");
+    //addOrderItem();
+    if (widget.tracking == false) {
+      widget.setTracking();
+      //delete all cart items
+      int length = widget.cartItems.length;
+      widget.updateCartCount(length * -1);
+      CartItemRepo().box.removeAll();
+      //setState(() {});
+    }
+
+    else printToast("Error: Order already exists");
   }
 
   void addVoucher() async {
@@ -217,8 +231,7 @@ class _CartScreenState extends State<CartScreen> {
                       PartialDivider(40, 10),
                       PaymentMethods(),
                       SizedBox(height: 5),
-                      //PaymentDetails(),
-                      buildPaymentDetails(price, _amount, _voucherDeduction, context),
+                      buildPaymentDetails(price, context),
                       SizedBox(height: 5),
                     ]
                   )
