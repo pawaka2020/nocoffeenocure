@@ -17,6 +17,17 @@ import 'cartitemcard.dart';
 import 'deliveryaddress.dart';
 import 'ordersubmit.dart';
 
+class Price {
+  double amount = 0.0;
+  double sst = 0.0;
+  double voucherDeduction = 0.0;
+  double subtotal = 0.0;
+  double deliveryFee = 0.0;
+  double roundingAdjustment = 0.0;
+  double total = 0.0;
+  Price();
+}
+
 class CartScreen extends StatefulWidget {
   var cartItems = CartItemRepo().getAll();
   var vouchers = VoucherRepo().getAll();
@@ -27,17 +38,60 @@ class CartScreen extends StatefulWidget {
 
 class _CartScreenState extends State<CartScreen> {
   //state variables
+  double _amount = 0.00;
   double _finalPrice = 0.00;
   double _packagePrice = 0.00;
   List _packagePrices = [0, 0];
   List<VoucherOB> _usedList = [];
   List<int> _selectedVoucherIds = [];
+  double _voucherDeduction = 0;
   String _specialRequest = "";
+
+  double _tax = 0.06;
+  double _deliveryFee = 4.00;
+  double _subtotal = 0;
+  double _roundingAdj = 0;
+
+  Price price = Price();
 
   final packaging = {
     "Straw": 0.50,
     "Paperbag": 10.00,
   };
+
+  void adjustPrice()  {
+    //calculate amount
+    double cartPrice = 0;
+    for (var cartItem in widget.cartItems) {
+      cartPrice += cartItem.price;
+    }
+    cartPrice += _packagePrice;
+    price.amount = cartPrice;
+
+    //calculate sst
+    //for now, just set it to zero becase I'm not sure if prices on menu exclusive or inclusive of tax.
+    //price.sst = price.amount * _tax;
+    price.sst = 0;
+
+    //calculate vouchers
+    for (var voucher in _usedList) {
+      price.voucherDeduction -= voucher.priceDeduct!;
+      price.voucherDeduction -= (price.amount - (voucher.priceDiscount! * price.amount));
+    }
+    price.voucherDeduction *= -1;
+
+    //calculate subtotal
+    price.subtotal = price.amount + price.sst + price.voucherDeduction;
+
+    //calculate delivery fee
+    price.deliveryFee = _deliveryFee;
+
+    //calculate rounding adjustment
+
+    //calculate final price
+    _finalPrice = price.amount;
+    price.total = price.subtotal + price.deliveryFee;
+  }
 
   //state functions
   Future<void> deleteCartItem(int id) async {
@@ -72,9 +126,7 @@ class _CartScreenState extends State<CartScreen> {
     ));
 
     if (updatedCartItem != null){
-      //CartItemRepo().box.put(updatedCartItem);
       setState(() {
-        print("SetState2!!!!!!!!!!!");
         CartItemRepo().box.put(updatedCartItem);
         widget.cartItems = CartItemRepo().getAll();
         adjustPrice();
@@ -82,15 +134,6 @@ class _CartScreenState extends State<CartScreen> {
     }
     else
       print("Error: Cart item not received");
-  }
-
-  void adjustPrice() {
-    double newFinalPrice = 0;
-    for (var cartItem in widget.cartItems) {
-      newFinalPrice += cartItem.price;
-    }
-    newFinalPrice += _packagePrice;
-    _finalPrice = newFinalPrice;
   }
 
   void updateSpecialRequest(String newSpecialRequest) {
@@ -174,12 +217,13 @@ class _CartScreenState extends State<CartScreen> {
                       PartialDivider(40, 10),
                       PaymentMethods(),
                       SizedBox(height: 5),
-                      PaymentDetails(),
+                      //PaymentDetails(),
+                      buildPaymentDetails(price, _amount, _voucherDeduction, context),
                       SizedBox(height: 5),
                     ]
                   )
                 ),
-                buildSubmitOrder(_finalPrice, placeOrder)
+                buildSubmitOrder(price.total, placeOrder)
               ]
             )
     );

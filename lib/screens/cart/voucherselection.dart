@@ -4,7 +4,7 @@ import '../../models/voucher.dart';
 import '../../repos/voucher.dart';
 
 Widget buildVoucherSelection(List<VoucherOB> usedList, List<int> selectedVoucherIds,
-    List<VoucherOB> vouchers, BuildContext context, void Function() addVoucher, void Function(int) removeVoucher ){
+    List<VoucherOB> vouchers, BuildContext context, void Function() addVoucher, void Function(int) removeVoucher) {
 
   return Padding(
       padding: EdgeInsets.only(left: 16, right: 16, top: 8, bottom: 8),
