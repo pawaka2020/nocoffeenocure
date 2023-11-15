@@ -18,6 +18,7 @@ import '../selectunusedvoucher/selectunusedvoucher.dart';
 import 'cartitemcard.dart';
 import 'deliveryaddress.dart';
 import 'ordersubmit.dart';
+
 ///adasd
 class Price {
   double amount = 0.0;
@@ -268,7 +269,3 @@ Future<bool> showDeleteConfirmationDialog(BuildContext context, String text1, St
     },
   );
 }
-
-
-
-
