@@ -18,6 +18,7 @@ enum BackendSource {
   dummy,
   testBackend,
 }
+final deepLink = 'nocoffeenocureapp://login';
 
 /*
 Implement CartCountNotifier to allow changes to cart icon's badge display in

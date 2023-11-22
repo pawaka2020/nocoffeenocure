@@ -28,6 +28,7 @@ class SpecialRequest extends StatelessWidget {
                 fontSize: 12,
                 color:Colors.blue
             ),
+            maxLength: 20,
             decoration: InputDecoration(
               enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(color: Colors.grey),

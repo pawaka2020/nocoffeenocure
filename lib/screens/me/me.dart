@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:uni_links/uni_links.dart';
+import '../../common.dart';
 import 'help.dart';
 import 'login_screen.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 /*
 Leads users to other screens 'help', 'talk to us', 'terms of service',
@@ -14,10 +17,8 @@ class Me extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: <Widget>[
-          //SizedBox(height: 16.0),
           Padding(
-            padding: EdgeInsets.only(top: 28.0, left: 16.0, right: 16.0), // Add top padding here
-            //child: logcard,
+            padding: EdgeInsets.only(top: 28.0, left: 16.0, right: 16.0),
             child:LoginCard()
           ),
           Expanded(
@@ -25,13 +26,13 @@ class Me extends StatelessWidget {
               padding: EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0),
               children: [
                 buildMeCard(context, 'Help', Icons.help_outline, HelpScreen()),
-                buildMeCard(context, 'Contact Us', Icons.chat_bubble_outline),
-                buildMeCard(context, 'Terms of Service', Icons.description),
-                buildMeCard(context, 'Privacy Policy', Icons.privacy_tip),
-                buildMeCard(context, 'About Us', Icons.info_outline),
-                buildMeCard(context, 'Our Bean', Icons.local_cafe),
-                buildMeCard(context, 'Locations', Icons.location_on),
-                buildMeCard(context, 'Settings', Icons.settings),
+                buildMeCard(context, 'Contact Us', Icons.chat_bubble_outline, HelpScreen()),
+                buildMeCard(context, 'Terms of Service', Icons.description, HelpScreen()),
+                buildMeCard(context, 'Privacy Policy', Icons.privacy_tip, HelpScreen()),
+                buildMeCard(context, 'About Us', Icons.info_outline, HelpScreen()),
+                buildMeCard(context, 'Our Bean', Icons.local_cafe, HelpScreen()),
+                buildMeCard(context, 'Locations', Icons.location_on, HelpScreen()),
+                buildMeCard(context, 'Settings', Icons.settings, HelpScreen()),
               ],
             ),
           ),
@@ -40,18 +41,24 @@ class Me extends StatelessWidget {
     );
   }
 
-  Widget buildMeCard(BuildContext context, String title, IconData icon, [Widget? screen]) {
+  void doNothing() {
+    printToast("Do nothing");
+  }
+
+  void navigateTo(BuildContext context, Widget screen) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) => screen,
+    ));
+  }
+
+  Widget buildMeCard(BuildContext context, String title, IconData icon, Widget screen) {
     return MeCard(
       title: title,
       icon: icon,
       onTap: () {
-        if (screen != null) {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => screen,
-            ),
-          );
-        }
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => screen,
+        ));
       },
     );
   }
@@ -98,59 +105,18 @@ class MeCard extends StatelessWidget {
   }
 }
 
-/*
-Sole card template just for logging in.
-Another Consumer and Provider implementiation will be used here to handle
-live updates of log in and log out.
-*/
-// Card logcard = Card(
-//   elevation: 4.0,
-//   margin: EdgeInsets.symmetric(vertical: 8.0),
-//   color: Colors.orange, // Card background color
-//   child: Padding(
-//     padding: EdgeInsets.all(16.0),
-//     child: Column(
-//       children: [
-//         Align(
-//           alignment: Alignment.centerLeft,
-//           child: Container(
-//             child: Text(
-//               'Welcome, Guest',
-//               style: TextStyle(
-//                 fontSize: 20.0,
-//                 fontWeight: FontWeight.bold,
-//                 color: Colors.white, // Text color
-//               ),
-//             ),
-//           ),
-//         ),
-//         SizedBox(height: 8.0),
-//         Align(
-//           alignment: Alignment.centerRight,
-//           child: Container(
-//             child: Text(
-//               'Log in or Sign Up',
-//               style: TextStyle(
-//                 fontSize: 16.0, // Smaller text size
-//                 color: Colors.white, // Text color
-//               ),
-//             ),
-//           ),
-//         ),
-//       ],
-//     ),
-//   ),
-// );
-
+//make this a stateful widget later so it can shift forms.
 class LoginCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        // Navigate to the 'LoginScreen' when the Card is tapped
-        Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => LoginScreen(),
-        ));
+        //Navigate to the 'LoginScreen' when the Card is tapped
+        // Navigator.of(context).push(MaterialPageRoute(
+        //   builder: (context) => LoginScreen(),
+        // ));
+        //sendWhatsapp(context);
+        handleDeepLink('ncncapp://hello');
       },
       child: Card(
         elevation: 4.0,
@@ -193,5 +159,33 @@ class LoginCard extends StatelessWidget {
     );
   }
 }
+
+void sendWhatsapp(BuildContext context) async {
+  String phone = "+60172520691";
+  String messageTest = "Hello World";
+  String message = "Hi No Coffee No Cure, I need my cure now!";
+  final url = Uri.parse('https://wa.me/$phone?text=${Uri.encodeFull(message)}');
+  String? urlResponse;
+
+  if (!await launchUrl(url)) {
+    throw Exception('Could not launch $url');
+  }
+  else {
+    //capture url link when user clicks on the URL response presented by Whatsapp Business API.
+    //urlResponse = ??
+  }
+  final result = linkStream.listen((String? link) {
+    // Handle the link and extract parameters
+    print("Link received: $link");
+
+    // Extract parameters from the link (token, phone, etc.)
+    // Perform user authentication based on the received parameters
+  });
+}
+
+//https://omegacoffee.com/redirect?token=unique_token&app_installed=true
+//unique_token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+
+
 
 

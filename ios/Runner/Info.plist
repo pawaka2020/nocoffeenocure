@@ -43,5 +43,19 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<!-- Add the following for deep linking -->
+	<key>CFBundleURLTypes</key>
+    <array>
+        <dict>
+            <key>CFBundleURLName</key>
+            <string></string>
+            <key>CFBundleURLSchemes</key>
+            <array>
+                <string>ncncapp</string>
+            </array>
+            <key>CFBundleURLPath</key>
+            <string>/login</string>
+        </dict>
+    </array>
 </dict>
 </plist>

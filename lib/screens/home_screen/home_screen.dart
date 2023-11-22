@@ -10,6 +10,7 @@ import '../cart/cart_screen.dart';
 import '../menu/menu.dart';
 import 'package:nocoffeenocure/screens/me/me.dart';
 
+import '../track/trackpage.dart';
 import 'cartnavybaritem.dart';
 
 /*
@@ -127,11 +128,3 @@ class VouchersPage extends StatelessWidget {
   }
 }
 
-class TrackPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text('Track Page'),
-    );
-  }
-}

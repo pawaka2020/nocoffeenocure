@@ -9,7 +9,15 @@ class HelpScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Help'),
+        title: Text(
+            'Help',
+            style: TextStyle(
+              color: Colors.white,
+            ),
+        ),
+        iconTheme: IconThemeData(
+          color: Colors.white,
+        ),
       ),
       body: placeholder,
     );
@@ -22,3 +30,4 @@ Center placeholder = Center(
       style: TextStyle(fontSize: 24),
     )
 );
+

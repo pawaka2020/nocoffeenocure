@@ -6,7 +6,7 @@ BottomNavyBarItem buildTrackNavyBarItem(bool tracking) {
   return BottomNavyBarItem(
     icon: Stack(
       children: [
-        Icon(Icons.directions_bike), //the icon
+        Icon(Icons.motorcycle), //the icon
         if (tracking == true) Positioned(
           left: 12,
           child: Container(

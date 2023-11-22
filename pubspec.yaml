@@ -39,6 +39,10 @@ dependencies:
   objectbox_flutter_libs: any
   flutter_secure_storage:
   uuid: ^4.1.0
+  url_launcher:
+  uni_links:
+  timelines:
+  timeline_tile:
 
 dev_dependencies:
   flutter_test:

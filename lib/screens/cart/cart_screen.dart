@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nocoffeenocure/screens/cart/packaging.dart';
 import 'package:nocoffeenocure/screens/cart/paymentdetails.dart';
 import 'package:nocoffeenocure/screens/cart/paymentmethods.dart';
+import 'package:nocoffeenocure/screens/cart/phone.dart';
 import 'package:nocoffeenocure/screens/cart/specialrequest.dart';
 import 'package:nocoffeenocure/screens/cart/voucherselection.dart';
 import '../../common.dart';
@@ -39,6 +40,7 @@ class CartScreen extends StatefulWidget {
   CartScreen(this.updateCartCount, this.setTracking, this.changePage, this.tracking);
   var cartItems = CartItemRepo().getAll();
   var vouchers = VoucherRepo().getAll();
+  //var vouchers = VoucherRepo().getAllFromUser();
 
   @override
   State<StatefulWidget> createState() => _CartScreenState();
@@ -88,7 +90,7 @@ class _CartScreenState extends State<CartScreen> {
     price.voucherDeduction *= -1;
 
     //calculate subtotal
-    price.subtotal = price.amount + price.sst + price.voucherDeduction;
+    price.subtotal = price.amount + price.sst - price.voucherDeduction;
 
     //calculate delivery fee
     price.deliveryFee = _deliveryFee;
@@ -122,7 +124,6 @@ class _CartScreenState extends State<CartScreen> {
           (item) => item.id == targetId,
       orElse: () => CartItemOB(),
     );
-
     if (cartItem != null) {
       print('Found item: ${cartItem.menuItemOB[0].title}');
     }
@@ -138,6 +139,7 @@ class _CartScreenState extends State<CartScreen> {
         CartItemRepo().box.put(updatedCartItem);
         widget.cartItems = CartItemRepo().getAll();
         adjustPrice();
+        printToast("Cart item updated");
       });
     }
     else
@@ -170,7 +172,6 @@ class _CartScreenState extends State<CartScreen> {
       CartItemRepo().box.removeAll();
       //setState(() {});
     }
-
     else printToast("Error: Order already exists");
   }
 
@@ -229,6 +230,8 @@ class _CartScreenState extends State<CartScreen> {
                       buildVoucherSelection(_usedList, _selectedVoucherIds, widget.vouchers, context, addVoucher, removeVoucher),
                       PartialDivider(40, 10),
                       DeliveryAddress(),
+                      PartialDivider(40, 10),
+                      buildPhoneNumber(),
                       PartialDivider(40, 10),
                       PaymentMethods(),
                       SizedBox(height: 5),

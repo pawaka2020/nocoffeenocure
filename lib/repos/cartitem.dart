@@ -1,3 +1,6 @@
+import 'package:nocoffeenocure/models/user.dart';
+import 'package:nocoffeenocure/repos/user.dart';
+
 import '../backend/dummy/cartitem.dart';
 import '../main.dart';
 import '../models/cartitem.dart';
@@ -5,9 +8,7 @@ import '../models/cartitem.dart';
 class CartItemRepo {
   final box = objectbox.cartItemBox;
 
-  void remove(int id) {
-    box.remove(id);
-  }
+
 
   Future<void> update(BackendSource source) async {
     late final newData;
@@ -30,11 +31,26 @@ class CartItemRepo {
   }
 
   List<CartItemOB> getAll() {
-    return box.getAll();
+    //return box.getAll();
+    UserOB? currentUser = UserRepo().getLoggedInUser();
+    List<CartItemOB> cartItems = currentUser!.cartItems;
+    //return cartItems;
+    return UserRepo().getLoggedInUser()!.cartItems;
   }
 
+  //called by menu_details
   void put(CartItemOB cartItem){
-    box.put(cartItem);
+    //box.put(cartItem);
+    UserOB? currentUser = UserRepo().getLoggedInUser();
+    currentUser?.cartItems.add(cartItem);
+    UserRepo().box.put(currentUser);
+  }
+
+  void remove(int id) {
+    //box.remove(id);
+    UserOB? currentUser = UserRepo().getLoggedInUser();
+    currentUser?.cartItems.removeWhere((element) => element.id == id);
+    UserRepo().box.put(currentUser);
   }
 
   void testPrint() {

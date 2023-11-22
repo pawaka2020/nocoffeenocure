@@ -1,4 +1,6 @@
+import 'package:nocoffeenocure/models/user.dart';
 import 'package:objectbox/objectbox.dart';
+import 'order.dart';
 
 //recommended size 440 x 100
 @Entity()
@@ -12,4 +14,7 @@ class VoucherOB {
   DateTime? expiryDate;
 
   bool? activated;
+
+  final user = ToOne<UserOB>();
+  final order = ToOne<OrderOB>();
 }

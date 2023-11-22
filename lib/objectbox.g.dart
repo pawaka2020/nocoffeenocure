@@ -18,6 +18,8 @@ import 'models/bannernews.dart';
 import 'models/cartitem.dart';
 import 'models/fullnews.dart';
 import 'models/menuitem.dart';
+import 'models/order.dart';
+import 'models/token.dart';
 import 'models/user.dart';
 import 'models/voucher.dart';
 
@@ -264,43 +266,9 @@ final _entities = <ModelEntity>[
       relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[]),
   ModelEntity(
-      id: const IdUid(12, 4530192993071638560),
-      name: 'UserOB',
-      lastPropertyId: const IdUid(5, 301378820354053017),
-      flags: 0,
-      properties: <ModelProperty>[
-        ModelProperty(
-            id: const IdUid(1, 1772969239402912101),
-            name: 'id',
-            type: 6,
-            flags: 1),
-        ModelProperty(
-            id: const IdUid(2, 1699615406421456723),
-            name: 'userId',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(3, 653484881005465406),
-            name: 'name',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(4, 6214153821840455891),
-            name: 'email',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(5, 301378820354053017),
-            name: 'address',
-            type: 9,
-            flags: 0)
-      ],
-      relations: <ModelRelation>[],
-      backlinks: <ModelBacklink>[]),
-  ModelEntity(
       id: const IdUid(15, 1006185654449316480),
       name: 'CartItemOB',
-      lastPropertyId: const IdUid(9, 2168617179162901087),
+      lastPropertyId: const IdUid(11, 8678586329167081701),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -337,7 +305,21 @@ final _entities = <ModelEntity>[
             id: const IdUid(9, 2168617179162901087),
             name: 'price',
             type: 8,
-            flags: 0)
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(10, 2175241338504207429),
+            name: 'orderId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(19, 4887777392783150537),
+            relationTarget: 'OrderOB'),
+        ModelProperty(
+            id: const IdUid(11, 8678586329167081701),
+            name: 'userId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(22, 3574927397556316278),
+            relationTarget: 'UserOB')
       ],
       relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[
@@ -346,7 +328,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(17, 8024934109289736930),
       name: 'VoucherOB',
-      lastPropertyId: const IdUid(8, 7914782462890144178),
+      lastPropertyId: const IdUid(12, 2025024905402711402),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -378,7 +360,230 @@ final _entities = <ModelEntity>[
             id: const IdUid(8, 7914782462890144178),
             name: 'priceDiscount',
             type: 8,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(11, 1438653914114026355),
+            name: 'userId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(20, 8026949474052666557),
+            relationTarget: 'UserOB'),
+        ModelProperty(
+            id: const IdUid(12, 2025024905402711402),
+            name: 'orderId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(21, 855284375073292395),
+            relationTarget: 'OrderOB')
+      ],
+      relations: <ModelRelation>[],
+      backlinks: <ModelBacklink>[]),
+  ModelEntity(
+      id: const IdUid(18, 6064446509916367692),
+      name: 'TokenOB',
+      lastPropertyId: const IdUid(5, 2272607414657403014),
+      flags: 0,
+      properties: <ModelProperty>[
+        ModelProperty(
+            id: const IdUid(1, 8745156916931656254),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        ModelProperty(
+            id: const IdUid(2, 1614979557165057070),
+            name: 'token',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(3, 2734293094508751276),
+            name: 'userId',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(4, 4369116351569210447),
+            name: 'expirationDate',
+            type: 10,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(5, 2272607414657403014),
+            name: 'guest',
+            type: 1,
             flags: 0)
+      ],
+      relations: <ModelRelation>[],
+      backlinks: <ModelBacklink>[]),
+  ModelEntity(
+      id: const IdUid(21, 894287139824345925),
+      name: 'OrderOB',
+      lastPropertyId: const IdUid(11, 1770077229146406988),
+      flags: 0,
+      properties: <ModelProperty>[
+        ModelProperty(
+            id: const IdUid(1, 6569334852921062188),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        ModelProperty(
+            id: const IdUid(2, 7252095066857705921),
+            name: 'orderId',
+            type: 6,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(3, 3939607138348557143),
+            name: 'eta',
+            type: 10,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(4, 8536933428330670500),
+            name: 'status',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(5, 341510995103447512),
+            name: 'locationLongitude',
+            type: 8,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(6, 3708257406920850226),
+            name: 'locationLatitude',
+            type: 8,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(7, 5768616073443887213),
+            name: 'totalPrice',
+            type: 8,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(8, 7182880521418299565),
+            name: 'deliveryAddress',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(9, 5528799804993733421),
+            name: 'onSitePickup',
+            type: 1,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(10, 1920845847731351459),
+            name: 'userId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(17, 4194775984416843370),
+            relationTarget: 'UserOB'),
+        ModelProperty(
+            id: const IdUid(11, 1770077229146406988),
+            name: 'phoneNumber',
+            type: 9,
+            flags: 0)
+      ],
+      relations: <ModelRelation>[],
+      backlinks: <ModelBacklink>[
+        ModelBacklink(name: 'cartItems', srcEntity: 'CartItemOB', srcField: ''),
+        ModelBacklink(name: 'vouchers', srcEntity: 'VoucherOB', srcField: '')
+      ]),
+  ModelEntity(
+      id: const IdUid(22, 5302879394691121557),
+      name: 'UserOB',
+      lastPropertyId: const IdUid(11, 2517427027947222361),
+      flags: 0,
+      properties: <ModelProperty>[
+        ModelProperty(
+            id: const IdUid(1, 1730973907303744519),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        ModelProperty(
+            id: const IdUid(2, 8193253317674972640),
+            name: 'userId',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(3, 1505167286862826768),
+            name: 'name',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(4, 1444465168141315392),
+            name: 'email',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(5, 6505783780621034591),
+            name: 'birthday',
+            type: 10,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(6, 3579661751333407088),
+            name: 'address',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(7, 4269190105807531042),
+            name: 'profileImage',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(8, 5237903220829767417),
+            name: 'coins',
+            type: 6,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(9, 3604708473021510924),
+            name: 'guest',
+            type: 1,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(10, 2371229402725387636),
+            name: 'isLoggedIn',
+            type: 1,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(11, 2517427027947222361),
+            name: 'phoneNumber',
+            type: 9,
+            flags: 0)
+      ],
+      relations: <ModelRelation>[],
+      backlinks: <ModelBacklink>[
+        ModelBacklink(
+            name: 'reviews', srcEntity: 'UserReview2OB', srcField: ''),
+        ModelBacklink(name: 'orders', srcEntity: 'OrderOB', srcField: ''),
+        ModelBacklink(name: 'vouchers', srcEntity: 'VoucherOB', srcField: ''),
+        ModelBacklink(name: 'cartItems', srcEntity: 'CartItemOB', srcField: '')
+      ]),
+  ModelEntity(
+      id: const IdUid(23, 6180815482110331163),
+      name: 'UserReview2OB',
+      lastPropertyId: const IdUid(5, 4454006953809070021),
+      flags: 0,
+      properties: <ModelProperty>[
+        ModelProperty(
+            id: const IdUid(1, 3701563915608125595),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        ModelProperty(
+            id: const IdUid(2, 3994297037497051764),
+            name: 'message',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(3, 3024624892324876142),
+            name: 'stars',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(4, 3169018883723215242),
+            name: 'status',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(5, 4454006953809070021),
+            name: 'userId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(18, 6758416861336710766),
+            relationTarget: 'UserOB')
       ],
       relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[])
@@ -411,8 +616,8 @@ Future<Store> openStore(
 ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
-      lastEntityId: const IdUid(17, 8024934109289736930),
-      lastIndexId: const IdUid(11, 6218316149259164835),
+      lastEntityId: const IdUid(23, 6180815482110331163),
+      lastIndexId: const IdUid(22, 3574927397556316278),
       lastRelationId: const IdUid(0, 0),
       lastSequenceId: const IdUid(0, 0),
       retiredEntityUids: const [
@@ -422,13 +627,19 @@ ModelDefinition getObjectBoxModel() {
         2897391873509332869,
         3833050479341648882,
         6271963573804352264,
-        6749911841847507853
+        6749911841847507853,
+        755040416761839102,
+        4530192993071638560,
+        1078667474729755585
       ],
       retiredIndexUids: const [
         8717456330994247813,
         25080071583396621,
         5804734188308448853,
-        3033352460847545794
+        3033352460847545794,
+        2035166375975082046,
+        8543830084600779176,
+        1652763991564368094
       ],
       retiredPropertyUids: const [
         3504729010156614603,
@@ -464,7 +675,26 @@ ModelDefinition getObjectBoxModel() {
         5141375944316396741,
         383743847163415760,
         1057079585257430136,
-        843305828425272101
+        843305828425272101,
+        1479696386852182766,
+        8329618371624587469,
+        352696961669626703,
+        745896767734292193,
+        6382646692716196750,
+        1772969239402912101,
+        1699615406421456723,
+        653484881005465406,
+        6214153821840455891,
+        301378820354053017,
+        4311487514591848774,
+        7666468359027592032,
+        5026814509820478210,
+        6223603823253459524,
+        4982496298708514632,
+        5816247544800360042,
+        288926490441761823,
+        6199814512664527826,
+        1546320062219839674
       ],
       retiredRelationUids: const [],
       modelVersion: 5,
@@ -769,52 +999,9 @@ ModelDefinition getObjectBoxModel() {
           object.menuItem.attach(store);
           return object;
         }),
-    UserOB: EntityDefinition<UserOB>(
-        model: _entities[7],
-        toOneRelations: (UserOB object) => [],
-        toManyRelations: (UserOB object) => {},
-        getId: (UserOB object) => object.id,
-        setId: (UserOB object, int id) {
-          object.id = id;
-        },
-        objectToFB: (UserOB object, fb.Builder fbb) {
-          final userIdOffset =
-              object.userId == null ? null : fbb.writeString(object.userId!);
-          final nameOffset =
-              object.name == null ? null : fbb.writeString(object.name!);
-          final emailOffset =
-              object.email == null ? null : fbb.writeString(object.email!);
-          final addressOffset =
-              object.address == null ? null : fbb.writeString(object.address!);
-          fbb.startTable(6);
-          fbb.addInt64(0, object.id);
-          fbb.addOffset(1, userIdOffset);
-          fbb.addOffset(2, nameOffset);
-          fbb.addOffset(3, emailOffset);
-          fbb.addOffset(4, addressOffset);
-          fbb.finish(fbb.endTable());
-          return object.id;
-        },
-        objectFromFB: (Store store, ByteData fbData) {
-          final buffer = fb.BufferContext(fbData);
-          final rootOffset = buffer.derefObject(0);
-
-          final object = UserOB()
-            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0)
-            ..userId = const fb.StringReader(asciiOptimization: true)
-                .vTableGetNullable(buffer, rootOffset, 6)
-            ..name = const fb.StringReader(asciiOptimization: true)
-                .vTableGetNullable(buffer, rootOffset, 8)
-            ..email = const fb.StringReader(asciiOptimization: true)
-                .vTableGetNullable(buffer, rootOffset, 10)
-            ..address = const fb.StringReader(asciiOptimization: true)
-                .vTableGetNullable(buffer, rootOffset, 12);
-
-          return object;
-        }),
     CartItemOB: EntityDefinition<CartItemOB>(
-        model: _entities[8],
-        toOneRelations: (CartItemOB object) => [],
+        model: _entities[7],
+        toOneRelations: (CartItemOB object) => [object.order, object.user],
         toManyRelations: (CartItemOB object) => {
               RelInfo<MenuItemOB>.toOneBacklink(10, object.id,
                       (MenuItemOB srcObject) => srcObject.cartItem):
@@ -831,7 +1018,7 @@ ModelDefinition getObjectBoxModel() {
               object.name == null ? null : fbb.writeString(object.name!);
           final contentOffset =
               object.content == null ? null : fbb.writeString(object.content!);
-          fbb.startTable(10);
+          fbb.startTable(12);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, imageOffset);
           fbb.addOffset(2, nameOffset);
@@ -839,6 +1026,8 @@ ModelDefinition getObjectBoxModel() {
           fbb.addInt64(4, object.quantity);
           fbb.addInt64(5, object.menuItem_id);
           fbb.addFloat64(8, object.price);
+          fbb.addInt64(9, object.order.targetId);
+          fbb.addInt64(10, object.user.targetId);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -860,6 +1049,12 @@ ModelDefinition getObjectBoxModel() {
                 const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 14)
             ..price =
                 const fb.Float64Reader().vTableGet(buffer, rootOffset, 20, 0);
+          object.order.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 22, 0);
+          object.order.attach(store);
+          object.user.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 24, 0);
+          object.user.attach(store);
           InternalToManyAccess.setRelInfo<CartItemOB>(
               object.menuItemOB,
               store,
@@ -868,8 +1063,8 @@ ModelDefinition getObjectBoxModel() {
           return object;
         }),
     VoucherOB: EntityDefinition<VoucherOB>(
-        model: _entities[9],
-        toOneRelations: (VoucherOB object) => [],
+        model: _entities[8],
+        toOneRelations: (VoucherOB object) => [object.user, object.order],
         toManyRelations: (VoucherOB object) => {},
         getId: (VoucherOB object) => object.id,
         setId: (VoucherOB object, int id) {
@@ -878,13 +1073,15 @@ ModelDefinition getObjectBoxModel() {
         objectToFB: (VoucherOB object, fb.Builder fbb) {
           final imageOffset =
               object.image == null ? null : fbb.writeString(object.image!);
-          fbb.startTable(9);
+          fbb.startTable(13);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, imageOffset);
           fbb.addFloat64(3, object.priceDeduct);
           fbb.addInt64(4, object.expiryDate?.millisecondsSinceEpoch);
           fbb.addBool(6, object.activated);
           fbb.addFloat64(7, object.priceDiscount);
+          fbb.addInt64(10, object.user.targetId);
+          fbb.addInt64(11, object.order.targetId);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -906,7 +1103,274 @@ ModelDefinition getObjectBoxModel() {
                 const fb.BoolReader().vTableGetNullable(buffer, rootOffset, 16)
             ..priceDiscount = const fb.Float64Reader()
                 .vTableGetNullable(buffer, rootOffset, 18);
+          object.user.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 24, 0);
+          object.user.attach(store);
+          object.order.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 26, 0);
+          object.order.attach(store);
+          return object;
+        }),
+    TokenOB: EntityDefinition<TokenOB>(
+        model: _entities[9],
+        toOneRelations: (TokenOB object) => [],
+        toManyRelations: (TokenOB object) => {},
+        getId: (TokenOB object) => object.id,
+        setId: (TokenOB object, int id) {
+          object.id = id;
+        },
+        objectToFB: (TokenOB object, fb.Builder fbb) {
+          final tokenOffset =
+              object.token == null ? null : fbb.writeString(object.token!);
+          final userIdOffset =
+              object.userId == null ? null : fbb.writeString(object.userId!);
+          fbb.startTable(6);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, tokenOffset);
+          fbb.addOffset(2, userIdOffset);
+          fbb.addInt64(3, object.expirationDate?.millisecondsSinceEpoch);
+          fbb.addBool(4, object.guest);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final expirationDateValue =
+              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 10);
+          final object = TokenOB()
+            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0)
+            ..token = const fb.StringReader(asciiOptimization: true)
+                .vTableGetNullable(buffer, rootOffset, 6)
+            ..userId = const fb.StringReader(asciiOptimization: true)
+                .vTableGetNullable(buffer, rootOffset, 8)
+            ..expirationDate = expirationDateValue == null
+                ? null
+                : DateTime.fromMillisecondsSinceEpoch(expirationDateValue)
+            ..guest =
+                const fb.BoolReader().vTableGetNullable(buffer, rootOffset, 12);
 
+          return object;
+        }),
+    OrderOB: EntityDefinition<OrderOB>(
+        model: _entities[10],
+        toOneRelations: (OrderOB object) => [object.user],
+        toManyRelations: (OrderOB object) => {
+              RelInfo<CartItemOB>.toOneBacklink(
+                      10, object.id, (CartItemOB srcObject) => srcObject.order):
+                  object.cartItems,
+              RelInfo<VoucherOB>.toOneBacklink(
+                      12, object.id, (VoucherOB srcObject) => srcObject.order):
+                  object.vouchers
+            },
+        getId: (OrderOB object) => object.id,
+        setId: (OrderOB object, int id) {
+          object.id = id;
+        },
+        objectToFB: (OrderOB object, fb.Builder fbb) {
+          final statusOffset =
+              object.status == null ? null : fbb.writeString(object.status!);
+          final deliveryAddressOffset = object.deliveryAddress == null
+              ? null
+              : fbb.writeString(object.deliveryAddress!);
+          final phoneNumberOffset = object.phoneNumber == null
+              ? null
+              : fbb.writeString(object.phoneNumber!);
+          fbb.startTable(12);
+          fbb.addInt64(0, object.id);
+          fbb.addInt64(1, object.orderId);
+          fbb.addInt64(2, object.eta?.millisecondsSinceEpoch);
+          fbb.addOffset(3, statusOffset);
+          fbb.addFloat64(4, object.locationLongitude);
+          fbb.addFloat64(5, object.locationLatitude);
+          fbb.addFloat64(6, object.totalPrice);
+          fbb.addOffset(7, deliveryAddressOffset);
+          fbb.addBool(8, object.onSitePickup);
+          fbb.addInt64(9, object.user.targetId);
+          fbb.addOffset(10, phoneNumberOffset);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final etaValue =
+              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 8);
+          final object = OrderOB()
+            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0)
+            ..orderId =
+                const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 6)
+            ..eta = etaValue == null
+                ? null
+                : DateTime.fromMillisecondsSinceEpoch(etaValue)
+            ..status = const fb.StringReader(asciiOptimization: true)
+                .vTableGetNullable(buffer, rootOffset, 10)
+            ..locationLongitude = const fb.Float64Reader()
+                .vTableGetNullable(buffer, rootOffset, 12)
+            ..locationLatitude = const fb.Float64Reader()
+                .vTableGetNullable(buffer, rootOffset, 14)
+            ..totalPrice = const fb.Float64Reader()
+                .vTableGetNullable(buffer, rootOffset, 16)
+            ..deliveryAddress = const fb.StringReader(asciiOptimization: true)
+                .vTableGetNullable(buffer, rootOffset, 18)
+            ..onSitePickup =
+                const fb.BoolReader().vTableGetNullable(buffer, rootOffset, 20)
+            ..phoneNumber = const fb.StringReader(asciiOptimization: true)
+                .vTableGetNullable(buffer, rootOffset, 24);
+          object.user.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 22, 0);
+          object.user.attach(store);
+          InternalToManyAccess.setRelInfo<OrderOB>(
+              object.cartItems,
+              store,
+              RelInfo<CartItemOB>.toOneBacklink(
+                  10, object.id, (CartItemOB srcObject) => srcObject.order));
+          InternalToManyAccess.setRelInfo<OrderOB>(
+              object.vouchers,
+              store,
+              RelInfo<VoucherOB>.toOneBacklink(
+                  12, object.id, (VoucherOB srcObject) => srcObject.order));
+          return object;
+        }),
+    UserOB: EntityDefinition<UserOB>(
+        model: _entities[11],
+        toOneRelations: (UserOB object) => [],
+        toManyRelations: (UserOB object) => {
+              RelInfo<UserReview2OB>.toOneBacklink(5, object.id,
+                  (UserReview2OB srcObject) => srcObject.user): object.reviews,
+              RelInfo<OrderOB>.toOneBacklink(
+                      10, object.id, (OrderOB srcObject) => srcObject.user):
+                  object.orders,
+              RelInfo<VoucherOB>.toOneBacklink(
+                      11, object.id, (VoucherOB srcObject) => srcObject.user):
+                  object.vouchers,
+              RelInfo<CartItemOB>.toOneBacklink(
+                      11, object.id, (CartItemOB srcObject) => srcObject.user):
+                  object.cartItems
+            },
+        getId: (UserOB object) => object.id,
+        setId: (UserOB object, int id) {
+          object.id = id;
+        },
+        objectToFB: (UserOB object, fb.Builder fbb) {
+          final userIdOffset =
+              object.userId == null ? null : fbb.writeString(object.userId!);
+          final nameOffset =
+              object.name == null ? null : fbb.writeString(object.name!);
+          final emailOffset =
+              object.email == null ? null : fbb.writeString(object.email!);
+          final addressOffset =
+              object.address == null ? null : fbb.writeString(object.address!);
+          final profileImageOffset = object.profileImage == null
+              ? null
+              : fbb.writeString(object.profileImage!);
+          final phoneNumberOffset = object.phoneNumber == null
+              ? null
+              : fbb.writeString(object.phoneNumber!);
+          fbb.startTable(12);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, userIdOffset);
+          fbb.addOffset(2, nameOffset);
+          fbb.addOffset(3, emailOffset);
+          fbb.addInt64(4, object.birthday?.millisecondsSinceEpoch);
+          fbb.addOffset(5, addressOffset);
+          fbb.addOffset(6, profileImageOffset);
+          fbb.addInt64(7, object.coins);
+          fbb.addBool(8, object.guest);
+          fbb.addBool(9, object.isLoggedIn);
+          fbb.addOffset(10, phoneNumberOffset);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final birthdayValue =
+              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 12);
+          final object = UserOB()
+            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0)
+            ..userId = const fb.StringReader(asciiOptimization: true)
+                .vTableGetNullable(buffer, rootOffset, 6)
+            ..name = const fb.StringReader(asciiOptimization: true)
+                .vTableGetNullable(buffer, rootOffset, 8)
+            ..email = const fb.StringReader(asciiOptimization: true)
+                .vTableGetNullable(buffer, rootOffset, 10)
+            ..birthday = birthdayValue == null
+                ? null
+                : DateTime.fromMillisecondsSinceEpoch(birthdayValue)
+            ..address = const fb.StringReader(asciiOptimization: true)
+                .vTableGetNullable(buffer, rootOffset, 14)
+            ..profileImage = const fb.StringReader(asciiOptimization: true)
+                .vTableGetNullable(buffer, rootOffset, 16)
+            ..coins =
+                const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 18)
+            ..guest =
+                const fb.BoolReader().vTableGetNullable(buffer, rootOffset, 20)
+            ..isLoggedIn =
+                const fb.BoolReader().vTableGetNullable(buffer, rootOffset, 22)
+            ..phoneNumber = const fb.StringReader(asciiOptimization: true)
+                .vTableGetNullable(buffer, rootOffset, 24);
+          InternalToManyAccess.setRelInfo<UserOB>(
+              object.reviews,
+              store,
+              RelInfo<UserReview2OB>.toOneBacklink(
+                  5, object.id, (UserReview2OB srcObject) => srcObject.user));
+          InternalToManyAccess.setRelInfo<UserOB>(
+              object.orders,
+              store,
+              RelInfo<OrderOB>.toOneBacklink(
+                  10, object.id, (OrderOB srcObject) => srcObject.user));
+          InternalToManyAccess.setRelInfo<UserOB>(
+              object.vouchers,
+              store,
+              RelInfo<VoucherOB>.toOneBacklink(
+                  11, object.id, (VoucherOB srcObject) => srcObject.user));
+          InternalToManyAccess.setRelInfo<UserOB>(
+              object.cartItems,
+              store,
+              RelInfo<CartItemOB>.toOneBacklink(
+                  11, object.id, (CartItemOB srcObject) => srcObject.user));
+          return object;
+        }),
+    UserReview2OB: EntityDefinition<UserReview2OB>(
+        model: _entities[12],
+        toOneRelations: (UserReview2OB object) => [object.user],
+        toManyRelations: (UserReview2OB object) => {},
+        getId: (UserReview2OB object) => object.id,
+        setId: (UserReview2OB object, int id) {
+          object.id = id;
+        },
+        objectToFB: (UserReview2OB object, fb.Builder fbb) {
+          final messageOffset =
+              object.message == null ? null : fbb.writeString(object.message!);
+          final starsOffset =
+              object.stars == null ? null : fbb.writeString(object.stars!);
+          final statusOffset =
+              object.status == null ? null : fbb.writeString(object.status!);
+          fbb.startTable(6);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, messageOffset);
+          fbb.addOffset(2, starsOffset);
+          fbb.addOffset(3, statusOffset);
+          fbb.addInt64(4, object.user.targetId);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+
+          final object = UserReview2OB()
+            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0)
+            ..message = const fb.StringReader(asciiOptimization: true)
+                .vTableGetNullable(buffer, rootOffset, 6)
+            ..stars = const fb.StringReader(asciiOptimization: true)
+                .vTableGetNullable(buffer, rootOffset, 8)
+            ..status = const fb.StringReader(asciiOptimization: true)
+                .vTableGetNullable(buffer, rootOffset, 10);
+          object.user.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0);
+          object.user.attach(store);
           return object;
         })
   };
@@ -1059,78 +1523,208 @@ class UserReviewOB_ {
       QueryRelationToOne<UserReviewOB, MenuItemOB>(_entities[6].properties[4]);
 }
 
-/// [UserOB] entity fields to define ObjectBox queries.
-class UserOB_ {
-  /// see [UserOB.id]
-  static final id = QueryIntegerProperty<UserOB>(_entities[7].properties[0]);
-
-  /// see [UserOB.userId]
-  static final userId = QueryStringProperty<UserOB>(_entities[7].properties[1]);
-
-  /// see [UserOB.name]
-  static final name = QueryStringProperty<UserOB>(_entities[7].properties[2]);
-
-  /// see [UserOB.email]
-  static final email = QueryStringProperty<UserOB>(_entities[7].properties[3]);
-
-  /// see [UserOB.address]
-  static final address =
-      QueryStringProperty<UserOB>(_entities[7].properties[4]);
-}
-
 /// [CartItemOB] entity fields to define ObjectBox queries.
 class CartItemOB_ {
   /// see [CartItemOB.id]
   static final id =
-      QueryIntegerProperty<CartItemOB>(_entities[8].properties[0]);
+      QueryIntegerProperty<CartItemOB>(_entities[7].properties[0]);
 
   /// see [CartItemOB.image]
   static final image =
-      QueryStringProperty<CartItemOB>(_entities[8].properties[1]);
+      QueryStringProperty<CartItemOB>(_entities[7].properties[1]);
 
   /// see [CartItemOB.name]
   static final name =
-      QueryStringProperty<CartItemOB>(_entities[8].properties[2]);
+      QueryStringProperty<CartItemOB>(_entities[7].properties[2]);
 
   /// see [CartItemOB.content]
   static final content =
-      QueryStringProperty<CartItemOB>(_entities[8].properties[3]);
+      QueryStringProperty<CartItemOB>(_entities[7].properties[3]);
 
   /// see [CartItemOB.quantity]
   static final quantity =
-      QueryIntegerProperty<CartItemOB>(_entities[8].properties[4]);
+      QueryIntegerProperty<CartItemOB>(_entities[7].properties[4]);
 
   /// see [CartItemOB.menuItem_id]
   static final menuItem_id =
-      QueryIntegerProperty<CartItemOB>(_entities[8].properties[5]);
+      QueryIntegerProperty<CartItemOB>(_entities[7].properties[5]);
 
   /// see [CartItemOB.price]
   static final price =
-      QueryDoubleProperty<CartItemOB>(_entities[8].properties[6]);
+      QueryDoubleProperty<CartItemOB>(_entities[7].properties[6]);
+
+  /// see [CartItemOB.order]
+  static final order =
+      QueryRelationToOne<CartItemOB, OrderOB>(_entities[7].properties[7]);
+
+  /// see [CartItemOB.user]
+  static final user =
+      QueryRelationToOne<CartItemOB, UserOB>(_entities[7].properties[8]);
 }
 
 /// [VoucherOB] entity fields to define ObjectBox queries.
 class VoucherOB_ {
   /// see [VoucherOB.id]
-  static final id = QueryIntegerProperty<VoucherOB>(_entities[9].properties[0]);
+  static final id = QueryIntegerProperty<VoucherOB>(_entities[8].properties[0]);
 
   /// see [VoucherOB.image]
   static final image =
-      QueryStringProperty<VoucherOB>(_entities[9].properties[1]);
+      QueryStringProperty<VoucherOB>(_entities[8].properties[1]);
 
   /// see [VoucherOB.priceDeduct]
   static final priceDeduct =
-      QueryDoubleProperty<VoucherOB>(_entities[9].properties[2]);
+      QueryDoubleProperty<VoucherOB>(_entities[8].properties[2]);
 
   /// see [VoucherOB.expiryDate]
   static final expiryDate =
-      QueryIntegerProperty<VoucherOB>(_entities[9].properties[3]);
+      QueryIntegerProperty<VoucherOB>(_entities[8].properties[3]);
 
   /// see [VoucherOB.activated]
   static final activated =
-      QueryBooleanProperty<VoucherOB>(_entities[9].properties[4]);
+      QueryBooleanProperty<VoucherOB>(_entities[8].properties[4]);
 
   /// see [VoucherOB.priceDiscount]
   static final priceDiscount =
-      QueryDoubleProperty<VoucherOB>(_entities[9].properties[5]);
+      QueryDoubleProperty<VoucherOB>(_entities[8].properties[5]);
+
+  /// see [VoucherOB.user]
+  static final user =
+      QueryRelationToOne<VoucherOB, UserOB>(_entities[8].properties[6]);
+
+  /// see [VoucherOB.order]
+  static final order =
+      QueryRelationToOne<VoucherOB, OrderOB>(_entities[8].properties[7]);
+}
+
+/// [TokenOB] entity fields to define ObjectBox queries.
+class TokenOB_ {
+  /// see [TokenOB.id]
+  static final id = QueryIntegerProperty<TokenOB>(_entities[9].properties[0]);
+
+  /// see [TokenOB.token]
+  static final token = QueryStringProperty<TokenOB>(_entities[9].properties[1]);
+
+  /// see [TokenOB.userId]
+  static final userId =
+      QueryStringProperty<TokenOB>(_entities[9].properties[2]);
+
+  /// see [TokenOB.expirationDate]
+  static final expirationDate =
+      QueryIntegerProperty<TokenOB>(_entities[9].properties[3]);
+
+  /// see [TokenOB.guest]
+  static final guest =
+      QueryBooleanProperty<TokenOB>(_entities[9].properties[4]);
+}
+
+/// [OrderOB] entity fields to define ObjectBox queries.
+class OrderOB_ {
+  /// see [OrderOB.id]
+  static final id = QueryIntegerProperty<OrderOB>(_entities[10].properties[0]);
+
+  /// see [OrderOB.orderId]
+  static final orderId =
+      QueryIntegerProperty<OrderOB>(_entities[10].properties[1]);
+
+  /// see [OrderOB.eta]
+  static final eta = QueryIntegerProperty<OrderOB>(_entities[10].properties[2]);
+
+  /// see [OrderOB.status]
+  static final status =
+      QueryStringProperty<OrderOB>(_entities[10].properties[3]);
+
+  /// see [OrderOB.locationLongitude]
+  static final locationLongitude =
+      QueryDoubleProperty<OrderOB>(_entities[10].properties[4]);
+
+  /// see [OrderOB.locationLatitude]
+  static final locationLatitude =
+      QueryDoubleProperty<OrderOB>(_entities[10].properties[5]);
+
+  /// see [OrderOB.totalPrice]
+  static final totalPrice =
+      QueryDoubleProperty<OrderOB>(_entities[10].properties[6]);
+
+  /// see [OrderOB.deliveryAddress]
+  static final deliveryAddress =
+      QueryStringProperty<OrderOB>(_entities[10].properties[7]);
+
+  /// see [OrderOB.onSitePickup]
+  static final onSitePickup =
+      QueryBooleanProperty<OrderOB>(_entities[10].properties[8]);
+
+  /// see [OrderOB.user]
+  static final user =
+      QueryRelationToOne<OrderOB, UserOB>(_entities[10].properties[9]);
+
+  /// see [OrderOB.phoneNumber]
+  static final phoneNumber =
+      QueryStringProperty<OrderOB>(_entities[10].properties[10]);
+}
+
+/// [UserOB] entity fields to define ObjectBox queries.
+class UserOB_ {
+  /// see [UserOB.id]
+  static final id = QueryIntegerProperty<UserOB>(_entities[11].properties[0]);
+
+  /// see [UserOB.userId]
+  static final userId =
+      QueryStringProperty<UserOB>(_entities[11].properties[1]);
+
+  /// see [UserOB.name]
+  static final name = QueryStringProperty<UserOB>(_entities[11].properties[2]);
+
+  /// see [UserOB.email]
+  static final email = QueryStringProperty<UserOB>(_entities[11].properties[3]);
+
+  /// see [UserOB.birthday]
+  static final birthday =
+      QueryIntegerProperty<UserOB>(_entities[11].properties[4]);
+
+  /// see [UserOB.address]
+  static final address =
+      QueryStringProperty<UserOB>(_entities[11].properties[5]);
+
+  /// see [UserOB.profileImage]
+  static final profileImage =
+      QueryStringProperty<UserOB>(_entities[11].properties[6]);
+
+  /// see [UserOB.coins]
+  static final coins =
+      QueryIntegerProperty<UserOB>(_entities[11].properties[7]);
+
+  /// see [UserOB.guest]
+  static final guest =
+      QueryBooleanProperty<UserOB>(_entities[11].properties[8]);
+
+  /// see [UserOB.isLoggedIn]
+  static final isLoggedIn =
+      QueryBooleanProperty<UserOB>(_entities[11].properties[9]);
+
+  /// see [UserOB.phoneNumber]
+  static final phoneNumber =
+      QueryStringProperty<UserOB>(_entities[11].properties[10]);
+}
+
+/// [UserReview2OB] entity fields to define ObjectBox queries.
+class UserReview2OB_ {
+  /// see [UserReview2OB.id]
+  static final id =
+      QueryIntegerProperty<UserReview2OB>(_entities[12].properties[0]);
+
+  /// see [UserReview2OB.message]
+  static final message =
+      QueryStringProperty<UserReview2OB>(_entities[12].properties[1]);
+
+  /// see [UserReview2OB.stars]
+  static final stars =
+      QueryStringProperty<UserReview2OB>(_entities[12].properties[2]);
+
+  /// see [UserReview2OB.status]
+  static final status =
+      QueryStringProperty<UserReview2OB>(_entities[12].properties[3]);
+
+  /// see [UserReview2OB.user]
+  static final user =
+      QueryRelationToOne<UserReview2OB, UserOB>(_entities[12].properties[4]);
 }

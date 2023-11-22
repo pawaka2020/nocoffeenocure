@@ -8,6 +8,7 @@ import '../../models/menuitem.dart';
 import '../../provider/cart_count_notifier.dart';
 import '../../repos/cartitem.dart';
 import '../../repos/menuitem.dart';
+import '../../repos/user.dart';
 import '../../widgets/partial_divider.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import '../menu/menu.dart';
@@ -65,11 +66,13 @@ class _MenuDetailsPageState extends State<MenuDetailsPage> {
       ..content = 'Beans: Supremo | Sweetness: Less sugar | Cup size: Regular'
       ..quantity = quantity
       ..price = price
-      ..menuItemOB.add(widget.menuItem.toMenuItemOB())
+      ..menuItemOB.add(widget.menuItem.toMenuItemOB()) //this one
     ;
+
     CartItemRepo().put(newcart);
-    widget.updateCartCount(1);
+
     printToast("Item added to cart");
+    widget.updateCartCount(1);
     Navigator.of(context).pop();
   }
 
@@ -90,8 +93,6 @@ class _MenuDetailsPageState extends State<MenuDetailsPage> {
     basePrice = price;
     quantity = widget.quantity;
     adjustPrice();
-    print("Before loading menu_detail:    ");
-    MenuItemRepo().printMenuItem(widget.menuItem);
   }
 
   @override
@@ -197,7 +198,8 @@ class Reviews extends StatelessWidget {
                   ReviewCard(userReviews[index]),
                 ],
               );
-            } else {
+            }
+            else {
               return ReviewCard(userReviews[index]);
             }
           },
@@ -228,8 +230,6 @@ class ReviewCard extends StatelessWidget {
                   child: Message(review.message),
                 ),
               ),
-
-              //Message(review.message),
             ],
           ),
         ),
@@ -344,7 +344,7 @@ class _AdditionMenuState extends State<AdditionMenu> {
                   selectedDetailIndex = index;
                   //new change.
                   widget.addition.selectedIndex = selectedDetailIndex;
-                  print(widget.addition.title + " index " + widget.addition.selectedIndex.toString() + " selected");
+                  //print(widget.addition.title + " index " + widget.addition.selectedIndex.toString() + " selected");
                   //widget.adjustPrice(additionDetail);
                   widget.adjustPrice();
                 });
@@ -413,9 +413,8 @@ class Finalize extends StatelessWidget {
   final VoidCallback increaseQuantity;
   final void Function() addToCart;
   final void Function() updateCart;
-  //final VoidCallback updateCart;
-  final bool editMode;
 
+  final bool editMode;
   Finalize(this.price, this.quantity, this.decreaseQuantity, this.increaseQuantity,
       this.addToCart, this.updateCart, this.editMode);
 
@@ -469,7 +468,7 @@ class QuantityDisplay extends StatelessWidget {
             IconButton(
               icon: Icon(Icons.remove),
               onPressed: () {
-                print("button remove pressed");
+                //print("button remove pressed");
                 decreaseQuantity();
               }
             ),
@@ -480,7 +479,7 @@ class QuantityDisplay extends StatelessWidget {
             IconButton(
               icon: Icon(Icons.add),
               onPressed: () {
-                print("button add pressed");
+                //print("button add pressed");
                 increaseQuantity();
                 // decreaseFactor();
               } // Call the onIncrease function when the button is pressed

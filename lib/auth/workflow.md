@@ -19,3 +19,6 @@ ObjectBox models to create:
 - User
 - CartItem
 - Order
+
+--------
+Create a 'Guest' user object specific to each phone, if token is missing.

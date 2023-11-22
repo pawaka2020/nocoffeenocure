@@ -1,5 +1,8 @@
+import 'package:nocoffeenocure/repos/user.dart';
+
 import '../backend/dummy/voucher.dart';
 import '../main.dart';
+import '../models/user.dart';
 import '../models/voucher.dart';
 
 class VoucherRepo {
@@ -8,6 +11,7 @@ class VoucherRepo {
   void remove(int id) {
     box.remove(id);
   }
+
   Future<void> update(BackendSource source) async {
     late final newData;
     late final currentData;
@@ -25,13 +29,25 @@ class VoucherRepo {
       print("adding new entries for VoucherOB");
       box.putMany(newData);
     }
-    //test print
-    final testData = box.getAll();
-    printVoucher(testData);
+
+    UserOB? currentUser = UserRepo().getLoggedInUser();
+    print("User detected in voucherrepo, ${currentUser?.name}");
+    currentUser?.vouchers.addAll(newData);
+    UserRepo().box.put(currentUser);
+
   }
 
   List<VoucherOB> getAll() {
-    return box.getAll();
+    //return box.getAll();
+    UserOB? currentUser = UserRepo().getLoggedInUser();
+    List<VoucherOB> vouchers = currentUser!.vouchers;
+    return vouchers;
+  }
+
+  List<VoucherOB> getAllFromUser() {
+    UserOB? currentUser = UserRepo().getLoggedInUser();
+    List<VoucherOB> vouchers = currentUser!.vouchers;
+    return vouchers;
   }
 
   void printVoucher(List<VoucherOB> list) {

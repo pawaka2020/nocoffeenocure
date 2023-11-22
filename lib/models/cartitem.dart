@@ -1,6 +1,8 @@
+import 'package:nocoffeenocure/models/user.dart';
 import 'package:objectbox/objectbox.dart';
 
 import 'menuitem.dart';
+import 'order.dart';
 
 @Entity()
 class CartItemOB {
@@ -16,4 +18,6 @@ class CartItemOB {
 
   @Backlink()
   var menuItemOB = ToMany<MenuItemOB>();
+  final order = ToOne<OrderOB>();
+  final user = ToOne<UserOB>();
 }

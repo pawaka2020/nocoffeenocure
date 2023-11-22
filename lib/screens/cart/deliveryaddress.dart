@@ -46,8 +46,8 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.grey),
                     ),
-                    hintText: 'E.g. I need more ice.',
-                    hintStyle: TextStyle(fontSize: 10) // Temporary placeholder text
+                    //hintText: 'E.g. I need more ice.',
+                    //hintStyle: TextStyle(fontSize: 10) // Temporary placeholder text
                 ),
                 )
               ),

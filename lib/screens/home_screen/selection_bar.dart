@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+
 class SelectionBar extends StatelessWidget {
   final List<String> categories;
   final Function(String) onCategorySelected; // Callback function
