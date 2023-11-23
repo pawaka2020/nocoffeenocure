@@ -90,7 +90,5 @@ Future<void> preLoadFromBackend() async {
   await MenuItemRepo().update(BackendSource.dummy);
   await CartItemRepo().update(BackendSource.dummy);
 
-
-
   print ("data pre-loaded");
 }

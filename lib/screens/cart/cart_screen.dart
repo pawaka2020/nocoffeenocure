@@ -210,40 +210,40 @@ class _CartScreenState extends State<CartScreen> {
     _usedList = VoucherRepo()
         .getFromIdList(widget.vouchers, _selectedVoucherIds);
     adjustPrice();
-
-    return Scaffold(
-      body: widget.cartItems.isEmpty
-          ? Center(
-              child: Text('Cart is Empty'),
-            )
-          : Column(
+    if (widget.cartItems.isEmpty) {
+      return Center(
+        child: Text('Cart is Empty'),
+      );
+    }
+    else {
+      return Column(
+        children: [
+          Expanded(
+            child: ListView(
               children: [
-                Expanded(
-                  child: ListView(
-                    children: [
-                      ...widget.cartItems.map((item) => CartItemCard(item, deleteCartItem, editCartItem)),
-                      PartialDivider(40, 10),
-                      SpecialRequest(updateSpecialRequest),
-                      PartialDivider(40, 10),
-                      Packaging(onSelectionChanged),
-                      PartialDivider(40, 10),
-                      buildVoucherSelection(_usedList, _selectedVoucherIds, widget.vouchers, context, addVoucher, removeVoucher),
-                      PartialDivider(40, 10),
-                      DeliveryAddress(),
-                      PartialDivider(40, 10),
-                      buildPhoneNumber(),
-                      PartialDivider(40, 10),
-                      PaymentMethods(),
-                      SizedBox(height: 5),
-                      buildPaymentDetails(price, context),
-                      SizedBox(height: 5),
-                    ]
-                  )
-                ),
-                buildSubmitOrder(price.total, placeOrder)
+                ...widget.cartItems.map((item) => CartItemCard(item, deleteCartItem, editCartItem)),
+                PartialDivider(40, 10),
+                SpecialRequest(updateSpecialRequest),
+                PartialDivider(40, 10),
+                Packaging(onSelectionChanged),
+                PartialDivider(40, 10),
+                buildVoucherSelection(_usedList, _selectedVoucherIds, widget.vouchers, context, addVoucher, removeVoucher),
+                PartialDivider(40, 10),
+                DeliveryAddress(),
+                PartialDivider(40, 10),
+                buildPhoneNumber(),
+                PartialDivider(40, 10),
+                PaymentMethods(),
+                SizedBox(height: 5),
+                buildPaymentDetails(price, context),
+                SizedBox(height: 5),
               ]
             )
-    );
+          ),
+          buildSubmitOrder(price.total, placeOrder)
+        ]
+      );
+    }
   }
 }
 

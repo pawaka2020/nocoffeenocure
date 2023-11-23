@@ -8,8 +8,6 @@ import '../models/cartitem.dart';
 class CartItemRepo {
   final box = objectbox.cartItemBox;
 
-
-
   Future<void> update(BackendSource source) async {
     late final newData;
     late final currentData;
