@@ -7,6 +7,7 @@ class VoucherDummy {
     await Future.delayed(Duration(seconds: delay));
     List<VoucherOB> result = [
       VoucherOB()
+        ..voucher_id = 0
         ..image = 'assets/images/vouchertest1.png'
         ..activated = false
         ..expiryDate = DateTime(2023, 12, 31)
@@ -15,6 +16,7 @@ class VoucherDummy {
         //..id = 0
       ,
       VoucherOB()
+        ..voucher_id = 1
         ..image = 'assets/images/vouchertest2.png'
         ..activated = false
         ..expiryDate = DateTime(2025, 6, 14)
@@ -23,6 +25,7 @@ class VoucherDummy {
         //..id = 1
       ,
       VoucherOB()
+        ..voucher_id = 2
         ..image = 'assets/images/vouchertest3.png'
         ..activated = false
         ..expiryDate = DateTime(2023, 2, 15)
@@ -31,6 +34,7 @@ class VoucherDummy {
         //..id = 2
       ,
       VoucherOB()
+        ..voucher_id = 3
         ..image = 'assets/images/vouchertest4.png'
         ..activated = false
         ..expiryDate = DateTime(2023, 5, 30)
@@ -39,6 +43,7 @@ class VoucherDummy {
         //..id = 3
       ,
       VoucherOB()
+        ..voucher_id = 4
         ..image = 'assets/images/vouchertest5.png'
         ..activated = false
         ..expiryDate = DateTime(2023, 9, 5)

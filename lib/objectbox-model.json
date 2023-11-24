@@ -298,7 +298,7 @@
     },
     {
       "id": "17:8024934109289736930",
-      "lastPropertyId": "12:2025024905402711402",
+      "lastPropertyId": "13:4838735645035575023",
       "name": "VoucherOB",
       "properties": [
         {
@@ -347,6 +347,11 @@
           "flags": 520,
           "indexId": "21:855284375073292395",
           "relationTarget": "OrderOB"
+        },
+        {
+          "id": "13:4838735645035575023",
+          "name": "voucher_id",
+          "type": 6
         }
       ],
       "relations": []

@@ -30,22 +30,36 @@ class VoucherRepo {
       box.putMany(newData);
     }
 
+    //change this one.
     UserOB? currentUser = UserRepo().getLoggedInUser();
-    print("User detected in voucherrepo, ${currentUser?.name}");
-    currentUser?.vouchers.addAll(newData);
+
+    for (var voucher in newData) {
+      bool hasMatchingVoucherId = false;
+      for (var voucher2 in currentUser!.vouchers) {
+        if (voucher.voucher_id == voucher2.voucher_id) {
+          hasMatchingVoucherId = true;
+          break;
+        }
+      }
+      if (!hasMatchingVoucherId) {
+        currentUser.vouchers.add(voucher);
+      }
+    }
+
+
+    //currentUser?.vouchers.addAll(newData);
     UserRepo().box.put(currentUser);
+
+    // Now list2 contains elements from list that don't have matching voucher_id
 
   }
 
   List<VoucherOB> getAll() {
     //return box.getAll();
-    UserOB? currentUser = UserRepo().getLoggedInUser();
-    List<VoucherOB> vouchers = currentUser!.vouchers;
-    return vouchers;
-  }
+    //print("!!!! This function is called!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
 
-  List<VoucherOB> getAllFromUser() {
     UserOB? currentUser = UserRepo().getLoggedInUser();
+    //printVoucher(currentUser!.vouchers);
     List<VoucherOB> vouchers = currentUser!.vouchers;
     return vouchers;
   }
@@ -66,13 +80,30 @@ class VoucherRepo {
     }
   }
 
+  // List<VoucherOB> getNotFromIdList(List<VoucherOB> allVouchers, List<int> _selectedVoucherIds) {
+  //   final notSelectedVouchers = allVouchers.where((voucher) => !_selectedVoucherIds.contains(voucher.id)).toList() ;
+  //   return notSelectedVouchers;
+  // }
   List<VoucherOB> getNotFromIdList(List<VoucherOB> allVouchers, List<int> _selectedVoucherIds) {
-    final notSelectedVouchers = allVouchers.where((voucher) => !_selectedVoucherIds.contains(voucher.id)).toList();
-    return notSelectedVouchers;
+    print("getNotFromIdList started");
+    printVoucher(allVouchers);
+    for (var id in _selectedVoucherIds) {
+      "inside getNotFromIdList, id = ${id.toString()}";
+    }
+    final results = allVouchers.where((voucher) =>
+    !_selectedVoucherIds.contains(voucher.id) && voucher.activated == false
+    ).toList();
+    for (var result in results) {
+      print("getNotFromIdList results : id = ${result.id.toString()}, activated = ${result.activated.toString()}");
+    }
+    return results;
   }
   //
   List<VoucherOB> getFromIdList(List<VoucherOB> allVouchers, List<int> _selectedVoucherIds) {
-    final notSelectedVouchers = allVouchers.where((voucher) => _selectedVoucherIds.contains(voucher.id)).toList();
-    return notSelectedVouchers;
+    final results = allVouchers.where((voucher) => _selectedVoucherIds.contains(voucher.id) && voucher.activated == false).toList();
+    for (var result in results) {
+      print("getFromIdList results : id = ${result.id.toString()}, activated = ${result.activated.toString()}");
+    }
+    return results;
   }
 }

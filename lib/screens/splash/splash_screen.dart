@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../common.dart';
 import '../../main.dart';
+import '../../models/user.dart';
 import '../../repos/bannernews.dart';
 import '../../repos/cartitem.dart';
 import '../../repos/fullnews.dart';
@@ -90,5 +91,16 @@ Future<void> preLoadFromBackend() async {
   await MenuItemRepo().update(BackendSource.dummy);
   await CartItemRepo().update(BackendSource.dummy);
 
+  //testEditVoucher();
   print ("data pre-loaded");
 }
+
+// void testEditVoucher() {
+//   UserOB? loggedInUser = UserRepo().getLoggedInUser();
+//   loggedInUser?.vouchers[0].activated = true;
+//   loggedInUser?.address = "Nope";
+//   VoucherRepo().box.put(loggedInUser?.vouchers[0]);
+//   loggedInUser = UserRepo().getLoggedInUser();
+//   print("value of activated = ${loggedInUser?.vouchers[0].activated.toString()}");
+//   print("address = ${loggedInUser?.address}");
+// }

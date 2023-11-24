@@ -16,6 +16,7 @@ import '../../repos/voucher.dart';
 import '../../widgets/partial_divider.dart';
 import '../menu_detail/menu_detail.dart';
 import '../selectunusedvoucher/selectunusedvoucher.dart';
+import 'addorder.dart';
 import 'cartitemcard.dart';
 import 'deliveryaddress.dart';
 import 'ordersubmit.dart';
@@ -40,7 +41,6 @@ class CartScreen extends StatefulWidget {
   CartScreen(this.updateCartCount, this.setTracking, this.changePage, this.tracking);
   var cartItems = CartItemRepo().getAll();
   var vouchers = VoucherRepo().getAll();
-  //var vouchers = VoucherRepo().getAllFromUser();
 
   @override
   State<StatefulWidget> createState() => _CartScreenState();
@@ -162,19 +162,6 @@ class _CartScreenState extends State<CartScreen> {
     });
   }
 
-  void placeOrder() {
-    //addOrderItem();
-    if (widget.tracking == false) {
-      widget.setTracking();
-      //delete all cart items
-      int length = widget.cartItems.length;
-      widget.updateCartCount(length * -1);
-      CartItemRepo().box.removeAll();
-      //setState(() {});
-    }
-    else printToast("Error: Order already exists");
-  }
-
   void addVoucher() async {
     final activated = await Navigator.of(context).push(MaterialPageRoute(
       builder: (context) => SelectUnusedVoucherScreen(widget.vouchers, _selectedVoucherIds, context),
@@ -200,13 +187,31 @@ class _CartScreenState extends State<CartScreen> {
     }
   }
 
-  @override
-  initState() {
-    adjustPrice();
+  void placeOrder() {
+    if (widget.tracking == false) {
+      addOrder(_selectedVoucherIds, );
+      _selectedVoucherIds = []; //
+      widget.setTracking();
+      //delete all cart items
+      int length = widget.cartItems.length;
+      widget.updateCartCount(length * -1);
+      CartItemRepo().box.removeAll();
+    }
+    else printToast("Error: Order already exists");
   }
+
+
+
+  // @override
+  // initState() {
+  //   adjustPrice();
+  // }
 
   @override
   Widget build(BuildContext context) {
+    print("Regenerating vouchers");
+    widget.vouchers = VoucherRepo().getAll(); //this one
+
     _usedList = VoucherRepo()
         .getFromIdList(widget.vouchers, _selectedVoucherIds);
     adjustPrice();

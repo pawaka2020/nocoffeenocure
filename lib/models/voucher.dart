@@ -8,6 +8,7 @@ class VoucherOB {
   @Id()
   int id = 0;
 
+  int? voucher_id;
   String? image;
   double? priceDiscount;
   double? priceDeduct;

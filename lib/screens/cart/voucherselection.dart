@@ -88,33 +88,3 @@ Widget buildSelectedVoucherCard(VoucherOB voucher, BuildContext context, List<in
       )
   );
 }
-
-// Widget buildSelectedVoucherCard() {
-//   return Container(
-//       height: 80, //70
-//       child: Card(
-//         elevation: 4,
-//         child: InkWell(
-//           onTap: () {
-//             // Navigate to the screen to select a voucher
-//           },
-//           child: Row(
-//             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//             children: [
-//               Flexible(
-//                 child: Image.asset(
-//                   "assets/images/vouchertest1.png",
-//                   fit: BoxFit.fill,
-//                   height: double.infinity
-//                 ),
-//               ),
-//               Padding(
-//                 padding: EdgeInsets.all(16),
-//                 child: Icon(Icons.delete),
-//               ),
-//             ],
-//           ),
-//         ),
-//       )
-//   );
-// }

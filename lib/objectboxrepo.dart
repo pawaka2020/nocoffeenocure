@@ -19,6 +19,7 @@ class ObjectBox {
   late final userBox;
   late final cartItemBox;
   late final voucherBox;
+  late final orderBox;
   //
   late final tokenBox;
 

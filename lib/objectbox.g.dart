@@ -328,7 +328,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(17, 8024934109289736930),
       name: 'VoucherOB',
-      lastPropertyId: const IdUid(12, 2025024905402711402),
+      lastPropertyId: const IdUid(13, 4838735645035575023),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -374,7 +374,12 @@ final _entities = <ModelEntity>[
             type: 11,
             flags: 520,
             indexId: const IdUid(21, 855284375073292395),
-            relationTarget: 'OrderOB')
+            relationTarget: 'OrderOB'),
+        ModelProperty(
+            id: const IdUid(13, 4838735645035575023),
+            name: 'voucher_id',
+            type: 6,
+            flags: 0)
       ],
       relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[]),
@@ -1073,7 +1078,7 @@ ModelDefinition getObjectBoxModel() {
         objectToFB: (VoucherOB object, fb.Builder fbb) {
           final imageOffset =
               object.image == null ? null : fbb.writeString(object.image!);
-          fbb.startTable(13);
+          fbb.startTable(14);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, imageOffset);
           fbb.addFloat64(3, object.priceDeduct);
@@ -1082,6 +1087,7 @@ ModelDefinition getObjectBoxModel() {
           fbb.addFloat64(7, object.priceDiscount);
           fbb.addInt64(10, object.user.targetId);
           fbb.addInt64(11, object.order.targetId);
+          fbb.addInt64(12, object.voucher_id);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -1102,7 +1108,9 @@ ModelDefinition getObjectBoxModel() {
             ..activated =
                 const fb.BoolReader().vTableGetNullable(buffer, rootOffset, 16)
             ..priceDiscount = const fb.Float64Reader()
-                .vTableGetNullable(buffer, rootOffset, 18);
+                .vTableGetNullable(buffer, rootOffset, 18)
+            ..voucher_id = const fb.Int64Reader()
+                .vTableGetNullable(buffer, rootOffset, 28);
           object.user.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 24, 0);
           object.user.attach(store);
@@ -1594,6 +1602,10 @@ class VoucherOB_ {
   /// see [VoucherOB.order]
   static final order =
       QueryRelationToOne<VoucherOB, OrderOB>(_entities[8].properties[7]);
+
+  /// see [VoucherOB.voucher_id]
+  static final voucher_id =
+      QueryIntegerProperty<VoucherOB>(_entities[8].properties[8]);
 }
 
 /// [TokenOB] entity fields to define ObjectBox queries.

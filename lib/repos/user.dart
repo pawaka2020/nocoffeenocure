@@ -96,12 +96,9 @@ class UserRepo {
       ;
       box.put(guest);
     }
-
   }
 
   List<UserOB> getAll() {
     return box.getAll();
   }
-
-
 }
