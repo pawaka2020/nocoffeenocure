@@ -86,7 +86,7 @@ import 'package:flutter/services.dart';
 //   }
 // }
 
-Widget buildPhoneNumber() {
+Widget buildPhoneNumber(Function(String) onSpecialRequestChanged) {
   String phoneNumber = '';
   return Padding(
     padding: EdgeInsets.only(left: 16, right: 28, top: 8, bottom: 8),
@@ -96,7 +96,7 @@ Widget buildPhoneNumber() {
           Text("Phone number"),
           SizedBox(height: 10),
           TextField(
-            //onChanged: onSpecialRequestChanged,
+            onChanged: onSpecialRequestChanged,
             style: TextStyle(
                 fontSize: 12,
                 color:Colors.blue

@@ -19,6 +19,8 @@ class OrderOB {
   double? totalPrice;
   String? deliveryAddress;
   String? phoneNumber;
+  String? specialRequest;
+  String? packageString;
   bool? onSitePickup;
 
   //one order can have multiple cart items

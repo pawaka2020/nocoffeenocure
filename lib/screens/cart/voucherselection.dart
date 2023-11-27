@@ -29,7 +29,8 @@ Widget buildVoucherSelection(List<VoucherOB> usedList, List<int> selectedVoucher
   );
 }
 
-Widget buildEmptyVoucherCard(BuildContext context, List<VoucherOB> vouchers, List<int> selectedVoucherIds, void Function() addVoucher) {
+Widget buildEmptyVoucherCard(BuildContext context, List<VoucherOB> vouchers,
+    List<int> selectedVoucherIds, void Function() addVoucher) {
   return Container(
       height: 80, //70
       child: Card(
@@ -58,7 +59,8 @@ Widget buildEmptyVoucherCard(BuildContext context, List<VoucherOB> vouchers, Lis
   );
 }
 
-Widget buildSelectedVoucherCard(VoucherOB voucher, BuildContext context, List<int> selectedVoucherIds, void Function(int) removeVoucher) {
+Widget buildSelectedVoucherCard(VoucherOB voucher, BuildContext context,
+    List<int> selectedVoucherIds, void Function(int) removeVoucher) {
   return Container(
       height: 80, //70
       child: Card(

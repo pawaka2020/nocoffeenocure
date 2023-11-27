@@ -1,35 +1,26 @@
 import 'package:flutter/material.dart';
 
-class Packaging extends StatefulWidget {
-  final Function(int, bool, double) onSelectionChanged;
+class PackageItem {
+  late String name;
+  late double price;
+  bool selected = false;
 
-  Packaging(this.onSelectionChanged);
+  PackageItem(this.name, this.price);
+}
+
+class Packaging extends StatefulWidget {
+  final Function(double, String) updatePackageDetails;
+  Packaging(this.updatePackageDetails);
 
   @override
   _PackagingState createState() => _PackagingState();
 }
 
 class _PackagingState extends State<Packaging> {
-  bool _strawSelected = false;
-  bool _paperbagSelected = false;
-
-  // void _handleStrawSelection(bool? value) {
-  //   if (value != null) {
-  //     setState(() {
-  //       _strawSelected = value;
-  //       widget.onSelectionChanged(_strawSelected, 0.5);
-  //     });
-  //   }
-  // }
-  //
-  // void _handlePaperbagSelection(bool? value) {
-  //   if (value != null) {
-  //     setState(() {
-  //       _paperbagSelected = value;
-  //       widget.onSelectionChanged(_paperbagSelected, 10.0);
-  //     });
-  //   }
-  // }
+  List<PackageItem> _packageItems = [
+    PackageItem("Straw", 0.50),
+    PackageItem("Paperbag", 1.00)
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -39,37 +30,35 @@ class _PackagingState extends State<Packaging> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text("Packaging"),
-          buildSelectionRow("Straw", 0.5, _strawSelected, (bool? value) {
-            setState(() {
-              if (value != null) {
-                _strawSelected = value;
-                widget. onSelectionChanged(0, value, 0.5);
-              }
-            });
-          }),
-          buildSelectionRow("Paperbag", 1.00, _paperbagSelected, (bool? value) {
-            setState(() {
-              if (value != null) {
-                _paperbagSelected = value;
-                widget. onSelectionChanged(1, value, 1.00);
-              }
-            });
-          }),
+          for (var item in _packageItems)
+            buildSelectionRow(item, widget.updatePackageDetails),
         ],
       ),
     );
   }
 
-  Row buildSelectionRow(String title, double price, bool selected, ValueChanged<bool?> onChanged) {
+  Widget buildSelectionRow(PackageItem item, Function(double, String) updatePackageDetails) {
+    late double packagePrice;
+    late String packageString;
+
     return Row(
-      mainAxisAlignment:MainAxisAlignment.end,
+      mainAxisAlignment: MainAxisAlignment.end,
       children: [
         Checkbox(
-          value: selected,
-          onChanged: onChanged,
+          value: item.selected,
+          onChanged: (bool? value) {
+            setState(() {
+              if (value != null) {
+                item.selected = value;
+                packagePrice = setPackagePrice();
+                packageString = setPackageString();
+                updatePackageDetails(packagePrice, packageString);
+              }
+            });
+          },
         ),
         Text(
-          title,
+          item.name,
           style: TextStyle(
             fontSize: 12,
           ),
@@ -78,7 +67,7 @@ class _PackagingState extends State<Packaging> {
         Align(
           alignment: Alignment.centerRight,
           child: Text(
-            'RM ${price.toStringAsFixed(2)}',
+            'RM ${item.price.toStringAsFixed(2)}',
             style: TextStyle(
               fontSize: 12,
             ),
@@ -87,127 +76,26 @@ class _PackagingState extends State<Packaging> {
       ],
     );
   }
+
+  // double setPackagePrice() {
+  //   double packagePrice = 0;
+  //   for (var item in _packageItems) {
+  //     if (item.selected == true) packagePrice += item.price;
+  //   }
+  //
+  //   return packagePrice;
+  // }
+
+  double setPackagePrice() {
+    return _packageItems
+        .where((item) => item.selected)
+        .fold(0, (double sum, item) => sum + item.price);
+  }
+
+  String setPackageString() {
+    return _packageItems
+        .where((item) => item.selected)
+        .map((item) => "${item.name} : RM ${item.price.toStringAsFixed(2)}")
+        .join('\n');
+  }
 }
-
-// import 'package:flutter/material.dart';
-//
-// class Packaging extends StatefulWidget {
-//   final Function(bool, double) onSelectionChanged;
-//
-//   Packaging(this.onSelectionChanged);
-//
-//   @override
-//   _PackagingState createState() => _PackagingState();
-// }
-//
-// class _PackagingState extends State<Packaging> {
-//   bool _strawSelected = false;
-//   bool _paperbagSelected = false;
-//
-//   void _handlePackageSelection(String type, double price, bool? value) {
-//     bool toggle;
-//     if (type == "Straw") toggle = _strawSelected;
-//     else if (type == "Packaging") toggle = _paperbagSelected;
-//
-//     setState(() {
-//       toggle = value!;
-//       widget.onSelectionChanged(toggle, price);
-//     });
-//   }
-//
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Padding(
-//       padding: EdgeInsets.only(left: 16, right: 16, top: 8, bottom: 8),
-//       child: Column(
-//         crossAxisAlignment: CrossAxisAlignment.start,
-//         children: [
-//           Text("Packaging"),
-//           // buildSelectionRow("Straw", 0.5, _strawSelected),
-//           // buildSelectionRow("Paperbag", 10.00, _paperbagSelected),
-//           buildSelectionRow("Straw", 0.5, _strawSelected, _handleStrawSelection),
-//           buildSelectionRow("Paperbag", 10.00, _paperbagSelected, _handlePaperbagSelection),
-//         ],
-//       ),
-//     );
-//   }
-//
-//   Row buildSelectionRow(String title, double price, bool selected, ValueChanged<bool?> onChanged) {
-//     return Row(
-//       mainAxisAlignment: MainAxisAlignment.end,
-//       children: [
-//         Checkbox(
-//           value: selected,
-//           onChanged: onChanged,
-//         ),
-//         Text(
-//           title,
-//           style: TextStyle(
-//             fontSize: 12,
-//           ),
-//         ),
-//         Spacer(),
-//         Align(
-//           alignment: Alignment.centerRight,
-//           child: Text(
-//             'RM ${price.toStringAsFixed(2)}',
-//             style: TextStyle(
-//               fontSize: 12,
-//             ),
-//           ),
-//         ),
-//       ],
-//     );
-//   }
-//
-//   // Row buildSelectionRow(String title, double price, bool selected) {
-//   //   return Row(
-//   //     mainAxisAlignment: MainAxisAlignment.end,
-//   //     children: [
-//   //       Checkbox(
-//   //         value: selected,
-//   //         onChanged:(value) {
-//   //           _handlePackageSelection(title, price, value);
-//   //         }
-//   //       ),
-//   //       Text(
-//   //         title,
-//   //         style: TextStyle(
-//   //           fontSize: 12,
-//   //         ),
-//   //       ),
-//   //       Spacer(),
-//   //       Align(
-//   //         alignment: Alignment.centerRight,
-//   //         child: Text(
-//   //           'RM ${price.toStringAsFixed(2)}',
-//   //           style: TextStyle(
-//   //             fontSize: 12,
-//   //           ),
-//   //         ),
-//   //       ),
-//   //     ],
-//   //   );
-//   // }
-//
-//   void _handleStrawSelection(bool? value) {
-//     if (value != null) {
-//       setState(() {
-//         _strawSelected = value;
-//         widget.onSelectionChanged(_strawSelected, 0.5);
-//       });
-//     }
-//   }
-//
-//   void _handlePaperbagSelection(bool? value) {
-//     if (value != null) {
-//       setState(() {
-//         _paperbagSelected = value;
-//         widget.onSelectionChanged(_paperbagSelected, 10.0);
-//       });
-//     }
-//   }
-// }
-//
-

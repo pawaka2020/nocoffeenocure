@@ -16,7 +16,6 @@ class MenuPage extends StatefulWidget {
 
   List<String> get categories {
     List<String> uniqueCategories = menuItems.map((item) => item.category).toSet().toList();
-    uniqueCategories.insert(0, 'All');
     return uniqueCategories;
   }
 
@@ -25,18 +24,20 @@ class MenuPage extends StatefulWidget {
 }
 
 class _MenuPageState extends State<MenuPage> {
-  String selectedCategory = 'All';
+  //String selectedCategory = 'All';
+  late String selectedCategory;
   ScrollController scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    // Set the initial category to the first one in the list
+    selectedCategory = (widget.categories.isNotEmpty ? widget.categories[0] : null)!;
+  }
 
   void handleCategorySelected(String category) {
     setState(() {
       selectedCategory = category;
-      //double offset = 0.0;
-      for (final category in widget.categories) {
-        if (category == selectedCategory) break;
-        //offset += getSliverListHeight(widget.menuItems, category);
-      }
-      //scrollController.animateTo(offset, duration: Duration(milliseconds: 500), curve: Curves.easeInOut);
     });
   }
 

@@ -54,14 +54,6 @@ class _HomeScreenState extends State<HomeScreen> {
     _tracking = true;
     printToast("Order placed");
     changePage(0);
-    // if (_tracking == false) {
-    //   setState(() {
-    //
-    //   });
-    // }
-    // else {
-    //   printToast("Error: existing order already present");
-    // }
   }
 
   @override
@@ -69,6 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       body: PageView(
         controller: _pageController,
+        physics: const NeverScrollableScrollPhysics(),
         children: [
           MenuPage(updateCartCount), //put updateCartCount here
           VouchersPage(),

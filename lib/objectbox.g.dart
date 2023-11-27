@@ -420,7 +420,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(21, 894287139824345925),
       name: 'OrderOB',
-      lastPropertyId: const IdUid(11, 1770077229146406988),
+      lastPropertyId: const IdUid(14, 4574324040476023871),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -478,6 +478,16 @@ final _entities = <ModelEntity>[
         ModelProperty(
             id: const IdUid(11, 1770077229146406988),
             name: 'phoneNumber',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(12, 5392808353674183885),
+            name: 'specialRequest',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(14, 4574324040476023871),
+            name: 'packageString',
             type: 9,
             flags: 0)
       ],
@@ -699,7 +709,8 @@ ModelDefinition getObjectBoxModel() {
         5816247544800360042,
         288926490441761823,
         6199814512664527826,
-        1546320062219839674
+        1546320062219839674,
+        7723157659364113340
       ],
       retiredRelationUids: const [],
       modelVersion: 5,
@@ -1184,7 +1195,13 @@ ModelDefinition getObjectBoxModel() {
           final phoneNumberOffset = object.phoneNumber == null
               ? null
               : fbb.writeString(object.phoneNumber!);
-          fbb.startTable(12);
+          final specialRequestOffset = object.specialRequest == null
+              ? null
+              : fbb.writeString(object.specialRequest!);
+          final packageStringOffset = object.packageString == null
+              ? null
+              : fbb.writeString(object.packageString!);
+          fbb.startTable(15);
           fbb.addInt64(0, object.id);
           fbb.addInt64(1, object.orderId);
           fbb.addInt64(2, object.eta?.millisecondsSinceEpoch);
@@ -1196,6 +1213,8 @@ ModelDefinition getObjectBoxModel() {
           fbb.addBool(8, object.onSitePickup);
           fbb.addInt64(9, object.user.targetId);
           fbb.addOffset(10, phoneNumberOffset);
+          fbb.addOffset(11, specialRequestOffset);
+          fbb.addOffset(13, packageStringOffset);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -1224,7 +1243,11 @@ ModelDefinition getObjectBoxModel() {
             ..onSitePickup =
                 const fb.BoolReader().vTableGetNullable(buffer, rootOffset, 20)
             ..phoneNumber = const fb.StringReader(asciiOptimization: true)
-                .vTableGetNullable(buffer, rootOffset, 24);
+                .vTableGetNullable(buffer, rootOffset, 24)
+            ..specialRequest = const fb.StringReader(asciiOptimization: true)
+                .vTableGetNullable(buffer, rootOffset, 26)
+            ..packageString = const fb.StringReader(asciiOptimization: true)
+                .vTableGetNullable(buffer, rootOffset, 30);
           object.user.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 22, 0);
           object.user.attach(store);
@@ -1672,6 +1695,14 @@ class OrderOB_ {
   /// see [OrderOB.phoneNumber]
   static final phoneNumber =
       QueryStringProperty<OrderOB>(_entities[10].properties[10]);
+
+  /// see [OrderOB.specialRequest]
+  static final specialRequest =
+      QueryStringProperty<OrderOB>(_entities[10].properties[11]);
+
+  /// see [OrderOB.packageString]
+  static final packageString =
+      QueryStringProperty<OrderOB>(_entities[10].properties[12]);
 }
 
 /// [UserOB] entity fields to define ObjectBox queries.

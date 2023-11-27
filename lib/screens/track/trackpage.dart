@@ -252,7 +252,7 @@ Widget box() {
                           color: Colors.black
                         )
                       ),
-                      Text("#2482011",
+                      Text("#48",
                           style: TextStyle(
                               fontSize: 16,
                               color: Colors.grey

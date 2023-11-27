@@ -24,13 +24,10 @@ class SplashScreen extends StatefulWidget {
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
-String imageFile = 'assets/images/splashimage.png';
-int delay = 3;
-
 class _SplashScreenState extends State<SplashScreen> {
   late StreamSubscription sub;
   String imageFile = 'assets/images/splashimage.png';
-  int delay = 5;
+  int delay = 3;
 
   void initDeepLinkListener() async {
     sub = uriLinkStream.listen((Uri? uri) {

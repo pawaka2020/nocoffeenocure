@@ -46,27 +46,30 @@ class CartScreen extends StatefulWidget {
   State<StatefulWidget> createState() => _CartScreenState();
 }
 
+class Package {
+  late String name;
+  late double price;
+  bool selected = false;
+
+  Package(name, price);
+}
+
 class _CartScreenState extends State<CartScreen> {
   //state variables
   double _finalPrice = 0.00;
   double _packagePrice = 0.00;
-  List _packagePrices = [0, 0];
+  String _packageString = '';
   List<VoucherOB> _usedList = [];
   List<int> _selectedVoucherIds = [];
   double _voucherDeduction = 0;
   String _specialRequest = "";
-
+  String _phoneNumber = '';
   double _tax = 0.06;
   double _deliveryFee = 4.00;
   double _subtotal = 0;
   double _roundingAdj = 0;
 
   Price price = Price();
-
-  final packaging = {
-    "Straw": 0.50,
-    "Paperbag": 10.00,
-  };
 
   void adjustPrice()  {
     //calculate amount
@@ -150,14 +153,14 @@ class _CartScreenState extends State<CartScreen> {
     _specialRequest = newSpecialRequest;
   }
 
-  void onSelectionChanged(int index, bool toggle, double price) {
-    _packagePrice = 0;
-    double _price = toggle ? price : 0;
-    _packagePrices[index] = _price;
-    for (var price in _packagePrices) {
-      _packagePrice += price;
-    }
+  void updatePhoneNumber(String phoneNumber) {
+    _phoneNumber = phoneNumber;
+  }
+
+  void updatePackageDetails(double packagePrice, String packageString) {
     setState(() {
+      _packagePrice = packagePrice;
+      _packageString = packageString;
       adjustPrice();
     });
   }
@@ -188,24 +191,20 @@ class _CartScreenState extends State<CartScreen> {
   }
 
   void placeOrder() {
-    if (widget.tracking == false) {
-      addOrder(_selectedVoucherIds, );
-      _selectedVoucherIds = []; //
-      widget.setTracking();
-      //delete all cart items
-      int length = widget.cartItems.length;
-      widget.updateCartCount(length * -1);
-      CartItemRepo().box.removeAll();
+    if (widget.tracking == true) {
+      printToast("Error: Order already exists");
+      return ;
     }
-    else printToast("Error: Order already exists");
+    printToast("phonenumber of ${_phoneNumber.toString()}");
+    addOrder(_selectedVoucherIds, widget.cartItems, _specialRequest, _packageString);
+    _selectedVoucherIds = []; //
+    widget.setTracking();
+    //delete all cart items
+
+    int length = widget.cartItems.length;
+    widget.updateCartCount(length * -1);
+    CartItemRepo().box.removeAll();
   }
-
-
-
-  // @override
-  // initState() {
-  //   adjustPrice();
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -228,15 +227,15 @@ class _CartScreenState extends State<CartScreen> {
               children: [
                 ...widget.cartItems.map((item) => CartItemCard(item, deleteCartItem, editCartItem)),
                 PartialDivider(40, 10),
-                SpecialRequest(updateSpecialRequest),
+                buildSpecialRequest(updateSpecialRequest),
                 PartialDivider(40, 10),
-                Packaging(onSelectionChanged),
+                Packaging(updatePackageDetails),
                 PartialDivider(40, 10),
                 buildVoucherSelection(_usedList, _selectedVoucherIds, widget.vouchers, context, addVoucher, removeVoucher),
                 PartialDivider(40, 10),
                 DeliveryAddress(),
                 PartialDivider(40, 10),
-                buildPhoneNumber(),
+                buildPhoneNumber(updatePhoneNumber),
                 PartialDivider(40, 10),
                 PaymentMethods(),
                 SizedBox(height: 5),
