@@ -420,7 +420,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(21, 894287139824345925),
       name: 'OrderOB',
-      lastPropertyId: const IdUid(14, 4574324040476023871),
+      lastPropertyId: const IdUid(22, 1461558863722286894),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -436,7 +436,7 @@ final _entities = <ModelEntity>[
         ModelProperty(
             id: const IdUid(3, 3939607138348557143),
             name: 'eta',
-            type: 10,
+            type: 6,
             flags: 0),
         ModelProperty(
             id: const IdUid(4, 8536933428330670500),
@@ -489,6 +489,46 @@ final _entities = <ModelEntity>[
             id: const IdUid(14, 4574324040476023871),
             name: 'packageString',
             type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(15, 8553214042705826470),
+            name: 'orderPlaced',
+            type: 10,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(16, 4592725279212508534),
+            name: 'PaymentMethod',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(17, 3110067079694454244),
+            name: 'amount',
+            type: 8,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(18, 96802594400191180),
+            name: 'sst',
+            type: 8,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(19, 7490591012195810945),
+            name: 'voucherDeduction',
+            type: 8,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(20, 3923099890212011569),
+            name: 'subtotal',
+            type: 8,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(21, 4620839665897857527),
+            name: 'deliveryFee',
+            type: 8,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(22, 1461558863722286894),
+            name: 'roundingAdjustment',
+            type: 8,
             flags: 0)
       ],
       relations: <ModelRelation>[],
@@ -1201,10 +1241,13 @@ ModelDefinition getObjectBoxModel() {
           final packageStringOffset = object.packageString == null
               ? null
               : fbb.writeString(object.packageString!);
-          fbb.startTable(15);
+          final PaymentMethodOffset = object.PaymentMethod == null
+              ? null
+              : fbb.writeString(object.PaymentMethod!);
+          fbb.startTable(23);
           fbb.addInt64(0, object.id);
           fbb.addInt64(1, object.orderId);
-          fbb.addInt64(2, object.eta?.millisecondsSinceEpoch);
+          fbb.addInt64(2, object.eta);
           fbb.addOffset(3, statusOffset);
           fbb.addFloat64(4, object.locationLongitude);
           fbb.addFloat64(5, object.locationLatitude);
@@ -1215,21 +1258,28 @@ ModelDefinition getObjectBoxModel() {
           fbb.addOffset(10, phoneNumberOffset);
           fbb.addOffset(11, specialRequestOffset);
           fbb.addOffset(13, packageStringOffset);
+          fbb.addInt64(14, object.orderPlaced?.millisecondsSinceEpoch);
+          fbb.addOffset(15, PaymentMethodOffset);
+          fbb.addFloat64(16, object.amount);
+          fbb.addFloat64(17, object.sst);
+          fbb.addFloat64(18, object.voucherDeduction);
+          fbb.addFloat64(19, object.subtotal);
+          fbb.addFloat64(20, object.deliveryFee);
+          fbb.addFloat64(21, object.roundingAdjustment);
           fbb.finish(fbb.endTable());
           return object.id;
         },
         objectFromFB: (Store store, ByteData fbData) {
           final buffer = fb.BufferContext(fbData);
           final rootOffset = buffer.derefObject(0);
-          final etaValue =
-              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 8);
+          final orderPlacedValue =
+              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 32);
           final object = OrderOB()
             ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0)
             ..orderId =
                 const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 6)
-            ..eta = etaValue == null
-                ? null
-                : DateTime.fromMillisecondsSinceEpoch(etaValue)
+            ..eta =
+                const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 8)
             ..status = const fb.StringReader(asciiOptimization: true)
                 .vTableGetNullable(buffer, rootOffset, 10)
             ..locationLongitude = const fb.Float64Reader()
@@ -1247,7 +1297,24 @@ ModelDefinition getObjectBoxModel() {
             ..specialRequest = const fb.StringReader(asciiOptimization: true)
                 .vTableGetNullable(buffer, rootOffset, 26)
             ..packageString = const fb.StringReader(asciiOptimization: true)
-                .vTableGetNullable(buffer, rootOffset, 30);
+                .vTableGetNullable(buffer, rootOffset, 30)
+            ..orderPlaced = orderPlacedValue == null
+                ? null
+                : DateTime.fromMillisecondsSinceEpoch(orderPlacedValue)
+            ..PaymentMethod = const fb.StringReader(asciiOptimization: true)
+                .vTableGetNullable(buffer, rootOffset, 34)
+            ..amount = const fb.Float64Reader()
+                .vTableGetNullable(buffer, rootOffset, 36)
+            ..sst = const fb.Float64Reader()
+                .vTableGetNullable(buffer, rootOffset, 38)
+            ..voucherDeduction = const fb.Float64Reader()
+                .vTableGetNullable(buffer, rootOffset, 40)
+            ..subtotal = const fb.Float64Reader()
+                .vTableGetNullable(buffer, rootOffset, 42)
+            ..deliveryFee = const fb.Float64Reader()
+                .vTableGetNullable(buffer, rootOffset, 44)
+            ..roundingAdjustment = const fb.Float64Reader()
+                .vTableGetNullable(buffer, rootOffset, 46);
           object.user.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 22, 0);
           object.user.attach(store);
@@ -1703,6 +1770,37 @@ class OrderOB_ {
   /// see [OrderOB.packageString]
   static final packageString =
       QueryStringProperty<OrderOB>(_entities[10].properties[12]);
+
+  /// see [OrderOB.orderPlaced]
+  static final orderPlaced =
+      QueryIntegerProperty<OrderOB>(_entities[10].properties[13]);
+
+  /// see [OrderOB.PaymentMethod]
+  static final PaymentMethod =
+      QueryStringProperty<OrderOB>(_entities[10].properties[14]);
+
+  /// see [OrderOB.amount]
+  static final amount =
+      QueryDoubleProperty<OrderOB>(_entities[10].properties[15]);
+
+  /// see [OrderOB.sst]
+  static final sst = QueryDoubleProperty<OrderOB>(_entities[10].properties[16]);
+
+  /// see [OrderOB.voucherDeduction]
+  static final voucherDeduction =
+      QueryDoubleProperty<OrderOB>(_entities[10].properties[17]);
+
+  /// see [OrderOB.subtotal]
+  static final subtotal =
+      QueryDoubleProperty<OrderOB>(_entities[10].properties[18]);
+
+  /// see [OrderOB.deliveryFee]
+  static final deliveryFee =
+      QueryDoubleProperty<OrderOB>(_entities[10].properties[19]);
+
+  /// see [OrderOB.roundingAdjustment]
+  static final roundingAdjustment =
+      QueryDoubleProperty<OrderOB>(_entities[10].properties[20]);
 }
 
 /// [UserOB] entity fields to define ObjectBox queries.

@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 
 //make sure the widget starts with
 class PaymentMethods extends StatefulWidget {
+  Function(String) updatePaymentMethod;
+  PaymentMethods(this.updatePaymentMethod);
+
   @override
   _PaymentMethodsState createState() => _PaymentMethodsState();
 }
@@ -48,6 +51,7 @@ class _PaymentMethodsState extends State<PaymentMethods> {
           onChanged: (String? value) {
             setState(() {
               _selectedPaymentMethod = value!;
+              widget.updatePaymentMethod("NCNC Wallet");
             });
           },
         ),
@@ -82,6 +86,7 @@ class _PaymentMethodsState extends State<PaymentMethods> {
           onChanged: (String? value) {
             setState(() {
               _selectedPaymentMethod = value!;
+              widget.updatePaymentMethod(method.name);
             });
           },
         ),

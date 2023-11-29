@@ -18,6 +18,7 @@ import '../menu_detail/menu_detail.dart';
 import '../selectunusedvoucher/selectunusedvoucher.dart';
 import 'addorder.dart';
 import 'cartitemcard.dart';
+import 'checkordererrors.dart';
 import 'deliveryaddress.dart';
 import 'ordersubmit.dart';
 
@@ -64,14 +65,16 @@ class _CartScreenState extends State<CartScreen> {
   double _voucherDeduction = 0;
   String _specialRequest = "";
   String _phoneNumber = '';
+  String _address = '';
+  bool _onsitePickup = false;
   double _tax = 0.06;
   double _deliveryFee = 4.00;
   double _subtotal = 0;
   double _roundingAdj = 0;
-
+  String _paymentMethod = '';
   Price price = Price();
 
-  void adjustPrice()  {
+  void adjustPrice() {
     //calculate amount
     double cartPrice = 0;
     for (var cartItem in widget.cartItems) {
@@ -157,12 +160,24 @@ class _CartScreenState extends State<CartScreen> {
     _phoneNumber = phoneNumber;
   }
 
+  void updateAddress(String address) {
+    _address = address;
+  }
+
+  void updateOnsitePickup(bool onsitePickup) {
+    _onsitePickup = onsitePickup;
+  }
+
   void updatePackageDetails(double packagePrice, String packageString) {
     setState(() {
       _packagePrice = packagePrice;
       _packageString = packageString;
       adjustPrice();
     });
+  }
+
+  void updatePaymentMethod(String paymentMethod) {
+    _paymentMethod = paymentMethod;
   }
 
   void addVoucher() async {
@@ -195,15 +210,19 @@ class _CartScreenState extends State<CartScreen> {
       printToast("Error: Order already exists");
       return ;
     }
-    printToast("phonenumber of ${_phoneNumber.toString()}");
-    addOrder(_selectedVoucherIds, widget.cartItems, _specialRequest, _packageString);
-    _selectedVoucherIds = []; //
-    widget.setTracking();
-    //delete all cart items
+    if (checkOrderErrors(widget.tracking)){
+      //printToast("payment type of ${_paymentMethod}");
+      addOrder(_selectedVoucherIds, widget.cartItems, _specialRequest,
+          _packageString, _address, _onsitePickup, price);
+      _selectedVoucherIds = []; //
+      widget.setTracking();
+      //delete all cart items
 
-    int length = widget.cartItems.length;
-    widget.updateCartCount(length * -1);
-    CartItemRepo().box.removeAll();
+      int length = widget.cartItems.length;
+      widget.updateCartCount(length * -1);
+      CartItemRepo().box.removeAll();
+    };
+
   }
 
   @override
@@ -233,11 +252,11 @@ class _CartScreenState extends State<CartScreen> {
                 PartialDivider(40, 10),
                 buildVoucherSelection(_usedList, _selectedVoucherIds, widget.vouchers, context, addVoucher, removeVoucher),
                 PartialDivider(40, 10),
-                DeliveryAddress(),
+                DeliveryAddress(updateAddress, updateOnsitePickup),
                 PartialDivider(40, 10),
                 buildPhoneNumber(updatePhoneNumber),
                 PartialDivider(40, 10),
-                PaymentMethods(),
+                PaymentMethods(updatePaymentMethod),
                 SizedBox(height: 5),
                 buildPaymentDetails(price, context),
                 SizedBox(height: 5),

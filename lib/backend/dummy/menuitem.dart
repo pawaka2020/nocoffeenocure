@@ -431,6 +431,129 @@ class MenuItemDummy {
           ],
           true
       ).toMenuItemOB(),
+      MenuItem(
+          'assets/images/coffeesample.png',
+          'Food 1',
+
+          10.00,
+          'Meals',
+          'A rich and bold blend that promises to keep you wide awake and invigorated. '
+              'Crafted from premium, handpicked coffee beans, this dark roast boasts '
+              'a robust flavor with deep, earthy undertones and a subtle hint of cocoa.',
+          [
+            UserReview("Richard", "Powerful!", 5),
+            UserReview("Susan Boyle", "Bitter but just the shot I need for my overtime shift.", 4)
+          ],
+          [
+            Addition(
+                "Beans",
+                0,
+                0,
+                [
+                  AdditionDetail("Supremo", 0.00),
+                  AdditionDetail("Yirgacheffe", 5.30),
+                  AdditionDetail("Mandheling", 8.00)
+                ]
+            ),
+            Addition(
+                "Sweetness",
+                0,
+                0,
+                [
+                  AdditionDetail("Less sugar", 0),
+                  AdditionDetail("More sugar", 1.00),
+                ]
+            ),
+          ],
+          [
+            Ingredient("Supremo", "assets/image/tiny.png"),
+            Ingredient("Lemon", "assets/image/tiny.png"),
+            Ingredient("Soda lemon", "assets/image/tiny.png"),
+          ],
+          true
+      ).toMenuItemOB(),
+      MenuItem(
+          'assets/images/coffeesample.png',
+          'Food 2',
+
+          10.00,
+          'Meals',
+          'A rich and bold blend that promises to keep you wide awake and invigorated. '
+              'Crafted from premium, handpicked coffee beans, this dark roast boasts '
+              'a robust flavor with deep, earthy undertones and a subtle hint of cocoa.',
+          [
+            UserReview("Richard", "Powerful!", 5),
+            UserReview("Susan Boyle", "Bitter but just the shot I need for my overtime shift.", 4)
+          ],
+          [
+            Addition(
+                "Beans",
+                0,
+                0,
+                [
+                  AdditionDetail("Supremo", 0.00),
+                  AdditionDetail("Yirgacheffe", 5.30),
+                  AdditionDetail("Mandheling", 8.00)
+                ]
+            ),
+            Addition(
+                "Sweetness",
+                0,
+                0,
+                [
+                  AdditionDetail("Less sugar", 0),
+                  AdditionDetail("More sugar", 1.00),
+                ]
+            ),
+          ],
+          [
+            Ingredient("Supremo", "assets/image/tiny.png"),
+            Ingredient("Lemon", "assets/image/tiny.png"),
+            Ingredient("Soda lemon", "assets/image/tiny.png"),
+          ],
+          true
+      ).toMenuItemOB(),
+      MenuItem(
+          'assets/images/coffeesample.png',
+          'Food 3',
+
+          10.00,
+          'Meals',
+          'A rich and bold blend that promises to keep you wide awake and invigorated. '
+              'Crafted from premium, handpicked coffee beans, this dark roast boasts '
+              'a robust flavor with deep, earthy undertones and a subtle hint of cocoa.',
+          [
+            UserReview("Richard", "Powerful!", 5),
+            UserReview("Susan Boyle", "Bitter but just the shot I need for my overtime shift.", 4)
+          ],
+          [
+            Addition(
+                "Beans",
+                0,
+                0,
+                [
+                  AdditionDetail("Supremo", 0.00),
+                  AdditionDetail("Yirgacheffe", 5.30),
+                  AdditionDetail("Mandheling", 8.00)
+                ]
+            ),
+            Addition(
+                "Sweetness",
+                0,
+                0,
+                [
+                  AdditionDetail("Less sugar", 0),
+                  AdditionDetail("More sugar", 1.00),
+                ]
+            ),
+          ],
+          [
+            Ingredient("Supremo", "assets/image/tiny.png"),
+            Ingredient("Lemon", "assets/image/tiny.png"),
+            Ingredient("Soda lemon", "assets/image/tiny.png"),
+          ],
+          true
+      ).toMenuItemOB(),
     ];
 
     //MenuItemOB asdas = MenuItemOB()..additions = AdditionOB();

@@ -15,6 +15,7 @@ class SelectionBar extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         child: Row(
           children: [
+            Icon(Icons.arrow_back_ios, color: Colors.blue),
             for (String category in categories)
               GestureDetector(
                 onTap: () {
@@ -26,15 +27,16 @@ class SelectionBar extends StatelessWidget {
                   child: Text(
                     category,
                     style: TextStyle(
-                      fontSize: 16,
+                      fontSize: 16, //16
                       fontWeight: FontWeight.bold,
                       color: Colors.blue, // Customize the color
                     ),
                   ),
                 ),
               ),
-          ],
-        ),
+            Icon(Icons.arrow_forward_ios, color: Colors.blue)
+          ]
+        )
       ),
     );
   }

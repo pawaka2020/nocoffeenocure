@@ -10,7 +10,8 @@ class OrderOB {
   int id = 0;
 
   int? orderId; // id for the order, used by rider and user for identification.
-  DateTime? eta; // should be in minutes only. even though we still have 00:00:00 as a display.
+  int? eta;
+  DateTime? orderPlaced; // should be in minutes only. even though we still have 00:00:00 as a display.
   String? status; // one of the following: Preparing, Out for Delivery, Arrived, Canceled.
   //?? something to be linked to a GPS service to allow user to track the rider's vehicle delivering the order.
   double? locationLongitude;
@@ -21,10 +22,16 @@ class OrderOB {
   String? phoneNumber;
   String? specialRequest;
   String? packageString;
+  String? PaymentMethod;
   bool? onSitePickup;
+  //payment details
+  double? amount;
+  double? sst;
+  double? voucherDeduction;
+  double? subtotal;
+  double? deliveryFee;
+  double? roundingAdjustment;
 
-  //one order can have multiple cart items
-  //allow users to place review on each individual cart item and for
   @Backlink()
   final cartItems = ToMany<CartItemOB>();
   @Backlink()

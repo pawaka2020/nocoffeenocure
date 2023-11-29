@@ -11,14 +11,6 @@ enum timelineType {
   between,
   end,
 }
-// enum deliveryPhase {
-//   orderConfirmed,
-//   preparing,
-//   outForDelivery,
-//   arrived,
-//   readyPickup,
-//   Completed,
-// }
 
 List<String> phase = [
   "Order Confirmed",
