@@ -7,6 +7,7 @@ import '../../repos/bannernews.dart';
 import '../../repos/cartitem.dart';
 import '../../repos/fullnews.dart';
 import '../../repos/menuitem.dart';
+import '../../repos/order.dart';
 import '../../repos/user.dart';
 import '../../repos/voucher.dart';
 import '../onboarding/onboarding_screen.dart';
@@ -87,6 +88,7 @@ Future<void> preLoadFromBackend() async {
   await BannerNewsRepo().update(BackendSource.dummy);
   await MenuItemRepo().update(BackendSource.dummy);
   await CartItemRepo().update(BackendSource.dummy);
+  await OrderRepo();
 
   //testEditVoucher();
   print ("data pre-loaded");

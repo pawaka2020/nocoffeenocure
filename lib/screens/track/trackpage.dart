@@ -4,7 +4,12 @@ import 'package:nocoffeenocure/screens/track/tracklocation.dart';
 //import 'package:timelines/timelines.dart';
 import 'package:timeline_tile/timeline_tile.dart';
 
-import 'orderdetails.dart';
+import '../../common.dart';
+import '../../models/order.dart';
+import '../../models/user.dart';
+import '../../repos/order.dart';
+import '../../repos/user.dart';
+import '../orderdetails/orderdetails.dart';
 
 enum timelineType {
   start,
@@ -173,6 +178,9 @@ Widget buildTimeLine2(int phaseIndex, timelineType type, int currentPhaseIndex) 
 }
 
 class TrackPage extends StatefulWidget {
+  bool tracking;
+  void Function(bool) setTracking;
+  TrackPage(this.tracking, this.setTracking);
 
   @override
   State<StatefulWidget> createState() => TrackPageState();
@@ -183,160 +191,187 @@ class TrackPageState extends State<TrackPage> {
   late DateTime _timer;
   late int _currentPhaseIndex;
   late orderType _type;
+  UserOB? currentUser = UserRepo().getLoggedInUser();
+
+  void cancelOrder(BuildContext context) async {
+    bool confirmation = await showDeleteConfirmationDialog(
+        context, 'Confirm Cancellation', 'Are you sure you want to cancel this order?');
+    if (confirmation) {
+      setState(() {
+        OrderOB? currentOrder = currentUser?.orders.firstWhere((order) => order.active == true);
+        print("current order id = ${currentOrder?.orderId.toString()}");
+        //remove the order from the current user.
+        currentUser?.orders.remove(currentOrder);
+        //remove from box
+        OrderRepo().box.remove(currentOrder?.id);
+        //put user back in box to udpdate
+        UserRepo().box.put(currentUser);
+        widget.setTracking(false);
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     _currentPhaseIndex = 3;
     _type = orderType.delivery;
 
-    return Column(
-      children: [
-        Expanded(
-          child: Padding(
-            padding: EdgeInsets.only(left: 16, right: 16, top: 0, bottom: 0),
-            child: ListView(
-              children: [
-                if (_type == orderType.pickup) ...[
-                  buildTimeLine2(0, timelineType.start, _currentPhaseIndex),
-                  buildTimeLine2(1, timelineType.between, _currentPhaseIndex),
-                  buildTimeLine2(3, timelineType.between, _currentPhaseIndex),
-                  buildTimeLine2(5, timelineType.end, _currentPhaseIndex),
-                ]
-                else ...[
-                  buildTimeLine2(0, timelineType.start, _currentPhaseIndex),
-                  buildTimeLine2(1, timelineType.between, _currentPhaseIndex),
-                  buildTimeLine2(2, timelineType.between, _currentPhaseIndex),
-                  buildTimeLine2(4, timelineType.between, _currentPhaseIndex),
-                  buildTimeLine2(5, timelineType.end, _currentPhaseIndex),
+    Widget box() {
+      double _height = 100; //100
+
+      return SizedBox(
+        width: double.infinity,
+        child: Card(
+            elevation: 4,
+            margin: EdgeInsets.all(0),
+            child: Padding(
+                padding: EdgeInsets.only(left: 0, right: 0),
+                child: Container(
+                  height: _height,
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text("ORDER NUMBER",
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.black
+                                  )
+                              ),
+                              Text("#48",
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.grey
+                                  )
+                              )
+                            ]
+                        ),
+                        Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text("ESTIMATED TIME",
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.black
+                                  )
+                              ),
+                              Text("00:30:00",
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.grey
+                                  )
+                              )
+                            ]
+                        ),
+                      ]
+                  ),
+
+                  // child: Column(
+                  //   mainAxisAlignment: MainAxisAlignment.center,
+                  //   children: [
+                  //     Text("Order number #2482011"),
+                  //     Text("Estimated time 30 minutes")
+                  //   ]
+                  // ),
+                )
+            )
+        ),
+      );
+    }
+
+    Widget selectionButton(BuildContext context, UserOB currentUser) {
+      return Padding(
+          padding: EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 16),
+          child: Align(
+              alignment: Alignment.topRight,
+              child: PopupMenuButton<String>(
+                icon: Icon(
+                  Icons.menu,
+                  color: Colors.orange,
+                  size: 40,
+                ),
+                onSelected: (value) {
+                  // Handle menu item selection
+                  switch (value) {
+                    case 'viewOrderDetails':
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => OrderDetailsScreen(currentUser),
+                      ));
+                      //print('View order details selected');
+                      break;
+                    case 'viewLocation':
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => TrackLocationScreen(),
+                      ));
+                      //print('View location selected');
+                      break;
+                    case 'cancelOrder':
+                      cancelOrder(context);
+                      //print('Cancel order selected');
+                      break;
+                  }
+                },
+                itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>
+                [
+                  PopupMenuItem<String>(
+                    value: 'viewOrderDetails',
+                    child: Text('View order details'),
+                  ),
+                  PopupMenuItem<String>(
+                    value: 'viewLocation',
+                    child: Text('View location'),
+                  ),
+                  PopupMenuItem<String>(
+                    value: 'cancelOrder',
+                    child: Text('Cancel order'),
+                  ),
                 ],
-              ],
+              )
+          )
+      );
+    }
+
+    if (widget.tracking == true) {
+      return Column(
+        children: [
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.only(left: 16, right: 16, top: 0, bottom: 0),
+              child: ListView(
+                children: [
+                  if (_type == orderType.pickup) ...[
+                    buildTimeLine2(0, timelineType.start, _currentPhaseIndex),
+                    buildTimeLine2(1, timelineType.between, _currentPhaseIndex),
+                    buildTimeLine2(3, timelineType.between, _currentPhaseIndex),
+                    buildTimeLine2(5, timelineType.end, _currentPhaseIndex),
+                  ]
+                  else ...[
+                    buildTimeLine2(0, timelineType.start, _currentPhaseIndex),
+                    buildTimeLine2(1, timelineType.between, _currentPhaseIndex),
+                    buildTimeLine2(2, timelineType.between, _currentPhaseIndex),
+                    buildTimeLine2(4, timelineType.between, _currentPhaseIndex),
+                    buildTimeLine2(5, timelineType.end, _currentPhaseIndex),
+                  ],
+                ],
+              ),
             ),
           ),
-        ),
-        selectionButton(context),
-        box(),
-      ],
-    );
+          selectionButton(context, currentUser!),
+          box(),
+        ],
+      );
+    }
+    else {
+      return Center(
+        child: Text("No orders")
+      );
+    }
+
   }
 }
 
-Widget box() {
-  double _height = 100; //100
 
-  return SizedBox(
-    width: double.infinity,
-      child: Card(
-        elevation: 4,
-        margin: EdgeInsets.all(0),
-        child: Padding(
-          padding: EdgeInsets.only(left: 0, right: 0),
-          child: Container(
-            height: _height,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text("ORDER NUMBER",
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.black
-                        )
-                      ),
-                      Text("#48",
-                          style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.grey
-                          )
-                      )
-                    ]
-                ),
-                Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text("ESTIMATED TIME",
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.black
-                          )
-                      ),
-                      Text("00:30:00",
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.grey
-                          )
-                      )
-                    ]
-                ),
-              ]
-            ),
-
-            // child: Column(
-            //   mainAxisAlignment: MainAxisAlignment.center,
-            //   children: [
-            //     Text("Order number #2482011"),
-            //     Text("Estimated time 30 minutes")
-            //   ]
-            // ),
-          )
-        )
-      ),
-  );
-}
-
-void cancelOrder() {}
-
-Widget selectionButton(BuildContext context) {
-  return Padding(
-    padding: EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 16),
-    child: Align(
-      alignment: Alignment.topRight,
-      child: PopupMenuButton<String>(
-          icon: Icon(
-          Icons.menu,
-          color: Colors.orange,
-          size: 40,
-        ),
-          onSelected: (value) {
-          // Handle menu item selection
-          switch (value) {
-            case 'viewOrderDetails':
-              Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => OrderDetailsScreen(),
-              ));
-              print('View order details selected');
-              break;
-            case 'viewLocation':
-              Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => TrackLocationScreen(),
-              ));
-              print('View location selected');
-              break;
-            case 'cancelOrder':
-              cancelOrder();
-              print('Cancel order selected');
-              break;
-          }
-        },
-          itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>
-          [
-            PopupMenuItem<String>(
-              value: 'viewOrderDetails',
-              child: Text('View order details'),
-            ),
-            PopupMenuItem<String>(
-              value: 'viewLocation',
-              child: Text('View location'),
-            ),
-            PopupMenuItem<String>(
-              value: 'cancelOrder',
-              child: Text('Cancel order'),
-            ),
-          ],
-      )
-    )
-  );
-}
 
 

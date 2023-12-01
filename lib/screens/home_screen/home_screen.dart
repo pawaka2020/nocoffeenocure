@@ -46,13 +46,14 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       _cartCount = _cartCount + adjustment;
       if (_cartCount < 0) _cartCount = 0;
+
     });
   }
 
-  void setTracking() {
+  void setTracking(bool value) {
     //add OrderItem
-    _tracking = true;
-    printToast("Order placed");
+    _tracking = value;
+
     changePage(0);
   }
 
@@ -65,8 +66,8 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           MenuPage(updateCartCount), //put updateCartCount here
           VouchersPage(),
-          CartScreen(updateCartCount, setTracking, changePage, _tracking), //put updateCartCount here
-          TrackPage(),
+          CartScreen(updateCartCount, setTracking, _tracking), //put updateCartCount here
+          TrackPage(_tracking, setTracking),
           Me()
         ],
         onPageChanged: (index) {

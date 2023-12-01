@@ -31,6 +31,7 @@ class OrderOB {
   double? subtotal;
   double? deliveryFee;
   double? roundingAdjustment;
+  bool? active;
 
   @Backlink()
   final cartItems = ToMany<CartItemOB>();

@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import '../../models/user.dart';
 
 class OrderDetailsScreen extends StatelessWidget {
+  UserOB currentUser;
+  OrderDetailsScreen(this.currentUser);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Order Details',
+          '${currentUser.orders[0].cartItems[0].name}',
           style: TextStyle(
             color: Colors.white,
           ),
@@ -22,7 +26,7 @@ class OrderDetailsScreen extends StatelessWidget {
 
 Center placeholder = Center(
     child: Text(
-      'Help me!',
+      'Order details!',
       style: TextStyle(fontSize: 24),
     )
 );

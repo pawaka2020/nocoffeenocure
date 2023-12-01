@@ -43,6 +43,7 @@ dependencies:
   uni_links:
   timelines:
   timeline_tile:
+  http:
 
 dev_dependencies:
   flutter_test:

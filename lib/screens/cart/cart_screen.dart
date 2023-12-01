@@ -36,10 +36,10 @@ class Price {
 
 class CartScreen extends StatefulWidget {
   void Function(int) updateCartCount;
-  void Function() setTracking;
-  void Function(int) changePage;
+  void Function(bool) setTracking;
+  //void Function(int) changePage;
   bool tracking;
-  CartScreen(this.updateCartCount, this.setTracking, this.changePage, this.tracking);
+  CartScreen(this.updateCartCount, this.setTracking,  this.tracking);
   var cartItems = CartItemRepo().getAll();
   var vouchers = VoucherRepo().getAll();
 
@@ -140,7 +140,7 @@ class _CartScreenState extends State<CartScreen> {
       builder: (context) => MenuDetailsPage(cartItem.menuItemOB[0].toMenuItem(), true, cartItem.quantity!, cartItem.id, widget.updateCartCount),
     ));
 
-    if (updatedCartItem != null){
+    if (updatedCartItem != null) {
       setState(() {
         CartItemRepo().box.put(updatedCartItem);
         widget.cartItems = CartItemRepo().getAll();
@@ -210,19 +210,18 @@ class _CartScreenState extends State<CartScreen> {
       printToast("Error: Order already exists");
       return ;
     }
-    if (checkOrderErrors(widget.tracking)){
-      //printToast("payment type of ${_paymentMethod}");
+    if (checkOrderErrors(widget.tracking)) {
+      //printToast("address of ${_address}");
+      widget.setTracking(true);
+
       addOrder(_selectedVoucherIds, widget.cartItems, _specialRequest,
           _packageString, _address, _onsitePickup, price);
       _selectedVoucherIds = []; //
-      widget.setTracking();
-      //delete all cart items
-
       int length = widget.cartItems.length;
       widget.updateCartCount(length * -1);
       CartItemRepo().box.removeAll();
+      printToast("Order placed");
     };
-
   }
 
   @override
@@ -270,28 +269,3 @@ class _CartScreenState extends State<CartScreen> {
   }
 }
 
-Future<bool> showDeleteConfirmationDialog(BuildContext context, String text1, String text2) async {
-  return await showDialog(
-    context: context,
-    builder: (context) {
-      return AlertDialog(
-        title: Text(text1),
-        content: Text(text2),
-        actions: [
-          TextButton(
-            child: Text('Cancel'),
-            onPressed: () {
-              Navigator.of(context).pop(false); // Return false to indicate cancellation
-            },
-          ),
-          TextButton(
-            child: Text('Delete'),
-            onPressed: () {
-              Navigator.of(context).pop(true); // Return true to indicate deletion confirmation
-            },
-          ),
-        ],
-      );
-    },
-  );
-}

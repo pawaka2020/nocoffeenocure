@@ -9,8 +9,8 @@ class CartItemOB {
   @Id()
   int id = 0;
 
-  String? image;
-  String? name;
+  String? image; //we don't use this anymore
+  String? name; // we don't use this anymore
   String? content;
   int? quantity;
   int? menuItem_id;

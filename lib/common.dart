@@ -19,3 +19,29 @@ void handleDeepLink(String? link) {
   //   print('Hello World');
   // }
 }
+
+Future<bool> showDeleteConfirmationDialog(BuildContext context, String text1, String text2) async {
+  return await showDialog(
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        title: Text(text1),
+        content: Text(text2),
+        actions: [
+          TextButton(
+            child: Text('Cancel'),
+            onPressed: () {
+              Navigator.of(context).pop(false); // Return false to indicate cancellation
+            },
+          ),
+          TextButton(
+            child: Text('Delete'),
+            onPressed: () {
+              Navigator.of(context).pop(true); // Return true to indicate deletion confirmation
+            },
+          ),
+        ],
+      );
+    },
+  );
+}

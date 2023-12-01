@@ -392,7 +392,7 @@
     },
     {
       "id": "21:894287139824345925",
-      "lastPropertyId": "22:1461558863722286894",
+      "lastPropertyId": "23:7582011488822259852",
       "name": "OrderOB",
       "properties": [
         {
@@ -503,6 +503,11 @@
           "id": "22:1461558863722286894",
           "name": "roundingAdjustment",
           "type": 8
+        },
+        {
+          "id": "23:7582011488822259852",
+          "name": "active",
+          "type": 1
         }
       ],
       "relations": []

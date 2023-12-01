@@ -5,6 +5,7 @@ import 'models/bannernews.dart';
 import 'models/cartitem.dart';
 import 'models/fullnews.dart';
 import 'models/menuitem.dart';
+import 'models/order.dart';
 import 'models/token.dart';
 import 'models/user.dart';
 import 'models/voucher.dart';
@@ -32,6 +33,7 @@ class ObjectBox {
     cartItemBox = store.box<CartItemOB>();
     voucherBox = store.box<VoucherOB>();
     tokenBox = store.box<TokenOB>();
+    orderBox = store.box<OrderOB>();
   }
 
   static Future<ObjectBox> create() async {

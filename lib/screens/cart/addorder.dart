@@ -29,6 +29,7 @@ import '../../models/cartitem.dart';
 import '../../models/order.dart';
 import '../../models/user.dart';
 import '../../models/voucher.dart';
+import '../../repos/order.dart';
 import '../../repos/user.dart';
 import '../../repos/voucher.dart';
 import 'cart_screen.dart';
@@ -101,7 +102,20 @@ void addOrder(List<int> selectedVoucherIds, List<CartItemOB> cartItems,
     //time setting
     ..orderPlaced = DateTime.now()
     ..eta = (60 * 25)
+    //IMPORTANT! status of order, allowing identification of this order later
+    ..active = true;
   ;
-  //printToast("specialRequest = $specialRequest");
-  //printToast("packageString = $packageString");
+  //this one doesn't work.
+  //currentUser..orders.add(newOrder);
+  //UserRepo().box.put(currentUser);
+  newOrder.user.target = currentUser;
+  OrderRepo().box.put(newOrder);
+
+  test();
+}
+
+void test() {
+  UserOB? currentUser = UserRepo().getLoggedInUser();
+  print("Okay, so current user is ${currentUser?.id.toString()}");
+  print("User cartitem first item = ${currentUser?.cartItems[0].menuItemOB[0].title}");
 }
