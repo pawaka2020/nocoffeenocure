@@ -420,7 +420,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(21, 894287139824345925),
       name: 'OrderOB',
-      lastPropertyId: const IdUid(23, 7582011488822259852),
+      lastPropertyId: const IdUid(24, 8700584188040987799),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -534,6 +534,11 @@ final _entities = <ModelEntity>[
             id: const IdUid(23, 7582011488822259852),
             name: 'active',
             type: 1,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(24, 8700584188040987799),
+            name: 'appWalletDiscount',
+            type: 8,
             flags: 0)
       ],
       relations: <ModelRelation>[],
@@ -1249,7 +1254,7 @@ ModelDefinition getObjectBoxModel() {
           final PaymentMethodOffset = object.PaymentMethod == null
               ? null
               : fbb.writeString(object.PaymentMethod!);
-          fbb.startTable(24);
+          fbb.startTable(25);
           fbb.addInt64(0, object.id);
           fbb.addInt64(1, object.orderId);
           fbb.addInt64(2, object.eta);
@@ -1272,6 +1277,7 @@ ModelDefinition getObjectBoxModel() {
           fbb.addFloat64(20, object.deliveryFee);
           fbb.addFloat64(21, object.roundingAdjustment);
           fbb.addBool(22, object.active);
+          fbb.addFloat64(23, object.appWalletDiscount);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -1322,7 +1328,9 @@ ModelDefinition getObjectBoxModel() {
             ..roundingAdjustment = const fb.Float64Reader()
                 .vTableGetNullable(buffer, rootOffset, 46)
             ..active =
-                const fb.BoolReader().vTableGetNullable(buffer, rootOffset, 48);
+                const fb.BoolReader().vTableGetNullable(buffer, rootOffset, 48)
+            ..appWalletDiscount = const fb.Float64Reader()
+                .vTableGetNullable(buffer, rootOffset, 50);
           object.user.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 22, 0);
           object.user.attach(store);
@@ -1813,6 +1821,10 @@ class OrderOB_ {
   /// see [OrderOB.active]
   static final active =
       QueryBooleanProperty<OrderOB>(_entities[10].properties[21]);
+
+  /// see [OrderOB.appWalletDiscount]
+  static final appWalletDiscount =
+      QueryDoubleProperty<OrderOB>(_entities[10].properties[22]);
 }
 
 /// [UserOB] entity fields to define ObjectBox queries.

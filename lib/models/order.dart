@@ -31,6 +31,10 @@ class OrderOB {
   double? subtotal;
   double? deliveryFee;
   double? roundingAdjustment;
+  double? appWalletDiscount;
+  //for identifying the only active order for a user.
+  //user is only allowed one active order at a time, though it can have multiple
+  //orders for bookkeeping purposes.
   bool? active;
 
   @Backlink()

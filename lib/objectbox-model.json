@@ -392,7 +392,7 @@
     },
     {
       "id": "21:894287139824345925",
-      "lastPropertyId": "23:7582011488822259852",
+      "lastPropertyId": "24:8700584188040987799",
       "name": "OrderOB",
       "properties": [
         {
@@ -508,6 +508,11 @@
           "id": "23:7582011488822259852",
           "name": "active",
           "type": 1
+        },
+        {
+          "id": "24:8700584188040987799",
+          "name": "appWalletDiscount",
+          "type": 8
         }
       ],
       "relations": []
