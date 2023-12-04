@@ -31,17 +31,6 @@ class _HomeScreenState extends State<HomeScreen> {
   bool _tracking = false;
   PageController _pageController = PageController(initialPage: 0);
 
-  void changePage(int index) {
-    setState(() {
-      _currentIndex = index;
-      _pageController.animateToPage(
-        index,
-        duration: Duration(milliseconds: 1), //default 300
-        curve: Curves.ease,
-      );
-    });
-  }
-
   void updateCartCount(int adjustment) {
     setState(() {
       _cartCount = _cartCount + adjustment;
@@ -50,11 +39,32 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  void setTracking(bool value) {
+  void setTracking(bool value, int pageIndex) async {
     //add OrderItem
     _tracking = value;
+    //changePage(pageIndex);
+    await changePage(pageIndex);
+  }
 
-    changePage(0);
+  Future<void> changePage(int index) async {
+    await _pageController.animateToPage(
+      index,
+      duration: Duration(milliseconds: 1),
+      curve: Curves.ease,
+    );
+  }
+
+  Future<void> placeOrder(int length) async {
+    _tracking = true;
+    await changePage(3);
+    updateCartCount(length * -1);
+    CartItemRepo().box.removeAll();
+    printToast("Order placed");
+  }
+
+  Future<void> removeOrder(int length) async {
+    _tracking = false;
+    await changePage(0);
   }
 
   @override
@@ -66,7 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           MenuPage(updateCartCount), //put updateCartCount here
           VouchersPage(),
-          CartScreen(updateCartCount, setTracking, _tracking), //put updateCartCount here
+          CartScreen(updateCartCount, placeOrder, _tracking, setTracking), //put updateCartCount here
           TrackPage(_tracking, setTracking),
           Me()
         ],
@@ -81,7 +91,8 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-Widget buildBottomNavigationBar(int currentIndex, int cartCount, bool tracking, void Function(int) changePage) {
+Widget buildBottomNavigationBar(int currentIndex, int cartCount, bool tracking,
+    Future<void> Function(int) changePage) {
   return BottomNavyBar(
     selectedIndex: currentIndex,
     backgroundColor: Colors.white, // Set the background color
@@ -121,4 +132,3 @@ class VouchersPage extends StatelessWidget {
     );
   }
 }
-

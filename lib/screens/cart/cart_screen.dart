@@ -30,16 +30,17 @@ class Price {
   double subtotal = 0.0;
   double deliveryFee = 0.0;
   double roundingAdjustment = 0.0;
+  double appWalletDiscount = 0.0;
   double total = 0.0;
   Price();
 }
 
 class CartScreen extends StatefulWidget {
   void Function(int) updateCartCount;
-  void Function(bool) setTracking;
-  //void Function(int) changePage;
+  void Function(int) placeOrder;
   bool tracking;
-  CartScreen(this.updateCartCount, this.setTracking,  this.tracking);
+  void Function(bool, int) setTracking;
+  CartScreen(this.updateCartCount, this.placeOrder,  this.tracking, this.setTracking);
   var cartItems = CartItemRepo().getAll();
   var vouchers = VoucherRepo().getAll();
 
@@ -71,7 +72,7 @@ class _CartScreenState extends State<CartScreen> {
   double _deliveryFee = 4.00;
   double _subtotal = 0;
   double _roundingAdj = 0;
-  String _paymentMethod = '';
+  String _paymentMethod = 'NCNC Wallet';
   Price price = Price();
 
   void adjustPrice() {
@@ -101,11 +102,17 @@ class _CartScreenState extends State<CartScreen> {
     //calculate delivery fee
     price.deliveryFee = _deliveryFee;
 
-    //calculate rounding adjustment
+    //calculate final app wallet adjustment
+    if (_paymentMethod == 'NCNC Wallet') {
+      price.appWalletDiscount = (price.subtotal + price.deliveryFee) * 0.20;
+    }
+    else {
+      price.appWalletDiscount = 0;
+    }
 
     //calculate final price
     _finalPrice = price.amount;
-    price.total = price.subtotal + price.deliveryFee;
+    price.total = (price.subtotal + price.deliveryFee) - price.appWalletDiscount;
   }
 
   //state functions
@@ -177,7 +184,11 @@ class _CartScreenState extends State<CartScreen> {
   }
 
   void updatePaymentMethod(String paymentMethod) {
-    _paymentMethod = paymentMethod;
+    setState(() {
+      _paymentMethod = paymentMethod;
+      adjustPrice();
+    });
+
   }
 
   void addVoucher() async {
@@ -205,22 +216,22 @@ class _CartScreenState extends State<CartScreen> {
     }
   }
 
-  void placeOrder() {
+  Future<void> placeOrder() async {
     if (widget.tracking == true) {
       printToast("Error: Order already exists");
       return ;
     }
     if (checkOrderErrors(widget.tracking)) {
-      //printToast("address of ${_address}");
-      widget.setTracking(true);
-
       addOrder(_selectedVoucherIds, widget.cartItems, _specialRequest,
           _packageString, _address, _onsitePickup, price);
-      _selectedVoucherIds = []; //
-      int length = widget.cartItems.length;
-      widget.updateCartCount(length * -1);
-      CartItemRepo().box.removeAll();
-      printToast("Order placed");
+      _selectedVoucherIds = [];
+      //first method
+      widget.placeOrder(widget.cartItems.length);
+      //second method
+      // widget.setTracking(true, 3);
+      // widget.updateCartCount(widget.cartItems.length * -1);
+      // CartItemRepo().box.removeAll();
+      // printToast("Order placed");
     };
   }
 

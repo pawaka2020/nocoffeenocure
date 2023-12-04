@@ -26,4 +26,3 @@ Center placeholder = Center(
       style: TextStyle(fontSize: 24),
     )
 );
-

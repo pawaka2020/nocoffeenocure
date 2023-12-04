@@ -10,7 +10,7 @@ class OrderOB {
   int id = 0;
 
   int? orderId; // id for the order, used by rider and user for identification.
-  int? eta;
+  int? eta; //in minutes
   DateTime? orderPlaced; // should be in minutes only. even though we still have 00:00:00 as a display.
   String? status; // one of the following: Preparing, Out for Delivery, Arrived, Canceled.
   //?? something to be linked to a GPS service to allow user to track the rider's vehicle delivering the order.

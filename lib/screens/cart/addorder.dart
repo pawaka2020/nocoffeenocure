@@ -101,7 +101,7 @@ void addOrder(List<int> selectedVoucherIds, List<CartItemOB> cartItems,
     ..totalPrice = price.total
     //time setting
     ..orderPlaced = DateTime.now()
-    ..eta = (60 * 25)
+    ..eta = 25
     //IMPORTANT! status of order, allowing identification of this order later
     ..active = true;
   ;

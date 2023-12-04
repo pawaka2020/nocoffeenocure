@@ -31,50 +31,7 @@ enum orderType {
   pickup
 }
 
-Widget buildTimeLine(IconData icon, Color iconColor, String label,
-    String subLabel, Color timelineColor, bool isFirst, bool isLast) {
-  return TimelineTile(
-    isFirst: isFirst,
-    isLast: isLast,
-    beforeLineStyle: LineStyle(color: timelineColor),
-    afterLineStyle: LineStyle(color: timelineColor),
-    indicatorStyle: IndicatorStyle(
-      width: 20,
-      color: timelineColor, // Set the color to blue
-      padding: EdgeInsets.all(4),
-    ),
-    endChild: Container(
-      constraints: const BoxConstraints(
-        minHeight: 100,
-      ),
-      child: Row(
-        children: [
-          SizedBox(width: 16),
-          Icon(icon, color: iconColor, size: 30), // 30 or 40
-          SizedBox(width: 16),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  label,
-                  style: TextStyle(fontSize: 16),
-                ),
-                Text(
-                  subLabel,
-                  style: TextStyle(fontSize: 12),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    ),
-  );
-}
-
-Widget buildTimeLine2(int phaseIndex, timelineType type, int currentPhaseIndex) {
+Widget buildTimeLine(int phaseIndex, timelineType type, int currentPhaseIndex) {
   const Color paleWhite = Color(0xFFE8E8E8);
   String label = phase[phaseIndex];
   late IconData icon;
@@ -179,7 +136,7 @@ Widget buildTimeLine2(int phaseIndex, timelineType type, int currentPhaseIndex) 
 
 class TrackPage extends StatefulWidget {
   bool tracking;
-  void Function(bool) setTracking;
+  void Function(bool, int) setTracking;
   TrackPage(this.tracking, this.setTracking);
 
   @override
@@ -192,29 +149,33 @@ class TrackPageState extends State<TrackPage> {
   late int _currentPhaseIndex;
   late orderType _type;
   UserOB? currentUser = UserRepo().getLoggedInUser();
+  //OrderOB? currentOrder = UserRepo().getLoggedInUser()?.orders.firstWhere((order) => order.active == true);
 
-  void cancelOrder(BuildContext context) async {
+  void cancelOrder(BuildContext context, OrderOB? currentOrder) async {
     bool confirmation = await showDeleteConfirmationDialog(
         context, 'Confirm Cancellation', 'Are you sure you want to cancel this order?');
     if (confirmation) {
       setState(() {
-        OrderOB? currentOrder = currentUser?.orders.firstWhere((order) => order.active == true);
-        print("current order id = ${currentOrder?.orderId.toString()}");
-        //remove the order from the current user.
+        final orderId = currentOrder?.orderId;
         currentUser?.orders.remove(currentOrder);
-        //remove from box
         OrderRepo().box.remove(currentOrder?.id);
-        //put user back in box to udpdate
         UserRepo().box.put(currentUser);
-        widget.setTracking(false);
+        widget.setTracking(false, 0);
+        printToast("Order ${orderId.toString()} canceled");
       });
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    //change this to depict whether order is still being prepared, or being delvered etc.
     _currentPhaseIndex = 3;
+    //affects types of delivery phases.
     _type = orderType.delivery;
+    OrderOB? currentOrder = currentUser?.orders.firstWhere((order) => order.active == true);
+
+    String orderNumberDisplay = '#${currentOrder?.orderId.toString()}';
+    String timeDisplay = '${currentOrder?.eta.toString()} min';
 
     Widget box() {
       double _height = 100; //100
@@ -240,7 +201,7 @@ class TrackPageState extends State<TrackPage> {
                                       color: Colors.black
                                   )
                               ),
-                              Text("#48",
+                              Text(orderNumberDisplay,
                                   style: TextStyle(
                                       fontSize: 16,
                                       color: Colors.grey
@@ -257,7 +218,7 @@ class TrackPageState extends State<TrackPage> {
                                       color: Colors.black
                                   )
                               ),
-                              Text("00:30:00",
+                              Text(timeDisplay,
                                   style: TextStyle(
                                       fontSize: 16,
                                       color: Colors.grey
@@ -267,21 +228,13 @@ class TrackPageState extends State<TrackPage> {
                         ),
                       ]
                   ),
-
-                  // child: Column(
-                  //   mainAxisAlignment: MainAxisAlignment.center,
-                  //   children: [
-                  //     Text("Order number #2482011"),
-                  //     Text("Estimated time 30 minutes")
-                  //   ]
-                  // ),
                 )
             )
         ),
       );
     }
 
-    Widget selectionButton(BuildContext context, UserOB currentUser) {
+    Widget selectionButton() {
       return Padding(
           padding: EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 16),
           child: Align(
@@ -297,7 +250,7 @@ class TrackPageState extends State<TrackPage> {
                   switch (value) {
                     case 'viewOrderDetails':
                       Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => OrderDetailsScreen(currentUser),
+                        builder: (context) => OrderDetailsScreen(currentOrder),
                       ));
                       //print('View order details selected');
                       break;
@@ -308,7 +261,7 @@ class TrackPageState extends State<TrackPage> {
                       //print('View location selected');
                       break;
                     case 'cancelOrder':
-                      cancelOrder(context);
+                      cancelOrder(context, currentOrder);
                       //print('Cancel order selected');
                       break;
                   }
@@ -342,23 +295,23 @@ class TrackPageState extends State<TrackPage> {
               child: ListView(
                 children: [
                   if (_type == orderType.pickup) ...[
-                    buildTimeLine2(0, timelineType.start, _currentPhaseIndex),
-                    buildTimeLine2(1, timelineType.between, _currentPhaseIndex),
-                    buildTimeLine2(3, timelineType.between, _currentPhaseIndex),
-                    buildTimeLine2(5, timelineType.end, _currentPhaseIndex),
+                    buildTimeLine(0, timelineType.start, _currentPhaseIndex),
+                    buildTimeLine(1, timelineType.between, _currentPhaseIndex),
+                    buildTimeLine(3, timelineType.between, _currentPhaseIndex),
+                    buildTimeLine(5, timelineType.end, _currentPhaseIndex),
                   ]
                   else ...[
-                    buildTimeLine2(0, timelineType.start, _currentPhaseIndex),
-                    buildTimeLine2(1, timelineType.between, _currentPhaseIndex),
-                    buildTimeLine2(2, timelineType.between, _currentPhaseIndex),
-                    buildTimeLine2(4, timelineType.between, _currentPhaseIndex),
-                    buildTimeLine2(5, timelineType.end, _currentPhaseIndex),
+                    buildTimeLine(0, timelineType.start, _currentPhaseIndex),
+                    buildTimeLine(1, timelineType.between, _currentPhaseIndex),
+                    buildTimeLine(2, timelineType.between, _currentPhaseIndex),
+                    buildTimeLine(4, timelineType.between, _currentPhaseIndex),
+                    buildTimeLine(5, timelineType.end, _currentPhaseIndex),
                   ],
                 ],
               ),
             ),
           ),
-          selectionButton(context, currentUser!),
+          selectionButton(),
           box(),
         ],
       );
