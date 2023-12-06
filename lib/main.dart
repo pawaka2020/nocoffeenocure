@@ -3,6 +3,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:nocoffeenocure/provider/cart_count_notifier.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
+import 'models/user.dart';
 import 'objectboxrepo.dart';
 import 'screens/splash/splash_screen.dart';
 
@@ -13,6 +14,7 @@ Singletons
 */
 late ObjectBox objectbox;
 late FlutterSecureStorage storage;
+late UserOB singletonUser;
 enum BackendSource {
   backend,
   dummy,
@@ -28,6 +30,7 @@ Launches the app as usual afterwards starting with SplashScreen as first screen.
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   objectbox = await ObjectBox.create();
+
   //auth initialization goes here
   storage = FlutterSecureStorage();
   // storage.write(key: 'token', value: 'asdads');

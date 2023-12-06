@@ -76,7 +76,7 @@ class UserRepo {
     }
     currentData = box.getAll();
     if (hasGuestUsers(currentData)) {
-      print("Has guests, will log in current user");
+      print("Guest account already created, will log in current user");
       final loggedUser = getLoggedInUser();
       //load cartitem, order, current vouchers, etc from loggedUser
     }

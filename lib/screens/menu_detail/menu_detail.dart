@@ -61,9 +61,6 @@ class _MenuDetailsPageState extends State<MenuDetailsPage> {
 
   void addToCart() {
     CartItemOB newcart = CartItemOB()
-      ..image = 'assets/images/coffeesample.png'
-      ..name = 'Test add'
-      ..content = 'Beans: Supremo | Sweetness: Less sugar | Cup size: Regular'
       ..quantity = quantity
       ..price = price
       ..menuItemOB.add(widget.menuItem.toMenuItemOB()) //this one

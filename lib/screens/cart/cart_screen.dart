@@ -95,6 +95,7 @@ class _CartScreenState extends State<CartScreen> {
       price.voucherDeduction -= (price.amount - (voucher.priceDiscount! * price.amount));
     }
     price.voucherDeduction *= -1;
+    if(price.voucherDeduction == -0) price.voucherDeduction = 0;
 
     //calculate subtotal
     price.subtotal = price.amount + price.sst - price.voucherDeduction;
@@ -237,12 +238,11 @@ class _CartScreenState extends State<CartScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print("Regenerating vouchers");
     widget.vouchers = VoucherRepo().getAll(); //this one
-
     _usedList = VoucherRepo()
         .getFromIdList(widget.vouchers, _selectedVoucherIds);
     adjustPrice();
+
     if (widget.cartItems.isEmpty) {
       return Center(
         child: Text('Cart is Empty'),

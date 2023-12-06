@@ -6,22 +6,46 @@ import 'cart_screen.dart';
 Widget buildPaymentDetails(Price price, BuildContext context) {
 
   //state functions
-  return Padding(
-    padding: EdgeInsets.only(left: 32, right: 32, top: 0, bottom: 8),
-    child: Column(
-        children: [
-          Align(
-              alignment: Alignment.centerLeft,
-              child: Text("Payment details")
+  // return Padding(
+  //   padding: EdgeInsets.only(left: 32, right: 32, top: 0, bottom: 8),
+  //   child: Column(
+  //       children: [
+  //         Align(
+  //             alignment: Alignment.centerLeft,
+  //             child: Text("Payment details")
+  //         ),
+  //         buildDivider(),
+  //         detailsRow("Amount (Incl. 6% SST)", 'RM ${price.amount.toStringAsFixed(2)}'),
+  //         detailsRow("Vouchers", '- RM ${price.voucherDeduction.toStringAsFixed(2)}'),
+  //         detailsRow("Subtotal", 'RM ${price.subtotal.toStringAsFixed(2)}'),
+  //         detailsRowInfo("Delivery fee", "RM ${price.deliveryFee.toStringAsFixed(2)}", "Delivery fee", "Loren ipsum", context),
+  //         if (price.appWalletDiscount != 0) detailsRow("NCNC Wallet Discount", '- RM ${price.appWalletDiscount.toStringAsFixed(2)}'),
+  //       ]
+  //   ),
+  // );
+  return Column(
+      children: [
+        Padding(
+          padding: EdgeInsets.only(left: 16, right: 16, top: 0, bottom: 8),
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: Text("Payment Details")
           ),
-          buildDivider(),
-          detailsRow("Amount (Incl. 6% SST)", 'RM ${price.amount.toStringAsFixed(2)}'),
-          detailsRow("Vouchers", '- RM ${price.voucherDeduction.toStringAsFixed(2)}'),
-          detailsRow("Subtotal", 'RM ${price.subtotal.toStringAsFixed(2)}'),
-          detailsRowInfo("Delivery fee", "RM ${price.deliveryFee.toStringAsFixed(2)}", "Delivery fee", "Loren ipsum", context),
-          if (price.appWalletDiscount != 0) detailsRow("NCNC Wallet Discount", 'RM ${price.appWalletDiscount.toStringAsFixed(2)}'),
-        ]
-    ),
+        ),
+        Padding(
+          padding: EdgeInsets.only(left: 32, right: 32, top: 0, bottom: 8),
+          child: Column(
+            children: [
+              buildDivider(),
+              detailsRow("Amount (Incl. 6% SST)", 'RM ${price.amount.toStringAsFixed(2)}'),
+              detailsRow("Vouchers", '- RM ${price.voucherDeduction.toStringAsFixed(2)}'),
+              detailsRow("Subtotal", 'RM ${price.subtotal.toStringAsFixed(2)}'),
+              detailsRowInfo("Delivery fee", "RM ${price.deliveryFee.toStringAsFixed(2)}", "Delivery fee", "Loren ipsum", context),
+              if (price.appWalletDiscount != 0) detailsRow("NCNC Wallet Discount", '- RM ${price.appWalletDiscount.toStringAsFixed(2)}'),
+            ]
+          )
+        ),
+      ]
   );
 }
 

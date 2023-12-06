@@ -3,6 +3,7 @@ import 'package:nocoffeenocure/repos/user.dart';
 import '../backend/dummy/order.dart';
 import '../backend/dummy/voucher.dart';
 import '../main.dart';
+import '../models/order.dart';
 import '../models/user.dart';
 import '../models/voucher.dart';
 
@@ -31,5 +32,11 @@ class OrderRepo {
       print("adding new entries for DummyOB");
       box.putMany(newData);
     }
+  }
+
+  OrderOB? getCurrentOrder() {
+    UserOB? currentUser = UserRepo().getLoggedInUser();
+    OrderOB? currentOrder = currentUser?.orders.firstWhere((order) => order.active == true);
+    return currentOrder;
   }
 }

@@ -28,6 +28,7 @@ class CartItemRepo {
     //testPrint();
   }
 
+  //called by cartScreen.
   List<CartItemOB> getAll() {
     //return box.getAll();
     UserOB? currentUser = UserRepo().getLoggedInUser();

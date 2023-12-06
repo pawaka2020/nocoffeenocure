@@ -25,10 +25,12 @@ Add this Order object to current User.
 import 'dart:math';
 
 import '../../common.dart';
+import '../../main.dart';
 import '../../models/cartitem.dart';
 import '../../models/order.dart';
 import '../../models/user.dart';
 import '../../models/voucher.dart';
+import '../../repos/cartitem.dart';
 import '../../repos/order.dart';
 import '../../repos/user.dart';
 import '../../repos/voucher.dart';
@@ -68,23 +70,13 @@ int generateOrderId()
   return orderId;
 }
 
-// class Price {
-//   double amount = 0.0;
-//   double sst = 0.0;
-//   double voucherDeduction = 0.0;
-//   double subtotal = 0.0;
-//   double deliveryFee = 0.0;
-//   double roundingAdjustment = 0.0;
-//   double total = 0.0;
-//   Price();
-// }
-
 void addOrder(List<int> selectedVoucherIds, List<CartItemOB> cartItems,
     String specialRequest, String packageString, String deliveryAddress,
     bool onSitePickup, Price price) {
   UserOB? currentUser = UserRepo().getLoggedInUser();
   setVouchersToUsed(currentUser!, selectedVoucherIds);
   List<VoucherOB> selectedVouchers = getSelectedVouchers(currentUser, selectedVoucherIds);
+
   OrderOB newOrder = OrderOB()
     ..orderId = generateOrderId()
     ..cartItems.addAll(cartItems) //WRONG!
@@ -105,17 +97,26 @@ void addOrder(List<int> selectedVoucherIds, List<CartItemOB> cartItems,
     //IMPORTANT! status of order, allowing identification of this order later
     ..active = true;
   ;
-  //this one doesn't work.
-  //currentUser..orders.add(newOrder);
-  //UserRepo().box.put(currentUser);
-  newOrder.user.target = currentUser;
-  OrderRepo().box.put(newOrder);
 
-  test();
+  // for (var item in cartItems) {
+  //   CartItemRepo().box.put(item);
+  // }
+  // newOrder.user.target = currentUser;
+  //OrderRepo().box.put(newOrder);
+
+  currentUser.orders.add(newOrder);
+  print("before adding, order length = ${currentUser.orders.length.toString()}");
+  print('before adding, order cart length = ${currentUser.orders[0].cartItems.length.toString()}');
+  UserRepo().box.put(currentUser);
+  singletonUser = currentUser;
+  print("before adding, singleton order length = ${singletonUser.orders.length.toString()}");
+  print('before adding, singleton order cart length = ${singletonUser.orders[0].cartItems.length.toString()}');
+  //test();
 }
 
 void test() {
-  UserOB? currentUser = UserRepo().getLoggedInUser();
-  print("Okay, so current user is ${currentUser?.id.toString()}");
-  print("User cartitem first item = ${currentUser?.cartItems[0].menuItemOB[0].title}");
+  OrderOB? currentOrder4 = OrderRepo().getCurrentOrder();
+  print("current order, address = ${currentOrder4?.deliveryAddress}");
+  print('current order, order cart length = ${currentOrder4?.cartItems.length.toString()}');
+
 }

@@ -93,7 +93,7 @@ Widget buildPhoneNumber(Function(String) onSpecialRequestChanged) {
     child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("Phone number"),
+          Text("Phone Number"),
           SizedBox(height: 10),
           TextField(
             onChanged: onSpecialRequestChanged,
