@@ -61,6 +61,7 @@ class _CartScreenState extends State<CartScreen> {
   double _finalPrice = 0.00;
   double _packagePrice = 0.00;
   String _packageString = '';
+  List<bool> _packageToggle = [false, false];
   List<VoucherOB> _usedList = [];
   List<int> _selectedVoucherIds = [];
   double _voucherDeduction = 0;
@@ -160,26 +161,36 @@ class _CartScreenState extends State<CartScreen> {
       print("Error: Cart item not received");
   }
 
+  //special requests
   void updateSpecialRequest(String newSpecialRequest) {
     _specialRequest = newSpecialRequest;
   }
 
   void updatePhoneNumber(String phoneNumber) {
+    // setState(() {
+    //   _phoneNumber = phoneNumber;
+    //   adjustPrice();
+    // });
     _phoneNumber = phoneNumber;
   }
 
-  void updateAddress(String address) {
+  void updateAddress(String address) {//
+    setState(() {
     _address = address;
+    });
+    //_address = address;
   }
 
   void updateOnsitePickup(bool onsitePickup) {
     _onsitePickup = onsitePickup;
   }
 
-  void updatePackageDetails(double packagePrice, String packageString) {
+  void updatePackageDetails(double packagePrice, String packageString, int index) {
+    _packagePrice = packagePrice;
+    _packageString = packageString;
+    _packageToggle[index] = !_packageToggle[index];
     setState(() {
-      _packagePrice = packagePrice;
-      _packageString = packageString;
+
       adjustPrice();
     });
   }
@@ -189,7 +200,6 @@ class _CartScreenState extends State<CartScreen> {
       _paymentMethod = paymentMethod;
       adjustPrice();
     });
-
   }
 
   void addVoucher() async {
@@ -224,7 +234,7 @@ class _CartScreenState extends State<CartScreen> {
     }
     if (checkOrderErrors(widget.tracking)) {
       addOrder(_selectedVoucherIds, widget.cartItems, _specialRequest,
-          _packageString, _address, _onsitePickup, price);
+          _packageString, _address, _onsitePickup, _phoneNumber, _paymentMethod, price);
       _selectedVoucherIds = [];
       //first method
       widget.placeOrder(widget.cartItems.length);
@@ -256,17 +266,17 @@ class _CartScreenState extends State<CartScreen> {
               children: [
                 ...widget.cartItems.map((item) => CartItemCard(item, deleteCartItem, editCartItem)),
                 PartialDivider(40, 10),
-                buildSpecialRequest(updateSpecialRequest),
+                buildSpecialRequest(_specialRequest, updateSpecialRequest),
                 PartialDivider(40, 10),
-                Packaging(updatePackageDetails),
+                Packaging(_packageToggle, updatePackageDetails),
                 PartialDivider(40, 10),
                 buildVoucherSelection(_usedList, _selectedVoucherIds, widget.vouchers, context, addVoucher, removeVoucher),
                 PartialDivider(40, 10),
-                DeliveryAddress(updateAddress, updateOnsitePickup),
+                DeliveryAddress(_address, _onsitePickup, updateAddress, updateOnsitePickup),
                 PartialDivider(40, 10),
-                buildPhoneNumber(updatePhoneNumber),
+                buildPhoneNumber(_phoneNumber, updatePhoneNumber),
                 PartialDivider(40, 10),
-                PaymentMethods(updatePaymentMethod),
+                PaymentMethods(_paymentMethod, updatePaymentMethod),
                 SizedBox(height: 5),
                 buildPaymentDetails(price, context),
                 SizedBox(height: 5),

@@ -5,39 +5,42 @@ class PackageItem {
   late double price;
   bool selected = false;
 
-  PackageItem(this.name, this.price);
+  PackageItem(this.name, this.price, this.selected);
 }
 
 class Packaging extends StatefulWidget {
-  final Function(double, String) updatePackageDetails;
-  Packaging(this.updatePackageDetails);
+  final Function(double, String, int) updatePackageDetails;
+  List<bool> packageToggle;
+  Packaging(this.packageToggle, this.updatePackageDetails);
 
   @override
   _PackagingState createState() => _PackagingState();
 }
 
 class _PackagingState extends State<Packaging> {
-  List<PackageItem> _packageItems = [
-    PackageItem("Straw", 0.50),
-    PackageItem("Paperbag", 1.00)
-  ];
+  late List<PackageItem> _packageItems;
 
   @override
   Widget build(BuildContext context) {
+    _packageItems = [
+      PackageItem("Straw", 0.50, widget.packageToggle[0]),
+      PackageItem("Paperbag", 1.00, widget.packageToggle[1])
+    ];
+
     return Padding(
       padding: EdgeInsets.only(left: 16, right: 16, top: 8, bottom: 8),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text("Packaging"),
-          for (var item in _packageItems)
-            buildSelectionRow(item, widget.updatePackageDetails),
+          buildSelectionRow(_packageItems[0], widget.updatePackageDetails, 0),
+          buildSelectionRow(_packageItems[1], widget.updatePackageDetails, 1)
         ],
       ),
     );
   }
 
-  Widget buildSelectionRow(PackageItem item, Function(double, String) updatePackageDetails) {
+  Widget buildSelectionRow(PackageItem item, Function(double, String, int) updatePackageDetails, int index) {
     late double packagePrice;
     late String packageString;
 
@@ -52,7 +55,7 @@ class _PackagingState extends State<Packaging> {
                 item.selected = value;
                 packagePrice = setPackagePrice();
                 packageString = setPackageString();
-                updatePackageDetails(packagePrice, packageString);
+                updatePackageDetails(packagePrice, packageString, index);
               }
             });
           },

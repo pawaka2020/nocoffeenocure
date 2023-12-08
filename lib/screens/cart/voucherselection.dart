@@ -34,14 +34,19 @@ Widget buildEmptyVoucherCard(BuildContext context, List<VoucherOB> vouchers,
   return Container(
       height: 80, //70
       child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(4.0),
+        ),
         elevation: 4,
-        child: InkWell(
-          onTap: () async {
-            addVoucher();
-          },
-          child: Padding(
-            padding: EdgeInsets.all(16),
-            child: Row(
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(4.0),
+          child: InkWell(
+            onTap: () async {
+              addVoucher();
+            },
+            child: Padding(
+              padding: EdgeInsets.all(16),
+              child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
@@ -53,8 +58,9 @@ Widget buildEmptyVoucherCard(BuildContext context, List<VoucherOB> vouchers,
                 Icon(Icons.add),
               ],
             ),
+            ),
           ),
-        ),
+        )
       )
   );
 }
@@ -64,27 +70,34 @@ Widget buildSelectedVoucherCard(VoucherOB voucher, BuildContext context,
   return Container(
       height: 80, //70
       child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(4.0),
+        ),
         elevation: 4,
-        child: InkWell(
-          onTap: () {
-            //
-            removeVoucher(voucher.id);
-          },
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Flexible(
-                child: Image.asset(
-                    voucher.image!,
-                    fit: BoxFit.fill,
-                    height: double.infinity
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(4.0),
+          child: InkWell(
+            onTap: () {
+              //
+              removeVoucher(voucher.id);
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Flexible(
+                  child: Image.asset(
+                      voucher.image!,
+                      fit: BoxFit.fill,
+                      height: double.infinity,
+                      width: double.infinity
+                  ),
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.all(16),
-                child: Icon(Icons.delete),
-              ),
-            ],
+                Padding(
+                  padding: EdgeInsets.all(16),
+                  child: Icon(Icons.delete),
+                ),
+              ],
+            ),
           ),
         ),
       )

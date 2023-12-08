@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-Widget buildSpecialRequest(Function(String) onSpecialRequestChanged) {
+Widget buildSpecialRequest(String _specialRequest, Function(String) onSpecialRequestChanged) {
+  TextEditingController _textEditingController = TextEditingController(text: _specialRequest);
   return Padding(
     padding: EdgeInsets.only(left: 16, right: 16, top: 8, bottom: 8),
     child: Column(
@@ -15,12 +16,13 @@ Widget buildSpecialRequest(Function(String) onSpecialRequestChanged) {
         ),
         SizedBox(height: 5),
         TextField(
+          controller: _textEditingController,
           onChanged: onSpecialRequestChanged,
           style: TextStyle(
               fontSize: 12,
               color:Colors.blue
           ),
-          maxLength: 20,
+          maxLength: 30,
           decoration: InputDecoration(
               enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(color: Colors.grey),

@@ -72,7 +72,7 @@ int generateOrderId()
 
 void addOrder(List<int> selectedVoucherIds, List<CartItemOB> cartItems,
     String specialRequest, String packageString, String deliveryAddress,
-    bool onSitePickup, Price price) {
+    bool onSitePickup, String phoneNumber, String paymentMethod, Price price) {
   UserOB? currentUser = UserRepo().getLoggedInUser();
   setVouchersToUsed(currentUser!, selectedVoucherIds);
   List<VoucherOB> selectedVouchers = getSelectedVouchers(currentUser, selectedVoucherIds);
@@ -85,11 +85,14 @@ void addOrder(List<int> selectedVoucherIds, List<CartItemOB> cartItems,
     ..vouchers.addAll(selectedVouchers) //WRONG!
     ..deliveryAddress = deliveryAddress
     ..onSitePickup = onSitePickup
-    //price setting
+    ..phoneNumber = phoneNumber
+    ..paymentMethod = paymentMethod
     ..amount = price.amount
     ..sst = price.sst
     ..voucherDeduction = price.voucherDeduction
     ..subtotal = price.subtotal
+    ..deliveryFee = price.deliveryFee
+    ..appWalletDiscount = price.appWalletDiscount
     ..totalPrice = price.total
     //time setting
     ..orderPlaced = DateTime.now()
@@ -107,10 +110,12 @@ void addOrder(List<int> selectedVoucherIds, List<CartItemOB> cartItems,
   currentUser.orders.add(newOrder);
   print("before adding, order length = ${currentUser.orders.length.toString()}");
   print('before adding, order cart length = ${currentUser.orders[0].cartItems.length.toString()}');
+  print('before adding, vouchers length = ${currentUser.orders[0].vouchers.length.toString()}');
   UserRepo().box.put(currentUser);
   singletonUser = currentUser;
   print("before adding, singleton order length = ${singletonUser.orders.length.toString()}");
   print('before adding, singleton order cart length = ${singletonUser.orders[0].cartItems.length.toString()}');
+  print('before adding, singleton vouchers length = ${currentUser.orders[0].vouchers.length.toString()}');
   //test();
 }
 

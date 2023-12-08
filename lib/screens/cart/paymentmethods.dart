@@ -2,15 +2,17 @@ import 'package:flutter/material.dart';
 
 //make sure the widget starts with
 class PaymentMethods extends StatefulWidget {
+  String paymentMethod;
   Function(String) updatePaymentMethod;
-  PaymentMethods(this.updatePaymentMethod);
+  PaymentMethods(this.paymentMethod, this.updatePaymentMethod);
 
   @override
   _PaymentMethodsState createState() => _PaymentMethodsState();
 }
 
 class _PaymentMethodsState extends State<PaymentMethods> {
-  String _selectedPaymentMethod = 'NCNC Wallet';
+
+  late String _selectedPaymentMethod;
 
   final List<PaymentMethod> paymentMethods = [
     PaymentMethod('E-wallet',  Icons.account_balance_wallet),
@@ -20,6 +22,7 @@ class _PaymentMethodsState extends State<PaymentMethods> {
 
   @override
   Widget build(BuildContext context) {
+    _selectedPaymentMethod = widget.paymentMethod;
     return Padding(
       padding: EdgeInsets.only(left: 16, right: 16, top: 8, bottom: 8),
       child: Column(

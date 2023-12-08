@@ -4,17 +4,20 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class DeliveryAddress extends StatefulWidget {
+  String address;
+  bool onsitePickup;
   Function(String) onSpecialRequestChanged;
   Function(bool) updateOnsitePickup;
-  DeliveryAddress(this.onSpecialRequestChanged, this.updateOnsitePickup);
+  DeliveryAddress(this.address, this.onsitePickup, this.onSpecialRequestChanged, this.updateOnsitePickup);
 
   @override
   _DeliveryAddressState createState() => _DeliveryAddressState();
 }
 
 class _DeliveryAddressState extends State<DeliveryAddress> {
-  String _userInput = ''; // Store the user's input in the TextField
-  bool _onSitePickup = false; // Toggle for on-site pickup
+  //String  _userInput = ''; // Store the user's input in the TextField
+
+  //bool _onSitePickup = false; // Toggle for on-site pickup
   static const String storeAddress =
       'COFFEE FANS SDN BHD (M) C-02-10, Ten Kinrara, Jalan BK 5a/3a, Bandar Kinrara, 47180 Puchong, Selangor';
   Color fainterGray = Colors.transparent;
@@ -24,15 +27,19 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
   Timer? _debounce;
   late TextEditingController _addressController;
 
-  @override
-  void initState() {
-    super.initState();
-    _addressController =
-        TextEditingController(text: _onSitePickup ? storeAddress : _userInput);
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   _addressController =
+  //       TextEditingController(text: _onSitePickup ? storeAddress : _userInput);
+  // }
 
   @override
   Widget build(BuildContext context) {
+    bool _onSitePickup = widget.onsitePickup;
+    String _userInput = widget.address;
+    _addressController =
+        TextEditingController(text: _onSitePickup ? storeAddress : _userInput);
     return Padding(
       padding: EdgeInsets.only(left: 16, right: 16, top: 8, bottom: 8),
       child: Column(

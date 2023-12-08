@@ -392,7 +392,7 @@
     },
     {
       "id": "21:894287139824345925",
-      "lastPropertyId": "24:8700584188040987799",
+      "lastPropertyId": "25:750862704918247180",
       "name": "OrderOB",
       "properties": [
         {
@@ -471,7 +471,7 @@
         },
         {
           "id": "16:4592725279212508534",
-          "name": "PaymentMethod",
+          "name": "paymentMethod",
           "type": 9
         },
         {
@@ -512,6 +512,11 @@
         {
           "id": "24:8700584188040987799",
           "name": "appWalletDiscount",
+          "type": 8
+        },
+        {
+          "id": "25:750862704918247180",
+          "name": "total",
           "type": 8
         }
       ],

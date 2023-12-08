@@ -51,30 +51,35 @@ Widget buildSelectVoucherCard(VoucherOB voucher, BuildContext context, List<int>
   return Container(
       height: 80, //70
       child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(4.0),
+        ),
         elevation: 4,
-        child: InkWell(
-          onTap: () {
-            SelectVoucher(context, voucher, selectedVoucherIds);
-            // Navigate to the screen to select a voucher
-          },
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Flexible(
-                child: Image.asset(
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(4.0),
+          child: InkWell(
+            onTap: () {
+              // Navigate to the screen to select a voucher
+              SelectVoucher(context, voucher, selectedVoucherIds);
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Flexible(
+                  child: Image.asset(
                     voucher.image!,
                     fit: BoxFit.fill,
                     height: double.infinity
+                  ),
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.all(16),
-                child: Icon(Icons.add),
-              ),
-              //Icon(Icons.add)
-            ],
+                Padding(
+                  padding: EdgeInsets.all(16),
+                  child: Icon(Icons.add),
+                ),
+              ],
+            ),
           ),
-        ),
+        )
       )
   );
 }
@@ -83,40 +88,8 @@ void SelectVoucher(BuildContext context, VoucherOB voucher, List<int> selectedVo
   print("Voucher selected");
   print("Voucher id = ${voucher.id.toString()}");
   selectedVoucherIds.add(voucher.id);
-  //Navigator.of(context).pop(selectedVoucherIds);
   Navigator.of(context).pop(true);
 }
-
-
-// Widget buildSelectVoucherCard() {
-//   return Container(
-//       height: 80, //70
-//       child: Card(
-//         elevation: 4,
-//         child: InkWell(
-//           onTap: () {
-//             // Navigate to the screen to select a voucher
-//           },
-//           child: Row(
-//             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//             children: [
-//               Flexible(
-//                 child: Image.asset(
-//                     "assets/images/vouchertest1.png",
-//                     fit: BoxFit.fill,
-//                     height: double.infinity
-//                 ),
-//               ),
-//               Padding(
-//                 padding: EdgeInsets.all(16),
-//                 child: Icon(Icons.add),
-//               ),
-//             ],
-//           ),
-//         ),
-//       )
-//   );
-// }
 
 Center placeholder = Center(
     child: Text(

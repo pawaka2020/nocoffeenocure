@@ -69,33 +69,49 @@ class UserRepo {
   }
 
   Future<void> loginAppStart(BackendSource source) async {
-    late final newData;
-    late final currentData;
-    if (source == BackendSource.dummy) {
-      newData = await UserDummy().get();
-    }
-    currentData = box.getAll();
-    if (hasGuestUsers(currentData)) {
-      print("Guest account already created, will log in current user");
-      final loggedUser = getLoggedInUser();
-      //load cartitem, order, current vouchers, etc from loggedUser
-    }
-    else {
-      print("Has no guests, will create a guest user");
-      UserOB guest = UserOB()
-        ..userId = '0000000000'
-        ..name = "Guest"
-        ..email = ''
-        ..birthday = null
-        ..phoneNumber = ""
-        ..address = ''
-        ..profileImage = ''
-        ..coins = 0
-        ..guest = true
-        ..isLoggedIn = true
-      ;
-      box.put(guest);
-    }
+    // late final newData;
+    // late final currentData;
+    // if (source == BackendSource.dummy) {
+    //   newData = await UserDummy().get();
+    // }
+    // currentData = box.getAll();
+    // if (hasGuestUsers(currentData)) {
+    //   print("Guest account already created, will log in current user");
+    //   final loggedUser = getLoggedInUser();
+    //   //load cartitem, order, current vouchers, etc from loggedUser
+    // }
+    // else {
+    //   print("Has no guests, will create a guest user");
+    //   box.removeAll();
+    //   UserOB guest = UserOB()
+    //     ..userId = '0000000000'
+    //     ..name = "Guest"
+    //     ..email = ''
+    //     ..birthday = null
+    //     ..phoneNumber = ""
+    //     ..address = ''
+    //     ..profileImage = ''
+    //     ..coins = 0
+    //     ..guest = true
+    //     ..isLoggedIn = true
+    //   ;
+    //   box.put(guest);
+    // }
+    print("Has no guests, will create a guest user");
+    box.removeAll();
+    UserOB guest = UserOB()
+      ..userId = '0000000000'
+      ..name = "Guest"
+      ..email = ''
+      ..birthday = null
+      ..phoneNumber = ""
+      ..address = ''
+      ..profileImage = ''
+      ..coins = 0
+      ..guest = true
+      ..isLoggedIn = true
+    ;
+    box.put(guest);
   }
 
   List<UserOB> getAll() {

@@ -420,7 +420,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(21, 894287139824345925),
       name: 'OrderOB',
-      lastPropertyId: const IdUid(24, 8700584188040987799),
+      lastPropertyId: const IdUid(25, 750862704918247180),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -497,7 +497,7 @@ final _entities = <ModelEntity>[
             flags: 0),
         ModelProperty(
             id: const IdUid(16, 4592725279212508534),
-            name: 'PaymentMethod',
+            name: 'paymentMethod',
             type: 9,
             flags: 0),
         ModelProperty(
@@ -538,6 +538,11 @@ final _entities = <ModelEntity>[
         ModelProperty(
             id: const IdUid(24, 8700584188040987799),
             name: 'appWalletDiscount',
+            type: 8,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(25, 750862704918247180),
+            name: 'total',
             type: 8,
             flags: 0)
       ],
@@ -1251,10 +1256,10 @@ ModelDefinition getObjectBoxModel() {
           final packageStringOffset = object.packageString == null
               ? null
               : fbb.writeString(object.packageString!);
-          final PaymentMethodOffset = object.PaymentMethod == null
+          final paymentMethodOffset = object.paymentMethod == null
               ? null
-              : fbb.writeString(object.PaymentMethod!);
-          fbb.startTable(25);
+              : fbb.writeString(object.paymentMethod!);
+          fbb.startTable(26);
           fbb.addInt64(0, object.id);
           fbb.addInt64(1, object.orderId);
           fbb.addInt64(2, object.eta);
@@ -1269,7 +1274,7 @@ ModelDefinition getObjectBoxModel() {
           fbb.addOffset(11, specialRequestOffset);
           fbb.addOffset(13, packageStringOffset);
           fbb.addInt64(14, object.orderPlaced?.millisecondsSinceEpoch);
-          fbb.addOffset(15, PaymentMethodOffset);
+          fbb.addOffset(15, paymentMethodOffset);
           fbb.addFloat64(16, object.amount);
           fbb.addFloat64(17, object.sst);
           fbb.addFloat64(18, object.voucherDeduction);
@@ -1278,6 +1283,7 @@ ModelDefinition getObjectBoxModel() {
           fbb.addFloat64(21, object.roundingAdjustment);
           fbb.addBool(22, object.active);
           fbb.addFloat64(23, object.appWalletDiscount);
+          fbb.addFloat64(24, object.total);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -1313,7 +1319,7 @@ ModelDefinition getObjectBoxModel() {
             ..orderPlaced = orderPlacedValue == null
                 ? null
                 : DateTime.fromMillisecondsSinceEpoch(orderPlacedValue)
-            ..PaymentMethod = const fb.StringReader(asciiOptimization: true)
+            ..paymentMethod = const fb.StringReader(asciiOptimization: true)
                 .vTableGetNullable(buffer, rootOffset, 34)
             ..amount = const fb.Float64Reader()
                 .vTableGetNullable(buffer, rootOffset, 36)
@@ -1330,7 +1336,9 @@ ModelDefinition getObjectBoxModel() {
             ..active =
                 const fb.BoolReader().vTableGetNullable(buffer, rootOffset, 48)
             ..appWalletDiscount = const fb.Float64Reader()
-                .vTableGetNullable(buffer, rootOffset, 50);
+                .vTableGetNullable(buffer, rootOffset, 50)
+            ..total = const fb.Float64Reader()
+                .vTableGetNullable(buffer, rootOffset, 52);
           object.user.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 22, 0);
           object.user.attach(store);
@@ -1791,8 +1799,8 @@ class OrderOB_ {
   static final orderPlaced =
       QueryIntegerProperty<OrderOB>(_entities[10].properties[13]);
 
-  /// see [OrderOB.PaymentMethod]
-  static final PaymentMethod =
+  /// see [OrderOB.paymentMethod]
+  static final paymentMethod =
       QueryStringProperty<OrderOB>(_entities[10].properties[14]);
 
   /// see [OrderOB.amount]
@@ -1825,6 +1833,10 @@ class OrderOB_ {
   /// see [OrderOB.appWalletDiscount]
   static final appWalletDiscount =
       QueryDoubleProperty<OrderOB>(_entities[10].properties[22]);
+
+  /// see [OrderOB.total]
+  static final total =
+      QueryDoubleProperty<OrderOB>(_entities[10].properties[23]);
 }
 
 /// [UserOB] entity fields to define ObjectBox queries.

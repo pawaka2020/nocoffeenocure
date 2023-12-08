@@ -22,7 +22,7 @@ class OrderOB {
   String? phoneNumber;
   String? specialRequest;
   String? packageString;
-  String? PaymentMethod;
+  String? paymentMethod;
   bool? onSitePickup;
   //payment details
   double? amount;
@@ -32,6 +32,7 @@ class OrderOB {
   double? deliveryFee;
   double? roundingAdjustment;
   double? appWalletDiscount;
+  double? total;
   //for identifying the only active order for a user.
   //user is only allowed one active order at a time, though it can have multiple
   //orders for bookkeeping purposes.
