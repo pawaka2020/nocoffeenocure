@@ -10,7 +10,7 @@ class OrderSubmit extends StatelessWidget {
     return SizedBox(
         width: MediaQuery.of(context).size.width,
         child: Card(
-          elevation: 4,
+          elevation: 14,
           margin: EdgeInsets.all(0),
           child: Padding(
               padding: EdgeInsets.only(left: 32, right: 32),

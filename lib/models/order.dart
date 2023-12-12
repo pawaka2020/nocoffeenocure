@@ -17,7 +17,7 @@ class OrderOB {
   double? locationLongitude;
   double? locationLatitude;
   //extra
-  double? totalPrice;
+
   String? deliveryAddress;
   String? phoneNumber;
   String? specialRequest;
@@ -32,7 +32,8 @@ class OrderOB {
   double? deliveryFee;
   double? roundingAdjustment;
   double? appWalletDiscount;
-  double? total;
+  double? totalPrice;
+  //double? total;
   //for identifying the only active order for a user.
   //user is only allowed one active order at a time, though it can have multiple
   //orders for bookkeeping purposes.

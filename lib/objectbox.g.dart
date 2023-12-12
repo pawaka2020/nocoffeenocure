@@ -539,11 +539,6 @@ final _entities = <ModelEntity>[
             id: const IdUid(24, 8700584188040987799),
             name: 'appWalletDiscount',
             type: 8,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(25, 750862704918247180),
-            name: 'total',
-            type: 8,
             flags: 0)
       ],
       relations: <ModelRelation>[],
@@ -765,7 +760,8 @@ ModelDefinition getObjectBoxModel() {
         288926490441761823,
         6199814512664527826,
         1546320062219839674,
-        7723157659364113340
+        7723157659364113340,
+        750862704918247180
       ],
       retiredRelationUids: const [],
       modelVersion: 5,
@@ -1283,7 +1279,6 @@ ModelDefinition getObjectBoxModel() {
           fbb.addFloat64(21, object.roundingAdjustment);
           fbb.addBool(22, object.active);
           fbb.addFloat64(23, object.appWalletDiscount);
-          fbb.addFloat64(24, object.total);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -1336,9 +1331,7 @@ ModelDefinition getObjectBoxModel() {
             ..active =
                 const fb.BoolReader().vTableGetNullable(buffer, rootOffset, 48)
             ..appWalletDiscount = const fb.Float64Reader()
-                .vTableGetNullable(buffer, rootOffset, 50)
-            ..total = const fb.Float64Reader()
-                .vTableGetNullable(buffer, rootOffset, 52);
+                .vTableGetNullable(buffer, rootOffset, 50);
           object.user.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 22, 0);
           object.user.attach(store);
@@ -1833,10 +1826,6 @@ class OrderOB_ {
   /// see [OrderOB.appWalletDiscount]
   static final appWalletDiscount =
       QueryDoubleProperty<OrderOB>(_entities[10].properties[22]);
-
-  /// see [OrderOB.total]
-  static final total =
-      QueryDoubleProperty<OrderOB>(_entities[10].properties[23]);
 }
 
 /// [UserOB] entity fields to define ObjectBox queries.

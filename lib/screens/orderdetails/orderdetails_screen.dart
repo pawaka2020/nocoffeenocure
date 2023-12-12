@@ -5,6 +5,7 @@ import 'package:nocoffeenocure/screens/orderdetails/paymentdetails.dart';
 import 'package:nocoffeenocure/screens/orderdetails/paymentmethod.dart';
 import 'package:nocoffeenocure/screens/orderdetails/phonenumber.dart';
 import 'package:nocoffeenocure/screens/orderdetails/specialrequest.dart';
+import 'package:nocoffeenocure/screens/orderdetails/totalpricedisplay.dart';
 import 'package:nocoffeenocure/screens/orderdetails/voucherdisplay.dart';
 import '../../common.dart';
 import '../../main.dart';
@@ -24,6 +25,7 @@ class OrderDetailsScreen extends StatelessWidget {
     print('in order details, singleton order cart length = ${singletonUser.orders[0].cartItems.length.toString()}');
     print('in order details, singleton vouchers length = ${currentUser.orders[0].vouchers.length.toString()}');
     print('in order details, payment method = ${currentUser.orders[0].paymentMethod}');
+    print('in order details, payment total = ${currentUser.orders[0].totalPrice}');
 
     return Scaffold(
       appBar: AppBar(
@@ -57,11 +59,13 @@ class OrderDetailsScreen extends StatelessWidget {
                   if (currentOrder.paymentMethod != '')
                     buildODPaymentMethod(currentOrder.paymentMethod!),
                   buildODPaymentDetails(currentOrder),
+
                   //payment details
                   //total price display
                 ]
               )
             ),
+            buildTotalPriceDisplay(currentOrder.totalPrice!),
           ]
       ),
     );
