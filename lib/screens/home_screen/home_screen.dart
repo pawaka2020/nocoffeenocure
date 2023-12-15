@@ -10,7 +10,7 @@ import '../cart/cart_screen.dart';
 import '../menu/menu.dart';
 import 'package:nocoffeenocure/screens/me/me.dart';
 
-import '../track/track_screen.dart';
+import '../order/order_screen.dart';
 import 'cartnavybaritem.dart';
 
 /*
@@ -113,7 +113,7 @@ Widget buildBottomNavigationBar(int currentIndex, int cartCount, bool tracking,
         textAlign: TextAlign.center,
       ),
       buildCartNavyBarItem(cartCount),
-      buildTrackNavyBarItem(tracking),
+      buildOrderNavyBarItem(tracking),
       BottomNavyBarItem(
         icon: Icon(Icons.person),
         title: Text('Me', style: TextStyle(color: Colors.black)), // Set text color

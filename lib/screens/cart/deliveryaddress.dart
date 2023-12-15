@@ -60,17 +60,17 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
                   controller: _addressController,
                   onChanged: (value) {
                     // Store user input separately
-                        _userInput = value;
-                        widget.onSpecialRequestChanged(_userInput);
-                        // Clear existing debounce timer
-                        if (_debounce != null) {
-                          _debounce!.cancel();
-                        }
-                        // Create a new debounce timer
-                        _debounce = Timer(Duration(seconds: 2), () {
-                          // Call updateAddress to fetch autocomplete results
-                          updateAddress(value);
-                        });
+                    _userInput = value;
+                    //widget.onSpecialRequestChanged(_userInput);
+                    // Clear existing debounce timer
+                    if (_debounce != null) {
+                      _debounce!.cancel();
+                    }
+                    // Create a new debounce timer
+                    _debounce = Timer(Duration(seconds: 2), () {
+                      // Call updateAddress to fetch autocomplete results
+                      updateAddress(value);
+                    });
 
                   },
                   style: TextStyle(
@@ -114,18 +114,18 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
           }),
           SizedBox(height: 10),
           _isLoading
-            ? Center(
+              ? Center(
             child: CircularProgressIndicator(),
           )
-            : _autocompleteResults.isNotEmpty
-                ? Container(
-                    height: 200, // Set a fixed height for the ListView
-                    child: ListView.builder(
-                      itemCount: _autocompleteResults.length,
-                      itemBuilder: (context, index) {
-                        return ListTile(
-                          title: Text(_autocompleteResults[index]),
-                          onTap: () {
+              : _autocompleteResults.isNotEmpty
+              ? Container(
+            height: 200, // Set a fixed height for the ListView
+            child: ListView.builder(
+              itemCount: _autocompleteResults.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  title: Text(_autocompleteResults[index]),
+                  onTap: () {
                     // Update the text field with the selected address
                     _addressController.text = _autocompleteResults[index];
                     widget.onSpecialRequestChanged(_addressController.text);
@@ -134,11 +134,11 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
                       _autocompleteResults.clear();
                     });
                   },
-                        );
-                      },
-                    ),
-                  )
-                : Container(),
+                );
+              },
+            ),
+          )
+              : Container(),
         ],
       ),
     );

@@ -44,6 +44,15 @@ dependencies:
   timelines:
   timeline_tile:
   http:
+  #klkjlj
+  flutter_map:
+  #geolocator:
+  geocode:
+  latlong2:
+  geocoding:
+  open_route_service:
+  geolocator:
+  location: ^5.0.0
 
 dev_dependencies:
   flutter_test:

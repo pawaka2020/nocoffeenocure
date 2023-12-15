@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/material.dart';
 
-BottomNavyBarItem buildTrackNavyBarItem(bool tracking) {
+BottomNavyBarItem buildOrderNavyBarItem(bool tracking) {
   return BottomNavyBarItem(
     icon: Stack(
       children: [
@@ -35,7 +35,7 @@ BottomNavyBarItem buildTrackNavyBarItem(bool tracking) {
         ), //the badge
       ],
     ),
-    title: Text('Track', style: TextStyle(color: Colors.black)),
+    title: Text('Order', style: TextStyle(color: Colors.black)),
     activeColor: Colors.orange,
     textAlign: TextAlign.center,
   );

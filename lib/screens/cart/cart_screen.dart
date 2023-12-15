@@ -176,7 +176,7 @@ class _CartScreenState extends State<CartScreen> {
 
   void updateAddress(String address) {//
     setState(() {
-    _address = address;
+      _address = address;
     });
     //_address = address;
   }

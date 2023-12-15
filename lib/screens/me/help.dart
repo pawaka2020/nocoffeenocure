@@ -4,13 +4,13 @@
 
 import 'package:flutter/material.dart';
 
-class HelpScreen extends StatelessWidget {
+class FAQScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-            'Help',
+            'FAQ',
             style: TextStyle(
               color: Colors.white,
             ),

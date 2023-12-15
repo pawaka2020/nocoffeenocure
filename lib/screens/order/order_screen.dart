@@ -1,9 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:nocoffeenocure/screens/track/tracklocation.dart';
-//import 'package:timelines/timelines.dart';
+import 'package:nocoffeenocure/screens/order/tracklocation.dart';
 import 'package:timeline_tile/timeline_tile.dart';
-
 import '../../common.dart';
 import '../../main.dart';
 import '../../models/order.dart';
@@ -159,23 +157,18 @@ class TrackPageState extends State<TrackPage> {
       OrderRepo().box.remove(currentOrder?.id);
       UserRepo().box.put(currentUser);
       widget.setTracking(false, 0);
-
       printToast("Order ${orderId.toString()} canceled");
     }
   }
 
   @override
   Widget build(BuildContext context) {
-
     if (widget.tracking == false) {
-
       return Center(
           child: Text("No orders")
       );
     }
-
     else {
-
       UserOB? currentUser = singletonUser;
       OrderOB? currentOrder = currentUser.orders.firstWhere((order) => order.active == true);
       print("in track page, singleton order length = ${singletonUser.orders.length.toString()}");
@@ -260,23 +253,20 @@ class TrackPageState extends State<TrackPage> {
                     size: 40,
                   ),
                   onSelected: (value) {
-                    // Handle menu item selection
                     switch (value) {
                       case 'viewOrderDetails':
                         Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => OrderDetailsScreen(),
                         ));
-                        //print('View order details selected');
                         break;
                       case 'viewLocation':
                         Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => TrackLocationScreen(),
+                          builder: (context) => TrackLocationScreen(
+                              currentOrder.onSitePickup!, currentOrder.deliveryAddress!),
                         ));
-                        //print('View location selected');
                         break;
                       case 'cancelOrder':
                         cancelOrder(context, currentOrder, currentUser);
-                        //print('Cancel order selected');
                         break;
                     }
                   },
