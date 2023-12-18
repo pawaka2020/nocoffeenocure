@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class PrivacyPolicyScreen extends StatelessWidget {
+class OurBeanScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           title: Text(
-            'Privacy Policy',
+            'Our Bean',
             style: TextStyle(
               color: Colors.white,
             ),
@@ -22,7 +22,7 @@ class PrivacyPolicyScreen extends StatelessWidget {
 
 Center placeholder = Center(
     child: Text(
-      'Privacy Policy',
+      'Our Bean',
       style: TextStyle(fontSize: 24),
     )
 );

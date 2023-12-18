@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class PrivacyPolicyScreen extends StatelessWidget {
+class TOSScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           title: Text(
-            'Privacy Policy',
+            'Terms of Service',
             style: TextStyle(
               color: Colors.white,
             ),
@@ -22,7 +22,7 @@ class PrivacyPolicyScreen extends StatelessWidget {
 
 Center placeholder = Center(
     child: Text(
-      'Privacy Policy',
+      'Terms of service',
       style: TextStyle(fontSize: 24),
     )
 );

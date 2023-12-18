@@ -13,8 +13,8 @@ Widget buildSpecialRequest(String _specialRequest, Function(String) onSpecialReq
             style: TextStyle(
             ),
           ),
-        ),
-        SizedBox(height: 5),
+        ), //text
+        SizedBox(height: 5), //spacing
         TextField(
           controller: _textEditingController,
           onChanged: onSpecialRequestChanged,

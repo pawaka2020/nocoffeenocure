@@ -32,7 +32,7 @@ Future<List<LatLng>> _loadUserCurrentLocation() async {
 Future<LatLng?> addressToLatLng(String address) async {
   try {
     List<Location> locations = await locationFromAddress(address);
-    if (locations != null && locations.isNotEmpty) {
+    if (locations.isNotEmpty) {
       print("latitude = ${locations.first.latitude}, longitude = ${locations.first.longitude}");
       return LatLng(locations.first.latitude, locations.first.longitude);
     }

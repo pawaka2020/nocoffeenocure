@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:nocoffeenocure/screens/me/privacy_policy.dart';
+import 'package:nocoffeenocure/screens/me/tos.dart';
 import 'package:uni_links/uni_links.dart';
 import '../../common.dart';
-import 'help.dart';
+import '../contactus/contactus.dart';
+import '../contactus/storelocation.dart';
+import '../faq/faq.dart';
+import '../settings/settings.dart';
+import 'about_us.dart';
 import 'login_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import 'ourbean.dart';
 
 /*
 Leads users to other screens 'help', 'talk to us', 'terms of service',
@@ -26,13 +34,13 @@ class Me extends StatelessWidget {
               padding: EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0),
               children: [
                 buildMeCard(context, 'FAQ', Icons.help_outline, FAQScreen()),
-                buildMeCard(context, 'Contact Us', Icons.chat_bubble_outline, FAQScreen()),
-                buildMeCard(context, 'Terms of Service', Icons.description, FAQScreen()),
-                buildMeCard(context, 'Privacy Policy', Icons.privacy_tip, FAQScreen()),
-                buildMeCard(context, 'About Us', Icons.info_outline, FAQScreen()),
-                buildMeCard(context, 'Our Bean', Icons.local_cafe, FAQScreen()),
-                buildMeCard(context, 'Locations', Icons.location_on, FAQScreen()),
-                buildMeCard(context, 'Settings', Icons.settings, FAQScreen()),
+                buildMeCard(context, 'Contact Us', Icons.chat_bubble_outline, ContactUsScreen()),
+                buildMeCard(context, 'Terms of Service', Icons.description, TOSScreen()),
+                buildMeCard(context, 'Privacy Policy', Icons.privacy_tip, PrivacyPolicyScreen()),
+                buildMeCard(context, 'About Us', Icons.info_outline, AboutUsScreen()),
+                buildMeCard(context, 'Our Bean', Icons.local_cafe, OurBeanScreen()),
+                buildMeCard(context, 'Locations', Icons.location_on, StoreLocationScreen()),
+                buildMeCard(context, 'Settings', Icons.settings, SettingsScreen()),
               ],
             ),
           ),
