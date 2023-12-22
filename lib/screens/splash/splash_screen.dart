@@ -8,6 +8,7 @@ import '../../repos/cartitem.dart';
 import '../../repos/fullnews.dart';
 import '../../repos/menuitem.dart';
 import '../../repos/order.dart';
+import '../../repos/token.dart';
 import '../../repos/user.dart';
 import '../../repos/voucher.dart';
 import '../onboarding/onboarding_screen.dart';
@@ -81,6 +82,7 @@ class _SplashScreenState extends State<SplashScreen> {
 }
 
 Future<void> preLoadFromBackend() async {
+  testToken();
   //create guest or log in as previously logged in user (guest or user).
   await UserRepo().loginAppStart(BackendSource.dummy);
   await VoucherRepo().update(BackendSource.dummy);
@@ -91,7 +93,7 @@ Future<void> preLoadFromBackend() async {
   await OrderRepo();
 
   //testEditVoucher();
-  print ("data pre-loaded");
+  print("data pre-loaded");
 }
 
 // void testEditVoucher() {

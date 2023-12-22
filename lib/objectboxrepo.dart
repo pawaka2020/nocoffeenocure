@@ -32,7 +32,7 @@ class ObjectBox {
     userBox = store.box<UserOB>();
     cartItemBox = store.box<CartItemOB>();
     voucherBox = store.box<VoucherOB>();
-    tokenBox = store.box<TokenOB>();
+    //tokenBox = store.box<TokenOB>();
     orderBox = store.box<OrderOB>();
   }
 

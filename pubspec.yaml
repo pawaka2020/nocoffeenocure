@@ -53,6 +53,8 @@ dependencies:
   open_route_service:
   geolocator:
   location: ^5.0.0
+  flutter_share_me: ^0.11.0
+  crypto:
 
 dev_dependencies:
   flutter_test:

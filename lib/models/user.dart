@@ -30,6 +30,7 @@ class UserOB
   int? coins; //amount of internal coins granted by the store for reward redemptions.
   bool? guest; //designate this user as 'guest' unique to the phone to allow usage of app even without logins.
   bool? isLoggedIn;
+  bool? newUser;
   //other fields (WIP)
   //vouchers
   //ongoing orders

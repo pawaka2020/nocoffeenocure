@@ -88,51 +88,6 @@ class ContactUsScreen extends StatelessWidget {
   String _subject = '';
   String _message = '';
 
-  void sendWhatsappMessage(BuildContext context, String name, String email, String phone, String subject, String message) async {
-    // Phone number in international format (+60172520691 in this case)
-
-    print("name = $name");
-
-    String phoneNumber = '+60172520691';
-
-    // Format the message
-    String formattedMessage = '$subject\n\n$message\n\n$name\n$phone\n$email';
-
-    // URL encode the message
-    String encodedMessage = Uri.encodeComponent(formattedMessage);
-
-    print("formatted message = $formattedMessage");
-    // Construct the WhatsApp URL
-    String whatsappUrl = 'https://wa.me/$phoneNumber?text=$encodedMessage';
-
-    // Launch the default browser to open WhatsApp with the pre-filled message
-    if (await canLaunch(whatsappUrl)) {
-      await launch(whatsappUrl);
-
-      // Show a dialog to inform the user
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text('Thank you for your inquiry'),
-            content: Text('Our team will reply within 1 business day.'),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop(); // Close the dialog
-                },
-                child: Text('Ok'),
-              ),
-            ],
-          );
-        },
-      );
-    } else {
-      // Handle error
-      print('Error launching WhatsApp');
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -149,7 +104,7 @@ class ContactUsScreen extends StatelessWidget {
         ),
       ),
       body: ListView(
-        padding: EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0),
+        padding: EdgeInsets.only(left:24.0, right: 24.0, bottom: 16.0),
         children: [
           SizedBox(height: 20),
           Card(
