@@ -25,7 +25,7 @@ String generateNewUserToken() {
     "iss": "your_server",
     "aud": "your_client",
   };
-
+//asdasd
   final base64Header = base64Url.encode(utf8.encode('{"alg":"HS256","typ":"JWT"}'));
   final base64Payload = base64Url.encode(utf8.encode(json.encode(payload)));
 
