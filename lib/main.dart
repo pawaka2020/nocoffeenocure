@@ -14,7 +14,7 @@ Singletons
 */
 late ObjectBox objectbox;
 late FlutterSecureStorage storage;
-late UserOB singletonUser;
+late UserOB singletonUser; //user created
 enum BackendSource {
   backend,
   dummy,
@@ -43,6 +43,7 @@ Future<void> main() async {
   // secureStorage.write(key: 'token', value: guestToken);
   // secureStorage.write(key: 'user_type', value: 'guest');
 
+// Store the token
 
   runApp(
     ChangeNotifierProvider(

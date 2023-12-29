@@ -39,8 +39,8 @@ class CartScreen extends StatefulWidget {
   void Function(int) updateCartCount;
   void Function(int) placeOrder;
   bool tracking;
-  void Function(bool, int) setTracking;
-  CartScreen(this.updateCartCount, this.placeOrder,  this.tracking, this.setTracking);
+  //void Function(bool, int) setTracking;
+  CartScreen(this.updateCartCount, this.placeOrder,  this.tracking);
   var cartItems = CartItemRepo().getAll();
   var vouchers = VoucherRepo().getAll();
 

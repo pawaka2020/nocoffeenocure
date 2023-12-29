@@ -1,5 +1,6 @@
 import '../backend/dummy/user.dart';
 import '../main.dart';
+import '../models/token.dart';
 import '../models/user.dart';
 
 //In release version, only fetch from online database.
@@ -68,50 +69,113 @@ class UserRepo {
     }
   }
 
+  bool checkForAuthToken() {
+    return false;
+  }
+
   Future<void> loginAppStart(BackendSource source) async {
-    // late final newData;
-    // late final currentData;
-    // if (source == BackendSource.dummy) {
-    //   newData = await UserDummy().get();
-    // }
-    // currentData = box.getAll();
-    // if (hasGuestUsers(currentData)) {
-    //   print("Guest account already created, will log in current user");
-    //   final loggedUser = getLoggedInUser();
-    //   //load cartitem, order, current vouchers, etc from loggedUser
-    // }
-    // else {
-    //   print("Has no guests, will create a guest user");
-    //   box.removeAll();
-    //   UserOB guest = UserOB()
-    //     ..userId = '0000000000'
-    //     ..name = "Guest"
-    //     ..email = ''
-    //     ..birthday = null
-    //     ..phoneNumber = ""
-    //     ..address = ''
-    //     ..profileImage = ''
-    //     ..coins = 0
-    //     ..guest = true
-    //     ..isLoggedIn = true
-    //   ;
-    //   box.put(guest);
-    // }
-    print("Has no guests, will create a guest user");
-    box.removeAll();
-    UserOB guest = UserOB()
-      ..userId = '0000000000'
-      ..name = "Guest"
-      ..email = ''
-      ..birthday = null
-      ..phoneNumber = ""
-      ..address = ''
-      ..profileImage = ''
-      ..coins = 0
-      ..guest = true
-      ..isLoggedIn = true
-    ;
-    box.put(guest);
+    /*
+    first, excute some logic to determine if there is an auth token in storage.
+    If there is, create registered User from analyzing that token, but I'll code that later.
+    For now I want a logic to determine that there is no auth token in storage for the following
+    code to be executed.
+    */
+    bool hasAuthToken = checkForAuthToken();
+    if (hasAuthToken) {
+      // Logic to create a registered user from analyzing the token
+      // You can add this logic later
+    }
+    else {
+      final users = box.getAll();
+      if (users.length == 0) {
+        print("no user in database. We will create a new guest user");
+        UserOB guest = UserOB()
+          ..userId = '000000'
+          ..name = "Guest"
+          ..email = ''
+          ..birthday = null
+          ..phoneNumber = ""
+          ..address = ''
+          ..profileImage = ''
+          ..coins = 0
+          ..guest = true
+          ..isLoggedIn = true
+          ..newUser = false
+        ;
+        //print("Has no guests, will create a guest user");
+        box.removeAll();
+        singletonUser = guest;
+        box.put(guest);
+      }
+      else {
+        print("user in database. We will load the current user");
+        singletonUser = users.firstWhere((user) => user.isLoggedIn == true);
+      }
+    }
+  }
+
+  void loginUser() {
+    //1. Generate logged user from token
+    String token = generateNewUserToken();
+    UserOB? loggedinUser = decodeToken(token);
+
+    //2. Objectbox management
+    //box.removeAll(); //this is not necessary. (not confirmed yet)
+    //List<UserOB> users1 = box.getAll();
+    //print("number of users prior to adjustment = ${users1.length}");
+    UserOB? currentUser = getLoggedInUser();
+    currentUser?.isLoggedIn = false;
+    box.put(currentUser);
+    //List<UserOB> users2 = box.getAll();
+    //print("number of users prior to adjustment = ${users2.length}");
+
+    box.put(loggedinUser); //yes, we should add this token-generated user to the Box.
+
+    //3. Setting as singlleton
+    singletonUser = loggedinUser!;
+  }
+
+  void loginUser2() {
+    List<UserOB> users = box.getAll();
+    if (users.any((user) => user.guest == false)) {
+      print("A registered user has been detected");
+
+      UserOB guestUser = users.firstWhere((user) => user.guest == true);
+      UserOB registeredUser = users.firstWhere((user) => user.guest == false);
+
+      guestUser.isLoggedIn = false;
+      registeredUser.isLoggedIn = true;
+
+      box.put(guestUser);
+      box.put(registeredUser);
+
+      singletonUser = registeredUser;
+    }
+    else {
+      print("A registered user has not been detected");
+
+      String token = generateNewUserToken();
+      UserOB? loggedinUser = decodeToken(token);
+      UserOB guestUser = users.firstWhere((user) => user.guest == true);
+      guestUser.isLoggedIn = false;
+      box.put(guestUser);
+      box.put(loggedinUser);
+      singletonUser = loggedinUser!;
+    }
+  }
+
+  void logoutUser() {
+    List<UserOB> users = box.getAll();
+    UserOB guestUser = users.firstWhere((user) => user.guest == true);
+    UserOB registeredUser = users.firstWhere((user) => user.guest == false);
+
+    guestUser.isLoggedIn = true;
+    registeredUser.isLoggedIn = false;
+
+    box.put(guestUser);
+    box.put(registeredUser);
+
+    singletonUser = guestUser;
   }
 
   List<UserOB> getAll() {

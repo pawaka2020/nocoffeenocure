@@ -10,6 +10,7 @@ import '../cart/cart_screen.dart';
 import '../menu/menu.dart';
 import 'package:nocoffeenocure/screens/me/me.dart';
 
+import '../news/newspage.dart';
 import '../order/order_screen.dart';
 import 'cartnavybaritem.dart';
 
@@ -35,7 +36,12 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       _cartCount = _cartCount + adjustment;
       if (_cartCount < 0) _cartCount = 0;
+    });
+  }
 
+  void resetCartCount() {
+    setState(() {
+      _cartCount = 0;
     });
   }
 
@@ -75,10 +81,10 @@ class _HomeScreenState extends State<HomeScreen> {
         physics: const NeverScrollableScrollPhysics(),
         children: [
           MenuPage(updateCartCount), //put updateCartCount here
-          VouchersPage(),
-          CartScreen(updateCartCount, placeOrder, _tracking, setTracking), //put updateCartCount here
-          TrackPage(_tracking, setTracking),
-          Me()
+          NewsPage(),
+          CartScreen(updateCartCount, placeOrder, _tracking), //put updateCartCount here
+          TrackScreen(_tracking, setTracking),
+          MeScreen(updateCartCount, setTracking),
         ],
         onPageChanged: (index) {
           setState(() {
@@ -107,8 +113,8 @@ Widget buildBottomNavigationBar(int currentIndex, int cartCount, bool tracking,
         textAlign: TextAlign.center,
       ),
       BottomNavyBarItem(
-        icon: Icon(Icons.local_offer),
-        title: Text('Vouchers', style: TextStyle(color: Colors.black)), // Set text color
+        icon: Icon(Icons.newspaper),
+        title: Text('News', style: TextStyle(color: Colors.black)), // Set text color
         activeColor: Colors.orange, // Set active tab text color
         textAlign: TextAlign.center,
       ),
@@ -124,11 +130,4 @@ Widget buildBottomNavigationBar(int currentIndex, int cartCount, bool tracking,
   );
 }
 
-class VouchersPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text('Vouchers Page'),
-    );
-  }
-}
+

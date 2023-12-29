@@ -19,7 +19,6 @@ import 'models/cartitem.dart';
 import 'models/fullnews.dart';
 import 'models/menuitem.dart';
 import 'models/order.dart';
-import 'models/token.dart';
 import 'models/user.dart';
 import 'models/voucher.dart';
 
@@ -384,40 +383,6 @@ final _entities = <ModelEntity>[
       relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[]),
   ModelEntity(
-      id: const IdUid(18, 6064446509916367692),
-      name: 'TokenOB',
-      lastPropertyId: const IdUid(5, 2272607414657403014),
-      flags: 0,
-      properties: <ModelProperty>[
-        ModelProperty(
-            id: const IdUid(1, 8745156916931656254),
-            name: 'id',
-            type: 6,
-            flags: 1),
-        ModelProperty(
-            id: const IdUid(2, 1614979557165057070),
-            name: 'token',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(3, 2734293094508751276),
-            name: 'userId',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(4, 4369116351569210447),
-            name: 'expirationDate',
-            type: 10,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(5, 2272607414657403014),
-            name: 'guest',
-            type: 1,
-            flags: 0)
-      ],
-      relations: <ModelRelation>[],
-      backlinks: <ModelBacklink>[]),
-  ModelEntity(
       id: const IdUid(21, 894287139824345925),
       name: 'OrderOB',
       lastPropertyId: const IdUid(25, 750862704918247180),
@@ -549,7 +514,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(22, 5302879394691121557),
       name: 'UserOB',
-      lastPropertyId: const IdUid(11, 2517427027947222361),
+      lastPropertyId: const IdUid(12, 5829590647862749672),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -606,6 +571,11 @@ final _entities = <ModelEntity>[
             id: const IdUid(11, 2517427027947222361),
             name: 'phoneNumber',
             type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(12, 5829590647862749672),
+            name: 'newUser',
+            type: 1,
             flags: 0)
       ],
       relations: <ModelRelation>[],
@@ -695,7 +665,8 @@ ModelDefinition getObjectBoxModel() {
         6749911841847507853,
         755040416761839102,
         4530192993071638560,
-        1078667474729755585
+        1078667474729755585,
+        6064446509916367692
       ],
       retiredIndexUids: const [
         8717456330994247813,
@@ -761,7 +732,12 @@ ModelDefinition getObjectBoxModel() {
         6199814512664527826,
         1546320062219839674,
         7723157659364113340,
-        750862704918247180
+        750862704918247180,
+        8745156916931656254,
+        1614979557165057070,
+        2734293094508751276,
+        4369116351569210447,
+        2272607414657403014
       ],
       retiredRelationUids: const [],
       modelVersion: 5,
@@ -1181,49 +1157,8 @@ ModelDefinition getObjectBoxModel() {
           object.order.attach(store);
           return object;
         }),
-    TokenOB: EntityDefinition<TokenOB>(
-        model: _entities[9],
-        toOneRelations: (TokenOB object) => [],
-        toManyRelations: (TokenOB object) => {},
-        getId: (TokenOB object) => object.id,
-        setId: (TokenOB object, int id) {
-          object.id = id;
-        },
-        objectToFB: (TokenOB object, fb.Builder fbb) {
-          final tokenOffset =
-              object.token == null ? null : fbb.writeString(object.token!);
-          final userIdOffset =
-              object.userId == null ? null : fbb.writeString(object.userId!);
-          fbb.startTable(6);
-          fbb.addInt64(0, object.id);
-          fbb.addOffset(1, tokenOffset);
-          fbb.addOffset(2, userIdOffset);
-          fbb.addInt64(3, object.expirationDate?.millisecondsSinceEpoch);
-          fbb.addBool(4, object.guest);
-          fbb.finish(fbb.endTable());
-          return object.id;
-        },
-        objectFromFB: (Store store, ByteData fbData) {
-          final buffer = fb.BufferContext(fbData);
-          final rootOffset = buffer.derefObject(0);
-          final expirationDateValue =
-              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 10);
-          final object = TokenOB()
-            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0)
-            ..token = const fb.StringReader(asciiOptimization: true)
-                .vTableGetNullable(buffer, rootOffset, 6)
-            ..userId = const fb.StringReader(asciiOptimization: true)
-                .vTableGetNullable(buffer, rootOffset, 8)
-            ..expirationDate = expirationDateValue == null
-                ? null
-                : DateTime.fromMillisecondsSinceEpoch(expirationDateValue)
-            ..guest =
-                const fb.BoolReader().vTableGetNullable(buffer, rootOffset, 12);
-
-          return object;
-        }),
     OrderOB: EntityDefinition<OrderOB>(
-        model: _entities[10],
+        model: _entities[9],
         toOneRelations: (OrderOB object) => [object.user],
         toManyRelations: (OrderOB object) => {
               RelInfo<CartItemOB>.toOneBacklink(
@@ -1348,7 +1283,7 @@ ModelDefinition getObjectBoxModel() {
           return object;
         }),
     UserOB: EntityDefinition<UserOB>(
-        model: _entities[11],
+        model: _entities[10],
         toOneRelations: (UserOB object) => [],
         toManyRelations: (UserOB object) => {
               RelInfo<UserReview2OB>.toOneBacklink(5, object.id,
@@ -1382,7 +1317,7 @@ ModelDefinition getObjectBoxModel() {
           final phoneNumberOffset = object.phoneNumber == null
               ? null
               : fbb.writeString(object.phoneNumber!);
-          fbb.startTable(12);
+          fbb.startTable(13);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, userIdOffset);
           fbb.addOffset(2, nameOffset);
@@ -1394,6 +1329,7 @@ ModelDefinition getObjectBoxModel() {
           fbb.addBool(8, object.guest);
           fbb.addBool(9, object.isLoggedIn);
           fbb.addOffset(10, phoneNumberOffset);
+          fbb.addBool(11, object.newUser);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -1424,7 +1360,9 @@ ModelDefinition getObjectBoxModel() {
             ..isLoggedIn =
                 const fb.BoolReader().vTableGetNullable(buffer, rootOffset, 22)
             ..phoneNumber = const fb.StringReader(asciiOptimization: true)
-                .vTableGetNullable(buffer, rootOffset, 24);
+                .vTableGetNullable(buffer, rootOffset, 24)
+            ..newUser =
+                const fb.BoolReader().vTableGetNullable(buffer, rootOffset, 26);
           InternalToManyAccess.setRelInfo<UserOB>(
               object.reviews,
               store,
@@ -1448,7 +1386,7 @@ ModelDefinition getObjectBoxModel() {
           return object;
         }),
     UserReview2OB: EntityDefinition<UserReview2OB>(
-        model: _entities[12],
+        model: _entities[11],
         toOneRelations: (UserReview2OB object) => [object.user],
         toManyRelations: (UserReview2OB object) => {},
         getId: (UserReview2OB object) => object.id,
@@ -1715,182 +1653,165 @@ class VoucherOB_ {
       QueryIntegerProperty<VoucherOB>(_entities[8].properties[8]);
 }
 
-/// [TokenOB] entity fields to define ObjectBox queries.
-class TokenOB_ {
-  /// see [TokenOB.id]
-  static final id = QueryIntegerProperty<TokenOB>(_entities[9].properties[0]);
-
-  /// see [TokenOB.token]
-  static final token = QueryStringProperty<TokenOB>(_entities[9].properties[1]);
-
-  /// see [TokenOB.userId]
-  static final userId =
-      QueryStringProperty<TokenOB>(_entities[9].properties[2]);
-
-  /// see [TokenOB.expirationDate]
-  static final expirationDate =
-      QueryIntegerProperty<TokenOB>(_entities[9].properties[3]);
-
-  /// see [TokenOB.guest]
-  static final guest =
-      QueryBooleanProperty<TokenOB>(_entities[9].properties[4]);
-}
-
 /// [OrderOB] entity fields to define ObjectBox queries.
 class OrderOB_ {
   /// see [OrderOB.id]
-  static final id = QueryIntegerProperty<OrderOB>(_entities[10].properties[0]);
+  static final id = QueryIntegerProperty<OrderOB>(_entities[9].properties[0]);
 
   /// see [OrderOB.orderId]
   static final orderId =
-      QueryIntegerProperty<OrderOB>(_entities[10].properties[1]);
+      QueryIntegerProperty<OrderOB>(_entities[9].properties[1]);
 
   /// see [OrderOB.eta]
-  static final eta = QueryIntegerProperty<OrderOB>(_entities[10].properties[2]);
+  static final eta = QueryIntegerProperty<OrderOB>(_entities[9].properties[2]);
 
   /// see [OrderOB.status]
   static final status =
-      QueryStringProperty<OrderOB>(_entities[10].properties[3]);
+      QueryStringProperty<OrderOB>(_entities[9].properties[3]);
 
   /// see [OrderOB.locationLongitude]
   static final locationLongitude =
-      QueryDoubleProperty<OrderOB>(_entities[10].properties[4]);
+      QueryDoubleProperty<OrderOB>(_entities[9].properties[4]);
 
   /// see [OrderOB.locationLatitude]
   static final locationLatitude =
-      QueryDoubleProperty<OrderOB>(_entities[10].properties[5]);
+      QueryDoubleProperty<OrderOB>(_entities[9].properties[5]);
 
   /// see [OrderOB.totalPrice]
   static final totalPrice =
-      QueryDoubleProperty<OrderOB>(_entities[10].properties[6]);
+      QueryDoubleProperty<OrderOB>(_entities[9].properties[6]);
 
   /// see [OrderOB.deliveryAddress]
   static final deliveryAddress =
-      QueryStringProperty<OrderOB>(_entities[10].properties[7]);
+      QueryStringProperty<OrderOB>(_entities[9].properties[7]);
 
   /// see [OrderOB.onSitePickup]
   static final onSitePickup =
-      QueryBooleanProperty<OrderOB>(_entities[10].properties[8]);
+      QueryBooleanProperty<OrderOB>(_entities[9].properties[8]);
 
   /// see [OrderOB.user]
   static final user =
-      QueryRelationToOne<OrderOB, UserOB>(_entities[10].properties[9]);
+      QueryRelationToOne<OrderOB, UserOB>(_entities[9].properties[9]);
 
   /// see [OrderOB.phoneNumber]
   static final phoneNumber =
-      QueryStringProperty<OrderOB>(_entities[10].properties[10]);
+      QueryStringProperty<OrderOB>(_entities[9].properties[10]);
 
   /// see [OrderOB.specialRequest]
   static final specialRequest =
-      QueryStringProperty<OrderOB>(_entities[10].properties[11]);
+      QueryStringProperty<OrderOB>(_entities[9].properties[11]);
 
   /// see [OrderOB.packageString]
   static final packageString =
-      QueryStringProperty<OrderOB>(_entities[10].properties[12]);
+      QueryStringProperty<OrderOB>(_entities[9].properties[12]);
 
   /// see [OrderOB.orderPlaced]
   static final orderPlaced =
-      QueryIntegerProperty<OrderOB>(_entities[10].properties[13]);
+      QueryIntegerProperty<OrderOB>(_entities[9].properties[13]);
 
   /// see [OrderOB.paymentMethod]
   static final paymentMethod =
-      QueryStringProperty<OrderOB>(_entities[10].properties[14]);
+      QueryStringProperty<OrderOB>(_entities[9].properties[14]);
 
   /// see [OrderOB.amount]
   static final amount =
-      QueryDoubleProperty<OrderOB>(_entities[10].properties[15]);
+      QueryDoubleProperty<OrderOB>(_entities[9].properties[15]);
 
   /// see [OrderOB.sst]
-  static final sst = QueryDoubleProperty<OrderOB>(_entities[10].properties[16]);
+  static final sst = QueryDoubleProperty<OrderOB>(_entities[9].properties[16]);
 
   /// see [OrderOB.voucherDeduction]
   static final voucherDeduction =
-      QueryDoubleProperty<OrderOB>(_entities[10].properties[17]);
+      QueryDoubleProperty<OrderOB>(_entities[9].properties[17]);
 
   /// see [OrderOB.subtotal]
   static final subtotal =
-      QueryDoubleProperty<OrderOB>(_entities[10].properties[18]);
+      QueryDoubleProperty<OrderOB>(_entities[9].properties[18]);
 
   /// see [OrderOB.deliveryFee]
   static final deliveryFee =
-      QueryDoubleProperty<OrderOB>(_entities[10].properties[19]);
+      QueryDoubleProperty<OrderOB>(_entities[9].properties[19]);
 
   /// see [OrderOB.roundingAdjustment]
   static final roundingAdjustment =
-      QueryDoubleProperty<OrderOB>(_entities[10].properties[20]);
+      QueryDoubleProperty<OrderOB>(_entities[9].properties[20]);
 
   /// see [OrderOB.active]
   static final active =
-      QueryBooleanProperty<OrderOB>(_entities[10].properties[21]);
+      QueryBooleanProperty<OrderOB>(_entities[9].properties[21]);
 
   /// see [OrderOB.appWalletDiscount]
   static final appWalletDiscount =
-      QueryDoubleProperty<OrderOB>(_entities[10].properties[22]);
+      QueryDoubleProperty<OrderOB>(_entities[9].properties[22]);
 }
 
 /// [UserOB] entity fields to define ObjectBox queries.
 class UserOB_ {
   /// see [UserOB.id]
-  static final id = QueryIntegerProperty<UserOB>(_entities[11].properties[0]);
+  static final id = QueryIntegerProperty<UserOB>(_entities[10].properties[0]);
 
   /// see [UserOB.userId]
   static final userId =
-      QueryStringProperty<UserOB>(_entities[11].properties[1]);
+      QueryStringProperty<UserOB>(_entities[10].properties[1]);
 
   /// see [UserOB.name]
-  static final name = QueryStringProperty<UserOB>(_entities[11].properties[2]);
+  static final name = QueryStringProperty<UserOB>(_entities[10].properties[2]);
 
   /// see [UserOB.email]
-  static final email = QueryStringProperty<UserOB>(_entities[11].properties[3]);
+  static final email = QueryStringProperty<UserOB>(_entities[10].properties[3]);
 
   /// see [UserOB.birthday]
   static final birthday =
-      QueryIntegerProperty<UserOB>(_entities[11].properties[4]);
+      QueryIntegerProperty<UserOB>(_entities[10].properties[4]);
 
   /// see [UserOB.address]
   static final address =
-      QueryStringProperty<UserOB>(_entities[11].properties[5]);
+      QueryStringProperty<UserOB>(_entities[10].properties[5]);
 
   /// see [UserOB.profileImage]
   static final profileImage =
-      QueryStringProperty<UserOB>(_entities[11].properties[6]);
+      QueryStringProperty<UserOB>(_entities[10].properties[6]);
 
   /// see [UserOB.coins]
   static final coins =
-      QueryIntegerProperty<UserOB>(_entities[11].properties[7]);
+      QueryIntegerProperty<UserOB>(_entities[10].properties[7]);
 
   /// see [UserOB.guest]
   static final guest =
-      QueryBooleanProperty<UserOB>(_entities[11].properties[8]);
+      QueryBooleanProperty<UserOB>(_entities[10].properties[8]);
 
   /// see [UserOB.isLoggedIn]
   static final isLoggedIn =
-      QueryBooleanProperty<UserOB>(_entities[11].properties[9]);
+      QueryBooleanProperty<UserOB>(_entities[10].properties[9]);
 
   /// see [UserOB.phoneNumber]
   static final phoneNumber =
-      QueryStringProperty<UserOB>(_entities[11].properties[10]);
+      QueryStringProperty<UserOB>(_entities[10].properties[10]);
+
+  /// see [UserOB.newUser]
+  static final newUser =
+      QueryBooleanProperty<UserOB>(_entities[10].properties[11]);
 }
 
 /// [UserReview2OB] entity fields to define ObjectBox queries.
 class UserReview2OB_ {
   /// see [UserReview2OB.id]
   static final id =
-      QueryIntegerProperty<UserReview2OB>(_entities[12].properties[0]);
+      QueryIntegerProperty<UserReview2OB>(_entities[11].properties[0]);
 
   /// see [UserReview2OB.message]
   static final message =
-      QueryStringProperty<UserReview2OB>(_entities[12].properties[1]);
+      QueryStringProperty<UserReview2OB>(_entities[11].properties[1]);
 
   /// see [UserReview2OB.stars]
   static final stars =
-      QueryStringProperty<UserReview2OB>(_entities[12].properties[2]);
+      QueryStringProperty<UserReview2OB>(_entities[11].properties[2]);
 
   /// see [UserReview2OB.status]
   static final status =
-      QueryStringProperty<UserReview2OB>(_entities[12].properties[3]);
+      QueryStringProperty<UserReview2OB>(_entities[11].properties[3]);
 
   /// see [UserReview2OB.user]
   static final user =
-      QueryRelationToOne<UserReview2OB, UserOB>(_entities[12].properties[4]);
+      QueryRelationToOne<UserReview2OB, UserOB>(_entities[11].properties[4]);
 }

@@ -133,16 +133,16 @@ Widget buildTimeLine(int phaseIndex, timelineType type, int currentPhaseIndex) {
   );
 }
 
-class TrackPage extends StatefulWidget {
+class TrackScreen extends StatefulWidget {
   bool tracking;
   void Function(bool, int) setTracking;
-  TrackPage(this.tracking, this.setTracking);
+  TrackScreen(this.tracking, this.setTracking);
 
   @override
-  State<StatefulWidget> createState() => TrackPageState();
+  State<StatefulWidget> createState() => TrackScreenState();
 }
 
-class TrackPageState extends State<TrackPage> {
+class TrackScreenState extends State<TrackScreen> {
   late DateTime _eta;
   late DateTime _timer;
   late int _currentPhaseIndex;
