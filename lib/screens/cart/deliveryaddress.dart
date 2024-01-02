@@ -112,7 +112,6 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
               }
             });
           }),
-          SizedBox(height: 10),
           _isLoading
               ? Center(
             child: CircularProgressIndicator(),
@@ -158,7 +157,7 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
             fontSize: 12,
           ),
         ),
-        Spacer(),
+        //Spacer(),
       ],
     );
   }

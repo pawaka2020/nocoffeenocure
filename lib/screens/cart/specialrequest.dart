@@ -22,7 +22,7 @@ Widget buildSpecialRequest(String _specialRequest, Function(String) onSpecialReq
               fontSize: 12,
               color:Colors.blue
           ),
-          maxLength: 30,
+          //maxLength: 30,
           decoration: InputDecoration(
               enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(color: Colors.grey),
@@ -39,3 +39,4 @@ Widget buildSpecialRequest(String _specialRequest, Function(String) onSpecialReq
     ),
   );
 }
+

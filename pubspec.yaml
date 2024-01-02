@@ -55,7 +55,8 @@ dependencies:
   location: ^5.0.0
   flutter_share_me: ^0.11.0
   crypto:
-
+  avatar_better:
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter

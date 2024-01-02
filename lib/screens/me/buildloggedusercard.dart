@@ -1,9 +1,11 @@
+import 'package:avatar_better/avatar_better.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nocoffeenocure/widgets/partial_divider.dart';
 
 import '../../common.dart';
 import '../../main.dart';
+import '../edit_profile/edit_profile_screen.dart';
 
 Widget detailsRowInfo(String text1, String text2, String infoTitle, String infoText, BuildContext context) {
   return Padding(
@@ -171,11 +173,16 @@ Widget buildLoggedUserCard(BuildContext context, int currentPoints,
       child: Column(
         children: [
           Row(
-            children: [
-              Icon(
-                Icons.account_circle,
-                color: Colors.grey,
-                size: 40,
+            children: [ //change this
+              Avatar.circle(
+                onTapAvatar: () {
+                  printToast("test");
+                },
+                radius: 35, //35
+                text: singletonUser.name!,
+                backgroundColor:Colors.grey,
+                randomGradient: false, //true
+                randomColor: false, //false
               ),
               SizedBox(width: 16),
               Expanded(
@@ -183,14 +190,14 @@ Widget buildLoggedUserCard(BuildContext context, int currentPoints,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Guest',
+                      singletonUser.name!,
                       style: TextStyle(
                         fontSize: 20,
                         //fontWeight: FontWeight.bold,
                       ),
                     ),
                     Text(
-                      '+6011345543',
+                      '${singletonUser.phoneNumber}',
                       style: TextStyle(fontSize: 12),
                     ),
                     Align(
@@ -205,6 +212,7 @@ Widget buildLoggedUserCard(BuildContext context, int currentPoints,
               ),
             ],
           ),
+          SizedBox(height: 5),
           Divider(),
           SizedBox(height: 5),
           Row(
@@ -213,6 +221,9 @@ Widget buildLoggedUserCard(BuildContext context, int currentPoints,
               InkWell(
                 onTap: () {
                   // Handle Edit Profile
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => EditProfileScreen(),
+                  ));
                 },
                 child: Text(
                   'Edit profile',

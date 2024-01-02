@@ -51,7 +51,7 @@ UserOB? decodeToken(String token) {
       ..newUser = decodedMap['newUser'] as bool?
       ..name = 'User'
       ..email = ''
-      ..birthday = null
+      ..birthday = DateTime(1900, 1, 1)
       ..address = ''
       ..profileImage = ''
       ..coins = 0
