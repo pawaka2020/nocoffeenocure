@@ -182,7 +182,7 @@ class TrackScreenState extends State<TrackScreen> {
       String orderNumberDisplay = '#${currentOrder.orderId.toString()}';
       String timeDisplay = '${currentOrder.eta.toString()} min';
       //
-      Widget box() {
+      Widget orderDisplay() {
         double _height = 100; //100
 
         return SizedBox(
@@ -315,7 +315,7 @@ class TrackScreenState extends State<TrackScreen> {
             ),
           ),
           selectionButton(),
-          box(),
+          orderDisplay(),
         ],
       );
     }

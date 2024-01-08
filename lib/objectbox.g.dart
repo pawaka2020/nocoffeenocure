@@ -514,7 +514,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(22, 5302879394691121557),
       name: 'UserOB',
-      lastPropertyId: const IdUid(12, 5829590647862749672),
+      lastPropertyId: const IdUid(14, 8908450750083107410),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -575,6 +575,11 @@ final _entities = <ModelEntity>[
         ModelProperty(
             id: const IdUid(12, 5829590647862749672),
             name: 'newUser',
+            type: 1,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(13, 2297897574411327433),
+            name: 'setDefaultAddress',
             type: 1,
             flags: 0)
       ],
@@ -737,7 +742,8 @@ ModelDefinition getObjectBoxModel() {
         1614979557165057070,
         2734293094508751276,
         4369116351569210447,
-        2272607414657403014
+        2272607414657403014,
+        8908450750083107410
       ],
       retiredRelationUids: const [],
       modelVersion: 5,
@@ -1317,7 +1323,7 @@ ModelDefinition getObjectBoxModel() {
           final phoneNumberOffset = object.phoneNumber == null
               ? null
               : fbb.writeString(object.phoneNumber!);
-          fbb.startTable(13);
+          fbb.startTable(15);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, userIdOffset);
           fbb.addOffset(2, nameOffset);
@@ -1330,6 +1336,7 @@ ModelDefinition getObjectBoxModel() {
           fbb.addBool(9, object.isLoggedIn);
           fbb.addOffset(10, phoneNumberOffset);
           fbb.addBool(11, object.newUser);
+          fbb.addBool(12, object.setDefaultAddress);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -1362,7 +1369,9 @@ ModelDefinition getObjectBoxModel() {
             ..phoneNumber = const fb.StringReader(asciiOptimization: true)
                 .vTableGetNullable(buffer, rootOffset, 24)
             ..newUser =
-                const fb.BoolReader().vTableGetNullable(buffer, rootOffset, 26);
+                const fb.BoolReader().vTableGetNullable(buffer, rootOffset, 26)
+            ..setDefaultAddress =
+                const fb.BoolReader().vTableGet(buffer, rootOffset, 28, false);
           InternalToManyAccess.setRelInfo<UserOB>(
               object.reviews,
               store,
@@ -1791,6 +1800,10 @@ class UserOB_ {
   /// see [UserOB.newUser]
   static final newUser =
       QueryBooleanProperty<UserOB>(_entities[10].properties[11]);
+
+  /// see [UserOB.setDefaultAddress]
+  static final setDefaultAddress =
+      QueryBooleanProperty<UserOB>(_entities[10].properties[12]);
 }
 
 /// [UserReview2OB] entity fields to define ObjectBox queries.

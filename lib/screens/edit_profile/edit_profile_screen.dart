@@ -1,12 +1,17 @@
-import 'package:avatar_better/avatar_better.dart';
+import 'dart:io';
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:nocoffeenocure/screens/edit_profile/photofromlibraryscreen.dart';
+import 'package:nocoffeenocure/screens/edit_profile/takephotoscreen.dart';
 
 import '../../common.dart';
 import '../../main.dart';
 import '../../widgets/partial_divider.dart';
 import '../cart/specialrequest.dart';
+import 'addressfield.dart';
 import 'birthdayfield.dart';
 import 'editnamefield.dart';
+import 'imageselection.dart';
 
 class EditProfileScreen extends StatefulWidget {
   @override
@@ -17,14 +22,28 @@ class EditProfileState extends State<EditProfileScreen> {
   String _name = singletonUser.name!;
   String _email = singletonUser.email!;
   DateTime _birthday = singletonUser.birthday!;
+  String _address = singletonUser.address!;
+  bool _setDefaultAddress = singletonUser.setDefaultAddress;
   TextEditingController _nameController = TextEditingController();
   TextEditingController _emailController = TextEditingController();
+  TextEditingController _addressController = TextEditingController();
+  String _profileImage = singletonUser.profileImage!;
+  late XFile file;
+  //bool newlyRegistered = singletonUser.newlyRegistered;
+  //bool? newUser = singletonUser.newUser;
+
+  //camera stuff
+  late CameraController _controller;
+  late Future<void> _controllerInitialization;
 
   @override
-  void initState() {
+  initState() {
     super.initState();
     _nameController.text = _name;
     _emailController.text = _email;
+    _addressController.text = _address;
+
+    //camera stuff
   }
 
   void updateName(String name) {
@@ -42,8 +61,61 @@ class EditProfileState extends State<EditProfileScreen> {
   void updateBirthday(DateTime birthday) {
     setState((){
       _birthday = birthday;
-      printToast("birthday is now ${_birthday.toString()}");
     });
+  }
+
+  void updateAddress(String address) {
+    setState((){
+      _address = address;
+    });
+  }
+
+  //merge with updateAddress later.
+  void updatesetDefaultAddress (bool setDefaultAddress) {
+    setState(() {
+      _setDefaultAddress = setDefaultAddress;
+    });
+  }
+
+  Future<void> _initializeCamera() async {
+    final cameras = await availableCameras();
+    final firstCamera = cameras.first;
+    //printToast("camera found = ${firstCamera.toString()}");
+    _controller = CameraController(
+      firstCamera,
+      ResolutionPreset.medium,
+    );
+    _controllerInitialization = _controller.initialize();
+    printToast("camera initialized = ${_controllerInitialization.toString()}");
+    //permissions taken here
+  }
+
+  Future<void> _takePhoto() async {
+    final XFile photo = await Navigator.of(context).push(MaterialPageRoute(builder: (context) => TakePhotoScreen()));
+    if (photo != null) {
+
+      setState(() {
+
+        file = photo;
+        String filepath = file.path;
+        print("I got the photo, ${filepath}");
+        File filepath2 = File(filepath);
+        print("filepath2 = ${filepath2}");
+
+        //_profileImage = filepath;
+        _profileImage = photo.path;
+      });
+    }
+  }
+
+  Future<void> _selectPhotoLibrary() async {
+    final photo = await Navigator.of(context).push(MaterialPageRoute(builder: (context) => PhotoFromLibraryScreen()));
+  }
+
+  @override
+  void dispose() {
+    //_controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -60,72 +132,40 @@ class EditProfileState extends State<EditProfileScreen> {
           color: Colors.white,
         ),
       ),
-      body: ListView(
-        padding: EdgeInsets.only(left: 24.0, right: 24.0, bottom: 16.0),
+      body: Column(
         children: [
-          SizedBox(height: 20),
-          buildImageSelection(_name),
-          SizedBox(height: 5),
-          PartialDivider(20, 30),
-          buildField("Name", 'Eg. John Doe', _nameController, updateName),
-          SizedBox(height: 10),
-          PartialDivider(20, 30),
-          //email
-          buildField("Email", 'Eg. example@gmail.com', _emailController, updateEmail),
-          SizedBox(height: 10),
-          PartialDivider(20, 30),
-          //BirthdayField(initialDate: _birthday!, onDateChanged: updateBirthday, ),
-          buildBirthdayField(_birthday, updateBirthday, context),
-        ],
-      ),
+          Expanded(
+            child: ListView(
+              padding: EdgeInsets.only(left: 24.0, right: 24.0, bottom: 16.0),
+              children: [
+                SizedBox(height: 20),
+                buildImageSelection(context, _profileImage, _takePhoto, _selectPhotoLibrary),
+                SizedBox(height: 5),
+                PartialDivider(20, 30),
+                buildField("Name", 'Eg. John Doe', _nameController, updateName),
+                SizedBox(height: 10),
+                PartialDivider(20, 30),
+                //email
+                buildField("Email", 'Eg. example@gmail.com', _emailController, updateEmail),
+                SizedBox(height: 10),
+                PartialDivider(20, 30),
+                //buildPhoneField
+                buildBirthdayField(_birthday, updateBirthday, context),
+                PartialDivider(20, 30),
+                AddressField(_address, _setDefaultAddress, updateAddress, updatesetDefaultAddress),
+              ],
+            ),
+          ),
+          buildSaveChanges(context),
+        ]
+      )
     );
   }
 }
 
-Widget buildImageSelection(String name) {
-  return GestureDetector(
-    onTap: () {
-      // Add your logic for image selection here
-      print('Image selected!');
-    },
-    child: Align(
-      alignment:Alignment.center,
-      child: Stack(
-        alignment: Alignment.topRight,
-        children: [
-          Avatar.circle(
-            onTapAvatar: () {
-            printToast("test");
-          },
-            radius: 35,
-            text: name,
-            backgroundColor:Colors.grey,
-            randomGradient: false, //true
-            randomColor: false, //false
-          ),
-          Container(
-            margin: EdgeInsets.all(2),
-            width: 27,
-            height: 27,
-            decoration: BoxDecoration(
-              color: Colors.blue,
-              shape: BoxShape.circle,
-            ),
-            child: Icon(
-              Icons.camera_alt,
-              color: Colors.white,
-              size: 18,
-            ),
-          ),
-
-        ],
-      ),
-    )
-  );
-}
-
 Widget buildField(
-    String title, String hintText, TextEditingController controller, Function(String) onFieldChanged) {
+    String title, String hintText, TextEditingController controller, Function(String) onFieldChanged
+    ) {
   return Column(
     children: [
       Align(
@@ -154,5 +194,47 @@ Widget buildField(
       ),
       // You can display 'specialRequest' here.
     ],
+  );
+}
+
+Widget buildSaveChanges(BuildContext context) {
+  return SizedBox(
+    width: MediaQuery.of(context).size.width,
+    child: Card(
+      elevation: 14,
+      margin: EdgeInsets.all(0),
+      child: Padding(
+        padding: EdgeInsets.only(top:16, bottom: 16, left: 32, right: 32),
+        child: Container(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              //button
+              ElevatedButton(
+                onPressed: () {},
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.orange, ///Button background color
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0), // Rounded button edges
+                  ),
+                ),
+                child: Container(
+                  width: double.infinity, // Occupy the maximum available width
+                  child: Center(
+                    child: Text(
+                      "Save Changes",
+                      style: TextStyle(
+                        color: Colors.white, // Text color
+                        fontSize: 16, // Text size
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ]
+          )
+        )
+      )
+    ),
   );
 }

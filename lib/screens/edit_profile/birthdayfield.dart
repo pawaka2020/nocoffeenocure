@@ -80,35 +80,40 @@ Widget buildBirthdayField(DateTime initialDate, Function(DateTime) onDateChanged
       InkWell(
         onTap: () {
           _selectDate(context, initialDate, onDateChanged);
-          //_selectDate(context, _birthday, onDateChanged);
         },
-        child: InputDecorator(
-          decoration: InputDecoration(
-            enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.grey),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.grey),
-            ),
-            hintText: 'Select Date',
-            hintStyle: TextStyle(
-                color: Colors.white,
-                fontSize: 10
-            ),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                _formatDate(initialDate),
-                //_formatDate(_birthday),
-                style: TextStyle(fontSize: 12, color: Colors.blue),
+        child: SizedBox(
+          height: 55.0,
+          child: InputDecorator(
+            decoration: InputDecoration(
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.grey),
               ),
-              Icon(Icons.calendar_today, color: Colors.blue),
-            ],
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.grey),
+              ),
+              hintText: 'Select Date',
+              hintStyle: TextStyle(
+                  color: Colors.white,
+                  fontSize: 10
+              ),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+              children: [
+                Text(
+                  _formatDate(initialDate),
+                  style: TextStyle(fontSize: 12, color: Colors.blue),
+                ),
+                // Align(
+                //   alignment: Alignment.topCenter,
+                //   child: Icon(Icons.calendar_today, color: Colors.blue,),
+                // ),
+              ],
+            ),
           ),
-        ),
-      ),
+        )
+      )
     ],
   );
 }

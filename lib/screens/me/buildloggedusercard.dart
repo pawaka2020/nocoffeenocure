@@ -1,8 +1,8 @@
-import 'package:avatar_better/avatar_better.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nocoffeenocure/widgets/partial_divider.dart';
-
+import 'dart:io';
 import '../../common.dart';
 import '../../main.dart';
 import '../edit_profile/edit_profile_screen.dart';
@@ -110,7 +110,7 @@ Widget buildLoggedUserCard(BuildContext context, int currentPoints,
       child: Column(
         children: [
           Text(
-            'Level 1 : Coffee Member',
+            'Level 1 : Coffee Taster',
             style: TextStyle(
               fontSize: 20,
               //fontWeight: FontWeight.bold
@@ -174,16 +174,18 @@ Widget buildLoggedUserCard(BuildContext context, int currentPoints,
         children: [
           Row(
             children: [ //change this
-              Avatar.circle(
-                onTapAvatar: () {
-                  printToast("test");
-                },
-                radius: 35, //35
-                text: singletonUser.name!,
-                backgroundColor:Colors.grey,
-                randomGradient: false, //true
-                randomColor: false, //false
-              ),
+              // Avatar.circle(
+              //   onTapAvatar: () {
+              //     printToast("test");
+              //   },
+              //   radius: 35, //35
+              //   text: singletonUser.name!,
+              //   backgroundColor:Colors.grey,
+              //   randomGradient: false, //true
+              //   randomColor: false, //false
+              // ),
+              buildUserPhotoDisplay(context, singletonUser.profileImage!),
+              //replace this
               SizedBox(width: 16),
               Expanded(
                 child: Column(
@@ -287,4 +289,31 @@ Future<bool> showLogoffConfirmationDialog(BuildContext context, void Function() 
       );
     },
   );
+}
+
+Widget buildUserPhotoDisplay(BuildContext context, String image) {
+  final profileDisplay;
+  final iconDisplay;
+  if (image == '') {
+    profileDisplay = null;
+    iconDisplay = Icon(
+      Icons.person,
+      size: 42, //50
+      color: Colors.grey
+    );
+  }
+  else {
+    profileDisplay = FileImage(File(image));;
+    iconDisplay = null;
+  }
+  return Align(
+    alignment: Alignment.center,
+    child: CircleAvatar(
+      radius: 32, //40
+      backgroundImage: profileDisplay,
+      backgroundColor: Colors.black12,
+      child: iconDisplay,
+    ),
+  );
+
 }

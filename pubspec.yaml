@@ -55,7 +55,9 @@ dependencies:
   location: ^5.0.0
   flutter_share_me: ^0.11.0
   crypto:
-  avatar_better:
+  image_picker:
+  camera: ^0.10.5+8
+  path: ^1.8.3
   
 dev_dependencies:
   flutter_test:

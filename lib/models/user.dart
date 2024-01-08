@@ -25,11 +25,12 @@ class UserOB
   DateTime? birthday; //set to null for 'guest' users.
   String? phoneNumber;
   String? address; // address of user, for sending to Lalamove/Grab/other delivery provider APIs.
-  String? profileImage; //profile image of user, if required later on.
-  int? coins; //amount of internal coins granted by the store for reward redemptions.
-  bool? guest; //designate this user as 'guest' unique to the phone to allow usage of app even without logins.
+  String? profileImage; // profile image of user, if required later on.
+  int? coins; // amount of internal coins granted by the store for reward redemptions.
+  bool? guest; // designate this user as 'guest' unique to the phone to allow usage of app even without logins.
   bool? isLoggedIn;
   bool? newUser;
+  bool setDefaultAddress = false;
   //other fields (WIP)
   //vouchers
   //ongoing orders
