@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:nocoffeenocure/screens/edit_profile/photofromlibraryscreen.dart';
 import 'package:nocoffeenocure/screens/edit_profile/takephotoscreen.dart';
 
@@ -36,6 +37,9 @@ class EditProfileState extends State<EditProfileScreen> {
   late CameraController _controller;
   late Future<void> _controllerInitialization;
 
+
+
+
   @override
   initState() {
     super.initState();
@@ -44,6 +48,7 @@ class EditProfileState extends State<EditProfileScreen> {
     _addressController.text = _address;
 
     //camera stuff
+
   }
 
   void updateName(String name) {
@@ -91,25 +96,39 @@ class EditProfileState extends State<EditProfileScreen> {
   }
 
   Future<void> _takePhoto() async {
-    final XFile photo = await Navigator.of(context).push(MaterialPageRoute(builder: (context) => TakePhotoScreen()));
-    if (photo != null) {
+    final XFile image = await Navigator.of(context).push(MaterialPageRoute(builder: (context) => TakePhotoScreen()));
+    if (image != null) {
 
       setState(() {
 
-        file = photo;
-        String filepath = file.path;
-        print("I got the photo, ${filepath}");
-        File filepath2 = File(filepath);
-        print("filepath2 = ${filepath2}");
+        // file = photo;
+        // String filepath = file.path;
+        // print("I got the photo, ${filepath}");
+        // File filepath2 = File(filepath);
+        // print("filepath2 = ${filepath2}");
 
         //_profileImage = filepath;
-        _profileImage = photo.path;
+        _profileImage = image.path;
       });
     }
   }
 
   Future<void> _selectPhotoLibrary() async {
-    final photo = await Navigator.of(context).push(MaterialPageRoute(builder: (context) => PhotoFromLibraryScreen()));
+    //final photo = await Navigator.of(context).push(MaterialPageRoute(builder: (context) => PhotoFromLibraryScreen()));
+
+    try {
+      XFile? image = await ImagePicker().pickImage(source: ImageSource.gallery);
+      if (image != null && mounted) {
+        setState(() {
+          _profileImage = image.path;
+          //Navigator.of(context).pop(image); //mine
+        });
+      }
+      else return;
+    }
+    catch (e) {
+      printToast("Error picking image: $e");
+    }
   }
 
   @override

@@ -6,6 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../common.dart';
 
+
+
+
 Future<String> showImageSelectionDialog(BuildContext context) async {
   return await showDialog(
     context: context,
@@ -39,6 +42,7 @@ void SelectImage(BuildContext context, Future<void> Function() takePhoto,
     takePhoto();
   }
   else if (choice == 'Choose from Library') {
+
     selectPhotoLibrary();
   }
 }
