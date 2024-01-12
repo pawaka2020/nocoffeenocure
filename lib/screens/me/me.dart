@@ -8,6 +8,7 @@ import '../../repos/user.dart';
 import '../../widgets/partial_divider.dart';
 import '../contactus/contactus.dart';
 import '../contactus/storelocation.dart';
+import '../edit_profile/edit_profile_screen.dart';
 import '../faq/faq.dart';
 import '../settings/settings.dart';
 import 'about_us.dart';
@@ -40,7 +41,7 @@ class _MeState extends State<MeScreen> {
       widget.updateCartCount(singletonUser.cartItems.length * -1);
       widget.setTracking(false, 4);
       //sendWhatsapp(context); //
-      UserRepo().loginUser2();
+      UserRepo().loginUser();
       printToast("Successfully logged in");
     });
   }
@@ -54,55 +55,25 @@ class _MeState extends State<MeScreen> {
     });
   }
 
+  void editProfile() async {
+    // if (saveChanges) {
+    //   setState(() {
+    //     printToast("Chansadasdasdsadsadsdsdsadges to profile saved");
+    //   });
+    // }
+
+    bool saveChanges = await Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) => EditProfileScreen(),
+    ));
+    if (saveChanges) {
+      setState(() {
+
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-
-    Expanded newbody = Expanded(
-      child: ListView(
-        padding: EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0),
-        children: [
-          singletonUser.guest == true
-              ? buildGuestCard(loginUser)
-              : buildLoggedUserCard(context, 50, 100, logoutUser),
-          buildMeCard(context, 'FAQ', Icons.help_outline, FAQScreen()),
-          buildMeCard(context, 'Contact Us', Icons.chat_bubble_outline, ContactUsScreen()),
-          buildMeCard(context, 'Terms of Service', Icons.description, TOSScreen()),
-          buildMeCard(context, 'Privacy Policy', Icons.privacy_tip, PrivacyPolicyScreen()),
-          buildMeCard(context, 'About Us', Icons.info_outline, AboutUsScreen()),
-          buildMeCard(context, 'Our Bean', Icons.local_cafe, OurBeanScreen()),
-          buildMeCard(context, 'Locations', Icons.location_on, StoreLocationScreen()),
-          buildMeCard(context, 'Settings', Icons.settings, SettingsScreen()),
-        ],
-      ),
-    );
-
-    Column oldbody = Column(
-      children: <Widget>[
-        Padding(
-            padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 28.0,),
-            child:
-            singletonUser.guest == true
-                ? buildGuestCard(loginUser)
-                : buildLoggedUserCard(context, 50, 100, logoutUser)
-        ),
-        Expanded(
-          child: ListView(
-            padding: EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0),
-            children: [
-              //add one more
-              buildMeCard(context, 'FAQ', Icons.help_outline, FAQScreen()),
-              buildMeCard(context, 'Contact Us', Icons.chat_bubble_outline, ContactUsScreen()),
-              buildMeCard(context, 'Terms of Service', Icons.description, TOSScreen()),
-              buildMeCard(context, 'Privacy Policy', Icons.privacy_tip, PrivacyPolicyScreen()),
-              buildMeCard(context, 'About Us', Icons.info_outline, AboutUsScreen()),
-              buildMeCard(context, 'Our Bean', Icons.local_cafe, OurBeanScreen()),
-              buildMeCard(context, 'Locations', Icons.location_on, StoreLocationScreen()),
-              buildMeCard(context, 'Settings', Icons.settings, SettingsScreen()),
-            ],
-          ),
-        ),
-      ],
-    );
 
 
     return Scaffold(
@@ -111,7 +82,7 @@ class _MeState extends State<MeScreen> {
         children: [
           singletonUser.guest == true
               ? buildGuestCard(loginUser)
-              : buildLoggedUserCard(context, 50, 100, logoutUser),
+              : buildLoggedUserCard(context, 50, 100, logoutUser, editProfile),
           buildMeCard(context, 'FAQ', Icons.help_outline, FAQScreen()),
           buildMeCard(context, 'Contact Us', Icons.chat_bubble_outline, ContactUsScreen()),
           buildMeCard(context, 'Terms of Service', Icons.description, TOSScreen()),

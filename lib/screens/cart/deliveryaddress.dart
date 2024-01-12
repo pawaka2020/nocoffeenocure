@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+import '../../main.dart';
+
 class DeliveryAddress extends StatefulWidget {
   String address;
   bool onsitePickup;
@@ -37,7 +39,13 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
   @override
   Widget build(BuildContext context) {
     bool _onSitePickup = widget.onsitePickup;
+    // if (singletonUser.setDefaultAddress == true) {
+    //   _userInput = singletonUser.address!;
+    // }
     String _userInput = widget.address;
+    //userInput = "Nopadodo";
+
+
     _addressController =
         TextEditingController(text: _onSitePickup ? storeAddress : _userInput);
     return Padding(

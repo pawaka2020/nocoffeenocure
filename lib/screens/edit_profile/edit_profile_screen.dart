@@ -2,11 +2,11 @@ import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:nocoffeenocure/screens/edit_profile/photofromlibraryscreen.dart';
+import 'package:nocoffeenocure/screens/edit_profile/savechanges.dart';
 import 'package:nocoffeenocure/screens/edit_profile/takephotoscreen.dart';
-
 import '../../common.dart';
 import '../../main.dart';
+import '../../repos/user.dart';
 import '../../widgets/partial_divider.dart';
 import '../cart/specialrequest.dart';
 import 'addressfield.dart';
@@ -37,18 +37,12 @@ class EditProfileState extends State<EditProfileScreen> {
   late CameraController _controller;
   late Future<void> _controllerInitialization;
 
-
-
-
   @override
   initState() {
     super.initState();
     _nameController.text = _name;
     _emailController.text = _email;
     _addressController.text = _address;
-
-    //camera stuff
-
   }
 
   void updateName(String name) {
@@ -98,30 +92,18 @@ class EditProfileState extends State<EditProfileScreen> {
   Future<void> _takePhoto() async {
     final XFile image = await Navigator.of(context).push(MaterialPageRoute(builder: (context) => TakePhotoScreen()));
     if (image != null) {
-
       setState(() {
-
-        // file = photo;
-        // String filepath = file.path;
-        // print("I got the photo, ${filepath}");
-        // File filepath2 = File(filepath);
-        // print("filepath2 = ${filepath2}");
-
-        //_profileImage = filepath;
         _profileImage = image.path;
       });
     }
   }
 
   Future<void> _selectPhotoLibrary() async {
-    //final photo = await Navigator.of(context).push(MaterialPageRoute(builder: (context) => PhotoFromLibraryScreen()));
-
     try {
       XFile? image = await ImagePicker().pickImage(source: ImageSource.gallery);
       if (image != null && mounted) {
         setState(() {
           _profileImage = image.path;
-          //Navigator.of(context).pop(image); //mine
         });
       }
       else return;
@@ -131,11 +113,20 @@ class EditProfileState extends State<EditProfileScreen> {
     }
   }
 
+  void saveChanges(BuildContext context) {
+    printToast("Changes saved");
+    UserRepo().updateLoggedinUser(_profileImage, _name, _email, _birthday, _address,
+        _setDefaultAddress);
+
+    //do the same for photo, email, birthday, address, setting delivery address
+    Navigator.of(context).pop(true);
+  }
+
   @override
   void dispose() {
-    //_controller.dispose();
     super.dispose();
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -175,16 +166,15 @@ class EditProfileState extends State<EditProfileScreen> {
               ],
             ),
           ),
-          buildSaveChanges(context),
+          buildSaveChanges(context, saveChanges),
         ]
       )
     );
   }
 }
 
-Widget buildField(
-    String title, String hintText, TextEditingController controller, Function(String) onFieldChanged
-    ) {
+Widget buildField(String title, String hintText, TextEditingController controller,
+    Function(String) onFieldChanged) {
   return Column(
     children: [
       Align(
@@ -216,44 +206,3 @@ Widget buildField(
   );
 }
 
-Widget buildSaveChanges(BuildContext context) {
-  return SizedBox(
-    width: MediaQuery.of(context).size.width,
-    child: Card(
-      elevation: 14,
-      margin: EdgeInsets.all(0),
-      child: Padding(
-        padding: EdgeInsets.only(top:16, bottom: 16, left: 32, right: 32),
-        child: Container(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              //button
-              ElevatedButton(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.orange, ///Button background color
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0), // Rounded button edges
-                  ),
-                ),
-                child: Container(
-                  width: double.infinity, // Occupy the maximum available width
-                  child: Center(
-                    child: Text(
-                      "Save Changes",
-                      style: TextStyle(
-                        color: Colors.white, // Text color
-                        fontSize: 16, // Text size
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ]
-          )
-        )
-      )
-    ),
-  );
-}

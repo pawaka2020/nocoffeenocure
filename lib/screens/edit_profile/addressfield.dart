@@ -15,9 +15,7 @@ class AddressField extends StatefulWidget {
 }
 
 class _AddressFieldState extends State<AddressField> {
-  //String  _userInput = ''; // Store the user's input in the TextField
 
-  //bool _onSitePickup = false; // Toggle for on-site pickup
   static const String storeAddress =
       'COFFEE FANS SDN BHD (M) C-02-10, Ten Kinrara, Jalan BK 5a/3a, Bandar Kinrara, 47180 Puchong, Selangor';
   Color fainterGray = Colors.transparent;
@@ -32,7 +30,7 @@ class _AddressFieldState extends State<AddressField> {
     bool _onSitePickup = widget.onsitePickup;
     String _userInput = widget.address;
     _addressController =
-        TextEditingController(text: _onSitePickup ? storeAddress : _userInput);
+        TextEditingController(text: _userInput);
     return Padding(
       padding: EdgeInsets.only(left: 0, right: 0, top: 0, bottom: 0),
       child: Column(
@@ -63,7 +61,8 @@ class _AddressFieldState extends State<AddressField> {
                   },
                   style: TextStyle(
                     fontSize: 12,
-                    color: _onSitePickup ? Colors.grey : Colors.blue,
+                    //color: _onSitePickup ? Colors.grey : Colors.blue,
+                    color: Colors.blue,
                   ),
                   decoration: InputDecoration(
                     enabledBorder: OutlineInputBorder(
@@ -84,12 +83,13 @@ class _AddressFieldState extends State<AddressField> {
                 _onSitePickup = value;
 
                 // If on-site pickup is selected, set the store address
-                if (_onSitePickup) {
-                  _addressController.text = storeAddress;
-                } else {
-                  // If on-site pickup is deselected, clear the text field
-                  _addressController.text = '';
-                }
+                // if (_onSitePickup) {
+                //   _addressController.text = storeAddress;
+                // }
+                // else {
+                //   // If on-site pickup is deselected, clear the text field
+                //   _addressController.text = '';
+                // }
 
                 // Unfocus the text field
                 FocusScope.of(context).unfocus();

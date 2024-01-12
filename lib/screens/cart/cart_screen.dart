@@ -6,6 +6,7 @@ import 'package:nocoffeenocure/screens/cart/phone.dart';
 import 'package:nocoffeenocure/screens/cart/specialrequest.dart';
 import 'package:nocoffeenocure/screens/cart/voucherselection.dart';
 import '../../common.dart';
+import '../../main.dart';
 import '../../models/cartitem.dart';
 import '../../models/menuitem.dart';
 import '../../models/voucher.dart';
@@ -67,7 +68,8 @@ class _CartScreenState extends State<CartScreen> {
   double _voucherDeduction = 0;
   String _specialRequest = "";
   String _phoneNumber = '';
-  String _address = '';
+  String _address = singletonUser.setDefaultAddress ? singletonUser.address! : '';
+
   bool _onsitePickup = false;
   double _tax = 0.06;
   double _deliveryFee = 4.00;
@@ -190,7 +192,6 @@ class _CartScreenState extends State<CartScreen> {
     _packageString = packageString;
     _packageToggle[index] = !_packageToggle[index];
     setState(() {
-
       adjustPrice();
     });
   }
@@ -259,6 +260,7 @@ class _CartScreenState extends State<CartScreen> {
       );
     }
     else {
+      //printToast("over here, item length = ${widget.cartItems.length}, image = ${widget.cartItems[0].image}");
       return Column(
         children: [
           Expanded(
@@ -275,9 +277,9 @@ class _CartScreenState extends State<CartScreen> {
                 SizedBox(height: 10),
                 PartialDivider(40, 10),
                 DeliveryAddress(_address, _onsitePickup, updateAddress, updateOnsitePickup),
-                PartialDivider(40, 10),
-                buildPhoneNumber(_phoneNumber, updatePhoneNumber),
-                SizedBox(height: 10),
+                //PartialDivider(40, 10),
+                //buildPhoneNumber(_phoneNumber, updatePhoneNumber),
+                //SizedBox(height: 10),
                 PartialDivider(40, 10),
                 PaymentMethods(_paymentMethod, updatePaymentMethod),
                 PartialDivider(40, 10),

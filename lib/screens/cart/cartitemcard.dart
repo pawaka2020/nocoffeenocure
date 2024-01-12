@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../common.dart';
 import '../../models/cartitem.dart';
 import '../../models/menuitem.dart';
 
@@ -33,10 +34,12 @@ class CartItemCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     String image = cartItem.menuItemOB[0].imagePath!;
+    //String image = '';
     String name = cartItem.menuItemOB[0].title!;
-    String content = getContent(cartItem.menuItemOB[0].additions);
+    //String name = '';
+    String content = getContent(cartItem.menuItemOB[0].additions)!;
+    //String content = '';
 
     return Padding(
       padding: EdgeInsets.only(left: 16, right: 16, top: 8, bottom: 8),

@@ -181,4 +181,20 @@ class UserRepo {
   List<UserOB> getAll() {
     return box.getAll();
   }
+
+  void updateLoggedinUser(String profileImage, String name, String email,
+      DateTime birthday, String address, bool setDefaultAddress) {
+    List<UserOB> users = box.getAll();
+    UserOB registeredUser = users.firstWhere((user) => user.guest == false);
+    //
+    registeredUser.profileImage = profileImage;
+    registeredUser.name = name;
+    registeredUser.email = email;
+    registeredUser.birthday = birthday;
+    registeredUser.address = address;
+    registeredUser.setDefaultAddress = setDefaultAddress;
+
+    box.put(registeredUser);
+    singletonUser = registeredUser;
+  }
 }

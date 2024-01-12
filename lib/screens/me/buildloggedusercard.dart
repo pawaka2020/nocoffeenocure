@@ -100,7 +100,7 @@ Widget loadingBar(int currentPoints, int totalPoints) {
 }
 
 Widget buildLoggedUserCard(BuildContext context, int currentPoints,
-    int totalPoints, void Function() logout) {
+    int totalPoints, void Function() logout, void Function() editProfile) {
 
   Card membershipDisplayCard = Card(
     elevation: 4.0,
@@ -174,18 +174,7 @@ Widget buildLoggedUserCard(BuildContext context, int currentPoints,
         children: [
           Row(
             children: [ //change this
-              // Avatar.circle(
-              //   onTapAvatar: () {
-              //     printToast("test");
-              //   },
-              //   radius: 35, //35
-              //   text: singletonUser.name!,
-              //   backgroundColor:Colors.grey,
-              //   randomGradient: false, //true
-              //   randomColor: false, //false
-              // ),
               buildUserPhotoDisplay(context, singletonUser.profileImage!),
-              //replace this
               SizedBox(width: 16),
               Expanded(
                 child: Column(
@@ -221,11 +210,17 @@ Widget buildLoggedUserCard(BuildContext context, int currentPoints,
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               InkWell(
-                onTap: () {
-                  // Handle Edit Profile
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => EditProfileScreen(),
-                  ));
+                onTap: () async {
+                  //Handle Edit Profile
+                  // Navigator.of(context).push(MaterialPageRoute(
+                  //   builder: (context) => EditProfileScreen(),
+                  // ));
+
+
+                  //if (editProfile) {}
+
+                  //update(saveChanges);
+                  editProfile();
                 },
                 child: Text(
                   'Edit profile',
