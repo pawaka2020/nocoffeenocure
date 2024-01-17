@@ -260,7 +260,7 @@ class _CartScreenState extends State<CartScreen> {
       );
     }
     else {
-      //printToast("over here, item length = ${widget.cartItems.length}, image = ${widget.cartItems[0].image}");
+
       return Column(
         children: [
           Expanded(

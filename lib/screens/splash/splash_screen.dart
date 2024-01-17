@@ -88,12 +88,23 @@ Future<void> preLoadFromBackend() async {
   await VoucherRepo().update(BackendSource.dummy);
   await FullNewsRepo().update(BackendSource.dummy);
   await BannerNewsRepo().update(BackendSource.dummy);
+  /*
+  I think this one here is the culprit.
+  This 'update' function provides the menu items, but it also wipes out
+  menu items added to a 'cartitem' object.
+  */
   await MenuItemRepo().update(BackendSource.dummy);
+  /*
+  this one also
+  */
   await CartItemRepo().update(BackendSource.dummy);
-  await OrderRepo();
+  //await OrderRepo();
 
   //testEditVoucher();
   print("data pre-loaded");
+
+
+
 }
 
 // void testEditVoucher() {

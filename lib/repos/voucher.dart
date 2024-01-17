@@ -22,8 +22,8 @@ class VoucherRepo {
     currentData = box.getAll();
     if (currentData.isNotEmpty) {
       print("replacing entries for VoucherOB");
-      box.removeAll();
-      box.putMany(newData);
+      //box.removeAll();
+      //box.putMany(newData);
     }
     else {
       print("adding new entries for VoucherOB");

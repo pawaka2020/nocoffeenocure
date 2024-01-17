@@ -15,8 +15,8 @@ class MenuItemRepo {
     currentData = box.getAll();
     if (currentData.isNotEmpty) {
       print("replacing for MenuItem");
-      box.removeAll(); //the id of 'box' does not reset to 0.
-      box.putMany(newData);
+      //box.removeAll(); //the id of 'box' does not reset to 0.
+      //box.putMany(newData);
     }
     else {
       print("adding for FullNewsOB");
@@ -29,12 +29,20 @@ class MenuItemRepo {
     return convert(box.getAll());
   }
 
+  List<MenuItemOB> getAllOB() {
+    return (box.getAll());
+  }
+
   List<MenuItem> convert(List<MenuItemOB> list) {
     List<MenuItem> result = [];
     for (var items in list) {
       result.add(items.toMenuItem());
     }
     return result;
+  }
+
+  void put (MenuItemOB menuItem) {
+    box.put(menuItem);
   }
 
   void printMenuItem(MenuItem menuItem) {

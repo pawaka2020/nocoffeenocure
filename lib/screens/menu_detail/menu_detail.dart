@@ -60,11 +60,15 @@ class _MenuDetailsPageState extends State<MenuDetailsPage> {
   }
 
   void addToCart() {
+    //try removing this first.
+    //MenuItemRepo().put(widget.menuItem.toMenuItemOB());
+
     CartItemOB newcart = CartItemOB()
       ..quantity = quantity
       ..price = price
       ..menuItemOB.add(widget.menuItem.toMenuItemOB()) //this one
     ;
+    //currentUser.orders.add(newOrder);
     CartItemRepo().put(newcart);
 
     printToast("Item added to cart");

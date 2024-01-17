@@ -3,6 +3,7 @@ import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:nocoffeenocure/screens/home_screen/top_banner.dart';
 import 'package:nocoffeenocure/screens/home_screen/tracknavybaritem.dart';
 import '../../common.dart';
+import '../../main.dart';
 import '../../models/cartitem.dart';
 import '../../repos/cartitem.dart';
 import '../bottom_nav_bar/bottom_nav_bar.dart';
@@ -46,9 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void setTracking(bool value, int pageIndex) async {
-    //add OrderItem
     _tracking = value;
-    //changePage(pageIndex);
     await changePage(pageIndex);
   }
 
@@ -64,13 +63,24 @@ class _HomeScreenState extends State<HomeScreen> {
     _tracking = true;
     await changePage(3);
     updateCartCount(length * -1);
-    CartItemRepo().box.removeAll();
+    CartItemRepo().flushUserCartItems();
     printToast("Order placed");
   }
 
   Future<void> removeOrder(int length) async {
     _tracking = false;
     await changePage(0);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    if (singletonUser.orders.length != 0 && _tracking == false) {
+      _tracking = true;
+    }
+    if (singletonUser.cartItems.length != 0 && _cartCount == 0) {
+      _cartCount = singletonUser.cartItems.length;
+    }
   }
 
   @override

@@ -17,8 +17,11 @@ class ObjectBox {
   late final fullNewsBox;
   late final bannerNewsBox;
   late final menuItemBox;
+  late final menuItemBox2;
   late final userBox;
   late final cartItemBox;
+  late final cartItemBox2;
+  late final cartItemBox3;
   late final voucherBox;
   late final orderBox;
   //
@@ -31,15 +34,14 @@ class ObjectBox {
     menuItemBox = store.box<MenuItemOB>();
     userBox = store.box<UserOB>();
     cartItemBox = store.box<CartItemOB>();
+    cartItemBox2 = store.box<CartItemOB>();//create a duplicate of this
     voucherBox = store.box<VoucherOB>();
-    //tokenBox = store.box<TokenOB>();
     orderBox = store.box<OrderOB>();
   }
 
   static Future<ObjectBox> create() async {
     final docsDir = await getApplicationDocumentsDirectory();
     final store = await openStore(directory: p.join(docsDir.path, "obx-example"));
-
     return ObjectBox._create(store);
   }
 }

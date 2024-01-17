@@ -31,6 +31,7 @@ import '../../models/order.dart';
 import '../../models/user.dart';
 import '../../models/voucher.dart';
 import '../../repos/cartitem.dart';
+import '../../repos/menuitem.dart';
 import '../../repos/order.dart';
 import '../../repos/user.dart';
 import '../../repos/voucher.dart';
@@ -77,6 +78,9 @@ void addOrder(List<int> selectedVoucherIds, List<CartItemOB> cartItems,
   setVouchersToUsed(currentUser!, selectedVoucherIds);
   List<VoucherOB> selectedVouchers = getSelectedVouchers(currentUser, selectedVoucherIds);
 
+  //VoucherRepo().box.putMany(selectedVouchers);
+  //CartItemRepo().box.putMany(cartItems);
+
   OrderOB newOrder = OrderOB()
     ..orderId = generateOrderId()
     ..cartItems.addAll(cartItems) //WRONG!
@@ -94,10 +98,10 @@ void addOrder(List<int> selectedVoucherIds, List<CartItemOB> cartItems,
     ..deliveryFee = price.deliveryFee
     ..appWalletDiscount = price.appWalletDiscount
     ..totalPrice = price.total
-    //time setting
+  //time setting
     ..orderPlaced = DateTime.now()
     ..eta = 25
-    //IMPORTANT! status of order, allowing identification of this order later
+  //IMPORTANT! status of order, allowing identification of this order later
     ..active = true;
   ;
 
@@ -105,7 +109,13 @@ void addOrder(List<int> selectedVoucherIds, List<CartItemOB> cartItems,
   //   CartItemRepo().box.put(item);
   // }
   // newOrder.user.target = currentUser;
-  //OrderRepo().box.put(newOrder);
+
+  // for (var cartItem in cartItems) {
+  //   MenuItemRepo().put(cartItem.menuItemOB[0]);
+  // }
+  // int cart = CartItemRepo().box.putMany(cartItems);
+  //OrderRepo().put(newOrder);
+
 
   currentUser.orders.add(newOrder);
   print("before adding, order length = ${currentUser.orders.length.toString()}");
@@ -117,6 +127,7 @@ void addOrder(List<int> selectedVoucherIds, List<CartItemOB> cartItems,
   print('before adding, singleton order cart length = ${singletonUser.orders[0].cartItems.length.toString()}');
   print('before adding, singleton vouchers length = ${currentUser.orders[0].vouchers.length.toString()}');
   //test();
+  //OrderRepo().put(newOrder); //?
 }
 
 void test() {
