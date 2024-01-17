@@ -106,7 +106,8 @@ class CartItemRepo {
 
   void flushUserCartItems() {
     UserOB? currentUser = UserRepo().getLoggedInUser();
-    currentUser?.cartItems.removeWhere((cartItem) => cartItem.user.target != null);
+    //currentUser?.cartItems.removeWhere((cartItem) => cartItem.user.target != null);
+    currentUser?.cartItems.removeWhere((cartItem) => cartItem.user.target != currentUser);
     UserRepo().box.put(currentUser);
   }
 }

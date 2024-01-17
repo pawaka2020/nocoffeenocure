@@ -26,10 +26,9 @@ Log in card at the top.
 According to website: 'About', 'Our Bean', 'Locations', Contact Us', 'Settings'
 */
 class MeScreen extends StatefulWidget {
-  void Function(int) updateCartCount;
-  void Function(bool, int) setTracking;
+  void Function() adjustCartCountTracking;
 
-  MeScreen(this.updateCartCount, this.setTracking);
+  MeScreen(this.adjustCartCountTracking);
   @override
   State<StatefulWidget> createState() => _MeState();
 }
@@ -38,30 +37,21 @@ class _MeState extends State<MeScreen> {
 
   void loginUser() {
     setState(() {
-      widget.updateCartCount(singletonUser.cartItems.length * -1);
-      widget.setTracking(false, 4);
-      //sendWhatsapp(context); //
       UserRepo().loginUser();
+      widget.adjustCartCountTracking();
       printToast("Successfully logged in");
     });
   }
 
   void logoutUser() {
     setState(() {
-      widget.updateCartCount(singletonUser.cartItems.length * -1);
-      widget.setTracking(false, 4);
-      UserRepo().logoutUser(); //this works
+      UserRepo().logoutUser();
+      widget.adjustCartCountTracking();
       printToast('Successfully logged out');
     });
   }
 
   void editProfile() async {
-    // if (saveChanges) {
-    //   setState(() {
-    //     printToast("Chansadasdasdsadsadsdsdsadges to profile saved");
-    //   });
-    // }
-
     bool saveChanges = await Navigator.of(context).push(MaterialPageRoute(
       builder: (context) => EditProfileScreen(),
     ));

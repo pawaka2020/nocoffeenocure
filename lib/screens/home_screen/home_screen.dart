@@ -33,6 +33,14 @@ class _HomeScreenState extends State<HomeScreen> {
   bool _tracking = false;
   PageController _pageController = PageController(initialPage: 0);
 
+  void adjustCartCountTracking() {
+    setState(() {
+      _cartCount = singletonUser.cartItems.length;
+      if (singletonUser.orders.length != 0) _tracking = true;
+      else _tracking = false;
+    });
+  }
+
   void updateCartCount(int adjustment) {
     setState(() {
       _cartCount = _cartCount + adjustment;
@@ -40,15 +48,14 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  void resetCartCount() {
-    setState(() {
-      _cartCount = 0;
-    });
-  }
-
   void setTracking(bool value, int pageIndex) async {
-    _tracking = value;
+    setState(() {
+      _tracking = value;
+
+    });
     await changePage(pageIndex);
+    // _tracking = value;
+    // await changePage(pageIndex);
   }
 
   Future<void> changePage(int index) async {
@@ -75,12 +82,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    if (singletonUser.orders.length != 0 && _tracking == false) {
-      _tracking = true;
-    }
-    if (singletonUser.cartItems.length != 0 && _cartCount == 0) {
-      _cartCount = singletonUser.cartItems.length;
-    }
+    adjustCartCountTracking();
   }
 
   @override
@@ -94,7 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
           NewsPage(),
           CartScreen(updateCartCount, placeOrder, _tracking), //put updateCartCount here
           TrackScreen(_tracking, setTracking),
-          MeScreen(updateCartCount, setTracking),
+          MeScreen(adjustCartCountTracking),
         ],
         onPageChanged: (index) {
           setState(() {

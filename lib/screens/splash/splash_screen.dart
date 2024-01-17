@@ -97,7 +97,7 @@ Future<void> preLoadFromBackend() async {
   /*
   this one also
   */
-  await CartItemRepo().update(BackendSource.dummy);
+  //await CartItemRepo().update(BackendSource.dummy);
   //await OrderRepo();
 
   //testEditVoucher();

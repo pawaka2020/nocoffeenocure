@@ -114,10 +114,10 @@ class EditProfileState extends State<EditProfileScreen> {
   }
 
   void saveChanges(BuildContext context) {
-    printToast("Changes saved");
+
     UserRepo().updateLoggedinUser(_profileImage, _name, _email, _birthday, _address,
         _setDefaultAddress);
-
+    printToast("Changes saved");
     //do the same for photo, email, birthday, address, setting delivery address
     Navigator.of(context).pop(true);
   }
