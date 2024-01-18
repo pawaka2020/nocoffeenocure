@@ -64,8 +64,6 @@ class _MeState extends State<MeScreen> {
 
   @override
   Widget build(BuildContext context) {
-
-
     return Scaffold(
       body: ListView(
           padding: EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0, top: 28.0,),
@@ -85,8 +83,6 @@ class _MeState extends State<MeScreen> {
       ),
 
     );
-
-
   }
 
   void navigateTo(BuildContext context, Widget screen) {
@@ -187,57 +183,6 @@ Widget buildGuestCard(void Function() func) {
     ),
   );
 }
-
-// //make this a stateful widget later so it can shift forms.
-// class LoginCard extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return GestureDetector(
-//       onTap: () {
-//         //sendWhatsapp(context); //
-//         //UserRepo().loginUser();
-//       },
-//       child: Card(
-//         elevation: 4.0,
-//         margin: EdgeInsets.symmetric(vertical: 8.0),
-//         color: Colors.orange,
-//         child: Padding(
-//           padding: EdgeInsets.all(16.0),
-//           child: Column(
-//             children: [
-//               Align(
-//                 alignment: Alignment.centerLeft,
-//                 child: Container(
-//                   child: Text(
-//                     'Welcome, Guest',
-//                     style: TextStyle(
-//                       fontSize: 20.0,
-//                       fontWeight: FontWeight.bold,
-//                       color: Colors.white,
-//                     ),
-//                   ),
-//                 ),
-//               ),
-//               SizedBox(height: 8.0),
-//               Align(
-//                 alignment: Alignment.centerRight,
-//                 child: Container(
-//                   child: Text(
-//                     'Log in or Sign Up',
-//                     style: TextStyle(
-//                       fontSize: 16.0,
-//                       color: Colors.white,
-//                     ),
-//                   ),
-//                 ),
-//               ),
-//             ],
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
 
 void sendWhatsapp(BuildContext context) async {
   printToast("What happened?");
