@@ -8,9 +8,9 @@ import '../../main.dart';
 class DeliveryAddress extends StatefulWidget {
   String address;
   bool onsitePickup;
-  Function(String) onSpecialRequestChanged;
+  Function(String) updateAddress;
   Function(bool) updateOnsitePickup;
-  DeliveryAddress(this.address, this.onsitePickup, this.onSpecialRequestChanged, this.updateOnsitePickup);
+  DeliveryAddress(this.address, this.onsitePickup, this.updateAddress, this.updateOnsitePickup);
 
   @override
   _DeliveryAddressState createState() => _DeliveryAddressState();
@@ -115,7 +115,7 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
                 FocusScope.of(context).unfocus();
 
                 widget.updateOnsitePickup(value);
-                widget.onSpecialRequestChanged(_addressController.text);
+                widget.updateAddress(_addressController.text);
                 _autocompleteResults = [];
               }
             });
@@ -135,7 +135,7 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
                   onTap: () {
                     // Update the text field with the selected address
                     _addressController.text = _autocompleteResults[index];
-                    widget.onSpecialRequestChanged(_addressController.text);
+                    widget.updateAddress(_addressController.text);
                     // Optionally, you can clear the autocomplete results after selecting
                     setState(() {
                       _autocompleteResults.clear();
@@ -171,7 +171,7 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
   }
 
   Future<void> updateAddress(String userInput) async {
-    widget.onSpecialRequestChanged(userInput);
+    widget.updateAddress(userInput); //original position
     setState(() {
       _isLoading = true;
     });
@@ -183,6 +183,7 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
       final response = await http.get(Uri.parse(apiUrl));
 
       if (response.statusCode == 200) {
+        //widget.updateAddress(userInput);
         // Parse the JSON response and extract address names
         final List<dynamic> data = json.decode(response.body);
         List<String> addresses =

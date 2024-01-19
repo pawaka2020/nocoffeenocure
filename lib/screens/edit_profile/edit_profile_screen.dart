@@ -13,6 +13,9 @@ import 'addressfield.dart';
 import 'birthdayfield.dart';
 import 'editnamefield.dart';
 import 'imageselection.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'dart:async';
 
 class EditProfileScreen extends StatefulWidget {
   @override
@@ -113,7 +116,43 @@ class EditProfileState extends State<EditProfileScreen> {
     }
   }
 
-  void saveChanges(BuildContext context) {
+  Future<bool> checkAddress(String address) async {
+    bool result = true;
+    final apiUrl =
+        'https://nominatim.openstreetmap.org/search?format=json&q=$address&countrycodes=MY';
+    try {
+      final response = await http.get(Uri.parse(apiUrl));
+
+      if (response.statusCode == 200) {
+        final List<dynamic> data = json.decode(response.body);
+        List<String> addresses = data.map((result) => result['display_name'] as String).toList();
+        if (addresses.isEmpty) {
+          printToast("Error: invalid address");
+          return false;
+        }
+        else {
+          return true;
+        }
+      }
+      else {
+        printToast("Error: address checking failed");
+        return false;
+      }
+    } catch (e) {
+      throw Exception('Error: $e');
+      return false;
+    }
+    return result;
+  }
+
+
+  void saveChanges(BuildContext context) async {
+
+    if (_setDefaultAddress == true) {
+      bool result = true;
+      result = await checkAddress(_address);
+      if (result == false) return ;
+    }
 
     UserRepo().updateLoggedinUser(_profileImage, _name, _email, _birthday, _address,
         _setDefaultAddress);

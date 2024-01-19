@@ -2,32 +2,32 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:geolocator/geolocator.dart';
+//import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:nocoffeenocure/screens/order/pickupmap.dart';
 import '../../common.dart';
 import 'deliverymap.dart';
 import 'package:http/http.dart' as http;
 
-Future<List<LatLng>> _loadUserCurrentLocation() async {
-  try {
-    LocationPermission permission = await Geolocator.requestPermission();
-    if (permission == LocationPermission.denied ||
-        permission == LocationPermission.deniedForever) {
-      // Handle the case where the user denied or permanently denied location access.
-      print('Location permission denied.');
-      return [];
-    }
-    Position position = await Geolocator.getCurrentPosition(
-      desiredAccuracy: LocationAccuracy.high,
-    );
-    return [LatLng(position.latitude, position.longitude)];
-  }
-  catch (e) {
-    print('Error getting location: $e');
-    return [];
-  }
-}
+// Future<List<LatLng>> _loadUserCurrentLocation() async {
+//   try {
+//     LocationPermission permission = await Geolocator.requestPermission();
+//     if (permission == LocationPermission.denied ||
+//         permission == LocationPermission.deniedForever) {
+//       // Handle the case where the user denied or permanently denied location access.
+//       print('Location permission denied.');
+//       return [];
+//     }
+//     Position position = await Geolocator.getCurrentPosition(
+//       desiredAccuracy: LocationAccuracy.high,
+//     );
+//     return [LatLng(position.latitude, position.longitude)];
+//   }
+//   catch (e) {
+//     print('Error getting location: $e');
+//     return [];
+//   }
+// }
 
 Future<LatLng?> addressToLatLng(String address) async {
   try {
@@ -44,6 +44,7 @@ Future<LatLng?> addressToLatLng(String address) async {
 
 Future<List<LatLng>> fetchRoute(LatLng start, LatLng end) async {
   String apikey = '5b3ce3597851110001cf6248456c4d76701e43d2ad85859108f86ed5';
+
   final response = await http.get(
     Uri.parse('https://api.openrouteservice.org/v2/directions/driving-car?api_key=$apikey&start=${start.longitude},${start.latitude}&end=${end.longitude},${end.latitude}'),
   );
@@ -61,7 +62,7 @@ Future<List<LatLng>> fetchRoute(LatLng start, LatLng end) async {
 class TrackLocationScreen extends StatefulWidget {
   final String address = 'COFFEE FANS SDN BHD (M) C-02-10, Ten Kinrara, Jalan BK 5a/3a, Bandar Kinrara, 47180 Puchong, Selangor';
   bool onSitePickup;
-  String deliveryAddress;
+  String deliveryAddress; // a string is passed here.
   TrackLocationScreen(this.onSitePickup, this.deliveryAddress);
   @override
   State<StatefulWidget> createState() => TrackLocationState();
@@ -89,14 +90,15 @@ class TrackLocationState extends State<TrackLocationScreen> {
     }
   }
 
-  Future<void> _loadUserLocation() async {
-    if (widget.onSitePickup == true)
-      final userLocation = _loadUserCurrentLocation();
-      setState((){
-        _loadLocation();
-      });
-  }
+  // Future<void> _loadUserLocation() async {
+  //   if (widget.onSitePickup == true)
+  //     final userLocation = _loadUserCurrentLocation();
+  //     setState((){
+  //       _loadLocation();
+  //     });
+  // }
 
+  //address is passed here.
   Future<void> _loadLocation() async {
     LatLng? coordinates = await addressToLatLng(widget.deliveryAddress);
     if (coordinates != null) {

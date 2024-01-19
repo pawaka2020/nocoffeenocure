@@ -81,17 +81,6 @@ class _AddressFieldState extends State<AddressField> {
             setState(() {
               if (value != null) {
                 _onSitePickup = value;
-
-                // If on-site pickup is selected, set the store address
-                // if (_onSitePickup) {
-                //   _addressController.text = storeAddress;
-                // }
-                // else {
-                //   // If on-site pickup is deselected, clear the text field
-                //   _addressController.text = '';
-                // }
-
-                // Unfocus the text field
                 FocusScope.of(context).unfocus();
 
                 widget.updateOnsitePickup(value);

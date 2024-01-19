@@ -233,17 +233,11 @@ class _CartScreenState extends State<CartScreen> {
       printToast("Error: Order already exists");
       return ;
     }
-    if (checkOrderErrors(widget.tracking)) {
+    if (await checkOrderErrors(widget.tracking, _address, _onsitePickup)) {
       addOrder(_selectedVoucherIds, widget.cartItems, _specialRequest,
           _packageString, _address, _onsitePickup, _phoneNumber, _paymentMethod, price);
       _selectedVoucherIds = [];
-      //first method
       widget.placeOrder(widget.cartItems.length);
-      //second method
-      // widget.setTracking(true, 3);
-      // widget.updateCartCount(widget.cartItems.length * -1);
-      // CartItemRepo().box.removeAll();
-      // printToast("Order placed");
     };
   }
 

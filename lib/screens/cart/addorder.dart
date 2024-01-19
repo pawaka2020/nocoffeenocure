@@ -78,9 +78,6 @@ void addOrder(List<int> selectedVoucherIds, List<CartItemOB> cartItems,
   setVouchersToUsed(currentUser!, selectedVoucherIds);
   List<VoucherOB> selectedVouchers = getSelectedVouchers(currentUser, selectedVoucherIds);
 
-  //VoucherRepo().box.putMany(selectedVouchers);
-  //CartItemRepo().box.putMany(cartItems);
-
   OrderOB newOrder = OrderOB()
     ..orderId = generateOrderId()
     ..cartItems.addAll(cartItems) //WRONG!
@@ -104,35 +101,7 @@ void addOrder(List<int> selectedVoucherIds, List<CartItemOB> cartItems,
   //IMPORTANT! status of order, allowing identification of this order later
     ..active = true;
   ;
-
-  // for (var item in cartItems) {
-  //   CartItemRepo().box.put(item);
-  // }
-  // newOrder.user.target = currentUser;
-
-  // for (var cartItem in cartItems) {
-  //   MenuItemRepo().put(cartItem.menuItemOB[0]);
-  // }
-  // int cart = CartItemRepo().box.putMany(cartItems);
-  //OrderRepo().put(newOrder);
-
-
   currentUser.orders.add(newOrder);
-  print("before adding, order length = ${currentUser.orders.length.toString()}");
-  print('before adding, order cart length = ${currentUser.orders[0].cartItems.length.toString()}');
-  print('before adding, vouchers length = ${currentUser.orders[0].vouchers.length.toString()}');
   UserRepo().box.put(currentUser);
   singletonUser = currentUser;
-  print("before adding, singleton order length = ${singletonUser.orders.length.toString()}");
-  print('before adding, singleton order cart length = ${singletonUser.orders[0].cartItems.length.toString()}');
-  print('before adding, singleton vouchers length = ${currentUser.orders[0].vouchers.length.toString()}');
-  //test();
-  //OrderRepo().put(newOrder); //?
-}
-
-void test() {
-  OrderOB? currentOrder4 = OrderRepo().getCurrentOrder();
-  print("current order, address = ${currentOrder4?.deliveryAddress}");
-  print('current order, order cart length = ${currentOrder4?.cartItems.length.toString()}');
-
 }

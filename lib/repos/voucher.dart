@@ -65,19 +65,19 @@ class VoucherRepo {
   }
 
   void printVoucher(List<VoucherOB> list) {
-    for (var voucher in list) {
-      print("Voucher ID: ${voucher.id}");
-      print("Image: ${voucher.image}");
-      print("Price Discount: ${voucher.priceDiscount}");
-      print("Price Deduct: ${voucher.priceDeduct}");
-      if (voucher.expiryDate != null) {
-        print("Expiry Date: ${voucher.expiryDate!.toLocal()}"); // Convert to local time
-      } else {
-        print("Expiry Date: N/A");
-      }
-      print("Activated: ${voucher.activated}");
-      print("\n");
-    }
+    // for (var voucher in list) {
+    //   print("Voucher ID: ${voucher.id}");
+    //   print("Image: ${voucher.image}");
+    //   print("Price Discount: ${voucher.priceDiscount}");
+    //   print("Price Deduct: ${voucher.priceDeduct}");
+    //   if (voucher.expiryDate != null) {
+    //     print("Expiry Date: ${voucher.expiryDate!.toLocal()}"); // Convert to local time
+    //   } else {
+    //     print("Expiry Date: N/A");
+    //   }
+    //   print("Activated: ${voucher.activated}");
+    //   print("\n");
+    // }
   }
 
   // List<VoucherOB> getNotFromIdList(List<VoucherOB> allVouchers, List<int> _selectedVoucherIds) {
