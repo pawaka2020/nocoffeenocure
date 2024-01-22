@@ -123,7 +123,7 @@ class ContactUsScreen extends StatelessWidget {
           SizedBox(height: 20),
           Text("Coffee Fans Sdn Bhd (M)",
               style: TextStyle(
-                fontSize: 16,
+                fontSize: 14,
               )
           ),
           SizedBox(height: 10),
@@ -131,7 +131,7 @@ class ContactUsScreen extends StatelessWidget {
             "C-02-10, Ten Kinrara, Jalan BK 5a/3a, Bandar Kinrara, 47180 Puchong, Selangor",
             textAlign: TextAlign.justify,
             style: TextStyle(
-              fontSize: 16,
+              fontSize: 14,
             ),
           ),
           SizedBox(height: 10),

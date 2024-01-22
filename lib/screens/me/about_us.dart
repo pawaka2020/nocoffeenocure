@@ -90,6 +90,10 @@ class AboutUsScreen extends StatelessWidget {
                     Text(
                       "'No Coffee No Cure' is a new venture that will passionately serve specialty grade brews & light pastries.",
                       textAlign: TextAlign.start,
+                      style: TextStyle(
+                        //color: Colors.orange,
+                        fontSize: 14,
+                      ),
                     ),
                     SizedBox(height: 5),
                     Text(
