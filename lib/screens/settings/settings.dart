@@ -58,15 +58,16 @@ class _SettingsPageState extends State<SettingsScreen> {
             child: ListView(
             padding: EdgeInsets.only(left: 24.0, right: 24.0, top: 24.0, bottom: 16.0),
             children: [
-              buildLanguageSelection(languages, selectedLanguage, changeLanguage),
-              PartialDivider(20, 30),
-              SizedBox(height: 10),
-              buildPushNotification2(notificationToggle, setNotification),
-              SizedBox(height: 10),
-              PartialDivider(20, 30),
-            ],
-          ),
-
+                SizedBox(height: 10),
+                buildLanguageSelection(languages, selectedLanguage, changeLanguage),
+                SizedBox(height: 20),
+                PartialDivider(20, 30),
+                SizedBox(height: 10),
+                buildPushNotification2(notificationToggle, setNotification),
+                SizedBox(height: 10),
+                PartialDivider(20, 30),
+              ],
+            ),
           ),
           buildSaveChanges(context, saveChanges)
         ]

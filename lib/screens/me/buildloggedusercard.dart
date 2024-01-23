@@ -6,6 +6,7 @@ import 'dart:io';
 import '../../common.dart';
 import '../../main.dart';
 import '../edit_profile/edit_profile_screen.dart';
+import '../membership/membership_screen.dart';
 
 Widget detailsRowInfo(String text1, String text2, String infoTitle, String infoText, BuildContext context) {
   return Padding(
@@ -118,7 +119,12 @@ Widget buildLoggedUserCard(BuildContext context, int currentPoints,
           ),
           SizedBox(height: 10),
           InkWell(
-            onTap: () {},
+            onTap: () {
+              //printToast("Membership goes here");
+              Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => MembershipScreen(),
+              ));
+            },
             child: Text('Membership levels and benefits',
                 style: TextStyle(
                   fontSize: 12,

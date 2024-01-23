@@ -32,7 +32,6 @@ Widget buildPushNotification2(bool notificationToggle, void Function(bool value)
           fontSize: 16.0,
         ),
       ),
-      //SizedBox(width: 40),
       FlutterSwitch(
         width: 100, //125
         height: 35.0, //55
@@ -42,7 +41,6 @@ Widget buildPushNotification2(bool notificationToggle, void Function(bool value)
         borderRadius: 15.0, //30 //10
         padding: 8.0,
         showOnOff: true,
-        //activeColor:Colors.orange,
         onToggle: (value) {
           setNotification(value);
         },
