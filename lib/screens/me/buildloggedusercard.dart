@@ -1,6 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:nocoffeenocure/screens/rewards/rewardsscreen.dart';
 import 'package:nocoffeenocure/widgets/partial_divider.dart';
 import 'dart:io';
 import '../../common.dart';
@@ -103,6 +104,10 @@ Widget loadingBar(int currentPoints, int totalPoints) {
 Widget buildLoggedUserCard(BuildContext context, int currentPoints,
     int totalPoints, void Function() logout, void Function() editProfile) {
 
+  /*
+  Some logic
+
+  */
   Card membershipDisplayCard = Card(
     elevation: 4.0,
     margin: EdgeInsets.symmetric(vertical: 8.0),
@@ -143,7 +148,7 @@ Widget buildLoggedUserCard(BuildContext context, int currentPoints,
             children: [
               Icon(
                 Icons.coffee_outlined,
-                color: Colors.grey,
+                color: (currentPoints!= 0)? Colors.orange : Colors.grey,
                 size: 40,
               ),
               loadingBar(currentPoints, totalPoints),
@@ -156,7 +161,12 @@ Widget buildLoggedUserCard(BuildContext context, int currentPoints,
             children: [
               Text("NCNC Coins : ${40.toString()}"),
               ElevatedButton(
-                onPressed: () {  },
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => RewardsScreen()
+                  ));
+
+                },
                 child: Text(
                   "Redeem",
                   style: TextStyle(

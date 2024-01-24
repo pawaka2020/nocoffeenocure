@@ -72,11 +72,65 @@ Widget loadingBar(int currentPoints, int totalPoints) {
   );
 }
 
-class MembershipScreen extends StatelessWidget {
+Widget buildLevelCard(String level, IconData icon, int currentPoints, int totalPoints,
+String benefit1, String benefit2, String benefit3) {
+  return Card(
+      elevation: 4.0,
+      margin: EdgeInsets.symmetric(vertical: 8.0),
+      child: Padding(
+          padding: EdgeInsets.all(16),
+          child: Column(
+              children: [
+                Text(
+                  level,
+                  style: TextStyle(
+                    fontSize: 20,
+                  ),
+                ),
+                SizedBox(height: 10),
+                Divider(),
+                SizedBox(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Icon(
+                      icon,
+                      color: (currentPoints!= 0)? Colors.orange : Colors.grey,
+                      size: 40,
+                    ),
+                    loadingBar(currentPoints, totalPoints),
+                  ],
+                ),
+                SizedBox(height: 10),
+                Divider(),
+                SizedBox(height: 10),
+                Text(
+                  benefit1 + '\n' + benefit2 + '\n' + benefit3,
+                  textAlign:TextAlign.left,
+                  style: TextStyle(
+                    fontSize: 14,
+                  ),
+                ),
+              ]
+          )
+      )
+  );
+}
 
-  String str1 = '- Special 20% discount on the first coffee order.';
-  String str2 = '- Access to discount vouchers.';
-  String str3 = '- Free delivery on first 5 orders.';
+Widget buildCardLevelConnector() {
+  return Column(
+    children: [
+      SizedBox(height: 5),
+      Icon(
+        Icons.keyboard_arrow_down,
+        color: Colors.grey,
+      ),
+    ],
+  );
+}
+
+
+class MembershipScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
@@ -98,54 +152,29 @@ class MembershipScreen extends StatelessWidget {
             child: ListView(
               padding: EdgeInsets.only(left: 24.0, right: 24.0, top: 24.0, bottom: 16.0),
               children: [
-                Card(
-                  elevation: 4.0,
-                  margin: EdgeInsets.symmetric(vertical: 8.0),
-                  child: Padding(
-                    padding: EdgeInsets.all(16),
-                      child: Column(
-                        children: [
-                          Text(
-                            'Level 1 : Coffee Taster',
-                            style: TextStyle(
-                              fontSize: 20,
-                            ),
-                          ),
-                          SizedBox(height: 10),
-                          Divider(),
-                          SizedBox(height: 10),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Icon(
-                                Icons.coffee_outlined,
-                                color: Colors.grey,
-                                size: 40,
-                              ),
-                              loadingBar(0, 100),
-                            ],
-                          ),
-                          SizedBox(height: 10),
-                          Divider(),
-                          SizedBox(height: 10),
-                          Text(
-                            // 'Special 20% discount on the first coffee order\n'
-                            //     'Access to discount vouchers\n'
-                            //     'Free delivery on first 5 orders',
-                            str1 + '\n' + str2 + '\n' + str3,
-                            textAlign:TextAlign.left,
-                            style: TextStyle(
-                              fontSize: 14,
-                            ),
-                          ),
-                        ]
-                      )
-                  )
-                ),
-                //build membership
+                buildLevelCard('Level 1 : Coffee Taster', Icons.coffee_outlined, 55, 100,
+                  '- Special 20% discount on the first coffee order.',
+                  '- Access to discount vouchers.',
+                  '- Free delivery on first 5 orders.'),
+                buildCardLevelConnector(),
+                buildLevelCard('Level 2 : Coffee Lover', Icons.coffee_maker, 0, 125,
+                  '- 15% discount on all purchases.',
+                  '- Early access to seasonal coffee offerings.',
+                  '- Priority notification on new arrivals and popular blends.'),
+                buildCardLevelConnector(),
+                buildLevelCard('Level 3 - Coffee Connoisseur', Icons.coffee_maker, 0, 150,
+                  '- Exclusive access to limited edition coffee blends.',
+                  '- Early access to new coffee releases.',
+                  '- Personalized recommendations based on taste preferences.'),
+                buildCardLevelConnector(),
+                buildLevelCard('Level 4 - Coffee Aficionado', Icons.coffee_maker, 0, 175,
+                    '- 25% discount on all purchases.',
+                    '- Free tasting and review on new coffee releases.',
+                    '- Quarterly coffee tasting events with industry experts.'),
+                //buildCardLevelConnector(),
+
               ],
             )
-            //how to gain xp?
           )
         ]
       ),

@@ -70,7 +70,7 @@ class _MeState extends State<MeScreen> {
         children: [
           singletonUser.guest == true
               ? buildGuestCard(loginUser)
-              : buildLoggedUserCard(context, 50, 100, logoutUser, editProfile),
+              : buildLoggedUserCard(context, 55, 100, logoutUser, editProfile),
           buildMeCard(context, 'FAQ', Icons.help_outline, FAQScreen()),
           buildMeCard(context, 'Contact Us', Icons.chat_bubble_outline, ContactUsScreen()),
           buildMeCard(context, 'Terms of Service', Icons.description, TOSScreen()),

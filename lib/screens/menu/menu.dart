@@ -187,10 +187,10 @@ class MenuGrid extends StatelessWidget {
         child: CustomScrollView(
           slivers: [
             for (final category in menuItemsByCategory.keys)
-              [
-                buildGridTitle(category),
-                buildGrid(menuItemsByCategory[category]!),
-              ],
+            [
+              buildGridTitle(category),
+              buildGrid(menuItemsByCategory[category]!),
+            ],
           ].expand((element) => element).toList(),
         ),
       ),
