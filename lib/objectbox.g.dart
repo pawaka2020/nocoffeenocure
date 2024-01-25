@@ -19,6 +19,7 @@ import 'models/cartitem.dart';
 import 'models/fullnews.dart';
 import 'models/menuitem.dart';
 import 'models/order.dart';
+import 'models/reward.dart';
 import 'models/user.dart';
 import 'models/voucher.dart';
 
@@ -626,6 +627,40 @@ final _entities = <ModelEntity>[
             relationTarget: 'UserOB')
       ],
       relations: <ModelRelation>[],
+      backlinks: <ModelBacklink>[]),
+  ModelEntity(
+      id: const IdUid(24, 1948993354929307331),
+      name: 'RewardOB',
+      lastPropertyId: const IdUid(5, 5915982108761402157),
+      flags: 0,
+      properties: <ModelProperty>[
+        ModelProperty(
+            id: const IdUid(1, 7222078129476444315),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        ModelProperty(
+            id: const IdUid(2, 7516972206393841667),
+            name: 'image',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(3, 4715333690662457425),
+            name: 'name',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(4, 1921410083013315783),
+            name: 'category',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(5, 5915982108761402157),
+            name: 'cost',
+            type: 6,
+            flags: 0)
+      ],
+      relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[])
 ];
 
@@ -656,7 +691,7 @@ Future<Store> openStore(
 ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
-      lastEntityId: const IdUid(23, 6180815482110331163),
+      lastEntityId: const IdUid(24, 1948993354929307331),
       lastIndexId: const IdUid(22, 3574927397556316278),
       lastRelationId: const IdUid(0, 0),
       lastSequenceId: const IdUid(0, 0),
@@ -1434,6 +1469,48 @@ ModelDefinition getObjectBoxModel() {
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0);
           object.user.attach(store);
           return object;
+        }),
+    RewardOB: EntityDefinition<RewardOB>(
+        model: _entities[12],
+        toOneRelations: (RewardOB object) => [],
+        toManyRelations: (RewardOB object) => {},
+        getId: (RewardOB object) => object.id,
+        setId: (RewardOB object, int id) {
+          object.id = id;
+        },
+        objectToFB: (RewardOB object, fb.Builder fbb) {
+          final imageOffset =
+              object.image == null ? null : fbb.writeString(object.image!);
+          final nameOffset =
+              object.name == null ? null : fbb.writeString(object.name!);
+          final categoryOffset = object.category == null
+              ? null
+              : fbb.writeString(object.category!);
+          fbb.startTable(6);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, imageOffset);
+          fbb.addOffset(2, nameOffset);
+          fbb.addOffset(3, categoryOffset);
+          fbb.addInt64(4, object.cost);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+
+          final object = RewardOB()
+            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0)
+            ..image = const fb.StringReader(asciiOptimization: true)
+                .vTableGetNullable(buffer, rootOffset, 6)
+            ..name = const fb.StringReader(asciiOptimization: true)
+                .vTableGetNullable(buffer, rootOffset, 8)
+            ..category = const fb.StringReader(asciiOptimization: true)
+                .vTableGetNullable(buffer, rootOffset, 10)
+            ..cost = const fb.Int64Reader()
+                .vTableGetNullable(buffer, rootOffset, 12);
+
+          return object;
         })
   };
 
@@ -1827,4 +1904,26 @@ class UserReview2OB_ {
   /// see [UserReview2OB.user]
   static final user =
       QueryRelationToOne<UserReview2OB, UserOB>(_entities[11].properties[4]);
+}
+
+/// [RewardOB] entity fields to define ObjectBox queries.
+class RewardOB_ {
+  /// see [RewardOB.id]
+  static final id = QueryIntegerProperty<RewardOB>(_entities[12].properties[0]);
+
+  /// see [RewardOB.image]
+  static final image =
+      QueryStringProperty<RewardOB>(_entities[12].properties[1]);
+
+  /// see [RewardOB.name]
+  static final name =
+      QueryStringProperty<RewardOB>(_entities[12].properties[2]);
+
+  /// see [RewardOB.category]
+  static final category =
+      QueryStringProperty<RewardOB>(_entities[12].properties[3]);
+
+  /// see [RewardOB.cost]
+  static final cost =
+      QueryIntegerProperty<RewardOB>(_entities[12].properties[4]);
 }

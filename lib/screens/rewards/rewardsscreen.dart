@@ -1,20 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-/*
-Rewards list:
-1 - Travel and Services
-2D1L trip to Kota Kinabalu.
-1-day Tour guide of Taman Negara.
-Full body health screening at Hippocratus Pharmacy.
-2 - Entertainment
-Ticket for Michael Jackson 'This is It' concert.
-1 Go-kart session at Pirate Nation.
-1 Golden Ticket for Gamuda Land.
-3 - Health & Beauty
-Estee Lauder facial cleanser.
-Garnier facemask.
-*/
+import 'package:image_card/image_card.dart';
 
 class RewardsScreen extends StatefulWidget {
   @override
@@ -39,46 +25,49 @@ class _RewardsScreenState extends State<RewardsScreen> {
           color: Colors.white,
         ),
       ),
-      body: Column(
-        children: [
-          SizedBox(
-            height: 48.0,
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              children: [
-                buildCategoryTab('Travel and Services', 0),
-                buildCategoryTab('Entertainment', 1),
-                buildCategoryTab('Health & Beauty', 2),
-              ],
+      body: Padding(
+        padding: EdgeInsets.only(left:12.0, right: 12.0, ),
+        child: Column(
+          children: [
+            SizedBox(
+              height: 48.0,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: [
+                  buildCategoryTab('Travel and Services', 0),
+                  buildCategoryTab('Entertainment', 1),
+                  buildCategoryTab('Health & Beauty', 2),
+                ],
+              ),
             ),
-          ),
-          Expanded(
-            child: PageView(
-              controller: _pageController,
-              onPageChanged: (index) {
-                setState(() {
-                  _selectedCategoryIndex = index;
-                });
-              },
-              children: [
-                buildCategoryList([
-                  '2D1L trip to Kota Kinabalu',
-                  '1-day Tour guide of Taman Negara',
-                  'Full body health screening at Hippocratus Pharmacy',
-                ]),
-                buildCategoryList([
-                  'Ticket for Michael Jackson \'This is It\' concert',
-                  '1 Go-kart session at Pirate Nation',
-                  '1 Golden Ticket for Gamuda Land',
-                ]),
-                buildCategoryList([
-                  'Estee Lauder facial cleanser',
-                  'Garnier facemask',
-                ]),
-              ],
+            Expanded(
+              child: PageView(
+                controller: _pageController,
+                onPageChanged: (index) {
+                  setState(() {
+                    _selectedCategoryIndex = index;
+                  });
+                },
+                children: [
+                  buildCategoryList([
+                    '2D1L trip to Kota Kinabalu',
+                    '1-day Tour guide of Taman Negara',
+                    'Health screening Pharmacy',
+                  ]),
+                  buildCategoryList([
+                    'Ticket for Michael Jackson \'This is It\' concert',
+                    '1 Go-kart session at Pirate Nation',
+                    '1 Golden Ticket for Gamuda Land',
+                  ]),
+                  buildCategoryList([
+                    'Estee Lauder facial cleanser',
+                    'Garnier facemask',
+                  ]),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        )
       ),
     );
   }
@@ -111,10 +100,11 @@ class _RewardsScreenState extends State<RewardsScreen> {
     return GridView.builder(
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
-        mainAxisSpacing: 16.0,
-        crossAxisSpacing: 16.0,
+        mainAxisSpacing: 16.0, //16
+        crossAxisSpacing: 16.0, //16
+        childAspectRatio: 0.52 //0.60
       ),
-      padding: EdgeInsets.all(16.0),
+      padding: EdgeInsets.only(top: 0, bottom: 8, left:16, right: 16),
       itemCount: items.length,
       itemBuilder: (context, index) {
         return InkWell(
@@ -128,10 +118,42 @@ class _RewardsScreenState extends State<RewardsScreen> {
             );
           },
           child: Card(
-            child: ListTile(
-              title: Text(items[index]),
-              // Add more customization as needed for each card
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12.0),
             ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(12.0),
+              child: Column(
+                children: [
+                  Image.asset(
+                    'assets/images/coffeesample.png',
+                    fit: BoxFit.cover,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(left: 15, right: 15, top: 8),
+                    child: Text(
+                      items[index],
+                      style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                      ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                  Divider(),
+                  Padding(
+                    padding: EdgeInsets.only(left: 15, right: 15),
+                    child: Text(
+                        "50 coins",
+                        style: TextStyle(
+                            fontSize: 12
+                        )
+                    ),
+                  ),
+                ],
+              ),
+            )
           ),
         );
       },
