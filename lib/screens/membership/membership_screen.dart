@@ -104,11 +104,14 @@ String benefit1, String benefit2, String benefit3) {
                 SizedBox(height: 10),
                 Divider(),
                 SizedBox(height: 10),
-                Text(
-                  benefit1 + '\n' + benefit2 + '\n' + benefit3,
-                  textAlign:TextAlign.left,
-                  style: TextStyle(
-                    fontSize: 14,
+                Align(
+                  alignment:Alignment.centerLeft,
+                  child: Text(
+                    benefit1 + '\n' + benefit2 + '\n' + benefit3,
+                    textAlign:TextAlign.start,
+                    style: TextStyle(
+                      fontSize: 14,
+                    ),
                   ),
                 ),
               ]
@@ -129,6 +132,70 @@ Widget buildCardLevelConnector() {
   );
 }
 
+Widget buildHowGetXPCard() => Card(
+    elevation: 4.0,
+    margin: EdgeInsets.symmetric(vertical: 8.0),
+    //color: Colors.orange,
+    child: Padding(
+        padding: EdgeInsets.all(16),
+        child: Column(
+            children: [
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text("How to gain XP?",
+                  style: TextStyle(
+                    //color: Colors.white,
+                    fontSize: 18,
+                    //fontWeight: FontWeight.bold,
+                  ),
+
+                ),
+              ),
+              SizedBox(height: 20),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text("- Daily check-ins [+2xp].",
+                  style: TextStyle(
+                    //color: Colors.white,
+                    fontSize: 14,
+                    //fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text("- Purchase of new items [+20xp].",
+                  style: TextStyle(
+                    //color: Colors.white,
+                    fontSize: 14,
+                    //fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text("- Writing reviews after purchase of new items [+4xp].",
+                  style: TextStyle(
+                    //color: Colors.white,
+                    fontSize: 14,
+                    //fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text("- Achieving milestones [+30 xp].",
+                  style: TextStyle(
+                    //color: Colors.white,
+                    fontSize: 14,
+                    //fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ]
+        )
+    )
+);
 
 class MembershipScreen extends StatelessWidget {
 
@@ -171,8 +238,63 @@ class MembershipScreen extends StatelessWidget {
                     '- 25% discount on all purchases.',
                     '- Free tasting and review on new coffee releases.',
                     '- Quarterly coffee tasting events with industry experts.'),
-                //buildCardLevelConnector(),
+                buildCardLevelConnector(),
+                buildLevelCard('Level 5 - Coffee Maestro', Icons.coffee_maker, 0, 200,
+                    '- ???',
+                    '- ???',
+                    '- ???'),
+                SizedBox(height: 10),
+                buildHowGetXPCard(),
+                // Card(
+                //   elevation: 4.0,
+                //   margin: EdgeInsets.symmetric(vertical: 8.0),
+                //   child: Padding(
+                //       padding: EdgeInsets.all(16),
+                //       child: Column(
+                //         children: [
+                //           Align(
+                //             alignment: Alignment.centerLeft,
+                //             child: Text("How to gain XP?",
+                //               style: TextStyle(
+                //                 fontSize: 18,
+                //                 //fontWeight: FontWeight.bold,
+                //               ),
+                //
+                //             ),
+                //           ),
+                //           SizedBox(height: 20),
+                //           Align(
+                //             alignment: Alignment.centerLeft,
+                //             child: Text("Daily check-ins [+2xp]",
+                //               textAlign:TextAlign.left,),
+                //           ),
+                //           Align(
+                //             alignment: Alignment.centerLeft,
+                //             child: Text("Purchase of new items [+20xp]",
+                //               textAlign:TextAlign.left,),
+                //           ),
+                //           Align(
+                //             alignment: Alignment.centerLeft,
+                //             child: Text("Writing reviews after purchase of new items [+4xp]",
+                //               textAlign:TextAlign.left,),
+                //           ),
+                //           Align(
+                //             alignment: Alignment.centerLeft,
+                //             child: Text("Achieving milestones [+30 xp]",
+                //               textAlign:TextAlign.left,),
+                //           ),
+                //         ]
+                //       )
+                //   )
+                // ),
 
+                /*
+                How to gain XP?
+                  - Daily check-ins [+2xp]
+                  - Purchase of new items [+20xp]
+                  - Writing reviews after purchase of new items [+4xp]
+                  - Achieving milestones [+30 xp]
+                 */
               ],
             )
           )
@@ -181,10 +303,3 @@ class MembershipScreen extends StatelessWidget {
     );
   }
 }
-
-Center placeholder = Center(
-    child: Text(
-      'Our Bean',
-      style: TextStyle(fontSize: 24),
-    )
-);

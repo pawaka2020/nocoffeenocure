@@ -134,8 +134,8 @@ class _RewardsScreenState extends State<RewardsScreen> {
                     child: Text(
                       items[index],
                       style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold,
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
                       ),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
