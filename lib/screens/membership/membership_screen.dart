@@ -245,56 +245,6 @@ class MembershipScreen extends StatelessWidget {
                     '- ???'),
                 SizedBox(height: 10),
                 buildHowGetXPCard(),
-                // Card(
-                //   elevation: 4.0,
-                //   margin: EdgeInsets.symmetric(vertical: 8.0),
-                //   child: Padding(
-                //       padding: EdgeInsets.all(16),
-                //       child: Column(
-                //         children: [
-                //           Align(
-                //             alignment: Alignment.centerLeft,
-                //             child: Text("How to gain XP?",
-                //               style: TextStyle(
-                //                 fontSize: 18,
-                //                 //fontWeight: FontWeight.bold,
-                //               ),
-                //
-                //             ),
-                //           ),
-                //           SizedBox(height: 20),
-                //           Align(
-                //             alignment: Alignment.centerLeft,
-                //             child: Text("Daily check-ins [+2xp]",
-                //               textAlign:TextAlign.left,),
-                //           ),
-                //           Align(
-                //             alignment: Alignment.centerLeft,
-                //             child: Text("Purchase of new items [+20xp]",
-                //               textAlign:TextAlign.left,),
-                //           ),
-                //           Align(
-                //             alignment: Alignment.centerLeft,
-                //             child: Text("Writing reviews after purchase of new items [+4xp]",
-                //               textAlign:TextAlign.left,),
-                //           ),
-                //           Align(
-                //             alignment: Alignment.centerLeft,
-                //             child: Text("Achieving milestones [+30 xp]",
-                //               textAlign:TextAlign.left,),
-                //           ),
-                //         ]
-                //       )
-                //   )
-                // ),
-
-                /*
-                How to gain XP?
-                  - Daily check-ins [+2xp]
-                  - Purchase of new items [+20xp]
-                  - Writing reviews after purchase of new items [+4xp]
-                  - Achieving milestones [+30 xp]
-                 */
               ],
             )
           )
