@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nocoffeenocure/screens/me/privacy_policy.dart';
 import 'package:nocoffeenocure/screens/me/tos.dart';
+import 'package:nocoffeenocure/screens/previous_orders/previous_orders_screen.dart';
 import 'package:uni_links/uni_links.dart';
 import '../../common.dart';
 import '../../main.dart';
@@ -71,6 +72,7 @@ class _MeState extends State<MeScreen> {
           singletonUser.guest == true
               ? buildGuestCard(loginUser)
               : buildLoggedUserCard(context, 55, 100, logoutUser, editProfile),
+          buildMeCard(context, 'Previous Orders', Icons.account_balance_wallet_outlined, PreviousOrdersScreen()),
           buildMeCard(context, 'FAQ', Icons.help_outline, FAQScreen()),
           buildMeCard(context, 'Contact Us', Icons.chat_bubble_outline, ContactUsScreen()),
           buildMeCard(context, 'Terms of Service', Icons.description, TOSScreen()),
