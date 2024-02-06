@@ -12,6 +12,7 @@ class FullNewsRepo {
     if (source == BackendSource.dummy) {
       newData = await FullNewsDummy().get();
     }
+
     currentData = box.getAll();
 
     if (currentData.isNotEmpty) {

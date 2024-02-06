@@ -5,6 +5,7 @@ import '../../main.dart';
 import '../../models/user.dart';
 import '../../repos/bannernews.dart';
 import '../../repos/cartitem.dart';
+import '../../repos/country.dart';
 import '../../repos/fullnews.dart';
 import '../../repos/menuitem.dart';
 import '../../repos/order.dart';
@@ -27,6 +28,7 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+
   late StreamSubscription sub;
   String imageFile = 'assets/images/splashimage.png';
   int delay = 3;
@@ -84,6 +86,7 @@ class _SplashScreenState extends State<SplashScreen> {
 Future<void> preLoadFromBackend() async {
   testToken();
   //create guest or log in as previously logged in user (guest or user).
+  await CountryRepo().update(BackendSource.online);
   await UserRepo().loginAppStart(BackendSource.dummy);
   await VoucherRepo().update(BackendSource.dummy);
   await FullNewsRepo().update(BackendSource.dummy);

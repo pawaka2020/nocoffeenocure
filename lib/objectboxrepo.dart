@@ -3,6 +3,7 @@ import 'package:path_provider/path_provider.dart';
 import 'main.dart';
 import 'models/bannernews.dart';
 import 'models/cartitem.dart';
+import 'models/country.dart';
 import 'models/fullnews.dart';
 import 'models/menuitem.dart';
 import 'models/order.dart';
@@ -20,10 +21,9 @@ class ObjectBox {
   late final menuItemBox2;
   late final userBox;
   late final cartItemBox;
-  late final cartItemBox2;
-  late final cartItemBox3;
   late final voucherBox;
   late final orderBox;
+  late final countryBox;
   //
   late final tokenBox;
 
@@ -34,9 +34,11 @@ class ObjectBox {
     menuItemBox = store.box<MenuItemOB>();
     userBox = store.box<UserOB>();
     cartItemBox = store.box<CartItemOB>();
-    cartItemBox2 = store.box<CartItemOB>();//create a duplicate of this
+    //create a duplicate of this
     voucherBox = store.box<VoucherOB>();
     orderBox = store.box<OrderOB>();
+    //test one
+    countryBox = store.box<CountryOB>();
   }
 
   static Future<ObjectBox> create() async {

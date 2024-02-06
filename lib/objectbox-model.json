@@ -627,9 +627,28 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "25:320625537204129979",
+      "lastPropertyId": "2:5276407103943098252",
+      "name": "CountryOB",
+      "properties": [
+        {
+          "id": "1:8289944436309932811",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:5276407103943098252",
+          "name": "name",
+          "type": 9
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "24:1948993354929307331",
+  "lastEntityId": "25:320625537204129979",
   "lastIndexId": "22:3574927397556316278",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",

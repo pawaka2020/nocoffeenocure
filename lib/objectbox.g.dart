@@ -16,6 +16,7 @@ import 'package:objectbox_flutter_libs/objectbox_flutter_libs.dart';
 
 import 'models/bannernews.dart';
 import 'models/cartitem.dart';
+import 'models/country.dart';
 import 'models/fullnews.dart';
 import 'models/menuitem.dart';
 import 'models/order.dart';
@@ -661,6 +662,25 @@ final _entities = <ModelEntity>[
             flags: 0)
       ],
       relations: <ModelRelation>[],
+      backlinks: <ModelBacklink>[]),
+  ModelEntity(
+      id: const IdUid(25, 320625537204129979),
+      name: 'CountryOB',
+      lastPropertyId: const IdUid(2, 5276407103943098252),
+      flags: 0,
+      properties: <ModelProperty>[
+        ModelProperty(
+            id: const IdUid(1, 8289944436309932811),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        ModelProperty(
+            id: const IdUid(2, 5276407103943098252),
+            name: 'name',
+            type: 9,
+            flags: 0)
+      ],
+      relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[])
 ];
 
@@ -691,7 +711,7 @@ Future<Store> openStore(
 ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
-      lastEntityId: const IdUid(24, 1948993354929307331),
+      lastEntityId: const IdUid(25, 320625537204129979),
       lastIndexId: const IdUid(22, 3574927397556316278),
       lastRelationId: const IdUid(0, 0),
       lastSequenceId: const IdUid(0, 0),
@@ -1511,6 +1531,34 @@ ModelDefinition getObjectBoxModel() {
                 .vTableGetNullable(buffer, rootOffset, 12);
 
           return object;
+        }),
+    CountryOB: EntityDefinition<CountryOB>(
+        model: _entities[13],
+        toOneRelations: (CountryOB object) => [],
+        toManyRelations: (CountryOB object) => {},
+        getId: (CountryOB object) => object.id,
+        setId: (CountryOB object, int id) {
+          object.id = id;
+        },
+        objectToFB: (CountryOB object, fb.Builder fbb) {
+          final nameOffset =
+              object.name == null ? null : fbb.writeString(object.name!);
+          fbb.startTable(3);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, nameOffset);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+
+          final object = CountryOB()
+            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0)
+            ..name = const fb.StringReader(asciiOptimization: true)
+                .vTableGetNullable(buffer, rootOffset, 6);
+
+          return object;
         })
   };
 
@@ -1926,4 +1974,15 @@ class RewardOB_ {
   /// see [RewardOB.cost]
   static final cost =
       QueryIntegerProperty<RewardOB>(_entities[12].properties[4]);
+}
+
+/// [CountryOB] entity fields to define ObjectBox queries.
+class CountryOB_ {
+  /// see [CountryOB.id]
+  static final id =
+      QueryIntegerProperty<CountryOB>(_entities[13].properties[0]);
+
+  /// see [CountryOB.name]
+  static final name =
+      QueryStringProperty<CountryOB>(_entities[13].properties[1]);
 }
