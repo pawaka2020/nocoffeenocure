@@ -13,7 +13,6 @@ class CountryRepo{
     if (source == BackendSource.dummy)
       newData = await CountryDummy().get();
 
-
     else if (source == BackendSource.online)
       newData = await CountryOnline().get();
 
@@ -28,7 +27,9 @@ class CountryRepo{
       print("adding for CountryOB");
       box.putMany(newData);
     }
-    printCountryList(newData);
+
+    singletonCountries = newData;
+    printCountryList(singletonCountries);
   }
 
   void printCountryList(List<CountryOB> list) {

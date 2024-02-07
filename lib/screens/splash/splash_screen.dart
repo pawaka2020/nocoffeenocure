@@ -50,11 +50,15 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   initState() {
     super.initState();
+    // Future.delayed(Duration(seconds: delay), () {
+    //   preLoadFromBackend().then((_) {
+    //     Navigator.pushReplacement(context,
+    //         MaterialPageRoute(builder: (context) => OnboardingScreen()));
+    //   });
+    // });
     Future.delayed(Duration(seconds: delay), () {
-      preLoadFromBackend().then((_) {
-        Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) => OnboardingScreen()));
-      });
+      Navigator.pushReplacement(context,
+          MaterialPageRoute(builder: (context) => OnboardingScreen()));
     });
     //set up deeplink listener here.
     initDeepLinkListener();
@@ -86,7 +90,7 @@ class _SplashScreenState extends State<SplashScreen> {
 Future<void> preLoadFromBackend() async {
   testToken();
   //create guest or log in as previously logged in user (guest or user).
-  await CountryRepo().update(BackendSource.online);
+  //await CountryRepo().update(BackendSource.online);
   await UserRepo().loginAppStart(BackendSource.dummy);
   await VoucherRepo().update(BackendSource.dummy);
   await FullNewsRepo().update(BackendSource.dummy);
