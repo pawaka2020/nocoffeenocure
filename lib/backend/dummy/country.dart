@@ -1,4 +1,6 @@
+import '../../common.dart';
 import '../../models/country.dart';
+import '../../repos/country.dart';
 
 class CountryDummy {
   Future<List<CountryOB>> get() async {
@@ -10,6 +12,8 @@ class CountryDummy {
       CountryOB()..name = 'China',
       CountryOB()..name = 'Japan'
     ];
+    countriesLoaded = true;
+    //CountryRepo().objectsLoaded = true;
     return list;
   }
 }

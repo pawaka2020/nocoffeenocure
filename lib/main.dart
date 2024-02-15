@@ -10,7 +10,9 @@ import 'package:nocoffeenocure/repos/user.dart';
 import 'package:nocoffeenocure/repos/voucher.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
+import 'common.dart';
 import 'models/country.dart';
+import 'models/fullnews.dart';
 import 'models/user.dart';
 import 'objectboxrepo.dart';
 import 'screens/splash/splash_screen.dart';
@@ -25,7 +27,8 @@ late ObjectBox objectbox;
 late FlutterSecureStorage storage;
 late UserOB singletonUser; //user created
 //List<CountryOB> singletonCountries = [];
-late List<CountryOB> singletonCountries;
+// late List<CountryOB> singletonCountries;
+// late List<FullNewsOB> singletonFullNews;
 
 enum BackendSource {
   dummy,
@@ -46,7 +49,7 @@ Future<void> preLoadFromBackend2() async {
   await CountryRepo().update(BackendSource.online);
   await UserRepo().loginAppStart(BackendSource.dummy);
   await VoucherRepo().update(BackendSource.dummy);
-  await FullNewsRepo().update(BackendSource.dummy);
+  await FullNewsRepo().update(BackendSource.online); //BackendSource.dummy
   await BannerNewsRepo().update(BackendSource.dummy);
   await MenuItemRepo().update(BackendSource.dummy);
   Connectivity().onConnectivityChanged.listen((ConnectivityResult result) async {
@@ -54,7 +57,10 @@ Future<void> preLoadFromBackend2() async {
 
     if (result == ConnectivityResult.wifi || result == ConnectivityResult.mobile) {
       //if (singletonCountries != []) { //!=
-      if(singletonCountries[0].name == 'NO') {
+      // if (singletonCountries[0].name == 'NO') {
+      //   await CountryRepo().update(BackendSource.online);
+      // }
+      if (countriesLoaded == false) {
         await CountryRepo().update(BackendSource.online);
       }
     }

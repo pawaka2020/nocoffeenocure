@@ -29,23 +29,23 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
 
-  late StreamSubscription sub;
+  //late StreamSubscription sub;
   String imageFile = 'assets/images/splashimage.png';
   int delay = 3;
 
-  void initDeepLinkListener() async {
-    sub = uriLinkStream.listen((Uri? uri) {
-      if (!mounted) return;
-      handleDeepLink(uri?.toString());
-    },
-    onError: (err) {
-      if (!mounted) return;
-      print('Error: $err');
-    });
-    // Check for initial deep link when the app is launched
-    final initialUri = await getInitialUri();
-    handleDeepLink(initialUri?.toString());
-  }
+  // void initDeepLinkListener() async {
+  //   sub = uriLinkStream.listen((Uri? uri) {
+  //     if (!mounted) return;
+  //     handleDeepLink(uri?.toString());
+  //   },
+  //   onError: (err) {
+  //     if (!mounted) return;
+  //     print('Error: $err');
+  //   });
+  //   // Check for initial deep link when the app is launched
+  //   final initialUri = await getInitialUri();
+  //   handleDeepLink(initialUri?.toString());
+  // }
 
   @override
   initState() {
@@ -61,7 +61,7 @@ class _SplashScreenState extends State<SplashScreen> {
           MaterialPageRoute(builder: (context) => OnboardingScreen()));
     });
     //set up deeplink listener here.
-    initDeepLinkListener();
+    //initDeepLinkListener();
   }
 
   @override
@@ -87,32 +87,32 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 }
 
-Future<void> preLoadFromBackend() async {
-  testToken();
-  //create guest or log in as previously logged in user (guest or user).
-  //await CountryRepo().update(BackendSource.online);
-  await UserRepo().loginAppStart(BackendSource.dummy);
-  await VoucherRepo().update(BackendSource.dummy);
-  await FullNewsRepo().update(BackendSource.dummy);
-  await BannerNewsRepo().update(BackendSource.dummy);
-  /*
-  I think this one here is the culprit.
-  This 'update' function provides the menu items, but it also wipes out
-  menu items added to a 'cartitem' object.
-  */
-  await MenuItemRepo().update(BackendSource.dummy);
-  /*
-  this one also
-  */
-  //await CartItemRepo().update(BackendSource.dummy);
-  //await OrderRepo();
-
-  //testEditVoucher();
-  print("data pre-loaded");
-
-
-
-}
+// Future<void> preLoadFromBackend() async {
+//   testToken();
+//   //create guest or log in as previously logged in user (guest or user).
+//   //await CountryRepo().update(BackendSource.online);
+//   await UserRepo().loginAppStart(BackendSource.dummy);
+//   await VoucherRepo().update(BackendSource.dummy);
+//   await FullNewsRepo().update(BackendSource.dummy);
+//   await BannerNewsRepo().update(BackendSource.dummy);
+//   /*
+//   I think this one here is the culprit.
+//   This 'update' function provides the menu items, but it also wipes out
+//   menu items added to a 'cartitem' object.
+//   */
+//   await MenuItemRepo().update(BackendSource.dummy);
+//   /*
+//   this one also
+//   */
+//   //await CartItemRepo().update(BackendSource.dummy);
+//   //await OrderRepo();
+//
+//   //testEditVoucher();
+//   print("data pre-loaded");
+//
+//
+//
+// }
 
 // void testEditVoucher() {
 //   UserOB? loggedInUser = UserRepo().getLoggedInUser();

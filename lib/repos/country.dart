@@ -5,6 +5,7 @@ import '../models/country.dart';
 
 class CountryRepo{
   final box = objectbox.countryBox;
+  bool objectsLoaded = false;
 
   Future<void> update(BackendSource source) async {
     late final newData;
@@ -28,8 +29,9 @@ class CountryRepo{
       box.putMany(newData);
     }
 
-    singletonCountries = newData;
-    printCountryList(singletonCountries);
+    //singletonCountries = newData;
+
+    printCountryList(newData);
   }
 
   void printCountryList(List<CountryOB> list) {
