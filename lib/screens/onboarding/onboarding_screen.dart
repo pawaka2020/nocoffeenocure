@@ -21,7 +21,7 @@ class OnboardingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print("onboarding screen started");
-
+    print("fullnews image = ${image}");
     Future.delayed(const Duration(seconds: 3), () {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (context) => HomeScreen()),
@@ -43,12 +43,11 @@ class OnboardingScreen extends StatelessWidget {
             //   ),
             // ),
             Expanded(
-              // Use Image.file to load the image from the file system
               child: Image.file(
-                File(image), // Pass the image file path
-                fit: BoxFit.fill, // Stretch the image to fill the entire screen
-                width: double.infinity, // Ensure it takes up the full width
-                height: double.infinity, // Ensure it takes up the full height
+                File(image),
+                fit: BoxFit.fill,
+                width: double.infinity,
+                height: double.infinity,
               ),
             ),
           ],

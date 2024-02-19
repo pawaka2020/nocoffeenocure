@@ -8,7 +8,7 @@ class FullNewsRepo {
 
   Future<void> update(BackendSource source) async {
     late final newData;
-    late final currentData;
+    //late final currentData;
 
     if (source == BackendSource.dummy) {
       newData = await FullNewsDummy().get();
@@ -16,17 +16,20 @@ class FullNewsRepo {
     else if (source == BackendSource.online) {
       newData = await FullNewsOnline().get();
     }
-    currentData = box.getAll();
+    // currentData = box.getAll();
+    //
+    // if (currentData.isNotEmpty) {
+    //   print("replacing for FullNewsOB");
+    //   box.removeAll(); //the id of 'box' does not reset to 0.
+    //   box.putMany(newData);
+    // }
+    // else {
+    //   print("adding for FullNewsOB");
+    //   box.putMany(newData);
+    // }
+    box.removeAll(); //the id of 'box' does not reset to 0.
+    box.putMany(newData);
 
-    if (currentData.isNotEmpty) {
-      print("replacing for FullNewsOB");
-      box.removeAll(); //the id of 'box' does not reset to 0.
-      box.putMany(newData);
-    }
-    else {
-      print("adding for FullNewsOB");
-      box.putMany(newData);
-    }
   }
 
   List<FullNewsOB> getAll() {

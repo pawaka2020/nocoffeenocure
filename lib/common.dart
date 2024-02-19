@@ -1,5 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:connectivity/connectivity.dart';
+import 'package:http/http.dart' as http;
+import 'dart:io';
+import 'package:path_provider/path_provider.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'dart:typed_data';
+import 'package:flutter/services.dart';
 
 void printToast(String message) {
     Fluttertoast.showToast(
@@ -20,9 +28,54 @@ void handleDeepLink(String? link) {
   // }
 }
 
+Future<String> getImage(String dbimage, String dir) async {
+  String filename = dbimage.split('/').last;
+  String imageUrl = onlineBackendURL + 'images/' + dir + '/' + filename;
+  var imageDataResponse = await http.get(Uri.parse(imageUrl));
+
+  if (imageDataResponse.statusCode == 200) {
+    Directory directory = await getApplicationDocumentsDirectory();
+    String directoryPath = '${directory.path}/backend/images/';
+    Directory(directoryPath).createSync(recursive: true); // Ensure directory exists
+    String filePath = '$directoryPath$filename';
+    File file = File(filePath);
+    await file.writeAsBytes(imageDataResponse.bodyBytes);
+    return filePath;
+  }
+  else {
+    return '';
+  }
+}
+
+Future<String> copyAssetToStorage(String image) async {
+  try {
+    // Get the directory where the file will be saved
+    Directory directory = await getApplicationDocumentsDirectory();
+    String directoryPath = '${directory.path}/backend/images/';
+    Directory(directoryPath).createSync(recursive: true);
+
+    // Read the asset file as bytes
+    ByteData data = await rootBundle.load(image);
+    List<int> bytes = data.buffer.asUint8List();
+
+    // Write the bytes to the file in the new location
+    String imagename = image.split('/').last;
+    //String filePath = '$directoryPath/news1.png';
+    String filePath = '$directoryPath$imagename';
+    File file = File(filePath);
+    await file.writeAsBytes(bytes);
+    return filePath;
+  }
+  catch (e) {
+    print('Error copying asset: $e');
+    return '';
+  }
+}
+
 Future<bool> showDeleteConfirmationDialog(BuildContext context, String text1, String text2) async {
   return await showDialog(
     context: context,
+    barrierDismissible: false,
     builder: (context) {
       return AlertDialog(
         title: Text(text1),
@@ -52,3 +105,4 @@ String onlineBackendURL = 'http://192.168.1.19:5000/';
 
 bool countriesLoaded = false;
 bool fullnewsLoaded = false;
+bool bannernewsLoaded = false;

@@ -18,15 +18,14 @@ class CountryOnline {
         return List<CountryOB>.from(countriesJson.map((json) => CountryOB.fromJson(json)));
       }
       else {
-        countriesLoaded = false;
         throw Exception('Failed to load countries: ${response.statusCode}');
+        countriesLoaded = false;
+        return [];
       }
     }
     catch (e) {
       print('Error fetching countries: $e');
-      // Return an empty list or a placeholder vvalue.
       countriesLoaded = false;
-      //CountryRepo().objectsLoaded = false;
       return [];
     }
   }

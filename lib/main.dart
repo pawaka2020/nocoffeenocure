@@ -17,7 +17,6 @@ import 'models/user.dart';
 import 'objectboxrepo.dart';
 import 'screens/splash/splash_screen.dart';
 import 'package:connectivity/connectivity.dart';
-
 // Import your splash screen file.
 
 /*
@@ -34,103 +33,22 @@ enum BackendSource {
   dummy,
   online,
 }
-final deepLink = 'nocoffeenocureapp://login';
 late final supabaseClient;
 /*
 Implement CartCountNotifier to allow changes to cart icon's badge display in
 HomeScreen.
 Launches the app as usual afterwards starting with SplashScreen as first screen.
 */
-
-
-Future<void> preLoadFromBackend2() async {
-  //testToken();
-  //create guest or log in as previously logged in user (guest or user).
-  await CountryRepo().update(BackendSource.online);
-  await UserRepo().loginAppStart(BackendSource.dummy);
-  await VoucherRepo().update(BackendSource.dummy);
-  await FullNewsRepo().update(BackendSource.online); //BackendSource.dummy
-  await BannerNewsRepo().update(BackendSource.dummy);
-  await MenuItemRepo().update(BackendSource.dummy);
-  Connectivity().onConnectivityChanged.listen((ConnectivityResult result) async {
-    print('Network status changed: $result');
-
-    if (result == ConnectivityResult.wifi || result == ConnectivityResult.mobile) {
-      //if (singletonCountries != []) { //!=
-      // if (singletonCountries[0].name == 'NO') {
-      //   await CountryRepo().update(BackendSource.online);
-      // }
-      if (countriesLoaded == false) {
-        await CountryRepo().update(BackendSource.online);
-      }
-    }
-  });
-
-  /*
-  I think this one here is the culprit.
-  This 'update' function provides the menu items, but it also wipes out
-  menu items added to a 'cartitem' object.
-  */
-
-  /*
-  this one also
-  */
-  //await CartItemRepo().update(BackendSource.dummy);
-  //await OrderRepo();
-
-  //testEditVoucher();
-  print("data pre-loaded");
-
-
-
-}
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   objectbox = await ObjectBox.create();
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => CartCountNotifier(),
+      child: MyApp(),
+    ),
+  );
 
-  // storage = FlutterSecureStorage();
-  // await CountryRepo().update(BackendSource.online);
-  // Connectivity().onConnectivityChanged.listen((ConnectivityResult result) async {
-  //   print('Network status changed: $result');
-  //
-  //   if ((result == ConnectivityResult.wifi || result == ConnectivityResult.mobile)
-  //   && (singletonCountries != [])) {
-  //     await CountryRepo().update(BackendSource.online);
-  //   }
-  //
-  // });
-  preLoadFromBackend2().then((_) {
-    runApp(
-      ChangeNotifierProvider(
-        create: (context) => CartCountNotifier(),
-        child: MyApp(),
-      ),
-    );
-  });
-  // Check for initial internet connectivity status
-  // var connectivityResult = await Connectivity().checkConnectivity();
-  // if (connectivityResult == ConnectivityResult.wifi ||
-  //     connectivityResult == ConnectivityResult.mobile) {
-  //   //await CountryRepo().update(BackendSource.online);
-  // }
-  // await CountryRepo().update(BackendSource.online);
-  //
-  // // Initialize the network connectivity listener
-  // Connectivity().onConnectivityChanged.listen((ConnectivityResult result) async {
-  //   print('Network status changed: $result');
-  //
-  //   if (result == ConnectivityResult.wifi || result == ConnectivityResult.mobile) {
-  //     await CountryRepo().update(BackendSource.online);
-  //   }
-  // });
-
-  // runApp(
-  //   ChangeNotifierProvider(
-  //     create: (context) => CartCountNotifier(),
-  //     child: MyApp(),
-  //   ),
-  // );
 }
 
 class MyApp extends StatelessWidget {
@@ -147,6 +65,7 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Orbitron',
       ),
       home: const SplashScreen()
+
     );
   }
 }

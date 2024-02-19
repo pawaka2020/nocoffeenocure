@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:nocoffeenocure/dummy_screen.dart';
 import '../../main.dart';
 import '../../repos/bannernews.dart';
+import 'dart:io';
 
 //with auto-slide, the one currently in use
 class TopBanner extends StatefulWidget {
@@ -54,6 +55,7 @@ class _TopBannerState extends State<TopBanner> {
         itemCount: widget.news.length,
         itemBuilder: (context, index) {
           final news_ = widget.news[index];
+          print("bannernews image = ${news_.image}");
           return GestureDetector(
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(
@@ -63,8 +65,8 @@ class _TopBannerState extends State<TopBanner> {
             child: Container(
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  //image: AssetImage(news_.imageUrl),
-                  image: AssetImage(news_.image!),
+                  //image: AssetImage(news_.image!),
+                  image:FileImage(File(news_.image!)),
                   fit: BoxFit.cover,
                 ),
               ),

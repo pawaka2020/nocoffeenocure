@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../common.dart';
@@ -15,11 +17,47 @@ import '../../repos/voucher.dart';
 import '../onboarding/onboarding_screen.dart';
 import 'package:uni_links/uni_links.dart';
 import 'dart:async';
+import 'package:connectivity/connectivity.dart';
 /*
 Shows No Coffee No Cure's company logo for 3 seconds before moving to the next
 screen.
 */
 //final url = Uri.parse('yourapp://helloWorld');
+
+Future<void> preLoadFromBackend(BuildContext context) async {
+  var connectivityResult = await Connectivity().checkConnectivity();
+  while (connectivityResult == ConnectivityResult.none) {
+    await showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('You\'re offline'),
+          content: Text('Please make sure you\'re connected to the Internet and try again'),
+          actions: [
+            TextButton(
+              child: Text('Ok'),
+              onPressed: () async {
+                Navigator.of(context).pop(false); // Close the dialog and return false
+              },
+            ),
+          ],
+        );
+      },
+    );
+    connectivityResult = await Connectivity().checkConnectivity();
+  }
+  // Proceed with repository updates after connectivity is restored
+  //await CountryRepo().update(BackendSource.online);
+  await UserRepo().loginAppStart(BackendSource.dummy);
+  await VoucherRepo().update(BackendSource.dummy);
+  //BackendSource.dummy
+  await BannerNewsRepo().update(BackendSource.dummy);
+  await FullNewsRepo().update(BackendSource.dummy); //dummy
+  await MenuItemRepo().update(BackendSource.dummy);
+
+  print("Data pre-loaded");
+}
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -28,7 +66,6 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-
   //late StreamSubscription sub;
   String imageFile = 'assets/images/splashimage.png';
   int delay = 3;
@@ -50,18 +87,9 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   initState() {
     super.initState();
-    // Future.delayed(Duration(seconds: delay), () {
-    //   preLoadFromBackend().then((_) {
-    //     Navigator.pushReplacement(context,
-    //         MaterialPageRoute(builder: (context) => OnboardingScreen()));
-    //   });
-    // });
-    Future.delayed(Duration(seconds: delay), () {
-      Navigator.pushReplacement(context,
-          MaterialPageRoute(builder: (context) => OnboardingScreen()));
+    preLoadFromBackend(context).then((_) {
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => OnboardingScreen()));
     });
-    //set up deeplink listener here.
-    //initDeepLinkListener();
   }
 
   @override

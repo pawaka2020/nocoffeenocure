@@ -7,7 +7,7 @@ class CountryRepo{
   final box = objectbox.countryBox;
   bool objectsLoaded = false;
 
-  Future<void> update(BackendSource source) async {
+  Future<void> update2(BackendSource source) async {
     late final newData;
     late final currentData;
 
@@ -28,9 +28,31 @@ class CountryRepo{
       print("adding for CountryOB");
       box.putMany(newData);
     }
+    printCountryList(newData);
+  }
 
-    //singletonCountries = newData;
+  Future<void> update(BackendSource source) async {
+    late var newData;
+    late var currentData;
 
+
+
+    if (source == BackendSource.dummy)
+      newData = await CountryDummy().get();
+
+    else if (source == BackendSource.online)
+      newData = await CountryOnline().get();
+
+    currentData = box.getAll();
+    if (currentData.isNotEmpty) {
+      print("replacing for CountryOB");
+      box.removeAll(); //the id of 'box' does not reset to 0.
+      box.putMany(newData);
+    }
+    else {
+      print("adding for CountryOB");
+      box.putMany(newData);
+    }
     printCountryList(newData);
   }
 
