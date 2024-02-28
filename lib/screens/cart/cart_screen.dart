@@ -254,7 +254,6 @@ class _CartScreenState extends State<CartScreen> {
       );
     }
     else {
-
       return Column(
         children: [
           Expanded(
@@ -271,9 +270,9 @@ class _CartScreenState extends State<CartScreen> {
                 SizedBox(height: 10),
                 PartialDivider(40, 10),
                 DeliveryAddress(_address, _onsitePickup, updateAddress, updateOnsitePickup),
-                //PartialDivider(40, 10),
-                //buildPhoneNumber(_phoneNumber, updatePhoneNumber),
-                //SizedBox(height: 10),
+                // PartialDivider(40, 10),
+                // buildPhoneNumber(_phoneNumber, updatePhoneNumber),
+                SizedBox(height: 10),
                 PartialDivider(40, 10),
                 PaymentMethods(_paymentMethod, updatePaymentMethod),
                 PartialDivider(40, 10),

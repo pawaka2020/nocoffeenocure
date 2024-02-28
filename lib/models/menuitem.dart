@@ -1,4 +1,4 @@
-  import 'package:objectbox/objectbox.dart';
+import 'package:objectbox/objectbox.dart';
 
 import 'cartitem.dart';
 
@@ -60,8 +60,8 @@ class MenuItem {
     menuItemOB.additions.addAll(this.additions.map((addition) => convertAddition(addition, menuItemOB)));
 
     menuItemOB.ingredients.addAll(this.ingredients.map((ingredient) => convertIngredient(ingredient, menuItemOB)));
-        return menuItemOB;
-    }
+    return menuItemOB;
+  }
 
   UserReviewOB convertUserReview(UserReview userReview, MenuItemOB menuItemOB) {
     final userReviewOB = UserReviewOB()
@@ -97,7 +97,6 @@ class MenuItem {
   IngredientOB convertIngredient(Ingredient ingredient, MenuItemOB menuItemOB) {
     final ingredientOB = IngredientOB()
       ..name = ingredient.name
-      ..imagePath = ingredient.imagePath
       ..menuItem.target = menuItemOB;
 
     return ingredientOB;
@@ -143,9 +142,9 @@ class Addition {
     };
   }
 
-  // factory Addition.fromJson(Map<String, dynamic> json) {
-  //   return Addition(json['title'], (json['additionDetails'] as List).map((detail) => AdditionDetail.fromJson(detail)).toList());
-  // }
+// factory Addition.fromJson(Map<String, dynamic> json) {
+//   return Addition(json['title'], (json['additionDetails'] as List).map((detail) => AdditionDetail.fromJson(detail)).toList());
+// }
 }
 
 class AdditionDetail {
@@ -168,19 +167,19 @@ class AdditionDetail {
 
 class Ingredient {
   final String name;
-  final String imagePath;
 
-  Ingredient(this.name, this.imagePath);
+
+  Ingredient(this.name);
 
   Map<String, dynamic> toJson() {
     return {
       'name': this.name,
-      'imagePath': this.imagePath,
+
     };
   }
 
   factory Ingredient.fromJson(Map<String, dynamic> json) {
-    return Ingredient(json['name'], json['imagePath']);
+    return Ingredient(json['name']);
   }
 }
 
@@ -296,7 +295,6 @@ class IngredientOB {
   Ingredient toIngredient() {
     return Ingredient(
       this.name ?? '',
-      this.imagePath ?? '',
     );
   }
 }
@@ -341,5 +339,3 @@ void printMenuItemOB(MenuItemOB menuItem) {
     print('Image Path: ${ingredient.imagePath ?? 'N/A'}');
   }
 }
-
-

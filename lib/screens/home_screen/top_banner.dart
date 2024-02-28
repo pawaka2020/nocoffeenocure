@@ -55,7 +55,7 @@ class _TopBannerState extends State<TopBanner> {
         itemCount: widget.news.length,
         itemBuilder: (context, index) {
           final news_ = widget.news[index];
-          print("bannernews image = ${news_.image}");
+          //print("bannernews image = ${news_.image}");
           return GestureDetector(
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(
@@ -66,7 +66,7 @@ class _TopBannerState extends State<TopBanner> {
               decoration: BoxDecoration(
                 image: DecorationImage(
                   //image: AssetImage(news_.image!),
-                  image:FileImage(File(news_.image!)),
+                  image: FileImage(File(news_.image!)),
                   fit: BoxFit.cover,
                 ),
               ),

@@ -28,6 +28,8 @@ void handleDeepLink(String? link) {
   // }
 }
 
+/* await getImage(news['name'],'fullnews')*/
+
 Future<String> getImage(String dbimage, String dir) async {
   String filename = dbimage.split('/').last;
   String imageUrl = onlineBackendURL + 'images/' + dir + '/' + filename;
@@ -101,8 +103,9 @@ Future<bool> showDeleteConfirmationDialog(BuildContext context, String text1, St
 
 String lorem = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.';
 
-String onlineBackendURL = 'http://192.168.1.19:5000/';
+String onlineBackendURL = 'http://192.168.1.21:5000/';
 
 bool countriesLoaded = false;
 bool fullnewsLoaded = false;
 bool bannernewsLoaded = false;
+bool menuitemLoaded = false;

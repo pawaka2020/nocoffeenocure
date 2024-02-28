@@ -6,6 +6,7 @@ import '../../repos/menuitem.dart';
 import '../../widgets/partial_divider.dart';
 import '../home_screen/selection_bar.dart';
 import '../home_screen/top_banner.dart';
+import 'dart:io';
 //line 157 for navigation
 //load the repos here.
 class MenuPage extends StatefulWidget {
@@ -84,8 +85,14 @@ class MyMenuCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(12.0),
           child: Column(
             children: [
-              Image.asset(
-                menuItem.imagePath,
+              // Image.asset(
+              //   menuItem.imagePath,
+              //   width: 150,
+              //   height: 165,//165
+              //   fit: BoxFit.cover,
+              // ),
+              Image.file(
+                File(menuItem.imagePath),
                 width: 150,
                 height: 165,//165
                 fit: BoxFit.cover,

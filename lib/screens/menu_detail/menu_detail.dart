@@ -12,6 +12,7 @@ import '../../repos/user.dart';
 import '../../widgets/partial_divider.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import '../menu/menu.dart';
+import 'dart:io';
 
 /*stateful widget version*/
 //load data from repos here.
@@ -60,18 +61,16 @@ class _MenuDetailsPageState extends State<MenuDetailsPage> {
   }
 
   void addToCart() {
-    //try removing this first.
-    //MenuItemRepo().put(widget.menuItem.toMenuItemOB());
-
+    //create object
     CartItemOB newcart = CartItemOB()
       ..quantity = quantity
       ..price = price
       ..menuItemOB.add(widget.menuItem.toMenuItemOB()) //this one
     ;
-    //currentUser.orders.add(newOrder);
+    //write it to objectbox
     CartItemRepo().put(newcart);
-
     printToast("Item added to cart");
+    //
     widget.updateCartCount(1);
     Navigator.of(context).pop();
   }
@@ -97,8 +96,6 @@ class _MenuDetailsPageState extends State<MenuDetailsPage> {
 
   @override
   Widget build(BuildContext context) {
-    //see first
-
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -116,10 +113,11 @@ class _MenuDetailsPageState extends State<MenuDetailsPage> {
           Expanded(
             child: ListView(
               children: [
-                SizedBox(height: 15),
+                SizedBox(height: 30),
                 MenuImage(widget.menuItem.imagePath),
                 SizedBox(height: 15),
                 Description(widget.menuItem.description),
+                SizedBox(height: 15),
                 PartialDivider(32, 10),
                 Reviews(widget.menuItem.userReviews),
                 PartialDivider(32, 10),
@@ -148,10 +146,33 @@ class MenuImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        width: 300,   //default 200
-        height: 310,  //default 333
-        child: Image.asset(imagePath)
+        width: 300,   //default 200 //300
+        height: 310,  //default 333 //310
+        //child: Image.asset(imagePath)
+        child: Image.file(
+          File(imagePath),
+          width: 50, //150
+          height: 55,//165
+          //fit: BoxFit.cover,
+        )
     );
+
+    // return SizedBox(
+    //   width: 150,
+    //   child: Card(
+    //     shape: RoundedRectangleBorder(
+    //       borderRadius: BorderRadius.circular(12.0),
+    //     ),
+    //     child: ClipRRect(
+    //       borderRadius: BorderRadius.circular(12.0),
+    //       child: Image.file(
+    //         File(imagePath),
+    //         width: 150,
+    //         height: 200, //230
+    //       ),
+    //     ),
+    //   ),
+    // );
   }
 }
 

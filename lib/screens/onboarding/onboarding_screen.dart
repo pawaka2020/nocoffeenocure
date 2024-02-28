@@ -20,8 +20,8 @@ class OnboardingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("onboarding screen started");
-    print("fullnews image = ${image}");
+    // print("onboarding screen started");
+    // print("fullnews image = ${image}");
     Future.delayed(const Duration(seconds: 3), () {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (context) => HomeScreen()),

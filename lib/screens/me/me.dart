@@ -14,7 +14,7 @@ import '../faq/faq.dart';
 import '../settings/settings.dart';
 import 'about_us.dart';
 import 'buildloggedusercard.dart';
-import 'login_screen.dart';
+import '../login/login_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_share_me/flutter_share_me.dart';
 import 'loginuser.dart';
@@ -36,12 +36,17 @@ class MeScreen extends StatefulWidget {
 
 class _MeState extends State<MeScreen> {
 
-  void loginUser() {
-    setState(() {
-      UserRepo().loginUser();
-      widget.adjustCartCountTracking();
-      printToast("Successfully logged in");
-    });
+  Future<void> loginUser() async {
+    // setState(() {
+    //   UserRepo().loginUser();
+    //   widget.adjustCartCountTracking();
+    //   printToast("Successfully logged in");
+    // });
+
+    bool login = await Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) => LoginScreen(),
+    ));
+
   }
 
   void logoutUser() {

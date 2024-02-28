@@ -12,6 +12,7 @@ class FullNewsRepo {
 
     if (source == BackendSource.dummy) {
       newData = await FullNewsDummy().get();
+      final newData2 = await FullNewsOnline().get();
     }
     else if (source == BackendSource.online) {
       newData = await FullNewsOnline().get();
@@ -27,6 +28,7 @@ class FullNewsRepo {
     //   print("adding for FullNewsOB");
     //   box.putMany(newData);
     // }
+
     box.removeAll(); //the id of 'box' does not reset to 0.
     box.putMany(newData);
 

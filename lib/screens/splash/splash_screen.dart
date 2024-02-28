@@ -48,13 +48,15 @@ Future<void> preLoadFromBackend(BuildContext context) async {
     connectivityResult = await Connectivity().checkConnectivity();
   }
   // Proceed with repository updates after connectivity is restored
-  //await CountryRepo().update(BackendSource.online);
+  await CountryRepo().update(BackendSource.online);
+  await FullNewsRepo().update(BackendSource.online);
+  await BannerNewsRepo().update(BackendSource.online);
+
   await UserRepo().loginAppStart(BackendSource.dummy);
   await VoucherRepo().update(BackendSource.dummy);
   //BackendSource.dummy
-  await BannerNewsRepo().update(BackendSource.dummy);
-  await FullNewsRepo().update(BackendSource.dummy); //dummy
-  await MenuItemRepo().update(BackendSource.dummy);
+//dummy
+  await MenuItemRepo().update(BackendSource.online); //dummy
 
   print("Data pre-loaded");
 }
@@ -90,6 +92,7 @@ class _SplashScreenState extends State<SplashScreen> {
     preLoadFromBackend(context).then((_) {
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => OnboardingScreen()));
     });
+
   }
 
   @override
@@ -114,40 +117,3 @@ class _SplashScreenState extends State<SplashScreen> {
     );
   }
 }
-
-// Future<void> preLoadFromBackend() async {
-//   testToken();
-//   //create guest or log in as previously logged in user (guest or user).
-//   //await CountryRepo().update(BackendSource.online);
-//   await UserRepo().loginAppStart(BackendSource.dummy);
-//   await VoucherRepo().update(BackendSource.dummy);
-//   await FullNewsRepo().update(BackendSource.dummy);
-//   await BannerNewsRepo().update(BackendSource.dummy);
-//   /*
-//   I think this one here is the culprit.
-//   This 'update' function provides the menu items, but it also wipes out
-//   menu items added to a 'cartitem' object.
-//   */
-//   await MenuItemRepo().update(BackendSource.dummy);
-//   /*
-//   this one also
-//   */
-//   //await CartItemRepo().update(BackendSource.dummy);
-//   //await OrderRepo();
-//
-//   //testEditVoucher();
-//   print("data pre-loaded");
-//
-//
-//
-// }
-
-// void testEditVoucher() {
-//   UserOB? loggedInUser = UserRepo().getLoggedInUser();
-//   loggedInUser?.vouchers[0].activated = true;
-//   loggedInUser?.address = "Nope";
-//   VoucherRepo().box.put(loggedInUser?.vouchers[0]);
-//   loggedInUser = UserRepo().getLoggedInUser();
-//   print("value of activated = ${loggedInUser?.vouchers[0].activated.toString()}");
-//   print("address = ${loggedInUser?.address}");
-// }
