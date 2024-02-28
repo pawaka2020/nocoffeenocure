@@ -2,10 +2,11 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../../common.dart';
 
-Future<void> sendPhoneNumber(String phoneNumber) async {
-  String url = onlineBackendURL + 'api/verify';
+Future<void> verifyCode(String enteredCode, String phoneNumber) async {
+  String url = onlineBackendURL + 'api/verify_code';
   Map<String, dynamic> data = {
     'phone_number': phoneNumber,
+    'entered_code' : enteredCode,
   };
 
   try {
@@ -17,15 +18,14 @@ Future<void> sendPhoneNumber(String phoneNumber) async {
       },
     );
     if (response.statusCode == 200) {
-      print('Phone number sent successfully: $phoneNumber');
+      print('Verification code sent successfully: $enteredCode, $phoneNumber');
       // Handle response if needed
     } else {
-      print('Failed to send phone number: ${response.statusCode}');
+      print('Failed to send verification code: ${response.statusCode}');
       // Handle error if needed
     }
   }
   catch (e) {
-    print('Error sending phone number: $e');
-    // Handle error if needed
+    print('Error sending verification code: $e');
   }
 }

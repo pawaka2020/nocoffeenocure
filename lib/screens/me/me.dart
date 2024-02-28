@@ -43,10 +43,12 @@ class _MeState extends State<MeScreen> {
     //   printToast("Successfully logged in");
     // });
 
-    bool login = await Navigator.of(context).push(MaterialPageRoute(
+    // bool login = await Navigator.of(context).push(MaterialPageRoute(
+    //   builder: (context) => LoginScreen(),
+    // ));
+    await Navigator.of(context).push(MaterialPageRoute(
       builder: (context) => LoginScreen(),
     ));
-
   }
 
   void logoutUser() {

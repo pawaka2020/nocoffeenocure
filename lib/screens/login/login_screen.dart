@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:nocoffeenocure/screens/login/sendphonenumber.dart';
 import 'package:nocoffeenocure/screens/verification/verification_screen.dart';
 import '../../common.dart';
 import '../../widgets/partial_divider.dart';
@@ -24,9 +25,17 @@ class _LoginScreenState extends State<LoginScreen> {
     if (_phoneNumber.length > 11 || _phoneNumber.length < 10)
       printToast("Error : phone number must be 10 or 11 characters.");
     else {
-      Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => VerificationScreen(_phoneNumber),
-      ));
+      try {
+        await sendPhoneNumber(_phoneNumber);
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => VerificationScreen(_phoneNumber),
+        ));
+      }
+      catch (e) {
+
+        print('Error getting verification code: $e');
+        // Optionally show an error message to the user
+      }
     }
   }
 

@@ -97,14 +97,20 @@ Future<void> main() async {
   //   }
   //
   // });
-  preLoadFromBackend2().then((_) {
-    runApp(
-      ChangeNotifierProvider(
-        create: (context) => CartCountNotifier(),
-        child: MyApp(),
-      ),
-    );
-  });
+  // preLoadFromBackend2().then((_) {
+  //   runApp(
+  //     ChangeNotifierProvider(
+  //       create: (context) => CartCountNotifier(),
+  //       child: MyApp(),
+  //     ),
+  //   );
+  // });
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => CartCountNotifier(),
+      child: MyApp(),
+    ),
+  );
   // Check for initial internet connectivity status
   // var connectivityResult = await Connectivity().checkConnectivity();
   // if (connectivityResult == ConnectivityResult.wifi ||

@@ -4,11 +4,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:nocoffeenocure/screens/verification/verifycode.dart';
 import '../../common.dart';
 import '../../widgets/partial_divider.dart';
 import '../contactus/contactus.dart';
 import '../me/privacy_policy.dart';
 import '../me/tos.dart';
+import 'buildverificationcodeboxes.dart';
 
 class VerificationScreen extends StatefulWidget {
   String _phoneNumber;
@@ -21,6 +23,13 @@ class VerificationScreen extends StatefulWidget {
 class VerificationScreenState extends State<VerificationScreen> {
   String _phoneNumber;
   VerificationScreenState(this._phoneNumber);
+
+  String enteredCode = '';
+
+  void setEnteredCode(String _enteredCode) {
+    enteredCode = _enteredCode;
+    // printToast("Set entered code value = ${enteredCode}");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,10 +70,12 @@ class VerificationScreenState extends State<VerificationScreen> {
                 ),
               ),
               SizedBox(height: 24),
-              buildVerificationCodeBoxes(context),
+              buildVerificationCodeBoxes(context, setEnteredCode), //save the input value to verificationCode
               SizedBox(height: 12), //24
               ElevatedButton(
                 onPressed: () {
+                  //printToast("code entered = $enteredCode, phone number entered = $_phoneNumber");
+                  verifyCode(enteredCode, _phoneNumber);
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.orange,
@@ -176,39 +187,9 @@ Widget buildDisclaimerText(BuildContext context) {
                 );
               },
           ),
-
         ],
       ),
       textAlign: TextAlign.center,
-    ),
-  );
-}
-
-Widget buildVerificationCodeBoxes(BuildContext context) {
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-    children: List.generate(
-      4,
-          (index) => SizedBox(
-        width: 60,
-        height: 60,
-        child: TextField(
-          textAlign: TextAlign.center,
-          keyboardType: TextInputType.number,
-          maxLength: 1,
-          decoration: InputDecoration(
-            counter: Offstage(),
-            border: OutlineInputBorder(),
-          ),
-          onChanged: (value) {
-            if (value.length == 1 && index < 3) {
-              FocusScope.of(context).nextFocus();
-            } else if (value.length == 0 && index > 0) {
-              FocusScope.of(context).previousFocus();
-            }
-          },
-        ),
-      ),
     ),
   );
 }
@@ -281,4 +262,50 @@ Stream<int> timerStream(int duration) {
     }
   });
   return controller.stream;
+}
+
+
+class VerificationCodeInput extends StatefulWidget {
+  final void Function(String) onCodeEntered;
+
+  VerificationCodeInput(this.onCodeEntered);
+
+  @override
+  _VerificationCodeInputState createState() => _VerificationCodeInputState();
+}
+
+class _VerificationCodeInputState extends State<VerificationCodeInput> {
+  TextEditingController _controller = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        for (int i = 0; i < 4; i++)
+          SizedBox(
+            width: 60,
+            height: 60,
+            child: TextField(
+              controller: _controller,
+              textAlign: TextAlign.center,
+              keyboardType: TextInputType.number,
+              maxLength: 4, // Limiting to 4 characters
+              onChanged: (value) {
+                if (value.length == 4) {
+                  // Notify the parent widget about the entered code
+                  widget.onCodeEntered(value);
+                  // Clear the input field
+                  _controller.clear();
+                }
+              },
+              decoration: InputDecoration(
+                counterText: '', // Hide character count
+                border: OutlineInputBorder(),
+              ),
+            ),
+          ),
+      ],
+    );
+  }
 }
