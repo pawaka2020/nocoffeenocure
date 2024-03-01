@@ -7,7 +7,6 @@ Future<void> sendPhoneNumber(String phoneNumber) async {
   Map<String, dynamic> data = {
     'phone_number': phoneNumber,
   };
-
   try {
     final response = await http.post(
       Uri.parse(url),
@@ -19,7 +18,8 @@ Future<void> sendPhoneNumber(String phoneNumber) async {
     if (response.statusCode == 200) {
       print('Phone number sent successfully: $phoneNumber');
       // Handle response if needed
-    } else {
+    }
+    else {
       print('Failed to send phone number: ${response.statusCode}');
       // Handle error if needed
     }

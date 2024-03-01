@@ -48,15 +48,15 @@ Future<void> preLoadFromBackend(BuildContext context) async {
     connectivityResult = await Connectivity().checkConnectivity();
   }
   // Proceed with repository updates after connectivity is restored
-  await CountryRepo().update(BackendSource.online);
-  await FullNewsRepo().update(BackendSource.online);
-  await BannerNewsRepo().update(BackendSource.online);
+  //await CountryRepo().update(BackendSource.online);
+  await FullNewsRepo().update(BackendSource.dummy); //
+  await BannerNewsRepo().update(BackendSource.dummy); //
 
   await UserRepo().loginAppStart(BackendSource.dummy);
   await VoucherRepo().update(BackendSource.dummy);
   //BackendSource.dummy
 //dummy
-  await MenuItemRepo().update(BackendSource.online); //dummy
+  await MenuItemRepo().update(BackendSource.dummy); //dummy
 
   print("Data pre-loaded");
 }

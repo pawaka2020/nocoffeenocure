@@ -95,7 +95,6 @@ class VerificationScreenState extends State<VerificationScreen> {
                     ),
                   ),
                 ),
-
               ),
               SizedBox(height: 12),
               Divider(),

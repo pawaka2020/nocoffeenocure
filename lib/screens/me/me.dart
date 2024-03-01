@@ -37,18 +37,15 @@ class MeScreen extends StatefulWidget {
 class _MeState extends State<MeScreen> {
 
   Future<void> loginUser() async {
-    // setState(() {
-    //   UserRepo().loginUser();
-    //   widget.adjustCartCountTracking();
-    //   printToast("Successfully logged in");
-    // });
+    setState(() {
+      UserRepo().loginUser();
+      widget.adjustCartCountTracking();
+      printToast("Successfully logged in");
+    });
 
-    // bool login = await Navigator.of(context).push(MaterialPageRoute(
+    // await Navigator.of(context).push(MaterialPageRoute(
     //   builder: (context) => LoginScreen(),
     // ));
-    await Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) => LoginScreen(),
-    ));
   }
 
   void logoutUser() {
@@ -63,7 +60,7 @@ class _MeState extends State<MeScreen> {
     bool saveChanges = await Navigator.of(context).push(MaterialPageRoute(
       builder: (context) => EditProfileScreen(),
     ));
-    if (saveChanges) {
+    if (saveChanges == true) {
       setState(() {
 
       });

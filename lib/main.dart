@@ -43,44 +43,44 @@ Launches the app as usual afterwards starting with SplashScreen as first screen.
 */
 
 
-Future<void> preLoadFromBackend2() async {
-  //testToken();
-  //create guest or log in as previously logged in user (guest or user).
-  await CountryRepo().update(BackendSource.online);
-  await UserRepo().loginAppStart(BackendSource.dummy);
-  await VoucherRepo().update(BackendSource.dummy);
-  await FullNewsRepo().update(BackendSource.online); //BackendSource.dummy
-  await BannerNewsRepo().update(BackendSource.dummy);
-  await MenuItemRepo().update(BackendSource.dummy);
-  Connectivity().onConnectivityChanged.listen((ConnectivityResult result) async {
-    print('Network status changed: $result');
-
-    if (result == ConnectivityResult.wifi || result == ConnectivityResult.mobile) {
-      //if (singletonCountries != []) { //!=
-      // if (singletonCountries[0].name == 'NO') {
-      //   await CountryRepo().update(BackendSource.online);
-      // }
-      if (countriesLoaded == false) {
-        await CountryRepo().update(BackendSource.online);
-      }
-    }
-  });
-
-  /*
-  I think this one here is the culprit.
-  This 'update' function provides the menu items, but it also wipes out
-  menu items added to a 'cartitem' object.
-  */
-
-  /*
-  this one also
-  */
-  //await CartItemRepo().update(BackendSource.dummy);
-  //await OrderRepo();
-
-  //testEditVoucher();
-  print("data pre-loaded");
-}
+// Future<void> preLoadFromBackend2() async {
+//   //testToken();
+//   //create guest or log in as previously logged in user (guest or user).
+//   //await CountryRepo().update(BackendSource.online);
+//   await UserRepo().loginAppStart(BackendSource.dummy);
+//   await VoucherRepo().update(BackendSource.dummy);
+//   await FullNewsRepo().update(BackendSource.online); //BackendSource.dummy
+//   await BannerNewsRepo().update(BackendSource.dummy);
+//   await MenuItemRepo().update(BackendSource.dummy);
+//   Connectivity().onConnectivityChanged.listen((ConnectivityResult result) async {
+//     print('Network status changed: $result');
+//
+//     if (result == ConnectivityResult.wifi || result == ConnectivityResult.mobile) {
+//       //if (singletonCountries != []) { //!=
+//       // if (singletonCountries[0].name == 'NO') {
+//       //   await CountryRepo().update(BackendSource.online);
+//       // }
+//       if (countriesLoaded == false) {
+//         await CountryRepo().update(BackendSource.online);
+//       }
+//     }
+//   });
+//
+//   /*
+//   I think this one here is the culprit.
+//   This 'update' function provides the menu items, but it also wipes out
+//   menu items added to a 'cartitem' object.
+//   */
+//
+//   /*
+//   this one also
+//   */
+//   //await CartItemRepo().update(BackendSource.dummy);
+//   //await OrderRepo();
+//
+//   //testEditVoucher();
+//   print("data pre-loaded");
+// }
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

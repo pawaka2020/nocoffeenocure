@@ -19,10 +19,16 @@ Future<void> verifyCode(String enteredCode, String phoneNumber) async {
     );
     if (response.statusCode == 200) {
       print('Verification code sent successfully: $enteredCode, $phoneNumber');
+      final jsonResponse = jsonDecode(response.body);
+      print('the message is ${jsonResponse['message']}');
       // Handle response if needed
-    } else {
-      print('Failed to send verification code: ${response.statusCode}');
+    }
+    else if (response.statusCode == 400)  {
+      printToast('Error: verification code incorrect');
       // Handle error if needed
+    }
+    else {
+
     }
   }
   catch (e) {

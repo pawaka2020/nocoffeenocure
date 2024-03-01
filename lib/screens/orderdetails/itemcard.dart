@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'dart:io';
 import '../../models/cartitem.dart';
 import '../../models/menuitem.dart';
 
@@ -52,10 +52,14 @@ class ODItemCard extends StatelessWidget {
                 Container(
                   width: 80,
                   height: double.infinity,
-                  child: Image.asset(
-                    image,
+                  // child: Image.asset(
+                  //   image,
+                  //   fit: BoxFit.cover,
+                  // ),
+                  child: Image.file(
+                    File(image),
                     fit: BoxFit.cover,
-                  ),
+                  )
                 ),
                 Padding(
                   padding: EdgeInsets.only(left: 90, top: 8, right: 16, bottom: 8),

@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 
 import '../../common.dart';
@@ -58,8 +59,12 @@ class CartItemCard extends StatelessWidget {
                 Container(
                   width: 80,
                   height: double.infinity,
-                  child: Image.asset(
-                    image,
+                  // child: Image.asset(
+                  //   image,
+                  //   fit: BoxFit.cover,
+                  // ),
+                  child: Image.file(
+                    File(image),
                     fit: BoxFit.cover,
                   ),
                 ),
