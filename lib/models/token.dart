@@ -19,11 +19,11 @@ String generateNewUserToken() {
     "phoneNumber": "+60172520691",
     "guest": false,
     "newUser": false,
-    //payloads in parallel of backlinks of UserOB(TBD)
     //other payloads
     "exp": DateTime.now().add(Duration(days: 1)).millisecondsSinceEpoch ~/ 1000,
     "iss": "your_server",
     "aud": "your_client",
+    //payloads in parallel of backlinks of UserOB(TBD)
   };
 //asdasd
   final base64Header = base64Url.encode(utf8.encode('{"alg":"HS256","typ":"JWT"}'));

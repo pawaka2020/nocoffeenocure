@@ -12,7 +12,6 @@ class FullNewsRepo {
 
     if (source == BackendSource.dummy) {
       newData = await FullNewsDummy().get();
-      final newData2 = await FullNewsOnline().get();
     }
     else if (source == BackendSource.online) {
       newData = await FullNewsOnline().get();

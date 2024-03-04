@@ -32,9 +32,7 @@ class _LoginScreenState extends State<LoginScreen> {
         ));
       }
       catch (e) {
-
         print('Error getting verification code: $e');
-        // Optionally show an error message to the user
       }
     }
   }

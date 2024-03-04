@@ -11,7 +11,7 @@ Future<void> sendPhoneNumber(String phoneNumber) async {
     final response = await http.post(
       Uri.parse(url),
       body: json.encode(data), // Encode the data as JSON
-      headers: <String, String>{
+      headers: <String, String> {
         'Content-Type': 'application/json', // Set content type header
       },
     );

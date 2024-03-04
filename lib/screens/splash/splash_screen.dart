@@ -49,7 +49,7 @@ Future<void> preLoadFromBackend(BuildContext context) async {
   }
   // Proceed with repository updates after connectivity is restored
   //await CountryRepo().update(BackendSource.online);
-  await FullNewsRepo().update(BackendSource.dummy); //
+  await FullNewsRepo().update(BackendSource.online); //
   await BannerNewsRepo().update(BackendSource.dummy); //
 
   await UserRepo().loginAppStart(BackendSource.dummy);

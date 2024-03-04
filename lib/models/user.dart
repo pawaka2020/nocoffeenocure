@@ -1,6 +1,5 @@
 import 'package:nocoffeenocure/models/voucher.dart';
 import 'package:objectbox/objectbox.dart';
-
 import 'cartitem.dart';
 import 'order.dart';
 
@@ -14,15 +13,14 @@ birthday (happy birthday vouchers, received 3 days in advance)
 current date (but this is taken from outside of the app)
 */
 @Entity()
-class UserOB
-{
+class UserOB {
   @Id()
   int id = 0; // for Objectbox's internal bookkeeping operations only, do not use!
 
   String? userId; // id for user, matching with id from reading auth token.
   String? name; // name of user.
   String? email; // email of user.
-  DateTime? birthday; //set to null for 'guest' users.
+  DateTime? birthday; // set to null for 'guest' users.
   String? phoneNumber;
   String? address; // address of user, for sending to Lalamove/Grab/other delivery provider APIs.
   String? profileImage; // profile image of user, if required later on.
@@ -34,7 +32,7 @@ class UserOB
   //other fields (WIP)
   //vouchers
   //ongoing orders
-  //
+
   @Backlink()
   final reviews = ToMany<UserReview2OB>();
   @Backlink()

@@ -3,6 +3,7 @@ import '../common.dart';
 import '../main.dart';
 import '../models/token.dart';
 import '../models/user.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 
 //In release version, only fetch from online database.
 //The repo should only have two users: logged in user and guest user.
@@ -110,6 +111,7 @@ class UserRepo {
       singletonUser = registeredUser;
       //print("!!! from login, cartitem length = ${singletonUser.cartItems.length}, order length = ${singletonUser.orders.length}");
     }
+    //asdadadaadasd
     else {
       print("A registered user has not been detected");
       String token = generateNewUserToken();
@@ -121,6 +123,23 @@ class UserRepo {
       singletonUser = loggedinUser!;
       //print("!!! from login, cartitem length = ${singletonUser.cartItems.length}, order length = ${singletonUser.orders.length}");
     }
+  }
+
+  void loginUserBackend(String authToken) {
+    List<UserOB> users = box.getAll();
+    // print("A registered user has not been detected");
+    //String token = generateNewUserToken();
+    // UserOB? loggedinUser = decodeToken(token);
+
+    Map<String, dynamic> decodedToken = JwtDecoder.decode(authToken);
+    UserOB loggedinUser = UserOB();
+
+    //the rest here is the same
+    UserOB guestUser = users.firstWhere((user) => user.guest == true);
+    guestUser.isLoggedIn = false;
+    box.put(guestUser);
+    box.put(loggedinUser);
+    singletonUser = loggedinUser!;
   }
 
   void logoutUser() {

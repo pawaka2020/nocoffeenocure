@@ -8,6 +8,8 @@ import 'package:nocoffeenocure/screens/verification/verifycode.dart';
 import '../../common.dart';
 import '../../widgets/partial_divider.dart';
 import '../contactus/contactus.dart';
+import '../home_screen/home_screen.dart';
+import '../me/me.dart';
 import '../me/privacy_policy.dart';
 import '../me/tos.dart';
 import 'buildverificationcodeboxes.dart';
@@ -28,7 +30,6 @@ class VerificationScreenState extends State<VerificationScreen> {
 
   void setEnteredCode(String _enteredCode) {
     enteredCode = _enteredCode;
-    // printToast("Set entered code value = ${enteredCode}");
   }
 
   @override
@@ -75,7 +76,10 @@ class VerificationScreenState extends State<VerificationScreen> {
               ElevatedButton(
                 onPressed: () {
                   //printToast("code entered = $enteredCode, phone number entered = $_phoneNumber");
-                  verifyCode(enteredCode, _phoneNumber);
+                  //verifyCode(enteredCode, _phoneNumber);
+
+
+                  Navigator.of(context).pop();
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.orange,

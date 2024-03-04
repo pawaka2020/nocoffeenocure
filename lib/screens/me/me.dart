@@ -37,15 +37,17 @@ class MeScreen extends StatefulWidget {
 class _MeState extends State<MeScreen> {
 
   Future<void> loginUser() async {
-    setState(() {
-      UserRepo().loginUser();
-      widget.adjustCartCountTracking();
-      printToast("Successfully logged in");
-    });
+    //using offline demo backend
+    // setState(() {
+    //   UserRepo().loginUser();
+    //   widget.adjustCartCountTracking();
+    //   printToast("Successfully logged in");
+    // });
 
-    // await Navigator.of(context).push(MaterialPageRoute(
-    //   builder: (context) => LoginScreen(),
-    // ));
+    //using online Flask backend
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) => LoginScreen(),
+    ));
   }
 
   void logoutUser() {
@@ -57,7 +59,8 @@ class _MeState extends State<MeScreen> {
   }
 
   void editProfile() async {
-    bool saveChanges = await Navigator.of(context).push(MaterialPageRoute(
+    bool saveChanges = false;
+    saveChanges = await Navigator.of(context).push(MaterialPageRoute(
       builder: (context) => EditProfileScreen(),
     ));
     if (saveChanges == true) {
@@ -65,6 +68,13 @@ class _MeState extends State<MeScreen> {
 
       });
     }
+
+    // await Navigator.of(context).push(MaterialPageRoute(
+    //   builder: (context) => EditProfileScreen(),
+    // )).then((_) {
+    //   setState(() {});
+    // });
+
   }
 
   @override
