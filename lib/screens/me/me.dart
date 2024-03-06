@@ -39,20 +39,31 @@ class _MeState extends State<MeScreen> {
   Future<void> loginUser() async {
     //using offline demo backend
     // setState(() {
-    //   UserRepo().loginUser();
+    //UserRepo().loginUser();
     //   widget.adjustCartCountTracking();
     //   printToast("Successfully logged in");
     // });
 
     //using online Flask backend
-    Navigator.of(context).push(MaterialPageRoute(
+    // Navigator.of(context).push(MaterialPageRoute(
+    //   builder: (context) => LoginScreen(),
+    // ));
+
+
+    //try to use setState
+    bool login = await Navigator.of(context).push(MaterialPageRoute(
       builder: (context) => LoginScreen(),
     ));
+    if (login == true)
+      setState((){
+        widget.adjustCartCountTracking();
+      });
   }
 
   void logoutUser() {
     setState(() {
-      UserRepo().logoutUser();
+      //UserRepo().logoutUser();
+      UserRepo().logoutUserBackend();
       widget.adjustCartCountTracking();
       printToast('Successfully logged out');
     });

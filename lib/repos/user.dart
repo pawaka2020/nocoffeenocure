@@ -116,6 +116,7 @@ class UserRepo {
       print("A registered user has not been detected");
       String token = generateNewUserToken();
       UserOB? loggedinUser = decodeToken(token);
+
       UserOB guestUser = users.firstWhere((user) => user.guest == true);
       guestUser.isLoggedIn = false;
       box.put(guestUser);
@@ -127,20 +128,41 @@ class UserRepo {
 
   void loginUserBackend(String authToken) {
     List<UserOB> users = box.getAll();
-    // print("A registered user has not been detected");
-    //String token = generateNewUserToken();
-    // UserOB? loggedinUser = decodeToken(token);
 
     Map<String, dynamic> decodedToken = JwtDecoder.decode(authToken);
-    UserOB loggedinUser = UserOB();
-
+    UserOB loggedinUser = UserOB()
+      ..userId = decodedToken['user_id']
+      ..name = decodedToken['name']
+      ..email = decodedToken['email']
+      ..birthday = decodedToken['birthday'] != null ? DateTime.parse(decodedToken['birthday']) : null
+      //..birthday = decodedToken['birthday'] // this is DateTime?
+      ..phoneNumber = decodedToken['phone_number']
+      ..address = decodedToken['address']
+      ..profileImage = decodedToken['profile_image']
+      ..coins = decodedToken['coins']
+      ..guest = decodedToken['guest']
+      ..isLoggedIn = decodedToken['is_logged_in']
+      ..newUser = decodedToken['new_user']
+      ..setDefaultAddress = decodedToken['set_default_address']
+      //backlinks (TODO)
+    ;
     //the rest here is the same
     UserOB guestUser = users.firstWhere((user) => user.guest == true);
     guestUser.isLoggedIn = false;
     box.put(guestUser);
-    box.put(loggedinUser);
+    box.put(loggedinUser); //do not disable this. It will cause crash.
     singletonUser = loggedinUser!;
   }
+
+  void logoutUserBackend() {
+    List<UserOB> users = box.getAll();
+    UserOB guestUser = users.firstWhere((user) => user.guest == true);
+    guestUser.isLoggedIn = true;
+    box.put(guestUser);
+    singletonUser = guestUser;
+  }
+
+
 
   void logoutUser() {
     List<UserOB> users = box.getAll();
