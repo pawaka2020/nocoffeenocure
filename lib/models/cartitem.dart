@@ -9,15 +9,15 @@ class CartItemOB {
   @Id()
   int id = 0;
 
-  String? image; //we don't use this anymore
-  String? name; // we don't use this anymore
+  String? image; // don't write this, we don't use this anymore
+  String? name; // don't write this, we don't use this anymore
   String? content;
   int? quantity;
   int? menuItem_id;
   double price = 0;
 
   @Backlink()
-  var menuItemOB = ToMany<MenuItemOB>();
-  final order = ToOne<OrderOB>();
-  final user = ToOne<UserOB>();
+  var menuItemOB = ToMany<MenuItemOB>(); //already done
+  final order = ToOne<OrderOB>(); //do this later
+  final user = ToOne<UserOB>(); //do this later
 }

@@ -74,7 +74,7 @@ class CartItemRepo {
   }
 
   //called by menu_details
-  void put(CartItemOB cartItem){
+  void put(CartItemOB cartItem) {
     //box.put(cartItem);
     //MenuItemRepo().put(cartItem.menuItemOB[0]);
     //currentUser.orders.add(newOrder);
@@ -82,6 +82,8 @@ class CartItemRepo {
     UserOB? currentUser = UserRepo().getLoggedInUser();
     currentUser?.cartItems.add(cartItem);
     UserRepo().box.put(currentUser);
+    //TODO: Write the cartitem object to user in postgreSQL database attached to Flask backend
+
   }
 
   void remove(int id) {

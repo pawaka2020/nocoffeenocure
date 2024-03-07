@@ -27,6 +27,7 @@ class EditProfileState extends State<EditProfileScreen> {
   String _email = singletonUser.email!;
   DateTime _birthday = singletonUser.birthday!;
   String _address = singletonUser.address!;
+
   bool _setDefaultAddress = singletonUser.setDefaultAddress;
   TextEditingController _nameController = TextEditingController();
   TextEditingController _emailController = TextEditingController();
