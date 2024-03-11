@@ -12,7 +12,7 @@ class BannerNewsOnline {
   Future<List<BannerNewsOB>> get() async {
 
     try {
-      final response = await http.get(Uri.parse(onlineBackendURL + 'bannernews'));
+      final response = await http.get(Uri.parse(onlineBackendURL + 'get_bannernews'));
       if (response.statusCode == 200) {
         Iterable bannernewsJson = json.decode(response.body);
         List<BannerNewsOB> bannerNewsList = [];

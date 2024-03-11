@@ -1,9 +1,13 @@
+import 'dart:convert';
+
 import '../backend/dummy/user.dart';
 import '../common.dart';
 import '../main.dart';
 import '../models/token.dart';
 import '../models/user.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:http/http.dart' as http;
+import 'dart:io';
 
 //In release version, only fetch from online database.
 //The repo should only have two users: logged in user and guest user.
@@ -80,20 +84,6 @@ class UserRepo {
     }
   }
 
-  //
-  // void loginUser() {
-  //   //1. Generate logged user from token
-  //   String token = generateNewUserToken();
-  //   UserOB? loggedinUser = decodeToken(token);
-  //   UserOB? currentUser = getLoggedInUser();
-  //   currentUser?.isLoggedIn = false;
-  //   box.put(currentUser);
-  //   box.put(loggedinUser); //yes, we should add this token-generated user to the Box.
-  //
-  //   //3. Setting as singlleton
-  //   singletonUser = loggedinUser!;
-  // }
-
   void loginUser() {
     List<UserOB> users = box.getAll();
     if (users.any((user) => user.guest == false)) {
@@ -162,7 +152,9 @@ class UserRepo {
     singletonUser = guestUser;
   }
 
+  void editUser() {
 
+  }
 
   void logoutUser() {
     List<UserOB> users = box.getAll();
@@ -184,7 +176,7 @@ class UserRepo {
   }
 
   void updateLoggedinUser(String profileImage, String name, String email,
-      DateTime birthday, String address, bool setDefaultAddress) {
+    DateTime birthday, String address, bool setDefaultAddress) {
     List<UserOB> users = box.getAll();
     UserOB registeredUser = users.firstWhere((user) => user.guest == false);
     //
@@ -197,5 +189,58 @@ class UserRepo {
 
     box.put(registeredUser);
     singletonUser = registeredUser;
+  }
+
+  Future<void> updateBackendUser(UserOB user) async {
+    final url = onlineBackendURL + 'update_user';
+
+    // Create JSON data to send to Flask backend
+    final Map<String, dynamic> data = {
+      'user_id' : user.userId.toString(),
+      'new_address' : user.address!,
+      'new_name' : user.name!,
+      'new_email' : user.email!,
+      'new_birthday' : user.birthday.toString(),
+      'new_phone_number' : user.phoneNumber!,
+      'new_profile_image' : user.profileImage!,
+      'new_coins' : user.coins.toString(),
+      'new_guest' : user.guest! ? 'true' : 'false',
+      'new_is_logged_in' : user.isLoggedIn! ? 'true' : 'false',
+      'new_new_user' : user.newUser! ? 'true' : 'false',
+      'new_set_default_address' : user.setDefaultAddress ? 'true' : 'false',
+      'cart_item': {
+        'price' : user.cartItems[0].price,
+        'quantity': user.cartItems[0].quantity,
+      }
+      // 'cart_item' : {
+      //   'price' : 4.2.toString(),
+      //   'quantity' : 5.toString()
+      // }
+      //other fields (WIP)
+      //how to nest a 'CartItem' with a field 'cart name' here? <- show me how to do it
+    };
+
+    // Encode data to JSON
+    final jsonData = json.encode(data);
+    try
+    {
+      final response = await http.post(
+        Uri.parse(url),
+        headers: <String, String> {
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonData,
+      );
+      if (response.statusCode == 200) {
+        printToast('User updated successfully');
+      }
+      else {
+        printToast('Failed to update user: ${response.statusCode}');
+      }
+    }
+    catch (e) {
+      printToast('Exception caught while updating user: $e');
+    }
+
   }
 }

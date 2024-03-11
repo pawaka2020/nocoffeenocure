@@ -69,10 +69,16 @@ class _MenuDetailsPageState extends State<MenuDetailsPage> {
     ;
     //write it to objectbox
     CartItemRepo().put(newcart);
-    printToast("Item added to cart");
-    //
+    if (singletonUser.guest == false) {
+      //add to user table on backend.
+      print("singletonuser id = ${singletonUser.userId}");
+      //print("price = ${singletonUser.cartItems[0].price}, quantity = ${singletonUser.cartItems[0].quantity}");
+      UserRepo().updateBackendUser(singletonUser);
+    }
+
     widget.updateCartCount(1);
     Navigator.of(context).pop();
+    printToast("Item added to cart");
   }
 
   void updateCart() {

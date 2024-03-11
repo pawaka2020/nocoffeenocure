@@ -9,7 +9,7 @@ import '../../repos/country.dart';
 class CountryOnline {
   Future<List<CountryOB>> get() async {
     try {
-      final response = await http.get(Uri.parse(onlineBackendURL + 'countries'));
+      final response = await http.get(Uri.parse(onlineBackendURL + 'get_countries'));
 
       if (response.statusCode == 200) {
         Iterable countriesJson = json.decode(response.body);

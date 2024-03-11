@@ -11,10 +11,10 @@ class CartItemOB {
 
   String? image; // don't write this, we don't use this anymore
   String? name; // don't write this, we don't use this anymore
-  String? content;
+  String? content; // don't write this, we don't use this anymore
   int? quantity;
-  int? menuItem_id;
   double price = 0;
+  int? menuItem_id;
 
   @Backlink()
   var menuItemOB = ToMany<MenuItemOB>(); //already done

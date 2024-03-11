@@ -82,6 +82,13 @@ class CartItemRepo {
     UserOB? currentUser = UserRepo().getLoggedInUser();
     currentUser?.cartItems.add(cartItem);
     UserRepo().box.put(currentUser);
+
+    
+
+    //11/3/2024 I need to update the singleton as well.
+    singletonUser = currentUser!;
+
+
     //TODO: Write the cartitem object to user in postgreSQL database attached to Flask backend
 
   }

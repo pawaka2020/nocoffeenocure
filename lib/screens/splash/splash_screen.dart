@@ -52,7 +52,7 @@ Future<void> preLoadFromBackend(BuildContext context) async {
   await FullNewsRepo().update(BackendSource.online); //
   await BannerNewsRepo().update(BackendSource.online); //
 
-  await UserRepo().loginAppStart(BackendSource.dummy);
+  await UserRepo().loginAppStart(BackendSource.dummy); //
   await VoucherRepo().update(BackendSource.dummy);
   //BackendSource.dummy
 //dummy

@@ -30,24 +30,44 @@ void handleDeepLink(String? link) {
 
 /* await getImage(news['name'],'fullnews')*/
 
-Future<String> getImage(String dbimage, String dir) async {
-  String filename = dbimage.split('/').last;
-  String imageUrl = onlineBackendURL + 'images/' + dir + '/' + filename;
+// Future<String> getImage(String dbimage, String dir) async {
+//   String filename = dbimage.split('/').last;
+//   String imageUrl = onlineBackendURL + 'images/' + dir + '/' + filename;
+//   var imageDataResponse = await http.get(Uri.parse(imageUrl));
+//
+//   if (imageDataResponse.statusCode == 200) {
+//     Directory directory = await getApplicationDocumentsDirectory();
+//     String directoryPath = '${directory.path}/backend/images/';
+//     Directory(directoryPath).createSync(recursive: true); // Ensure directory exists
+//     String filePath = '$directoryPath$filename';
+//     File file = File(filePath);
+//     await file.writeAsBytes(imageDataResponse.bodyBytes);
+//     return filePath;
+//   }
+//   else {
+//     return '';
+//   }
+// }
+
+
+Future<String> getImage(String dbImage, String dir) async {
+  String filename = dbImage.split('/').last;
+  String imageUrl = onlineBackendURL + 'static/images/' + dir + '/' + filename;
   var imageDataResponse = await http.get(Uri.parse(imageUrl));
 
   if (imageDataResponse.statusCode == 200) {
     Directory directory = await getApplicationDocumentsDirectory();
-    String directoryPath = '${directory.path}/backend/images/';
+    String directoryPath = '${directory.path}/backend/images/$dir/';
     Directory(directoryPath).createSync(recursive: true); // Ensure directory exists
     String filePath = '$directoryPath$filename';
     File file = File(filePath);
     await file.writeAsBytes(imageDataResponse.bodyBytes);
     return filePath;
-  }
-  else {
+  } else {
     return '';
   }
 }
+
 
 Future<String> copyAssetToStorage(String image) async {
   try {

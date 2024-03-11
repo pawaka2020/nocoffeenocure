@@ -61,7 +61,7 @@ class MenuItemOnline {
 
   Future<List<MenuItemOB>> get() async {
     try {
-      final response = await http.get(Uri.parse(onlineBackendURL + 'menuitems'));
+      final response = await http.get(Uri.parse(onlineBackendURL + 'get_menuitems'));
       if (response.statusCode == 200) {
         Iterable menuitemJson = json.decode(response.body);
         List<MenuItemOB> menuitemList = [];

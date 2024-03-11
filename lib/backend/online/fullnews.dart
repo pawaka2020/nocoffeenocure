@@ -9,7 +9,7 @@ class FullNewsOnline {
 
   Future<List<FullNewsOB>> get() async {
     try {
-      final response = await http.get(Uri.parse(onlineBackendURL + 'fullnews'));
+      final response = await http.get(Uri.parse(onlineBackendURL + 'get_fullnews'));
       if (response.statusCode == 200) {
         Iterable fullnewsJson = json.decode(response.body);
         List<FullNewsOB> fullNewsList = [];
