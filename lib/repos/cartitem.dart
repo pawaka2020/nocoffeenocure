@@ -97,6 +97,8 @@ class CartItemRepo {
     //box.remove(id);
     UserOB? currentUser = UserRepo().getLoggedInUser();
     currentUser?.cartItems.removeWhere((element) => element.id == id);
+    //12/3/2024
+    singletonUser = currentUser!;
     UserRepo().box.put(currentUser);
   }
 

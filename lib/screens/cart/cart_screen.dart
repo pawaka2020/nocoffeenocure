@@ -13,6 +13,7 @@ import '../../models/voucher.dart';
 import '../../provider/cart_count_notifier.dart';
 import '../../repos/cartitem.dart';
 import '../../repos/menuitem.dart';
+import '../../repos/user.dart';
 import '../../repos/voucher.dart';
 import '../../widgets/partial_divider.dart';
 import '../menu_detail/menu_detail.dart';
@@ -126,6 +127,9 @@ class _CartScreenState extends State<CartScreen> {
     if (confirmation) {
       setState(() {
         CartItemRepo().remove(id);
+
+        UserRepo().updateBackendUser();
+
         widget.cartItems = CartItemRepo().getAll();
         widget.updateCartCount(-1);
         printToast("Item removed from cart");
@@ -153,7 +157,9 @@ class _CartScreenState extends State<CartScreen> {
 
     if (updatedCartItem != null) {
       setState(() {
-        CartItemRepo().box.put(updatedCartItem);
+        //CartItemRepo().box.put(updatedCartItem); //replace this? 12/3/2024
+        CartItemRepo().put(updatedCartItem);
+        UserRepo().updateBackendUser();
         widget.cartItems = CartItemRepo().getAll();
         adjustPrice();
         printToast("Cart item updated");

@@ -3,6 +3,7 @@ import 'dart:convert';
 import '../backend/dummy/user.dart';
 import '../common.dart';
 import '../main.dart';
+import '../models/cartitem.dart';
 import '../models/token.dart';
 import '../models/user.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
@@ -191,56 +192,65 @@ class UserRepo {
     singletonUser = registeredUser;
   }
 
-  Future<void> updateBackendUser(UserOB user) async {
-    final url = onlineBackendURL + 'update_user';
+  Future<void> updateBackendUser() async {
+    if (singletonUser.guest == false) {
+      final url = onlineBackendURL + 'update_user';
 
-    // Create JSON data to send to Flask backend
-    final Map<String, dynamic> data = {
-      'user_id' : user.userId.toString(),
-      'new_address' : user.address!,
-      'new_name' : user.name!,
-      'new_email' : user.email!,
-      'new_birthday' : user.birthday.toString(),
-      'new_phone_number' : user.phoneNumber!,
-      'new_profile_image' : user.profileImage!,
-      'new_coins' : user.coins.toString(),
-      'new_guest' : user.guest! ? 'true' : 'false',
-      'new_is_logged_in' : user.isLoggedIn! ? 'true' : 'false',
-      'new_new_user' : user.newUser! ? 'true' : 'false',
-      'new_set_default_address' : user.setDefaultAddress ? 'true' : 'false',
-      'cart_item': {
-        'price' : user.cartItems[0].price,
-        'quantity': user.cartItems[0].quantity,
-      }
-      // 'cart_item' : {
-      //   'price' : 4.2.toString(),
-      //   'quantity' : 5.toString()
-      // }
-      //other fields (WIP)
-      //how to nest a 'CartItem' with a field 'cart name' here? <- show me how to do it
-    };
+      List<Map<String, dynamic>> mapCartItems(List<CartItemOB> cartItems) {
+        return cartItems.map((item) {
+          return {
+            'price': item.price,
+            'quantity': item.quantity,
 
-    // Encode data to JSON
-    final jsonData = json.encode(data);
-    try
-    {
-      final response = await http.post(
-        Uri.parse(url),
-        headers: <String, String> {
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-        body: jsonData,
-      );
-      if (response.statusCode == 200) {
-        printToast('User updated successfully');
+          };
+        }).toList();
       }
-      else {
-        printToast('Failed to update user: ${response.statusCode}');
+
+
+      // Create JSON data to send to Flask backend
+      final Map<String, dynamic> data = {
+        'user_id' : singletonUser.userId.toString(),
+        'new_address' : singletonUser.address!,
+        'new_name' : singletonUser.name!,
+        'new_email' : singletonUser.email!,
+        'new_birthday' : singletonUser.birthday.toString(),
+        'new_phone_number' : singletonUser.phoneNumber!,
+        'new_profile_image' : singletonUser.profileImage!,
+        'new_coins' : singletonUser.coins.toString(),
+        'new_guest' : singletonUser.guest! ? 'true' : 'false',
+        'new_is_logged_in' : singletonUser.isLoggedIn! ? 'true' : 'false',
+        'new_new_user' : singletonUser.newUser! ? 'true' : 'false',
+        'new_set_default_address' : singletonUser.setDefaultAddress ? 'true' : 'false',
+        // 'cart_items': user.cartItems.map((item) => {
+        //   'price': item.price,
+        //   'quantity' : item.quantity,
+        // }).toList(),
+        'cart_items' : mapCartItems(singletonUser.cartItems)
+        //do the same here for 'cart_items'
+      };
+
+      // Encode data to JSON
+      final jsonData = json.encode(data);
+      try
+      {
+        final response = await http.post(
+          Uri.parse(url),
+          headers: <String, String> {
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonData,
+        );
+        if (response.statusCode == 200) {
+          printToast('User updated successfully');
+        }
+        else {
+          printToast('Failed to update user: ${response.statusCode}');
+        }
+      }
+      catch (e) {
+        printToast('Exception caught while updating user: $e');
       }
     }
-    catch (e) {
-      printToast('Exception caught while updating user: $e');
-    }
-
+    else return ;
   }
 }
