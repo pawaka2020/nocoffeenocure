@@ -1,6 +1,5 @@
 import 'package:nocoffeenocure/models/user.dart';
 import 'package:nocoffeenocure/repos/user.dart';
-
 import '../backend/dummy/cartitem.dart';
 import '../common.dart';
 import '../main.dart';
@@ -9,6 +8,8 @@ import '../models/menuitem.dart';
 import '../models/order.dart';
 import 'menuitem.dart';
 import 'order.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class CartItemRepo {
   final box = objectbox.cartItemBox;
@@ -83,14 +84,50 @@ class CartItemRepo {
     currentUser?.cartItems.add(cartItem);
     UserRepo().box.put(currentUser);
 
-    
-
     //11/3/2024 I need to update the singleton as well.
     singletonUser = currentUser!;
-
+    //13/3/2024
+    putBackend(cartItem);
 
     //TODO: Write the cartitem object to user in postgreSQL database attached to Flask backend
 
+  }
+
+  Future<void> putBackend(CartItemOB cartItem) async {
+    if (singletonUser.guest == false) {
+      final url = onlineBackendURL + 'add_cart_user';
+
+      final Map<String, dynamic> data = {
+        'user_id' : singletonUser.userId.toString(),
+        'price' : cartItem.price,
+        'quantity' : cartItem.quantity,
+      };
+      // Encode data to JSON
+      final jsonData = json.encode(data);
+
+      try
+      {
+        final response = await http.post(
+
+          Uri.parse(url),
+          headers: <String, String> {
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonData,
+        );
+        if (response.statusCode == 200) {
+          printToast('Cartitem added to backend successfully');
+        }
+        else {
+          printToast('Failed to update user: ${response.statusCode}');
+          print('Failed to update user: ${response.statusCode}');
+        }
+      }
+      catch (e) {
+        printToast('Exception caught while updating user: $e');
+      }
+
+    }
   }
 
   void remove(int id) {

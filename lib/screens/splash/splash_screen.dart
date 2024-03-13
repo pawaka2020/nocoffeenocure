@@ -33,7 +33,7 @@ Future<void> preLoadFromBackend(BuildContext context) async {
       builder: (context) {
         return AlertDialog(
           title: Text('You\'re offline'),
-          content: Text('Please make sure you\'re connected to the Internet and try again'),
+          content: Text('Please make sure you\'re connected to the Internet and try again.'),
           actions: [
             TextButton(
               child: Text('Ok'),
@@ -49,14 +49,14 @@ Future<void> preLoadFromBackend(BuildContext context) async {
   }
   // Proceed with repository updates after connectivity is restored
   //await CountryRepo().update(BackendSource.dummy);
-  await FullNewsRepo().update(BackendSource.online); //
-  await BannerNewsRepo().update(BackendSource.online); //
+  await FullNewsRepo().update(BackendSource.online); // dummy
+  await BannerNewsRepo().update(BackendSource.online); // dummy
 
   await UserRepo().loginAppStart(BackendSource.dummy); //
   await VoucherRepo().update(BackendSource.dummy);
   //BackendSource.dummy
 //dummy
-  await MenuItemRepo().update(BackendSource.online); //dummy
+  await MenuItemRepo().update(BackendSource.online); // dummy
 
   print("Data pre-loaded");
 }

@@ -206,7 +206,6 @@ class UserRepo {
         }).toList();
       }
 
-
       // Create JSON data to send to Flask backend
       final Map<String, dynamic> data = {
         'user_id' : singletonUser.userId.toString(),

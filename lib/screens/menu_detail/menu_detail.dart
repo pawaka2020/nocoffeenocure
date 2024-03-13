@@ -76,7 +76,7 @@ class _MenuDetailsPageState extends State<MenuDetailsPage> {
     //   UserRepo().updateBackendUser();
     // }
 
-    UserRepo().updateBackendUser();
+    //UserRepo().updateBackendUser();
 
     widget.updateCartCount(1);
     Navigator.of(context).pop();
