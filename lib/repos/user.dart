@@ -201,7 +201,6 @@ class UserRepo {
           return {
             'price': item.price,
             'quantity': item.quantity,
-
           };
         }).toList();
       }

@@ -87,20 +87,23 @@ class CartItemRepo {
     //11/3/2024 I need to update the singleton as well.
     singletonUser = currentUser!;
     //13/3/2024
-    putBackend(cartItem);
+    //putBackend(cartItem);
 
     //TODO: Write the cartitem object to user in postgreSQL database attached to Flask backend
 
   }
 
   Future<void> putBackend(CartItemOB cartItem) async {
+    //printToast("cartItem id = ${cartItem.id}");
     if (singletonUser.guest == false) {
       final url = onlineBackendURL + 'add_cart_user';
 
       final Map<String, dynamic> data = {
         'user_id' : singletonUser.userId.toString(),
+        'id' : cartItem.id,
         'price' : cartItem.price,
         'quantity' : cartItem.quantity,
+        // cartitem child objects (TODO)
       };
       // Encode data to JSON
       final jsonData = json.encode(data);
@@ -108,7 +111,6 @@ class CartItemRepo {
       try
       {
         final response = await http.post(
-
           Uri.parse(url),
           headers: <String, String> {
             'Content-Type': 'application/json; charset=UTF-8',
@@ -116,17 +118,83 @@ class CartItemRepo {
           body: jsonData,
         );
         if (response.statusCode == 200) {
-          printToast('Cartitem added to backend successfully');
+          print('Cartitem added to backend successfully');
         }
         else {
-          printToast('Failed to update user: ${response.statusCode}');
           print('Failed to update user: ${response.statusCode}');
         }
       }
       catch (e) {
-        printToast('Exception caught while updating user: $e');
+        print('Exception caught while updating user: $e');
       }
 
+    }
+  }
+
+  Future<void> editBackend(CartItemOB cartItem) async {
+    if (singletonUser.guest == false) {
+      final url = onlineBackendURL + 'edit_cart_user';
+      final Map<String, dynamic> data = {
+        'user_id' : singletonUser.userId.toString(),
+        'id' : cartItem.id,
+        'price' : cartItem.price,
+        'quantity' : cartItem.quantity,
+        // cartitem child objects (TODO)
+      };
+      // Encode data to JSON
+      final jsonData = json.encode(data);
+
+      try
+      {
+        final response = await http.post(
+          Uri.parse(url),
+          headers: <String, String> {
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonData,
+        );
+        if (response.statusCode == 200) {
+          print('Cartitem added to backend successfully');
+        }
+        else {
+          print('Failed to update user: ${response.statusCode}');
+        }
+      }
+      catch (e) {
+        print('Exception caught while updating user: $e');
+      }
+    }
+  }
+
+  Future<void> deleteBackend(int id) async {
+    if (singletonUser.guest == false) {
+      final url = onlineBackendURL + 'delete_cart_user';
+      final Map<String, dynamic> data = {
+        'user_id' : singletonUser.userId.toString(),
+        'id' : id,
+      };
+
+      final jsonData = json.encode(data);
+
+      try
+      {
+        final response = await http.post(
+          Uri.parse(url),
+          headers: <String, String> {
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonData,
+        );
+        if (response.statusCode == 200) {
+          print('Cartitem added to backend successfully');
+        }
+        else {
+          print('Failed to update user: ${response.statusCode}');
+        }
+      }
+      catch (e) {
+        print('Exception caught while updating user: $e');
+      }
     }
   }
 

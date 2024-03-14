@@ -127,8 +127,8 @@ class _CartScreenState extends State<CartScreen> {
     if (confirmation) {
       setState(() {
         CartItemRepo().remove(id);
-
-        UserRepo().updateBackendUser();
+        CartItemRepo().deleteBackend(id);
+        //UserRepo().updateBackendUser();
 
         widget.cartItems = CartItemRepo().getAll();
         widget.updateCartCount(-1);
@@ -159,7 +159,8 @@ class _CartScreenState extends State<CartScreen> {
       setState(() {
         //CartItemRepo().box.put(updatedCartItem); //replace this? 12/3/2024
         CartItemRepo().put(updatedCartItem);
-        UserRepo().updateBackendUser();
+        //UserRepo().updateBackendUser();
+        CartItemRepo().editBackend(updatedCartItem);
         widget.cartItems = CartItemRepo().getAll();
         adjustPrice();
         printToast("Cart item updated");

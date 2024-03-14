@@ -69,6 +69,7 @@ class _MenuDetailsPageState extends State<MenuDetailsPage> {
     ;
     //write it to objectbox
     CartItemRepo().put(newcart);
+    CartItemRepo().putBackend(newcart);
     // if (singletonUser.guest == false) {
     //   //add to user table on backend.
     //   print("singletonuser id = ${singletonUser.userId}");
