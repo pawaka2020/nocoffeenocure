@@ -219,6 +219,31 @@ class MenuItemOB {
       this.available ?? false,
     );
   }
+
+  // 'menuitem': cartItem.menuItemOB.map((item) => {
+  // 'imagepath': item.imagePath,
+  // 'title': item.title,
+  // 'price': item.price,
+  // 'category': item.category,
+  // 'description': item.description,
+  // 'available': item.available,
+  // 'userreviews': item.userReviews.map((review) => review.toJson()).toList(),
+  // 'additions': item.additions.map((addition) => addition.toJson()).toList(),
+  // 'ingredients': item.ingredients.map((ingredient) => ingredient.toJson()).toList(),
+  // }).toList(),
+  Map<String, dynamic> toJson() {
+    return {
+      'imagepath': imagePath,
+      'title': title,
+      'price': price,
+      'category': category,
+      'description': description,
+      'available': available,
+      'userreviews': userReviews.map((review) => review.toJson()).toList(),
+      'additions': additions.map((addition) => addition.toJson()).toList(),
+      'ingredients': ingredients.map((ingredient) => ingredient.toJson()).toList(),
+    };
+  }
 }
 
 @Entity()
@@ -239,6 +264,14 @@ class UserReviewOB {
       this.stars ?? 0,
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'name': name,
+      'message': message,
+      'stars': stars,
+    };
+  }
 }
 
 @Entity()
@@ -253,6 +286,16 @@ class AdditionOB {
   final menuItem = ToOne<MenuItemOB>();
   @Backlink()
   final additionDetails = ToMany<AdditionDetailOB>();
+
+  Map<String, dynamic> toJson() {
+    return {
+      'title': title,
+      'selectedPrice': selectedPrice,
+      'selectedIndex': selectedIndex,
+      'additionDetails': additionDetails.map((detail) => detail.toAdditionDetail()).toList(),
+    };
+  }
+
 
   Addition toAddition() {
     return Addition(
@@ -280,6 +323,13 @@ class AdditionDetailOB {
       this.price ?? 0.0,
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'name': name,
+      'price': price,
+    };
+  }
 }
 
 @Entity()
@@ -291,6 +341,13 @@ class IngredientOB {
   String? imagePath;
 
   final menuItem = ToOne<MenuItemOB>();
+
+  Map<String, dynamic> toJson() {
+    return {
+      'name': name,
+      'imagePath': imagePath,
+    };
+  }
 
   Ingredient toIngredient() {
     return Ingredient(

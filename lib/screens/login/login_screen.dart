@@ -13,6 +13,12 @@ import '../login/builddisclaimertext.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
+//Future<void> sendEmail(String email) async {
+//   String url = onlineBackendURL + 'api/verify_email';
+
+// Future<void> verifyCode(String enteredCode, String email) async {
+//   String url = onlineBackendURL + 'api/verify_email_code';
+
 enum AuthStage {
   login,
   verification,
@@ -79,7 +85,9 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future<void> verifyCode(String enteredCode, String email) async {
-    String url = onlineBackendURL + 'api/verify_email_code';
+    //String url = onlineBackendURL + 'api/verify_email_code';
+    String url = onlineBackendURL + 'api/verify_code';
+
     Map<String, dynamic> data = {
       'email': email,
       'entered_code' : enteredCode,
@@ -98,7 +106,7 @@ class _LoginScreenState extends State<LoginScreen> {
         print('email entered = ${jsonResponse['email']}');
         print('verification code = ${jsonResponse['verification_code']}');
         print('auth token = ${jsonResponse['auth_token']}');
-
+        
         final authToken = jsonResponse['auth_token'];
         UserRepo().loginUserBackend(authToken);
         printToast("Login successful");
@@ -109,69 +117,13 @@ class _LoginScreenState extends State<LoginScreen> {
         // Handle error if needed
       }
       else {
-
+        printToast("ERROR: ERROR");
       }
     }
     catch (e) {
       print('Error sending verification code: $e');
     }
   }
-
-  // Widget loginUI() => ListView(
-  //     children: [
-  //       Padding(
-  //           padding: EdgeInsets.fromLTRB(24, 24, 24, 0),
-  //           child: Column(
-  //             children: [
-  //               Card(
-  //                 elevation: 4.0,
-  //                 shape: RoundedRectangleBorder(
-  //                   borderRadius: BorderRadius.circular(4.0),
-  //                 ),
-  //                 child: ClipRRect(
-  //                   borderRadius: BorderRadius.circular(4.0),
-  //                   child: Image.asset(
-  //                     'assets/images/ncnclogo.png',
-  //                     fit: BoxFit.fill,
-  //                   ),
-  //                 ),
-  //               ),
-  //               SizedBox(height: 24),
-  //               buildPhoneNumber(_phoneNumber, updatePhoneNumber),
-  //               SizedBox(height: 24),
-  //               ElevatedButton(
-  //                 onPressed: () {
-  //                   getVerificationCode();
-  //                 },
-  //                 style: ElevatedButton.styleFrom(
-  //                   backgroundColor: Colors.orange,
-  //                   shape: RoundedRectangleBorder(
-  //                     borderRadius: BorderRadius.circular(10.0),
-  //                   ),
-  //                 ),
-  //                 child: Container(
-  //                   width: double.infinity,
-  //                   child: Center(
-  //                     child: Text(
-  //                       "Get Verification Code",
-  //                       style: TextStyle(
-  //                         color: Colors.white,
-  //                         fontSize: 16,
-  //                       ),
-  //                     ),
-  //                   ),
-  //                 ),
-  //               ),
-  //               SizedBox(height: 133), //135
-  //             ],
-  //           )
-  //       ),
-  //       CustomPaint(
-  //         size: Size(MediaQuery.of(context).size.width, 100), //change this '50' to a height value that fills the rest of the unoccupied screen's height
-  //         painter: SlopedHillPainter(),
-  //       ),
-  //     ]
-  // );
 
   Widget loginEmailUI() => ListView(
       children: [
@@ -229,7 +181,6 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ]
   );
-
 
   Widget verificationUI() => Padding(
       padding: EdgeInsets.fromLTRB(24, 24, 24, 0),

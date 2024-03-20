@@ -96,15 +96,29 @@ class CartItemRepo {
   Future<void> putBackend(CartItemOB cartItem) async {
     //printToast("cartItem id = ${cartItem.id}");
     if (singletonUser.guest == false) {
-      final url = onlineBackendURL + 'add_cart_user';
+      //final url = onlineBackendURL + 'add_cart_user';
+      final url = onlineBackendURL + 'add_cartitem';
 
       final Map<String, dynamic> data = {
         'user_id' : singletonUser.userId.toString(),
         'id' : cartItem.id,
         'price' : cartItem.price,
         'quantity' : cartItem.quantity,
-        // cartitem child objects (TODO)
+        'menuitem_id' : cartItem.menuItem_id,
+        // 'menuitem': cartItem.menuItemOB.map((item) => {
+        //   'imagepath': item.imagePath,
+        //   'title': item.title,
+        //   'price': item.price,
+        //   'category': item.category,
+        //   'description': item.description,
+        //   'available': item.available,
+        //   'userreviews': item.userReviews.map((review) => review.toJson()).toList(),
+        //   'additions': item.additions.map((addition) => addition.toJson()).toList(),
+        //   'ingredients': item.ingredients.map((ingredient) => ingredient.toJson()).toList(),
+        // }).toList(),
+        'menuitem': cartItem.menuItemOB.map((menuitem)=> menuitem.toJson()).toList(),
       };
+
       // Encode data to JSON
       final jsonData = json.encode(data);
 

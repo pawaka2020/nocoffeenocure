@@ -5,6 +5,8 @@ import 'dart:convert';
 import '../../common.dart';
 import 'package:http/http.dart' as http;
 
+import '../dummy/menuitem.dart';
+
 class MenuItemOnline {
 
   List<UserReviewOB> getUserReviews(Map<String, dynamic> json) {
@@ -28,15 +30,17 @@ class MenuItemOnline {
       for (var additionJson in additionJsonList) {
         AdditionOB addition = AdditionOB()
           ..title = additionJson['title']
-          ..selectedPrice = additionJson['selectedPrice']
-          ..selectedIndex = additionJson['selectedIndex'];
+          ..selectedPrice = additionJson['selectedPrice'].toDouble()// I got error int is not a subtype of Double
+          ..selectedIndex = additionJson['selectedIndex']
+          ;
 
         if (additionJson['addition_details'] != null) {
           List<dynamic> detailJsonList = additionJson['addition_details'];
           for (var detailJson in detailJsonList) {
             AdditionDetailOB detail = AdditionDetailOB()
               ..name = detailJson['name']
-              ..price = detailJson['price'];
+              ..price = detailJson['price'].toDouble()
+            ;
             addition.additionDetails.add(detail);
           }
         }
@@ -68,7 +72,6 @@ class MenuItemOnline {
         for (var json in menuitemJson) {
           MenuItemOB menuitem = MenuItemOB()
             ..imagePath = await getImage(json['imagepath'],'menuitem')
-            //..imagePath = 'assets/images/coffeesample.png'
             ..title = json['title']
             ..price = json['price'].toDouble()
             ..category = json['category']
@@ -78,10 +81,13 @@ class MenuItemOnline {
           menuitem.userReviews.addAll(getUserReviews(json));
           menuitem.additions.addAll(getAdditions(json));
           menuitem.ingredients.addAll(getIngredients(json));
+
           menuitemList.add(menuitem);
         }
         menuitemLoaded = true;
+        //print("asdsaddsdsadAAAAA");
         return menuitemList;
+        //return MenuItemDummy().get();
       }
       else {
         menuitemLoaded = false;
