@@ -34,13 +34,35 @@ class UserOB {
   //ongoing orders
 
   @Backlink()
-  final reviews = ToMany<UserReview2OB>();
-  @Backlink()
   final orders = ToMany<OrderOB>();
   @Backlink()
   final vouchers = ToMany<VoucherOB>();
+  //@Backlink()
+  //late final cartItems = ToMany<CartItemOB>();
   @Backlink()
   final cartItems = ToMany<CartItemOB>();
+  @Backlink()
+  final reviews = ToMany<UserReview2OB>();
+
+  Map<String, dynamic> toJson() {
+    return {
+      'user_id': userId,
+      'name': name,
+      'email': email,
+      'birthday': birthday?.toIso8601String(), //Converting object to an encodable object failed: Instance of 'DateTime'
+      'phone_number': phoneNumber,
+      'address': address,
+      'profile_image': profileImage,
+      'coins': coins,
+      'guest': guest,
+      'is_logged_in': isLoggedIn,
+      'new_user': newUser,
+      'set_default_address': setDefaultAddress,
+      // child objects
+      'cart_items': cartItems.map((review) => review.toJson()).toList(),
+    };
+  }
+
 }
 
 @Entity()

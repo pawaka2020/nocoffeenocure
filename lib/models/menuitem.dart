@@ -244,6 +244,52 @@ class MenuItemOB {
       'ingredients': ingredients.map((ingredient) => ingredient.toJson()).toList(),
     };
   }
+
+
+  MenuItemOB();
+
+  // Define a fromJson method to create a MenuItemOB instance from JSON data
+  factory MenuItemOB.fromJson(Map<String, dynamic> json) {
+    MenuItemOB menuItem = MenuItemOB()
+      ..id = json['id'] ?? 0
+      ..imagePath = json['imagePath']
+      ..title = json['title']
+      ..price = json['price'] ?? 0
+      ..category = json['category']
+      ..description = json['description']
+      ..available = json['available'] ?? false
+    ;
+    menuItem.userReviews.addAll(UserReviewOB.listFromJson(json['userreviews'] ?? [])); //UserReviewOB.listFromJson(json['userreviews'] ?? []
+    menuItem.additions.addAll([]); //AdditionOB.listFromJson(json['additions'] ?? [])
+    menuItem.ingredients.addAll([]); //IngredientOB.listFromJson(json['ingredients'] ?? [])
+
+    return menuItem;
+
+    // return MenuItemOB()
+    //   ..id = json['id'] ?? 0
+    //   ..imagePath = json['imagePath']
+    //   ..title = json['title']
+    //   ..price = json['price'] ?? 0
+    //   ..category = json['category']
+    //   ..description = json['description']
+    //   ..available = json['available'] ?? false
+    //   // ..userReviews = UserReviewOB.listFromJson(json['userreviews'] ?? [])
+    //   // ..additions = AdditionOB.listFromJson(json['additions'] ?? [])
+    //   // ..ingredients = IngredientOB.listFromJson(json['ingredients'] ?? [])
+    // ;
+    // }
+
+  }
+
+  // Define a listFromJson method to create a list of MenuItemOB instances from a list of JSON data
+  static List<MenuItemOB> listFromJson(List<dynamic> jsonList) {
+    List<MenuItemOB> items = [];
+    for (var json in jsonList) {
+      items.add(MenuItemOB.fromJson(json));
+    }
+    return items;
+  }
+
 }
 
 @Entity()
@@ -264,6 +310,28 @@ class UserReviewOB {
       this.stars ?? 0,
     );
   }
+
+  UserReviewOB();
+
+  // Define a fromJson method to create a UserReviewOB instance from JSON data
+  factory UserReviewOB.fromJson(Map<String, dynamic> json) {
+    return UserReviewOB()
+      ..id = json['id'] ?? 0
+      ..name = json['name'] ?? ''
+      ..message = json['message'] ?? ''
+      ..stars = json['stars'] ?? 0
+    ;
+  }
+
+  // Define a listFromJson method to create a list of UserReviewOB instances from a list of JSON data
+  static List<UserReviewOB> listFromJson(List<dynamic> jsonList) {
+    List<UserReviewOB> items = [];
+    for (var json in jsonList) {
+      items.add(UserReviewOB.fromJson(json));
+    }
+    return items;
+  }
+
 
   Map<String, dynamic> toJson() {
     return {
@@ -296,7 +364,6 @@ class AdditionOB {
     };
   }
 
-
   Addition toAddition() {
     return Addition(
       this.title ?? '',
@@ -304,6 +371,21 @@ class AdditionOB {
       this.selectedPrice ?? 0,
       this.additionDetails.map((detail) => detail.toAdditionDetail()).toList(),
     );
+  }
+
+  AdditionOB();
+
+  // Define a fromJson method to create an AdditionOB instance from JSON data
+  factory AdditionOB.fromJson(Map<String, dynamic> json) {
+    final addition = AdditionOB()
+      ..id = json['id'] ?? 0
+      ..title = json['title'] ?? ''
+      ..selectedPrice = json['selectedPrice'] ?? 0
+      ..selectedIndex = json['selectedIndex'] ?? 0
+    ;
+    addition.additionDetails.addAll([]);
+
+    return addition;
   }
 }
 

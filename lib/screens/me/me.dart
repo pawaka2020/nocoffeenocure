@@ -62,8 +62,8 @@ class _MeState extends State<MeScreen> {
 
   void logoutUser() {
     setState(() {
-      //UserRepo().logoutUser();
-      UserRepo().logoutUserBackend();
+      UserRepo().logoutUser();
+      //UserRepo().logoutUserBackend();
       widget.adjustCartCountTracking();
       printToast('Successfully logged out');
     });

@@ -43,8 +43,11 @@ class CartScreen extends StatefulWidget {
   bool tracking;
   //void Function(bool, int) setTracking;
   CartScreen(this.updateCartCount, this.placeOrder,  this.tracking);
-  var cartItems = CartItemRepo().getAll();
-  var vouchers = VoucherRepo().getAll();
+  //var cartItems = CartItemRepo().getAll() ?? [];
+  List<CartItemOB> cartItems =  [];
+  //List<CartItemOB> cartItems = CartItemRepo().getAll() ?? [];
+  //var vouchers = VoucherRepo().getAll();
+  List<VoucherOB> vouchers =  [];
 
   @override
   State<StatefulWidget> createState() => _CartScreenState();
@@ -250,7 +253,8 @@ class _CartScreenState extends State<CartScreen> {
 
   @override
   Widget build(BuildContext context) {
-    widget.vouchers = VoucherRepo().getAll(); //this one
+    widget.vouchers = VoucherRepo().getAll();
+
     _usedList = VoucherRepo()
         .getFromIdList(widget.vouchers, _selectedVoucherIds);
     adjustPrice();

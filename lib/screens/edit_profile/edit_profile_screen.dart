@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'package:camera/camera.dart';
+import 'package:date_picker_plus/date_picker_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:nocoffeenocure/screens/edit_profile/savechanges.dart';
 import 'package:nocoffeenocure/screens/edit_profile/takephotoscreen.dart';
@@ -11,6 +13,7 @@ import '../../widgets/partial_divider.dart';
 import '../cart/specialrequest.dart';
 import 'addressfield.dart';
 import 'birthdayfield.dart';
+import 'buildbirthdayfield.dart';
 import 'editnamefield.dart';
 import 'imageselection.dart';
 import 'package:http/http.dart' as http;
@@ -32,6 +35,7 @@ class EditProfileState extends State<EditProfileScreen> {
   TextEditingController _nameController = TextEditingController();
   TextEditingController _emailController = TextEditingController();
   TextEditingController _addressController = TextEditingController();
+  TextEditingController _birthdayController = TextEditingController();
   String _profileImage = singletonUser.profileImage!;
   late XFile file;
   //bool newlyRegistered = singletonUser.newlyRegistered;
@@ -62,9 +66,13 @@ class EditProfileState extends State<EditProfileScreen> {
   }
 
   void updateBirthday(DateTime birthday) {
+    //printToast("birthday updated to ${_birthday.toString()}");
     setState((){
       _birthday = birthday;
+      //printToast("birthday updated to ${_birthday.toString()}");
     });
+    //_birthday = birthday;
+
   }
 
   void updateAddress(String address) {
@@ -146,7 +154,6 @@ class EditProfileState extends State<EditProfileScreen> {
     return result;
   }
 
-
   void saveChanges(BuildContext context) async {
 
     if (_setDefaultAddress == true) {
@@ -160,6 +167,36 @@ class EditProfileState extends State<EditProfileScreen> {
     printToast("Changes saved");
     //do the same for photo, email, birthday, address, setting delivery address
     Navigator.of(context).pop(true);
+
+    // DateTime date = await showDatePickerDialog(
+    //   context: context,
+    //   minDate: DateTime(1900, 1, 1),
+    //   maxDate: DateTime(2023, 12, 31),
+    //   initialDate: DateTime(1900, 1, 1),
+    //   daysOfTheWeekTextStyle : TextStyle(
+    //     color: Colors.blue,
+    //     fontSize: 10,
+    //   ),
+    //   enabledCellsTextStyle : TextStyle(
+    //     //color: Colors.green,
+    //   ),
+    //   disabledCellsTextStyle :TextStyle(
+    //     color: Colors.white,
+    //   ),
+    //   currentDateTextStyle:TextStyle(
+    //     //color: Colors.orange,
+    //   ),
+    //   selectedCellTextStyle: TextStyle(
+    //     color: Colors.grey,
+    //   ),
+    //   leadingDateTextStyle: TextStyle(
+    //     color: Colors.orange,
+    //     fontSize: 16,
+    //   ),
+    // ) ?? DateTime(1900, 1, 1);
+
+    //printToast("The entered date is ${date.toString()}");
+
   }
 
   @override
@@ -170,6 +207,7 @@ class EditProfileState extends State<EditProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -199,7 +237,6 @@ class EditProfileState extends State<EditProfileScreen> {
                 buildField("Email", 'Eg. example@gmail.com', _emailController, updateEmail),
                 SizedBox(height: 10),
                 PartialDivider(20, 30),
-                //buildPhoneField
                 buildBirthdayField(_birthday, updateBirthday, context),
                 PartialDivider(20, 30),
                 AddressField(_address, _setDefaultAddress, updateAddress, updatesetDefaultAddress),
@@ -246,3 +283,54 @@ Widget buildField(String title, String hintText, TextEditingController controlle
   );
 }
 
+String _formatDate(DateTime date) {
+  return "${date.day}/${date.month}/${date.year}";
+}
+
+// Widget buildBirthdayField2(BuildContext context, TextEditingController controller, DateTime? initialDate) {
+//   return GestureDetector(
+//     onTap: () async {
+//       DateTime? picked = await showDatePicker(
+//         context: context,
+//         initialDate: initialDate ?? DateTime.now(),
+//         firstDate: DateTime(1900),
+//         lastDate: DateTime.now(),
+//         builder: (BuildContext context, Widget? child) {
+//           return Theme(
+//             data: ThemeData.light().copyWith(
+//               colorScheme: ColorScheme.light(
+//                 primary: Colors.blue, // header background color
+//                 onPrimary: Colors.white, // header text color
+//                 surface: Colors.blue, // background color of calendar
+//                 onSurface: Colors.black, // text color of calendar dates
+//               ),
+//               dialogBackgroundColor: Colors.white, // dialog background color
+//             ),
+//             child: child!,
+//           );
+//         },
+//       );
+//       if (picked != null && picked != initialDate) {
+//         // Update the initialDate to the picked date
+//         initialDate = picked;
+//         controller.text = "${picked.year}-${picked.month}-${picked.day}";
+//       }
+//     },
+//     child: AbsorbPointer(
+//       child: TextFormField(
+//         controller: controller,
+//         decoration: InputDecoration(
+//           labelText: 'Birthday',
+//           hintText: 'Enter your birthday',
+//           prefixIcon: Icon(Icons.calendar_today),
+//         ),
+//         validator: (value) {
+//           if (value == null || value.isEmpty) {
+//             return 'Please enter your birthday';
+//           }
+//           return null;
+//         },
+//       ),
+//     ),
+//   );
+// }

@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import '../backend/dummy/user.dart';
 import '../common.dart';
 import '../main.dart';
@@ -10,10 +9,6 @@ import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io';
 
-//In release version, only fetch from online database.
-//The repo should only have two users: logged in user and guest user.
-//the repo should only fetch logged in user
-//at the very first time of app launch, create guest user and write into the offline cache.
 class UserRepo {
   final box = objectbox.userBox;
   String? currentUserId;
@@ -135,8 +130,19 @@ class UserRepo {
       ..isLoggedIn = decodedToken['is_logged_in']
       ..newUser = decodedToken['new_user']
       ..setDefaultAddress = decodedToken['set_default_address']
-      //backlinks (TODO)
     ;
+
+    // List<Map<String, dynamic>> decodedCartItems = decodedToken['cart_items'] ?? [];
+    // for (var itemData in decodedCartItems) {
+    //   CartItemOB cartItem = CartItemOB()
+    //     //..title = itemData['title']
+    //   // Add other fields as needed
+    //   ;
+    //   loggedinUser.cartItems.add(cartItem);
+    // }
+    //loggedinUser.cartItems = CartItemOB().listFromJson(decodedToken['cart_items']));
+    loggedinUser.cartItems.addAll(CartItemOB.listFromJson(decodedToken['cart_items']) ?? []);
+
     //the rest here is the same
     UserOB guestUser = users.firstWhere((user) => user.guest == true);
     guestUser.isLoggedIn = false;
@@ -145,12 +151,39 @@ class UserRepo {
     singletonUser = loggedinUser!;
   }
 
-  void logoutUserBackend() {
-    List<UserOB> users = box.getAll();
-    UserOB guestUser = users.firstWhere((user) => user.guest == true);
-    guestUser.isLoggedIn = true;
-    box.put(guestUser);
-    singletonUser = guestUser;
+  Future<void> logoutUserBackend() async {
+    /////
+    final url = onlineBackendURL + 'logoff';
+
+    print("Logging off user with userId = ${singletonUser.userId}");
+
+    final Map<String, dynamic> data = {
+      'user_id' : singletonUser.userId.toString(),
+    };
+
+    // Encode data to JSON
+    final jsonData = json.encode(data);
+    //
+    try
+    {
+      final response = await http.post(
+        Uri.parse(url),
+        headers: <String, String> {
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonData,
+      );
+      if (response.statusCode == 200) {
+        print('User userId = ${singletonUser.userId} logged off successfully');
+      }
+      else {
+        print('Failed to log off user: ${response.statusCode}');
+      }
+    }
+    catch (e) {
+      print('Exception caught while logging off user: $e');
+    }
+
   }
 
   void editUser() {
@@ -158,9 +191,13 @@ class UserRepo {
   }
 
   void logoutUser() {
+
+    logoutUserBackend();
+
     List<UserOB> users = box.getAll();
     UserOB guestUser = users.firstWhere((user) => user.guest == true);
     UserOB registeredUser = users.firstWhere((user) => user.guest == false);
+
 
     guestUser.isLoggedIn = true;
     registeredUser.isLoggedIn = false;
@@ -169,6 +206,7 @@ class UserRepo {
     box.put(registeredUser);
 
     singletonUser = guestUser;
+
     //printToast("!!! from logout, cartitem length = ${singletonUser.cartItems.length}, order length = ${singletonUser.orders.length}");
   }
 
@@ -188,45 +226,34 @@ class UserRepo {
     registeredUser.address = address;
     registeredUser.setDefaultAddress = setDefaultAddress;
 
+
     box.put(registeredUser);
     singletonUser = registeredUser;
+
+    updateBackendUser();
   }
 
   Future<void> updateBackendUser() async {
     if (singletonUser.guest == false) {
-      final url = onlineBackendURL + 'update_user';
-
-      List<Map<String, dynamic>> mapCartItems(List<CartItemOB> cartItems) {
-        return cartItems.map((item) {
-          return {
-            'price': item.price,
-            'quantity': item.quantity,
-          };
-        }).toList();
-      }
-
-      // Create JSON data to send to Flask backend
+      final url = onlineBackendURL + '/api/update_user';
+      String imageBase64 = await getImageBase64(singletonUser.profileImage!);
       final Map<String, dynamic> data = {
-        'user_id' : singletonUser.userId.toString(),
-        'new_address' : singletonUser.address!,
-        'new_name' : singletonUser.name!,
-        'new_email' : singletonUser.email!,
-        'new_birthday' : singletonUser.birthday.toString(),
-        'new_phone_number' : singletonUser.phoneNumber!,
-        'new_profile_image' : singletonUser.profileImage!,
-        'new_coins' : singletonUser.coins.toString(),
-        'new_guest' : singletonUser.guest! ? 'true' : 'false',
-        'new_is_logged_in' : singletonUser.isLoggedIn! ? 'true' : 'false',
-        'new_new_user' : singletonUser.newUser! ? 'true' : 'false',
-        'new_set_default_address' : singletonUser.setDefaultAddress ? 'true' : 'false',
-        // 'cart_items': user.cartItems.map((item) => {
-        //   'price': item.price,
-        //   'quantity' : item.quantity,
-        // }).toList(),
-        'cart_items' : mapCartItems(singletonUser.cartItems)
-        //do the same here for 'cart_items'
+        'user_id': singletonUser.userId,
+        'name': singletonUser.name,
+        'email': singletonUser.email,
+        'birthday': singletonUser.birthday?.toIso8601String(), //Converting object to an encodable object failed: Instance of 'DateTime'
+        'phone_number': singletonUser.phoneNumber,
+        'address': singletonUser.address,
+        'profile_image': singletonUser.profileImage,
+        'coins': singletonUser.coins,
+        'guest': singletonUser.guest,
+        'is_logged_in': singletonUser.isLoggedIn,
+        'new_user': singletonUser.newUser,
+        'set_default_address': singletonUser.setDefaultAddress,
+        // child objects
+        'cart_items': singletonUser.cartItems.map((review) => review.toJson()).toList(),
+        'image_base_64': imageBase64,
       };
-
       // Encode data to JSON
       final jsonData = json.encode(data);
       try
@@ -250,5 +277,23 @@ class UserRepo {
       }
     }
     else return ;
+  }
+
+  Future<String> getImageBase64(String image_path) async {
+    print("profile image = ${image_path}");
+    if (image_path == '')
+      //logic 1
+      return "";
+    else {
+      //logic 2
+      File imageFile = File(image_path);
+      List<int> imageBytes = await imageFile.readAsBytes();
+
+      // Convert the image bytes to a base64-encoded string
+      String imageBase64 = base64Encode(imageBytes);
+
+      return imageBase64;
+    }
+
   }
 }

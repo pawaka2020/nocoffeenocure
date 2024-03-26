@@ -105,17 +105,6 @@ class CartItemRepo {
         'price' : cartItem.price,
         'quantity' : cartItem.quantity,
         'menuitem_id' : cartItem.menuItem_id,
-        // 'menuitem': cartItem.menuItemOB.map((item) => {
-        //   'imagepath': item.imagePath,
-        //   'title': item.title,
-        //   'price': item.price,
-        //   'category': item.category,
-        //   'description': item.description,
-        //   'available': item.available,
-        //   'userreviews': item.userReviews.map((review) => review.toJson()).toList(),
-        //   'additions': item.additions.map((addition) => addition.toJson()).toList(),
-        //   'ingredients': item.ingredients.map((ingredient) => ingredient.toJson()).toList(),
-        // }).toList(),
         'menuitem': cartItem.menuItemOB.map((menuitem)=> menuitem.toJson()).toList(),
       };
 
@@ -147,12 +136,15 @@ class CartItemRepo {
 
   Future<void> editBackend(CartItemOB cartItem) async {
     if (singletonUser.guest == false) {
-      final url = onlineBackendURL + 'edit_cart_user';
+      //final url = onlineBackendURL + 'edit_cart_user';
+      final url = onlineBackendURL + 'edit_cartitem';
       final Map<String, dynamic> data = {
-        'user_id' : singletonUser.userId.toString(),
-        'id' : cartItem.id,
-        'price' : cartItem.price,
-        'quantity' : cartItem.quantity,
+        'user_id': singletonUser.userId.toString(),
+        'id': cartItem.id,
+        'price': cartItem.price,
+        'quantity': cartItem.quantity,
+        'menuitem_id': cartItem.menuItem_id,
+        'menuitem': cartItem.menuItemOB.map((menuitem)=> menuitem.toJson()).toList(),
         // cartitem child objects (TODO)
       };
       // Encode data to JSON
@@ -182,7 +174,8 @@ class CartItemRepo {
 
   Future<void> deleteBackend(int id) async {
     if (singletonUser.guest == false) {
-      final url = onlineBackendURL + 'delete_cart_user';
+      //final url = onlineBackendURL + 'delete_cart_user';
+      final url = onlineBackendURL + 'delete_cartitem';
       final Map<String, dynamic> data = {
         'user_id' : singletonUser.userId.toString(),
         'id' : id,
