@@ -58,10 +58,13 @@ class VoucherRepo {
     //return box.getAll();
     //print("!!!! This function is called!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
 
-    UserOB? currentUser = UserRepo().getLoggedInUser();
-    //printVoucher(currentUser!.vouchers);
-    List<VoucherOB> vouchers = currentUser!.vouchers;
-    return vouchers;
+    // UserOB? currentUser = UserRepo().getLoggedInUser();
+    // //printVoucher(currentUser!.vouchers);
+    // List<VoucherOB> vouchers = currentUser!.vouchers;
+    // return vouchers;
+
+    //3/27/2024
+    return singletonUser.vouchers;
   }
 
   void printVoucher(List<VoucherOB> list) {

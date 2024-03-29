@@ -59,19 +59,14 @@ class CartItemRepo {
   List<CartItemOB> getAll() {
     //return box.getAll();
 
-    UserOB? currentUser = UserRepo().getLoggedInUser();
-    List<CartItemOB> cartItems = currentUser!.cartItems;
-    return cartItems;
+    //old code
+    //UserOB? currentUser = UserRepo().getLoggedInUser();
+    //List<CartItemOB> cartItems = currentUser!.cartItems;
 
-    List<MenuItemOB> menuItems = MenuItemRepo().getAllOB();
-    // List<CartItemOB> cartItems = box.getAll();
-    // for (var item in cartItems) {
-    //   item.menuItemOB.addAll(menuItems);
-    // }
-    // UserOB? currentUser = UserRepo().getLoggedInUser();
-    // currentUser?.cartItems.addAll(cartItems);
-    // UserRepo().box.put(currentUser);
-    // return cartItems;
+    //return cartItems;
+
+    //new code (3/27/2024)
+    return singletonUser.cartItems;
   }
 
   //called by menu_details
@@ -79,9 +74,12 @@ class CartItemRepo {
     //box.put(cartItem);
     //MenuItemRepo().put(cartItem.menuItemOB[0]);
     //currentUser.orders.add(newOrder);
+    //final users = box.getAll();
+    //UserOB? currentUser =  users.firstWhere((user) => (user.isLoggedIn == true) && (user.userId == singletonUser.userId));
 
     UserOB? currentUser = UserRepo().getLoggedInUser();
     currentUser?.cartItems.add(cartItem);
+    print("current user id is ${currentUser?.userId}");
     UserRepo().box.put(currentUser);
 
     //11/3/2024 I need to update the singleton as well.
@@ -161,6 +159,7 @@ class CartItemRepo {
         );
         if (response.statusCode == 200) {
           print('Cartitem added to backend successfully');
+          //singletonUser.cartItems = cartItem;
         }
         else {
           print('Failed to update user: ${response.statusCode}');

@@ -67,6 +67,7 @@ class _MenuDetailsPageState extends State<MenuDetailsPage> {
       ..price = price
       ..menuItemOB.add(widget.menuItem.toMenuItemOB()) //this one
     ;
+
     //write it to objectbox
     CartItemRepo().put(newcart);
     CartItemRepo().putBackend(newcart);

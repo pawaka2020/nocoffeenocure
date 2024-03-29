@@ -89,39 +89,40 @@ class _LoginScreenState extends State<LoginScreen> {
     String url = onlineBackendURL + 'api/verify_code';
 
     Map<String, dynamic> data = {
-      'email': email,
-      'entered_code' : enteredCode,
+      'email': email ?? '',
+      'entered_code' : enteredCode ?? 0,
     };
-    try {
-      final response = await http.post(
-        Uri.parse(url),
-        body: json.encode(data), // Encode the data as JSON
-        headers: <String, String> {
-          'Content-Type': 'application/json', // Set content type header
-        },
-      );
-      if (response.statusCode == 200) {
-        print('Verification code sent successfully');
-        final jsonResponse = jsonDecode(response.body);
-        print('email entered = ${jsonResponse['email']}');
-        print('verification code = ${jsonResponse['verification_code']}');
-        print('auth token = ${jsonResponse['auth_token']}');
-        
-        final authToken = jsonResponse['auth_token'];
-        UserRepo().loginUserBackend(authToken);
-        printToast("Login successful");
-        Navigator.of(context).pop(true);
-      }
-      else if (response.statusCode == 400)  {
-        printToast('Error: verification code incorrect');
-        // Handle error if needed
-      }
-      else {
-        printToast("ERROR: ERROR");
-      }
+    // try {
+    //
+    // }
+    // catch (e) {
+    //   print('Error sending verification code: $e');
+    // }
+    final response = await http.post(
+      Uri.parse(url),
+      body: json.encode(data), // Encode the data as JSON
+      headers: <String, String> {
+        'Content-Type': 'application/json', // Set content type header
+      },
+    );
+    if (response.statusCode == 200) {
+      print('Verification code sent successfully');
+      final jsonResponse = jsonDecode(response.body);
+      print('email entered = ${jsonResponse['email']}');
+      print('verification code = ${jsonResponse['verification_code']}');
+      print('auth token = ${jsonResponse['auth_token']}');
+
+      final authToken = jsonResponse['auth_token'];
+      UserRepo().loginUserBackend(authToken);
+      printToast("Login successful");
+      Navigator.of(context).pop(true);
     }
-    catch (e) {
-      print('Error sending verification code: $e');
+    else if (response.statusCode == 400)  {
+      printToast('Error: verification code incorrect');
+      // Handle error if needed
+    }
+    else {
+      printToast("ERROR: ERROR");
     }
   }
 

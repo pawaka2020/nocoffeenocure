@@ -44,8 +44,9 @@ class CartScreen extends StatefulWidget {
   //void Function(bool, int) setTracking;
   CartScreen(this.updateCartCount, this.placeOrder,  this.tracking);
   //var cartItems = CartItemRepo().getAll() ?? [];
-  List<CartItemOB> cartItems =  [];
-  //List<CartItemOB> cartItems = CartItemRepo().getAll() ?? [];
+  //List<CartItemOB> cartItems =  [];
+  List<CartItemOB> cartItems = CartItemRepo().getAll() ?? [];
+
   //var vouchers = VoucherRepo().getAll();
   List<VoucherOB> vouchers =  [];
 

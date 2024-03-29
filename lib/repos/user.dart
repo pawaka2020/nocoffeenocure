@@ -26,7 +26,7 @@ class UserRepo {
   UserOB? getLoggedInUser() {
     final users = box.getAll();
     try {
-      return users.firstWhere((user) => user.isLoggedIn == true);
+      return users.firstWhere((user) => (user.isLoggedIn == true) && (user.userId == singletonUser.userId));
     }
     catch (e) {
       return null;
@@ -132,22 +132,21 @@ class UserRepo {
       ..setDefaultAddress = decodedToken['set_default_address']
     ;
 
-    // List<Map<String, dynamic>> decodedCartItems = decodedToken['cart_items'] ?? [];
-    // for (var itemData in decodedCartItems) {
-    //   CartItemOB cartItem = CartItemOB()
-    //     //..title = itemData['title']
-    //   // Add other fields as needed
-    //   ;
-    //   loggedinUser.cartItems.add(cartItem);
-    // }
-    //loggedinUser.cartItems = CartItemOB().listFromJson(decodedToken['cart_items']));
-    loggedinUser.cartItems.addAll(CartItemOB.listFromJson(decodedToken['cart_items']) ?? []);
+    var _cartItems = CartItemOB.listFromJson(decodedToken['cart_items']);
+    print("_cartItems length obtained from json = ${_cartItems.length}");
+
+    loggedinUser.cartItems.addAll(CartItemOB.listFromJson(decodedToken['cart_items'])); //CartItemOB.listFromJson(decodedToken['cart_items'])
+    loggedinUser.vouchers.addAll([]);
+    loggedinUser.reviews.addAll([]);
 
     //the rest here is the same
     UserOB guestUser = users.firstWhere((user) => user.guest == true);
+    //UserOB registeredUser = users.firstWhere((user) => user.guest == false) ?? UserOB();
     guestUser.isLoggedIn = false;
     box.put(guestUser);
     box.put(loggedinUser); //do not disable this. It will cause crash.
+    //registeredUser = loggedinUser;
+    //box.put(registeredUser);
     singletonUser = loggedinUser!;
   }
 
@@ -225,7 +224,6 @@ class UserRepo {
     registeredUser.birthday = birthday;
     registeredUser.address = address;
     registeredUser.setDefaultAddress = setDefaultAddress;
-
 
     box.put(registeredUser);
     singletonUser = registeredUser;

@@ -42,11 +42,11 @@ class CartItemOB {
   factory CartItemOB.fromJson(Map<String, dynamic> json) {
     final cartitem = CartItemOB()
       ..id = json['id'] ?? 0
-      ..quantity = json['quantity']
+      ..quantity = json['quantity'] ?? ''
       ..price = json['price'] ?? 0
-      ..menuItem_id = json['menuitem_id']
+      ..menuItem_id = json['menuitem_id'] ?? 0
     ;
-    cartitem.menuItemOB.addAll(MenuItemOB.listFromJson(json['cart_item']) ?? []); //MenuItemOB.listFromJson(json['cart_item'])
+    cartitem.menuItemOB.addAll(MenuItemOB.listFromJson(json['menuitem']) ?? []); //MenuItemOB.listFromJson(json['cart_item'])
 
     return cartitem;
   }
@@ -55,6 +55,7 @@ class CartItemOB {
   static List<CartItemOB> listFromJson(List<dynamic> jsonList) {
     List<CartItemOB> items = [];
     for (var json in jsonList) {
+      print("Item added in cartitem.listfromJson");
       items.add(CartItemOB.fromJson(json));
     }
     return items;

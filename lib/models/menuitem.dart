@@ -259,9 +259,10 @@ class MenuItemOB {
       ..description = json['description']
       ..available = json['available'] ?? false
     ;
+
     menuItem.userReviews.addAll(UserReviewOB.listFromJson(json['userreviews'] ?? [])); //UserReviewOB.listFromJson(json['userreviews'] ?? []
-    menuItem.additions.addAll([]); //AdditionOB.listFromJson(json['additions'] ?? [])
-    menuItem.ingredients.addAll([]); //IngredientOB.listFromJson(json['ingredients'] ?? [])
+    menuItem.additions.addAll(AdditionOB.listFromJson(json['additions'] ?? [])); //AdditionOB.listFromJson(json['additions'] ?? [])
+    menuItem.ingredients.addAll(IngredientOB.listFromJson(json['ingredients'] ?? [])); //IngredientOB.listFromJson(json['ingredients'] ?? [])
 
     return menuItem;
 
@@ -383,9 +384,17 @@ class AdditionOB {
       ..selectedPrice = json['selectedPrice'] ?? 0
       ..selectedIndex = json['selectedIndex'] ?? 0
     ;
-    addition.additionDetails.addAll([]);
+    addition.additionDetails.addAll(AdditionDetailOB.listFromJson(json['additionDetails'] ?? []));
 
     return addition;
+  }
+
+  static List<AdditionOB> listFromJson(List<dynamic> jsonList) {
+    List<AdditionOB> items = [];
+    for (var json in jsonList) {
+      items.add(AdditionOB.fromJson(json));
+    }
+    return items;
   }
 }
 
@@ -398,6 +407,26 @@ class AdditionDetailOB {
   double? price;
 
   final addition = ToOne<AdditionOB>();
+
+  AdditionDetailOB();
+
+  // Define a fromJson method to create an AdditionDetailOB instance from JSON data
+  factory AdditionDetailOB.fromJson(Map<String, dynamic> json) {
+    return AdditionDetailOB()
+      ..id = json['id'] ?? 0
+      ..name = json['name'] ?? ''
+      ..price = json['price'] ?? 0
+    ;
+  }
+
+  // Define a listFromJson method to create a list of AdditionDetailOB instances from a list of JSON data
+  static List<AdditionDetailOB> listFromJson(List<dynamic> jsonList) {
+    List<AdditionDetailOB> items = [];
+    for (var json in jsonList) {
+      items.add(AdditionDetailOB.fromJson(json));
+    }
+    return items;
+  }
 
   AdditionDetail toAdditionDetail() {
     return AdditionDetail(
@@ -423,6 +452,28 @@ class IngredientOB {
   String? imagePath;
 
   final menuItem = ToOne<MenuItemOB>();
+
+  IngredientOB();
+
+  // Define a fromJson method to create an IngredientOB instance from JSON data
+  factory IngredientOB.fromJson(Map<String, dynamic> json) {
+    return IngredientOB()
+      ..id = json['id'] ?? 0
+      ..name = json['name'] ?? ''
+      ..imagePath = json['imagePath'] ?? ''
+    ;
+  }
+
+  // Define a listFromJson method to create a list of IngredientOB instances from a list of JSON data
+  static List<IngredientOB> listFromJson(List<dynamic> jsonList) {
+    List<IngredientOB> items = [];
+    for (var json in jsonList) {
+      items.add(IngredientOB.fromJson(json));
+    }
+    return items;
+  }
+
+
 
   Map<String, dynamic> toJson() {
     return {
