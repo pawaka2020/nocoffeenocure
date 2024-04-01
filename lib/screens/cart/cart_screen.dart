@@ -9,6 +9,7 @@ import '../../common.dart';
 import '../../main.dart';
 import '../../models/cartitem.dart';
 import '../../models/menuitem.dart';
+import '../../models/user.dart';
 import '../../models/voucher.dart';
 import '../../provider/cart_count_notifier.dart';
 import '../../repos/cartitem.dart';
@@ -161,10 +162,25 @@ class _CartScreenState extends State<CartScreen> {
 
     if (updatedCartItem != null) {
       setState(() {
-        //CartItemRepo().box.put(updatedCartItem); //replace this? 12/3/2024
-        CartItemRepo().put(updatedCartItem);
-        //UserRepo().updateBackendUser();
         CartItemRepo().editBackend(updatedCartItem);
+
+        //CartItemRepo().box.put(updatedCartItem); //replace this? 12/3/2024
+        //CartItemRepo().put(updatedCartItem); //this causes addition 4/1/2024
+        //UserRepo().updateBackendUser();
+        UserOB? currentUser = UserRepo().getLoggedInUser(); //29/3/2024
+        currentUser?.cartItems.add(cartItem);
+        print("current user id is ${currentUser?.userId}");
+        UserRepo().box.put(currentUser);
+
+
+
+        //singletonUser.cartItems[targetId] = updatedCartItem;
+        int index = cartItems.indexWhere((item) => item.id == targetId);
+        // If the cartItem is found, replace it with the new object
+        if (index != -1) {
+          singletonUser.cartItems[index] = updatedCartItem;
+        }
+
         widget.cartItems = CartItemRepo().getAll();
         adjustPrice();
         printToast("Cart item updated");

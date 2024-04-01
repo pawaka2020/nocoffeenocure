@@ -66,7 +66,9 @@ class _TopBannerState extends State<TopBanner> {
               decoration: BoxDecoration(
                 image: DecorationImage(
                   //image: AssetImage(news_.image!),
-                  image: FileImage(File(news_.image!)),
+                  //image: FileImage(File(news_.image!)),
+                  image: NetworkImage(news_.image!),
+                  //image: http://192.168.1.21:5000/static/images/bannernews/bannerimage1.png??
                   fit: BoxFit.cover,
                 ),
               ),

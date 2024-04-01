@@ -71,7 +71,8 @@ class MenuItemOnline {
         List<MenuItemOB> menuitemList = [];
         for (var json in menuitemJson) {
           MenuItemOB menuitem = MenuItemOB()
-            ..imagePath = await getImage(json['imagepath'],'menuitem')
+            //..imagePath = await getImage(json['imagepath'],'menuitem')
+            ..imagePath = onlineBackendURL + json['imagepath']
             ..title = json['title']
             ..price = json['price'].toDouble()
             ..category = json['category']

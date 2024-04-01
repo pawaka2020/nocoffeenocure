@@ -55,7 +55,6 @@ class CartItemOB {
   static List<CartItemOB> listFromJson(List<dynamic> jsonList) {
     List<CartItemOB> items = [];
     for (var json in jsonList) {
-      print("Item added in cartitem.listfromJson");
       items.add(CartItemOB.fromJson(json));
     }
     return items;

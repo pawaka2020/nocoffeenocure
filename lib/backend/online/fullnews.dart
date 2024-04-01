@@ -14,7 +14,10 @@ class FullNewsOnline {
         Iterable fullnewsJson = json.decode(response.body);
         List<FullNewsOB> fullNewsList = [];
         for (var news in fullnewsJson) {
-          fullNewsList.add(FullNewsOB()..name = await getImage(news['name'],'fullnews'));
+          fullNewsList.add(FullNewsOB()
+            //..name = await getImage(news['name'],'fullnews')
+            ..name = onlineBackendURL + news['name']
+          );
         }
         fullnewsLoaded = true;
         return fullNewsList;

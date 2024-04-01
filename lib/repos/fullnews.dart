@@ -28,6 +28,7 @@ class FullNewsRepo {
     //   box.putMany(newData);
     // }
 
+
     box.removeAll(); //the id of 'box' does not reset to 0.
     box.putMany(newData);
 

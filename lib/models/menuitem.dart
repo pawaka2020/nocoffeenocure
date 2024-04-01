@@ -250,9 +250,10 @@ class MenuItemOB {
 
   // Define a fromJson method to create a MenuItemOB instance from JSON data
   factory MenuItemOB.fromJson(Map<String, dynamic> json) {
+
     MenuItemOB menuItem = MenuItemOB()
       ..id = json['id'] ?? 0
-      ..imagePath = json['imagePath']
+      ..imagePath = json['imagepath']
       ..title = json['title']
       ..price = json['price'] ?? 0
       ..category = json['category']

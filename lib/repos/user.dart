@@ -26,7 +26,7 @@ class UserRepo {
   UserOB? getLoggedInUser() {
     final users = box.getAll();
     try {
-      return users.firstWhere((user) => (user.isLoggedIn == true) && (user.userId == singletonUser.userId));
+      return users.firstWhere((user) => (user.isLoggedIn == true) && (user.email == singletonUser.email));
     }
     catch (e) {
       return null;
@@ -133,20 +133,17 @@ class UserRepo {
     ;
 
     var _cartItems = CartItemOB.listFromJson(decodedToken['cart_items']);
-    print("_cartItems length obtained from json = ${_cartItems.length}");
 
-    loggedinUser.cartItems.addAll(CartItemOB.listFromJson(decodedToken['cart_items'])); //CartItemOB.listFromJson(decodedToken['cart_items'])
+    loggedinUser.cartItems.addAll(_cartItems); //CartItemOB.listFromJson(decodedToken['cart_items'])
     loggedinUser.vouchers.addAll([]);
     loggedinUser.reviews.addAll([]);
 
     //the rest here is the same
     UserOB guestUser = users.firstWhere((user) => user.guest == true);
-    //UserOB registeredUser = users.firstWhere((user) => user.guest == false) ?? UserOB();
+
     guestUser.isLoggedIn = false;
     box.put(guestUser);
-    box.put(loggedinUser); //do not disable this. It will cause crash.
-    //registeredUser = loggedinUser;
-    //box.put(registeredUser);
+    //box.put(loggedinUser); //do not disable this. It will cause crash.
     singletonUser = loggedinUser!;
   }
 
@@ -195,14 +192,15 @@ class UserRepo {
 
     List<UserOB> users = box.getAll();
     UserOB guestUser = users.firstWhere((user) => user.guest == true);
-    UserOB registeredUser = users.firstWhere((user) => user.guest == false);
+    //UserOB registeredUser = users.firstWhere((user) => user.guest == false);
 
 
     guestUser.isLoggedIn = true;
-    registeredUser.isLoggedIn = false;
+    //registeredUser.isLoggedIn = false;
 
     box.put(guestUser);
-    box.put(registeredUser);
+    //box.remove(registeredUser.id);
+    //box.put(registeredUser);
 
     singletonUser = guestUser;
 

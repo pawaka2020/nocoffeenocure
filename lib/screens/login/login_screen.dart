@@ -106,12 +106,7 @@ class _LoginScreenState extends State<LoginScreen> {
       },
     );
     if (response.statusCode == 200) {
-      print('Verification code sent successfully');
       final jsonResponse = jsonDecode(response.body);
-      print('email entered = ${jsonResponse['email']}');
-      print('verification code = ${jsonResponse['verification_code']}');
-      print('auth token = ${jsonResponse['auth_token']}');
-
       final authToken = jsonResponse['auth_token'];
       UserRepo().loginUserBackend(authToken);
       printToast("Login successful");

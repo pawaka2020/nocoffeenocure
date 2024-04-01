@@ -91,10 +91,17 @@ class MyMenuCard extends StatelessWidget {
               //   height: 165,//165
               //   fit: BoxFit.cover,
               // ),
-              Image.file(
-                File(menuItem.imagePath),
+              // Image.file(
+              //   File(menuItem.imagePath),
+              //   width: 150,
+              //   height: 165,
+              //   fit: BoxFit.cover,
+              // ),
+              //load from URL
+              Image.network(
+                menuItem.imagePath,
                 width: 150,
-                height: 165,//165
+                height: 165,
                 fit: BoxFit.cover,
               ),
               SizedBox(height: 5), //default 5

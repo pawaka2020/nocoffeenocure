@@ -18,7 +18,8 @@ class BannerNewsOnline {
         List<BannerNewsOB> bannerNewsList = [];
         for (var news in bannernewsJson) {
           bannerNewsList.add(BannerNewsOB()
-            ..image = await getImage(news['image'],'bannernews')
+            //..image = await getImage(news['image'],'bannernews')
+            ..image = onlineBackendURL + news['image']
             ..article = news['article']
           );
         }

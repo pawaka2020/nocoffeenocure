@@ -159,11 +159,16 @@ class MenuImage extends StatelessWidget {
         width: 300,   //default 200 //300
         height: 310,  //default 333 //310
         //child: Image.asset(imagePath)
-        child: Image.file(
-          File(imagePath),
-          width: 50, //150
-          height: 55,//165
-          //fit: BoxFit.cover,
+        // child: Image.file(
+        //   File(imagePath),
+        //   width: 50, //150
+        //   height: 55,//165
+        //   //fit: BoxFit.cover,
+        // ),
+        child: Image.network(
+          imagePath,
+          width: 50,
+          height: 55,
         )
     );
 

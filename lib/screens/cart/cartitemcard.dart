@@ -63,10 +63,14 @@ class CartItemCard extends StatelessWidget {
                   //   image,
                   //   fit: BoxFit.cover,
                   // ),
-                  child: Image.file(
-                    File(image),
+                  // child: Image.file(
+                  //   File(image),
+                  //   fit: BoxFit.cover,
+                  // ),
+                  child: Image.network(
+                    image,
                     fit: BoxFit.cover,
-                  ),
+                  )
                 ),
                 Padding(
                   padding: EdgeInsets.only(left: 90, top: 8, right: 16, bottom: 8),

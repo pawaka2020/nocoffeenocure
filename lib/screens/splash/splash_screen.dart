@@ -55,7 +55,7 @@ Future<void> preLoadFromBackend(BuildContext context) async {
   await UserRepo().loginAppStart(BackendSource.dummy); //
   await VoucherRepo().update(BackendSource.dummy);
   //BackendSource.dummy
-//dummy
+  //dummy
   await MenuItemRepo().update(BackendSource.online); // dummy
 
   print("Data pre-loaded");

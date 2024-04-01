@@ -77,7 +77,8 @@ class CartItemRepo {
     //final users = box.getAll();
     //UserOB? currentUser =  users.firstWhere((user) => (user.isLoggedIn == true) && (user.userId == singletonUser.userId));
 
-    UserOB? currentUser = UserRepo().getLoggedInUser();
+    UserOB currentUser = singletonUser;
+    //UserOB? currentUser = UserRepo().getLoggedInUser(); //29/3/2024
     currentUser?.cartItems.add(cartItem);
     print("current user id is ${currentUser?.userId}");
     UserRepo().box.put(currentUser);
@@ -85,9 +86,13 @@ class CartItemRepo {
     //11/3/2024 I need to update the singleton as well.
     singletonUser = currentUser!;
     //13/3/2024
-    //putBackend(cartItem);
-
-    //TODO: Write the cartitem object to user in postgreSQL database attached to Flask backend
+    // UserOB currentUser = singletonUser;
+    // currentUser?.cartItems.add(cartItem);
+    // print("current user id is ${currentUser?.userId}");
+    // UserRepo().box.put(currentUser);
+    //
+    // //11/3/2024 I need to update the singleton as well.
+    // singletonUser = currentUser!;
 
   }
 
