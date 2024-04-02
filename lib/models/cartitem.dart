@@ -30,7 +30,7 @@ class CartItemOB {
       'quantity' : quantity,
       'price' : price,
       'menuitem_id' : menuItem_id,
-      'menuitem' : menuItemOB.map((review) => review.toJson()).toList(),
+      'menuitem' : menuItemOB.map((menuitem) => menuitem.toJson()).toList(),
     };
   }
 

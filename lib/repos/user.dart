@@ -292,4 +292,11 @@ class UserRepo {
     }
 
   }
+
+  Future<void> putOrderBackend() async {
+    if (singletonUser.guest == false) {
+      final url = onlineBackendURL + '/api/update_user';
+    }
+    else return ;
+  }
 }

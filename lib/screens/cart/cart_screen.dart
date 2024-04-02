@@ -171,9 +171,6 @@ class _CartScreenState extends State<CartScreen> {
         currentUser?.cartItems.add(cartItem);
         print("current user id is ${currentUser?.userId}");
         UserRepo().box.put(currentUser);
-
-
-
         //singletonUser.cartItems[targetId] = updatedCartItem;
         int index = cartItems.indexWhere((item) => item.id == targetId);
         // If the cartItem is found, replace it with the new object

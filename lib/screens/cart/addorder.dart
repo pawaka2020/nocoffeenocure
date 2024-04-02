@@ -80,10 +80,9 @@ void addOrder(List<int> selectedVoucherIds, List<CartItemOB> cartItems,
 
   OrderOB newOrder = OrderOB()
     ..orderId = generateOrderId()
-    ..cartItems.addAll(cartItems) //WRONG!
     ..specialRequest = specialRequest
     ..packageString = packageString
-    ..vouchers.addAll(selectedVouchers) //WRONG!
+     //WRONG!
     ..deliveryAddress = deliveryAddress
     ..onSitePickup = onSitePickup
     ..phoneNumber = phoneNumber
@@ -95,13 +94,21 @@ void addOrder(List<int> selectedVoucherIds, List<CartItemOB> cartItems,
     ..deliveryFee = price.deliveryFee
     ..appWalletDiscount = price.appWalletDiscount
     ..totalPrice = price.total
-  //time setting
+    //time setting
     ..orderPlaced = DateTime.now()
     ..eta = 25
-  //IMPORTANT! status of order, allowing identification of this order later
-    ..active = true;
+    //IMPORTANT! status of order, allowing identification of this order later
+    ..active = true
+    ..cartItems.addAll(cartItems)
+    ..vouchers.addAll(selectedVouchers)//WRONG!
   ;
   currentUser.orders.add(newOrder);
+
+  // inserts the user in objectbox with the updated values
   UserRepo().box.put(currentUser);
+
+  //inserts order in a user in backend
+  OrderRepo().putBackend(newOrder);
+
   singletonUser = currentUser;
 }
