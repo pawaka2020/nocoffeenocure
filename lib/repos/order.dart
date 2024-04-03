@@ -52,7 +52,7 @@ class OrderRepo {
         'sst': order.sst,
         'voucherDeduction': order.voucherDeduction,
         'subtotal': order.subtotal,
-        'deliveryFee': order.deliveryAddress,
+        'deliveryFee': order.deliveryFee,
         'roundingAdjustment': order.roundingAdjustment,
         'appWalletDiscount': order.appWalletDiscount,
         'totalPrice': order.totalPrice,
@@ -76,6 +76,37 @@ class OrderRepo {
         );
         if (response.statusCode == 200) {
           print('Order added to backend successfully');
+        }
+        else {
+          print('Failed to update user: ${response.statusCode}');
+        }
+      }
+      catch (e) {
+        print('Exception caught while updating user: $e');
+      }
+    }
+  }
+
+  Future<void> removeFromBackend(OrderOB order) async {
+    if (singletonUser.guest == false) {
+      final url = onlineBackendURL + 'delete_order';
+      final Map<String, dynamic> data = {
+        'user_id' : singletonUser.userId.toString(),
+        'order_id' : order.orderId,
+      };
+      final jsonData = json.encode(data);
+
+      try
+      {
+        final response = await http.post(
+          Uri.parse(url),
+          headers: <String, String> {
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonData,
+        );
+        if (response.statusCode == 200) {
+          print('Order removed from backend successfully');
         }
         else {
           print('Failed to update user: ${response.statusCode}');

@@ -6,6 +6,7 @@ import '../../common.dart';
 import '../../main.dart';
 import '../../models/order.dart';
 import '../../models/user.dart';
+import '../../repos/cartitem.dart';
 import '../../repos/order.dart';
 import '../../repos/user.dart';
 import '../orderdetails/orderdetails_screen.dart';
@@ -156,6 +157,12 @@ class TrackScreenState extends State<TrackScreen> {
       currentUser?.orders.remove(currentOrder);
       OrderRepo().box.remove(currentOrder?.id);
       UserRepo().box.put(currentUser);
+
+      //4/3/2024
+      OrderRepo().removeFromBackend(currentOrder!);
+      singletonUser = currentUser!;
+      //
+
       widget.setTracking(false, 0);
       printToast("Order ${orderId.toString()} canceled");
     }

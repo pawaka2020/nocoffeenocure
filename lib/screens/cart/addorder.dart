@@ -108,6 +108,7 @@ void addOrder(List<int> selectedVoucherIds, List<CartItemOB> cartItems,
   UserRepo().box.put(currentUser);
 
   //inserts order in a user in backend
+  //CartItemRepo().deleteBackend(cartItems.)
   OrderRepo().putBackend(newOrder);
 
   singletonUser = currentUser;
