@@ -1,6 +1,7 @@
 import 'package:nocoffeenocure/repos/user.dart';
 
 import '../backend/dummy/voucher.dart';
+import '../backend/online/voucher.dart';
 import '../main.dart';
 import '../models/user.dart';
 import '../models/voucher.dart';
@@ -19,20 +20,23 @@ class VoucherRepo {
     if (source == BackendSource.dummy) {
       newData = await VoucherDummy().get();
     }
+    else if (source == BackendSource.online) {
+      newData = await VoucherOnline().get();
+
+    }
     currentData = box.getAll();
     if (currentData.isNotEmpty) {
       print("replacing entries for VoucherOB");
-      //box.removeAll();
-      //box.putMany(newData);
+      box.removeAll();
+      box.putMany(newData);
     }
     else {
       print("adding new entries for VoucherOB");
       box.putMany(newData);
     }
 
-    //change this one.
+    //add only picked vouchers to Users
     UserOB? currentUser = UserRepo().getLoggedInUser();
-
     for (var voucher in newData) {
       bool hasMatchingVoucherId = false;
       for (var voucher2 in currentUser!.vouchers) {
@@ -45,42 +49,43 @@ class VoucherRepo {
         currentUser.vouchers.add(voucher);
       }
     }
-
-
     //currentUser?.vouchers.addAll(newData);
     UserRepo().box.put(currentUser);
+    //4/4/2024
+    singletonUser = currentUser!;
 
     // Now list2 contains elements from list that don't have matching voucher_id
-
   }
 
   List<VoucherOB> getAll() {
-    //return box.getAll();
-    //print("!!!! This function is called!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+    return box.getAll();
+
 
     // UserOB? currentUser = UserRepo().getLoggedInUser();
-    // //printVoucher(currentUser!.vouchers);
-    // List<VoucherOB> vouchers = currentUser!.vouchers;
-    // return vouchers;
-
-    //3/27/2024
-    return singletonUser.vouchers;
+    // // //printVoucher(currentUser!.vouchers);
+    // List<VoucherOB> vouchers = box.getAll();
+    //
+    //
+    // // return vouchers;
+    // singletonUser = currentUser;
+    // //3/27/2024
+    //return singletonUser.vouchers;
   }
 
   void printVoucher(List<VoucherOB> list) {
-    // for (var voucher in list) {
-    //   print("Voucher ID: ${voucher.id}");
-    //   print("Image: ${voucher.image}");
-    //   print("Price Discount: ${voucher.priceDiscount}");
-    //   print("Price Deduct: ${voucher.priceDeduct}");
-    //   if (voucher.expiryDate != null) {
-    //     print("Expiry Date: ${voucher.expiryDate!.toLocal()}"); // Convert to local time
-    //   } else {
-    //     print("Expiry Date: N/A");
-    //   }
-    //   print("Activated: ${voucher.activated}");
-    //   print("\n");
-    // }
+    for (var voucher in list) {
+      print("Voucher ID: ${voucher.id}");
+      print("Image: ${voucher.image}");
+      print("Price Discount: ${voucher.priceDiscount}");
+      print("Price Deduct: ${voucher.priceDeduct}");
+      if (voucher.expiryDate != null) {
+        print("Expiry Date: ${voucher.expiryDate!.toLocal()}"); // Convert to local time
+      } else {
+        print("Expiry Date: N/A");
+      }
+      print("Activated: ${voucher.activated}");
+      print("\n");
+    }
   }
 
   // List<VoucherOB> getNotFromIdList(List<VoucherOB> allVouchers, List<int> _selectedVoucherIds) {
@@ -101,6 +106,7 @@ class VoucherRepo {
     }
     return results;
   }
+
   //
   List<VoucherOB> getFromIdList(List<VoucherOB> allVouchers, List<int> _selectedVoucherIds) {
     final results = allVouchers.where((voucher) => _selectedVoucherIds.contains(voucher.id) && voucher.activated == false).toList();

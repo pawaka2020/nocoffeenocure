@@ -9,6 +9,8 @@ import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io';
 
+import '../models/voucher.dart';
+
 class UserRepo {
   final box = objectbox.userBox;
   String? currentUserId;
@@ -132,10 +134,10 @@ class UserRepo {
       ..setDefaultAddress = decodedToken['set_default_address']
     ;
 
-    var _cartItems = CartItemOB.listFromJson(decodedToken['cart_items']);
+    // var _cartItems = CartItemOB.listFromJson(decodedToken['cart_items']);
 
-    loggedinUser.cartItems.addAll(_cartItems); //CartItemOB.listFromJson(decodedToken['cart_items'])
-    loggedinUser.vouchers.addAll([]);
+    loggedinUser.cartItems.addAll(CartItemOB.listFromJson(decodedToken['cart_items'])); //CartItemOB.listFromJson(decodedToken['cart_items'])
+    loggedinUser.vouchers.addAll([]); //VoucherOB.listFromJson(decodedToken['vouchers'])
     loggedinUser.reviews.addAll([]);
 
     //the rest here is the same

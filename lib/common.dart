@@ -129,3 +129,4 @@ bool countriesLoaded = false;
 bool fullnewsLoaded = false;
 bool bannernewsLoaded = false;
 bool menuitemLoaded = false;
+bool voucherLoaded = false;

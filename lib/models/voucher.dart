@@ -34,4 +34,20 @@ class VoucherOB {
     };
   }
 
+  static List<VoucherOB> listFromJson(List<dynamic> jsonList) {
+    List<VoucherOB> items = [];
+    for (var json in jsonList) {
+      //items.add(VoucherOB.fromJson(json));
+    }
+    return items;
+  }
+
+  VoucherOB();
+
+  factory VoucherOB.fromJson(Map<String, dynamic> json) {
+    VoucherOB voucher = VoucherOB()
+
+    ;
+    return voucher;
+  }
 }

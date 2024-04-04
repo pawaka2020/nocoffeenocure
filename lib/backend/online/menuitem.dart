@@ -5,7 +5,7 @@ import 'dart:convert';
 import '../../common.dart';
 import 'package:http/http.dart' as http;
 
-import '../dummy/menuitem.dart';
+//import '../dummy/menuitem.dart';
 
 class MenuItemOnline {
 

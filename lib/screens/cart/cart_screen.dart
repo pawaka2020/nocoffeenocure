@@ -48,8 +48,8 @@ class CartScreen extends StatefulWidget {
   //List<CartItemOB> cartItems =  [];
   List<CartItemOB> cartItems = CartItemRepo().getAll() ?? [];
 
-  //var vouchers = VoucherRepo().getAll();
-  List<VoucherOB> vouchers =  [];
+  var vouchers = VoucherRepo().getAll();
+  //List<VoucherOB> vouchers =  [];
 
   @override
   State<StatefulWidget> createState() => _CartScreenState();

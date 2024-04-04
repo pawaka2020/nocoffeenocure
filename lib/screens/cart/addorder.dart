@@ -74,9 +74,19 @@ int generateOrderId()
 void addOrder(List<int> selectedVoucherIds, List<CartItemOB> cartItems,
     String specialRequest, String packageString, String deliveryAddress,
     bool onSitePickup, String phoneNumber, String paymentMethod, Price price) {
-  UserOB? currentUser = UserRepo().getLoggedInUser();
+
+  //print("voucher inside user = ${singletonUser.vouchers.length}");
+
+  //UserOB? currentUser = UserRepo().getLoggedInUser();
+  UserOB? currentUser = singletonUser;
   setVouchersToUsed(currentUser!, selectedVoucherIds);
+  //this is to be added to User object.
   List<VoucherOB> selectedVouchers = getSelectedVouchers(currentUser, selectedVoucherIds);
+
+  print("selectedVoucherIds length = ${selectedVoucherIds.length}");
+  print("selectedVouchers length = ${selectedVouchers.length}");
+
+
 
   OrderOB newOrder = OrderOB()
     ..orderId = generateOrderId()

@@ -30,8 +30,8 @@ class OrderRepo {
     //printToast("cartItem id = ${cartItem.id}");
     if (singletonUser.guest == false) {
       final url = onlineBackendURL + 'add_order';
-
-      // just copy over the fields from singletonUser.order
+      print("vouchers length = ${order.vouchers.length}");
+      // just c opy over the fields from singletonUser.order
       final Map<String, dynamic> data = {
         //required for user identification in Flask backend
         'user_id': singletonUser.userId,
