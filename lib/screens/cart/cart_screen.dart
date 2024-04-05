@@ -269,6 +269,8 @@ class _CartScreenState extends State<CartScreen> {
   Widget build(BuildContext context) {
     widget.vouchers = VoucherRepo().getAll();
 
+    print("_selectedVoucherIds = ${_selectedVoucherIds.toString()}");
+
     _usedList = VoucherRepo()
         .getFromIdList(widget.vouchers, _selectedVoucherIds);
     adjustPrice();

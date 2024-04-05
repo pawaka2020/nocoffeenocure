@@ -137,7 +137,8 @@ class UserRepo {
     // var _cartItems = CartItemOB.listFromJson(decodedToken['cart_items']);
 
     loggedinUser.cartItems.addAll(CartItemOB.listFromJson(decodedToken['cart_items'])); //CartItemOB.listFromJson(decodedToken['cart_items'])
-    loggedinUser.vouchers.addAll([]); //VoucherOB.listFromJson(decodedToken['vouchers'])
+    loggedinUser.vouchers.addAll(VoucherOB.listFromJson(decodedToken['vouchers']));
+    //loggedinUser.vouchers.addAll([]);//VoucherOB.listFromJson(decodedToken['vouchers'])
     loggedinUser.reviews.addAll([]);
 
     //the rest here is the same

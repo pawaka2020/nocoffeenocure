@@ -58,7 +58,7 @@ class VoucherRepo {
   }
 
   List<VoucherOB> getAll() {
-    return box.getAll();
+    //return box.getAll();
 
 
     // UserOB? currentUser = UserRepo().getLoggedInUser();
@@ -69,7 +69,7 @@ class VoucherRepo {
     // // return vouchers;
     // singletonUser = currentUser;
     // //3/27/2024
-    //return singletonUser.vouchers;
+    return singletonUser.vouchers;
   }
 
   void printVoucher(List<VoucherOB> list) {

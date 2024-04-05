@@ -1,5 +1,6 @@
 import 'package:nocoffeenocure/models/user.dart';
 import 'package:objectbox/objectbox.dart';
+import '../common.dart';
 import 'order.dart';
 
 //recommended size 440 x 100
@@ -37,16 +38,22 @@ class VoucherOB {
   static List<VoucherOB> listFromJson(List<dynamic> jsonList) {
     List<VoucherOB> items = [];
     for (var json in jsonList) {
-      //items.add(VoucherOB.fromJson(json));
+      items.add(VoucherOB.fromJson(json));
     }
     return items;
+    //return [];
   }
 
   VoucherOB();
 
   factory VoucherOB.fromJson(Map<String, dynamic> json) {
     VoucherOB voucher = VoucherOB()
-
+      ..voucher_id = json['voucher_id']
+      ..image = onlineBackendURL + json['image']
+      ..activated = json['activated']
+      ..expiryDate = json['expiryDate'] != null ? DateTime.parse(json['expiryDate']) : null
+      ..priceDeduct = json['priceDeduct'] != null ? double.parse(json['priceDeduct'].toString()) : null
+      ..priceDiscount = json['priceDiscount'] != null ? double.parse(json['priceDiscount'].toString()) : null
     ;
     return voucher;
   }

@@ -70,10 +70,15 @@ Widget buildSelectVoucherCard(VoucherOB voucher, BuildContext context, List<int>
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Flexible(
-                  child: Image.asset(
-                    voucher.image!,
-                    fit: BoxFit.fill,
-                    height: double.infinity
+                  // child: Image.asset(
+                  //   voucher.image!,
+                  //   fit: BoxFit.fill,
+                  //   height: double.infinity
+                  // ),
+                  child: Image.network(
+                      voucher.image!,
+                      fit: BoxFit.fill,
+                      height: double.infinity
                   ),
                 ),
                 Padding(
@@ -94,10 +99,3 @@ void SelectVoucher(BuildContext context, VoucherOB voucher, List<int> selectedVo
   selectedVoucherIds.add(voucher.id);
   Navigator.of(context).pop(true);
 }
-
-Center placeholder = Center(
-    child: Text(
-      'Help me!',
-      style: TextStyle(fontSize: 24),
-    )
-);

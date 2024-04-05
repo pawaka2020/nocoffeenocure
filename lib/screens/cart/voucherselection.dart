@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nocoffeenocure/screens/selectunusedvoucher/selectunusedvoucher.dart';
+import '../../common.dart';
 import '../../models/voucher.dart';
 import '../../repos/voucher.dart';
 
@@ -85,11 +86,17 @@ Widget buildSelectedVoucherCard(VoucherOB voucher, BuildContext context,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Flexible(
-                  child: Image.asset(
-                      voucher.image!,
-                      fit: BoxFit.fill,
-                      height: double.infinity,
-                      width: double.infinity
+                  // child: Image.asset(
+                  //     '',
+                  //     fit: BoxFit.fill,
+                  //     height: double.infinity,
+                  //     width: double.infinity
+                  // ),
+                  child: Image.network(
+                    voucher.image!,
+                    fit: BoxFit.fill,
+                    height: double.infinity,
+                    width: double.infinity
                   ),
                 ),
                 Padding(
