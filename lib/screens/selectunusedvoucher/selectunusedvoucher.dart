@@ -4,6 +4,8 @@ import '../../common.dart';
 import '../../models/voucher.dart';
 import '../../repos/voucher.dart';
 
+//change VoucherRepo()
+//         .getNotFromIdList(vouchers, selectedVoucherIds);
 class SelectUnusedVoucherScreen extends StatelessWidget {
   List<VoucherOB> vouchers;
   List<int> selectedVoucherIds;
@@ -17,7 +19,7 @@ class SelectUnusedVoucherScreen extends StatelessWidget {
     List<VoucherOB> unusedList = VoucherRepo()
         .getNotFromIdList(vouchers, selectedVoucherIds);
 
-    // printToast("sadasdsadsadsadsadasdsadasdsadasdasdasdasdasdasdsadsad");
+    //print("in selectedunusedvoucherscreen, selectedvoucherIds = ${selectedVoucherIds.toString()}");
 
     return Scaffold(
       appBar: AppBar(
@@ -94,8 +96,12 @@ Widget buildSelectVoucherCard(VoucherOB voucher, BuildContext context, List<int>
 }
 
 void SelectVoucher(BuildContext context, VoucherOB voucher, List<int> selectedVoucherIds) {
-  print("Voucher selected");
-  print("Voucher id = ${voucher.id.toString()}");
-  selectedVoucherIds.add(voucher.id);
-  Navigator.of(context).pop(true);
+  //print("Voucher selected");
+  //print("Voucher id = ${voucher.id.toString()}");
+  //selectedVoucherIds.add(voucher.id);
+  //Navigator.of(context).pop(true);
+
+  //selectedVoucherIds.add(voucher.voucher_id!); //
+
+  Navigator.of(context).pop(voucher.voucher_id);
 }

@@ -228,16 +228,33 @@ class _CartScreenState extends State<CartScreen> {
   }
 
   void addVoucher() async {
-    final activated = await Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) => SelectUnusedVoucherScreen(widget.vouchers, _selectedVoucherIds, context),
+    // final activated = await Navigator.of(context).push(MaterialPageRoute(
+    //   builder: (context) => SelectUnusedVoucherScreen(widget.vouchers, _selectedVoucherIds, context),
+    // ));
+    // if (activated) {
+    //
+    //   print("!!!! _selectedVoucherIds = ${_selectedVoucherIds.toString()}");
+    //
+    //   setState(() {
+    //     _usedList = VoucherRepo()
+    //         .getFromIdList(widget.vouchers, _selectedVoucherIds);
+    //   });
+    // }
+    // else print("Error in adding new voucher");
+
+    final addedVoucher = await Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => SelectUnusedVoucherScreen(widget.vouchers, _selectedVoucherIds, context),
     ));
-    if (activated) {
+    if (addedVoucher != null) {
       setState(() {
-        _usedList = VoucherRepo()
-            .getFromIdList(widget.vouchers, _selectedVoucherIds);
+        _usedList.add(widget.vouchers.firstWhere((voucher) => voucher.voucher_id == addedVoucher));
+        _selectedVoucherIds.add(addedVoucher);
       });
     }
-    else print("Error in adding new voucher");
+
+
+    //print("addedVoucher = ${addedVoucher}");
+    //print("_usedList length = ${_usedList.length.toString()}");
   }
 
   void removeVoucher(int id) async {
@@ -269,10 +286,9 @@ class _CartScreenState extends State<CartScreen> {
   Widget build(BuildContext context) {
     widget.vouchers = VoucherRepo().getAll();
 
-    print("_selectedVoucherIds = ${_selectedVoucherIds.toString()}");
+    //print("_selectedVoucherIds = ${_selectedVoucherIds.toString()}");
 
-    _usedList = VoucherRepo()
-        .getFromIdList(widget.vouchers, _selectedVoucherIds);
+    //List<VoucherOB> _usedList = VoucherRepo().getFromIdList(widget.vouchers, _selectedVoucherIds);
     adjustPrice();
 
     if (widget.cartItems.isEmpty) {

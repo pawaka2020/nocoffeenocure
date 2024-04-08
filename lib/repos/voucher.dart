@@ -99,10 +99,10 @@ class VoucherRepo {
       "inside getNotFromIdList, id = ${id.toString()}";
     }
     final results = allVouchers.where((voucher) =>
-    !_selectedVoucherIds.contains(voucher.id) && voucher.activated == false
+    !_selectedVoucherIds.contains(voucher.voucher_id) && voucher.activated == false
     ).toList();
     for (var result in results) {
-      print("getNotFromIdList results : id = ${result.id.toString()}, activated = ${result.activated.toString()}");
+      print("getNotFromIdList results : id = ${result.voucher_id.toString()}, activated = ${result.activated.toString()}");
     }
     return results;
   }
