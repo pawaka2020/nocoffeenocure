@@ -261,10 +261,16 @@ class _CartScreenState extends State<CartScreen> {
     bool confirmation = await showDeleteConfirmationDialog(
         context, 'Confirm Deletion', 'Are you sure you want to remove this voucher?');
     if (confirmation) {
+      // setState(() {
+      //   _selectedVoucherIds.remove(id);
+      //   _usedList = VoucherRepo()
+      //       .getFromIdList(widget.vouchers, _selectedVoucherIds);
+      // });
+      //printToast("id = ${id.toString()}");
+
       setState(() {
         _selectedVoucherIds.remove(id);
-        _usedList = VoucherRepo()
-            .getFromIdList(widget.vouchers, _selectedVoucherIds);
+        _usedList.removeWhere((voucher) => voucher.voucher_id == id);
       });
     }
   }

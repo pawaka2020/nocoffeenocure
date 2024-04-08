@@ -79,8 +79,8 @@ Widget buildSelectedVoucherCard(VoucherOB voucher, BuildContext context,
           borderRadius: BorderRadius.circular(4.0),
           child: InkWell(
             onTap: () {
-              //
-              removeVoucher(voucher.id);
+              //removeVoucher(voucher.id);
+              removeVoucher(voucher.voucher_id!);
             },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -109,9 +109,9 @@ class VoucherRepo {
 
   //
   List<VoucherOB> getFromIdList(List<VoucherOB> allVouchers, List<int> _selectedVoucherIds) {
-    final results = allVouchers.where((voucher) => _selectedVoucherIds.contains(voucher.id) && voucher.activated == false).toList();
+    final results = allVouchers.where((voucher) => _selectedVoucherIds.contains(voucher.voucher_id) && voucher.activated == false).toList();
     for (var result in results) {
-      print("getFromIdList results : id = ${result.id.toString()}, activated = ${result.activated.toString()}");
+      print("getFromIdList results : id = ${result.voucher_id.toString()}, activated = ${result.activated.toString()}");
     }
     return results;
   }
