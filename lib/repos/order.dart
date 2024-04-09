@@ -28,6 +28,11 @@ class OrderRepo {
 
   Future<void> putBackend(OrderOB order) async {
     //printToast("cartItem id = ${cartItem.id}");
+
+
+
+    print('user voucher length = ${singletonUser.vouchers.toString()}');
+
     if (singletonUser.guest == false) {
       final url = onlineBackendURL + 'add_order';
       print("vouchers length = ${order.vouchers.length}");
@@ -60,6 +65,7 @@ class OrderRepo {
         // child objects
         'cartItems': order.cartItems.map((cartitem)=>cartitem.toJson()).toList(),
         'vouchers': order.vouchers.map((voucher)=>voucher.toJson()).toList(),
+        'user_vouchers': singletonUser.vouchers.map((voucher)=>voucher.toJson()).toList(),
       };
 
       // Encode data to JSON

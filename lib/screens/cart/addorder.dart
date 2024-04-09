@@ -71,22 +71,23 @@ int generateOrderId()
   return orderId;
 }
 
-void addOrder(List<int> selectedVoucherIds, List<CartItemOB> cartItems,
+void addOrder(List<int> selectedVoucherIds, List<VoucherOB> usedList, List<CartItemOB> cartItems,
     String specialRequest, String packageString, String deliveryAddress,
     bool onSitePickup, String phoneNumber, String paymentMethod, Price price) {
 
   //print("voucher inside user = ${singletonUser.vouchers.length}");
 
-  //UserOB? currentUser = UserRepo().getLoggedInUser();
-  UserOB? currentUser = singletonUser;
-  setVouchersToUsed(currentUser!, selectedVoucherIds);
-  //this is to be added to User object.
-  List<VoucherOB> selectedVouchers = getSelectedVouchers(currentUser, selectedVoucherIds);
+  UserOB? currentUser = UserRepo().getLoggedInUser();
 
-  print("selectedVoucherIds length = ${selectedVoucherIds.length}");
-  print("selectedVouchers length = ${selectedVouchers.length}");
-
-
+  // List<VoucherOB> unusedList = [];
+  //
+  // for (var useditem in usedList) {
+  //   for (var item in singletonUser.vouchers) {
+  //     if (item.voucher_id != useditem.voucher_id) {
+  //       unusedList.add(item);
+  //     }
+  //   }
+  // }
 
   OrderOB newOrder = OrderOB()
     ..orderId = generateOrderId()
@@ -110,16 +111,27 @@ void addOrder(List<int> selectedVoucherIds, List<CartItemOB> cartItems,
     //IMPORTANT! status of order, allowing identification of this order later
     ..active = true
     ..cartItems.addAll(cartItems)
-    ..vouchers.addAll(selectedVouchers)//WRONG!
+    ..vouchers.addAll(usedList)//WRONG!
   ;
-  currentUser.orders.add(newOrder);
 
-  // inserts the user in objectbox with the updated values
+  print("order voucher count = ${newOrder.vouchers.length.toString()}");
+  //print("");
+
+  currentUser?.orders.add(newOrder);
+
+  //currentUser?.vouchers.addAll(unusedList);
+  for (var useditem in usedList)
+    currentUser?.vouchers.removeWhere((element) => element.voucher_id == useditem.voucher_id);
+
+  //print('current user voucher count is now ${currentUser?.vouchers.length.toString()}');
+
+  singletonUser = currentUser!;
+
   UserRepo().box.put(currentUser);
 
   //inserts order in a user in backend
   //CartItemRepo().deleteBackend(cartItems.)
   OrderRepo().putBackend(newOrder);
 
-  singletonUser = currentUser;
+
 }

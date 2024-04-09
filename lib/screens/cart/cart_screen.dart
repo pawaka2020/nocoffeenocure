@@ -281,7 +281,7 @@ class _CartScreenState extends State<CartScreen> {
       return ;
     }
     if (await checkOrderErrors(widget.tracking, _address, _onsitePickup)) {
-      addOrder(_selectedVoucherIds, widget.cartItems, _specialRequest,
+      addOrder(_selectedVoucherIds, _usedList, widget.cartItems, _specialRequest,
           _packageString, _address, _onsitePickup, _phoneNumber, _paymentMethod, price);
       _selectedVoucherIds = [];
       widget.placeOrder(widget.cartItems.length);
