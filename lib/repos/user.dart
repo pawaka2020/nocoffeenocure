@@ -216,9 +216,13 @@ class UserRepo {
 
   void updateLoggedinUser(String profileImage, String name, String email,
     DateTime birthday, String address, bool setDefaultAddress) {
-    List<UserOB> users = box.getAll();
-    UserOB registeredUser = users.firstWhere((user) => user.guest == false);
+    //List<UserOB> users = box.getAll();
+    //UserOB registeredUser = users.firstWhere((user) => user.guest == false);
     //
+    //print("before, address 1 = ${address}");
+    //print("before, name 1 = ${name}");
+    UserOB registeredUser = singletonUser; //16/4/2024
+
     registeredUser.profileImage = profileImage;
     registeredUser.name = name;
     registeredUser.email = email;
@@ -226,7 +230,9 @@ class UserRepo {
     registeredUser.address = address;
     registeredUser.setDefaultAddress = setDefaultAddress;
 
-    box.put(registeredUser);
+    //box.put(registeredUser); //16/4/2024
+    print("after, address 1 = ${registeredUser.address}");
+    print("after, name 1 = ${registeredUser.name}");
     singletonUser = registeredUser;
 
     updateBackendUser();
@@ -234,6 +240,10 @@ class UserRepo {
 
   Future<void> updateBackendUser() async {
     if (singletonUser.guest == false) {
+
+      //print("in updateBackendUser, address 2 = ${singletonUser.address}");
+
+
       final url = onlineBackendURL + '/api/update_user';
       String imageBase64 = await getImageBase64(singletonUser.profileImage!);
       final Map<String, dynamic> data = {

@@ -161,7 +161,6 @@ class EditProfileState extends State<EditProfileScreen> {
       result = await checkAddress(_address);
       if (result == false) return ;
     }
-
     UserRepo().updateLoggedinUser(_profileImage, _name, _email, _birthday, _address,
         _setDefaultAddress);
     printToast("Changes saved");
@@ -203,7 +202,6 @@ class EditProfileState extends State<EditProfileScreen> {
   void dispose() {
     super.dispose();
   }
-
 
   @override
   Widget build(BuildContext context) {
