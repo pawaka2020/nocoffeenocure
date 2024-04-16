@@ -5,9 +5,11 @@ import '../models/fullnews.dart';
 
 class FullNewsRepo {
   final box = objectbox.fullNewsBox;
+  late final newData;
+  List<FullNewsOB> newData2 = [];
 
   Future<void> update(BackendSource source) async {
-    late final newData;
+
     //late final currentData;
 
     if (source == BackendSource.dummy) {
@@ -15,6 +17,7 @@ class FullNewsRepo {
     }
     else if (source == BackendSource.online) {
       newData = await FullNewsOnline().get();
+      newData2 = await FullNewsOnline().get();
     }
     // currentData = box.getAll();
     //
@@ -34,7 +37,16 @@ class FullNewsRepo {
 
   }
 
+  Future<List<FullNewsOB>> load() {
+    return FullNewsOnline().get();
+  }
+
   List<FullNewsOB> getAll() {
+
+    //return FullNewsRepo().load();
+
     return box.getAll();
+
+    //return newData2;
   }
 }

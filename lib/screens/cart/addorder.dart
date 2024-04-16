@@ -65,8 +65,7 @@ List<VoucherOB> getSelectedVouchers(UserOB currentUser, List<int> selectedVouche
 }
 
 //generate orderId as a random 4-digit number.
-int generateOrderId()
-{
+int generateOrderId() {
   int orderId = Random().nextInt(9000) + 1000;
   return orderId;
 }

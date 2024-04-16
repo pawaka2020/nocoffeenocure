@@ -16,6 +16,7 @@ import '../../repos/fullnews.dart';
 
 class OnboardingScreen extends StatelessWidget {
   final image = FullNewsRepo().getAll()[0].name!;
+  //final image = FullNewsRepo().getAll()[0].name;
 
   @override
   Widget build(BuildContext context) {
