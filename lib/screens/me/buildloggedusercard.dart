@@ -203,12 +203,13 @@ Widget buildLoggedUserCard(BuildContext context, int currentPoints,
                         //fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Text(
-                      '${singletonUser.phoneNumber}',
-                      style: TextStyle(fontSize: 12),
-                    ),
+                    // Text(
+                    //   '${singletonUser.phoneNumber}',
+                    //   style: TextStyle(fontSize: 12),
+                    // ),
+                    SizedBox(height: 10),
                     Align(
-                      alignment: Alignment.centerRight,
+                      alignment: Alignment.centerLeft,
                       child: Text(
                         'id: ${singletonUser.userId}',
                         style: TextStyle(fontSize: 8),

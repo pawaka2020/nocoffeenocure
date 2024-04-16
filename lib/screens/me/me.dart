@@ -17,7 +17,6 @@ import 'buildloggedusercard.dart';
 import '../login/login_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_share_me/flutter_share_me.dart';
-import 'loginuser.dart';
 import 'ourbean.dart';
 
 /*

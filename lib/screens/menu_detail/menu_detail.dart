@@ -11,6 +11,7 @@ import '../../repos/menuitem.dart';
 import '../../repos/user.dart';
 import '../../widgets/partial_divider.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import '../login/login_screen.dart';
 import '../menu/menu.dart';
 import 'dart:io';
 
@@ -61,29 +62,26 @@ class _MenuDetailsPageState extends State<MenuDetailsPage> {
   }
 
   void addToCart() {
-    //create object
-    CartItemOB newcart = CartItemOB()
-      ..quantity = quantity
-      ..price = price
-      ..menuItemOB.add(widget.menuItem.toMenuItemOB()) //this one
-    ;
+    if (singletonUser.guest == true) {
+      //todo: logic to prompt users to login first.
+      printToast("login reqiured");
+    }
+    else {
+      CartItemOB newcart = CartItemOB()
+        ..quantity = quantity
+        ..price = price
+        ..menuItemOB.add(widget.menuItem.toMenuItemOB()) //this one
+          ;
+      CartItemRepo().put(newcart);
+      CartItemRepo().putBackend(newcart);
 
-    //write it to objectbox
-    CartItemRepo().put(newcart);
-    CartItemRepo().putBackend(newcart);
-    // if (singletonUser.guest == false) {
-    //   //add to user table on backend.
-    //   print("singletonuser id = ${singletonUser.userId}");
-    //   //print("price = ${singletonUser.cartItems[0].price}, quantity = ${singletonUser.cartItems[0].quantity}");
-    //   UserRepo().updateBackendUser();
-    // }
-
-    //UserRepo().updateBackendUser();
-
-    widget.updateCartCount(1);
-    Navigator.of(context).pop();
-    printToast("Item added to cart");
+      widget.updateCartCount(1);
+      Navigator.of(context).pop();
+      printToast("Item added to cart");
+    }
   }
+
+
 
   void updateCart() {
     CartItemOB updatedCartItem = CartItemRepo().box.get(widget.cartItemId);
@@ -529,15 +527,58 @@ class QuantityDisplay extends StatelessWidget {
 
 class AddToCartButton extends StatelessWidget {
   final BuildContext context;
-  final void Function() func;
+  final void Function() addToCart;
   final String buttonLabel;
-  AddToCartButton(this.context, this.func, this.buttonLabel);
+  AddToCartButton(this.context, this.addToCart, this.buttonLabel);
+
+  Future<void> showLoginDialog(BuildContext context, void Function() loginUser) async {
+    return await showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text("User login is required"),
+          //content: Text("User login is required"),
+          actions: [
+            TextButton(
+              child: Text('Log in or sign up'),
+              onPressed: () {
+                loginUser();
+                //Navigator.of(context).pop(false);
+              },
+            ),
+            TextButton(
+              child: Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop(false); // Return false to indicate cancellation
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> loginUser() async {
+    Navigator.of(context).pop(false);
+    bool login = await Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) => LoginScreen(),
+    ));
+    if (login == true)
+      // setState((){
+      //   widget.adjustCartCountTracking();
+      // });
+      printToast("User logged in");
+  }
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: () {
-        func();
+       // checks for login first.
+        if (singletonUser.guest == true)
+          showLoginDialog(context, loginUser);
+        else
+          addToCart();
       },
       style: ElevatedButton.styleFrom(
         backgroundColor: Colors.orange, ///Button background color

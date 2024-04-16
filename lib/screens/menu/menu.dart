@@ -142,7 +142,7 @@ class MenuGrid extends StatelessWidget {
   final ScrollController scrollController;
   void Function(int) updateCartCount;
 
-  MenuGrid(this.menuItems, this.scrollController, this.updateCartCount);
+  MenuGrid(this.menuItems, this.scrollController, this.updateCartCount,);
 
   SliverToBoxAdapter buildGridTitle(String title) {
     return SliverToBoxAdapter(
