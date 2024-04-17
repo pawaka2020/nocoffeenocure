@@ -125,6 +125,12 @@ class EditProfileState extends State<EditProfileScreen> {
     }
   }
 
+  Future<void> _removeProfileImage() async {
+    setState(() {
+      _profileImage = '';
+    });
+  }
+
   Future<bool> checkAddress(String address) async {
     bool result = true;
     final apiUrl =
@@ -166,36 +172,6 @@ class EditProfileState extends State<EditProfileScreen> {
     printToast("Changes saved");
     //do the same for photo, email, birthday, address, setting delivery address
     Navigator.of(context).pop(true);
-
-    // DateTime date = await showDatePickerDialog(
-    //   context: context,
-    //   minDate: DateTime(1900, 1, 1),
-    //   maxDate: DateTime(2023, 12, 31),
-    //   initialDate: DateTime(1900, 1, 1),
-    //   daysOfTheWeekTextStyle : TextStyle(
-    //     color: Colors.blue,
-    //     fontSize: 10,
-    //   ),
-    //   enabledCellsTextStyle : TextStyle(
-    //     //color: Colors.green,
-    //   ),
-    //   disabledCellsTextStyle :TextStyle(
-    //     color: Colors.white,
-    //   ),
-    //   currentDateTextStyle:TextStyle(
-    //     //color: Colors.orange,
-    //   ),
-    //   selectedCellTextStyle: TextStyle(
-    //     color: Colors.grey,
-    //   ),
-    //   leadingDateTextStyle: TextStyle(
-    //     color: Colors.orange,
-    //     fontSize: 16,
-    //   ),
-    // ) ?? DateTime(1900, 1, 1);
-
-    //printToast("The entered date is ${date.toString()}");
-
   }
 
   @override
@@ -225,7 +201,7 @@ class EditProfileState extends State<EditProfileScreen> {
               padding: EdgeInsets.only(left: 24.0, right: 24.0, bottom: 16.0),
               children: [
                 SizedBox(height: 20),
-                buildImageSelection(context, _profileImage, _takePhoto, _selectPhotoLibrary),
+                buildImageSelection(context, _profileImage, _takePhoto, _selectPhotoLibrary, _removeProfileImage),
                 SizedBox(height: 5),
                 PartialDivider(20, 30),
                 buildField("Name", 'Eg. John Doe', _nameController, updateName),

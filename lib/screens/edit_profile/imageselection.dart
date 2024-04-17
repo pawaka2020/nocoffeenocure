@@ -6,27 +6,30 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../common.dart';
 
-
-
-
 Future<String> showImageSelectionDialog(BuildContext context) async {
   return await showDialog(
     context: context,
     builder: (context) {
       return AlertDialog(
-        title: Text("Pick an Image"),
+        title: Text("Pick an image"),
         actions: [
           TextButton(
-            child: Text('Take a Photo'),
+            child: Text('Take a photo'),
             onPressed: () {
-              Navigator.of(context).pop('Take a Photo'); // Return false to indicate cancellation
+              Navigator.of(context).pop('Take a photo'); // Return false to indicate cancellation
             },
           ),
           TextButton(
-            child: Text('Choose from Library'),
+            child: Text('Choose from library'),
             onPressed: () {
-              Navigator.of(context).pop('Choose from Library'); // Return true to indicate deletion confirmation
+              Navigator.of(context).pop('Choose from library'); // Return true to indicate deletion confirmation
             },
+          ),
+          TextButton(
+            child: Text('Remove profile image'),
+            onPressed: () {
+              Navigator.of(context).pop('Remove profile image');
+            }
           ),
         ],
       );
@@ -36,19 +39,21 @@ Future<String> showImageSelectionDialog(BuildContext context) async {
 
 //go to order page and opy that drop down menu thingy when tapping the burger icon
 void SelectImage(BuildContext context, Future<void> Function() takePhoto,
-    Future<void> Function() selectPhotoLibrary) async {
+    Future<void> Function() selectPhotoLibrary, Future<void> Function() removeProfileImage) async {
   String choice = await showImageSelectionDialog(context);
-  if (choice == 'Take a Photo') {
+  if (choice == 'Take a photo') {
     takePhoto();
   }
-  else if (choice == 'Choose from Library') {
-
+  else if (choice == 'Choose from library') {
     selectPhotoLibrary();
+  }
+  else if (choice == 'Remove profile image') {
+    removeProfileImage();
   }
 }
 
 Widget buildImageSelection(BuildContext context, String image, Future<void> Function() takePhoto,
-    Future<void> Function() selectPhotoLibrary) {
+    Future<void> Function() selectPhotoLibrary, Future<void> Function() removeProfileImage) {
   final profileDisplay;
   final iconDisplay;
   if (image == '') {
@@ -65,7 +70,7 @@ Widget buildImageSelection(BuildContext context, String image, Future<void> Func
   }
   return InkWell(
     onTap: () {
-      SelectImage(context, takePhoto, selectPhotoLibrary);
+      SelectImage(context, takePhoto, selectPhotoLibrary, removeProfileImage);
     },
     child: Align(
         alignment: Alignment.center,

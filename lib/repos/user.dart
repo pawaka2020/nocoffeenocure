@@ -223,7 +223,9 @@ class UserRepo {
     //print("before, name 1 = ${name}");
     UserOB registeredUser = singletonUser; //16/4/2024
 
+
     registeredUser.profileImage = profileImage;
+    //registeredUser.profileImage = '/static/images/users/' + singletonUser.userId! + '/profile_image.jpg';
     registeredUser.name = name;
     registeredUser.email = email;
     registeredUser.birthday = birthday;
@@ -243,7 +245,10 @@ class UserRepo {
 
       //print("in updateBackendUser, address 2 = ${singletonUser.address}");
 
-
+    /*
+       saved image in backend = /data/user/0/com.example.nocoffeenocure/cache/731e839f-ef76-43cc-a78f-e7340b93c494/IMG-20240417-WA0004.jpg
+       desired image in backend = "/static/images/users/22732379/profile_image.jpg"
+    */
       final url = onlineBackendURL + '/api/update_user';
       String imageBase64 = await getImageBase64(singletonUser.profileImage!);
       final Map<String, dynamic> data = {
@@ -253,7 +258,8 @@ class UserRepo {
         'birthday': singletonUser.birthday?.toIso8601String(), //Converting object to an encodable object failed: Instance of 'DateTime'
         'phone_number': singletonUser.phoneNumber,
         'address': singletonUser.address,
-        'profile_image': singletonUser.profileImage,
+        //'profile_image': singletonUser.profileImage,
+        'profile_image': 'static/images/users/' + singletonUser.userId! + '/profile_image.jpg',
         'coins': singletonUser.coins,
         'guest': singletonUser.guest,
         'is_logged_in': singletonUser.isLoggedIn,
