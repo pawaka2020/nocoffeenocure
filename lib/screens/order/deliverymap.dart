@@ -8,7 +8,6 @@ import 'package:http/http.dart' as http;
 
 Widget buildDeliveryMap(LatLng _location, String address, List<LatLng> roadRoute) {
   LatLng bikeLocation = const LatLng(3.0492795, 101.6444132);
-  //List<LatLng> roadRoute = [];
 
   Widget carrierLocation = MarkerLayer(
       markers: [

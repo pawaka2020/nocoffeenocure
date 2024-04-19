@@ -1,22 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import '../../common.dart';
 import '../../main.dart';
 import '../../models/cartitem.dart';
 import '../../models/menuitem.dart';
-import '../../provider/cart_count_notifier.dart';
 import '../../repos/cartitem.dart';
-import '../../repos/menuitem.dart';
-import '../../repos/user.dart';
 import '../../widgets/partial_divider.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import '../login/login_screen.dart';
-import '../menu/menu.dart';
-import 'dart:io';
 
 /*stateful widget version*/
-//load data from repos here.
 class MenuDetailsPage extends StatefulWidget {
   final MenuItem menuItem;
   final bool editMode;
@@ -80,8 +72,6 @@ class _MenuDetailsPageState extends State<MenuDetailsPage> {
       printToast("Item added to cart");
     }
   }
-
-
 
   void updateCart() {
     CartItemOB updatedCartItem = CartItemRepo().box.get(widget.cartItemId);
@@ -156,36 +146,12 @@ class MenuImage extends StatelessWidget {
     return Container(
         width: 300,   //default 200 //300
         height: 310,  //default 333 //310
-        //child: Image.asset(imagePath)
-        // child: Image.file(
-        //   File(imagePath),
-        //   width: 50, //150
-        //   height: 55,//165
-        //   //fit: BoxFit.cover,
-        // ),
         child: Image.network(
           imagePath,
           width: 50,
           height: 55,
         )
     );
-
-    // return SizedBox(
-    //   width: 150,
-    //   child: Card(
-    //     shape: RoundedRectangleBorder(
-    //       borderRadius: BorderRadius.circular(12.0),
-    //     ),
-    //     child: ClipRRect(
-    //       borderRadius: BorderRadius.circular(12.0),
-    //       child: Image.file(
-    //         File(imagePath),
-    //         width: 150,
-    //         height: 200, //230
-    //       ),
-    //     ),
-    //   ),
-    // );
   }
 }
 
@@ -378,8 +344,6 @@ class _AdditionMenuState extends State<AdditionMenu> {
                   selectedDetailIndex = index;
                   //new change.
                   widget.addition.selectedIndex = selectedDetailIndex;
-                  //print(widget.addition.title + " index " + widget.addition.selectedIndex.toString() + " selected");
-                  //widget.adjustPrice(additionDetail);
                   widget.adjustPrice();
                 });
               },
@@ -392,7 +356,6 @@ class _AdditionMenuState extends State<AdditionMenu> {
   }
 }
 
-/*only reacts when icon is tapped, not the whole widget*/
 class AdditionMenuDetail extends StatelessWidget {
   final AdditionDetail additionDetail;
   final bool isSelected;
@@ -564,9 +527,6 @@ class AddToCartButton extends StatelessWidget {
       builder: (context) => LoginScreen(),
     ));
     if (login == true)
-      // setState((){
-      //   widget.adjustCartCountTracking();
-      // });
       printToast("User logged in");
   }
 
@@ -601,4 +561,3 @@ class AddToCartButton extends StatelessWidget {
     );
   }
 }
-

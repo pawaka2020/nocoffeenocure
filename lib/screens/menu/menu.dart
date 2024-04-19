@@ -85,18 +85,6 @@ class MyMenuCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(12.0),
           child: Column(
             children: [
-              // Image.asset(
-              //   menuItem.imagePath,
-              //   width: 150,
-              //   height: 165,//165
-              //   fit: BoxFit.cover,
-              // ),
-              // Image.file(
-              //   File(menuItem.imagePath),
-              //   width: 150,
-              //   height: 165,
-              //   fit: BoxFit.cover,
-              // ),
               //load from URL
               Image.network(
                 menuItem.imagePath,

@@ -161,7 +161,6 @@ class TrackScreenState extends State<TrackScreen> {
       //4/3/2024
       OrderRepo().removeFromBackend(currentOrder!);
       singletonUser = currentUser!;
-      //
 
       widget.setTracking(false, 0);
       printToast("Order ${orderId.toString()} canceled");

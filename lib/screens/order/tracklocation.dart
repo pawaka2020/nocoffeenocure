@@ -9,26 +9,6 @@ import '../../common.dart';
 import 'deliverymap.dart';
 import 'package:http/http.dart' as http;
 
-// Future<List<LatLng>> _loadUserCurrentLocation() async {
-//   try {
-//     LocationPermission permission = await Geolocator.requestPermission();
-//     if (permission == LocationPermission.denied ||
-//         permission == LocationPermission.deniedForever) {
-//       // Handle the case where the user denied or permanently denied location access.
-//       print('Location permission denied.');
-//       return [];
-//     }
-//     Position position = await Geolocator.getCurrentPosition(
-//       desiredAccuracy: LocationAccuracy.high,
-//     );
-//     return [LatLng(position.latitude, position.longitude)];
-//   }
-//   catch (e) {
-//     print('Error getting location: $e');
-//     return [];
-//   }
-// }
-
 Future<LatLng?> addressToLatLng(String address) async {
   try {
     List<Location> locations = await locationFromAddress(address);
@@ -89,14 +69,6 @@ class TrackLocationState extends State<TrackLocationScreen> {
       });
     }
   }
-
-  // Future<void> _loadUserLocation() async {
-  //   if (widget.onSitePickup == true)
-  //     final userLocation = _loadUserCurrentLocation();
-  //     setState((){
-  //       _loadLocation();
-  //     });
-  // }
 
   //address is passed here.
   Future<void> _loadLocation() async {

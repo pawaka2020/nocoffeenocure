@@ -242,13 +242,11 @@ class UserRepo {
 
   Future<void> updateBackendUser() async {
     if (singletonUser.guest == false) {
-
       //print("in updateBackendUser, address 2 = ${singletonUser.address}");
-
-    /*
-       saved image in backend = /data/user/0/com.example.nocoffeenocure/cache/731e839f-ef76-43cc-a78f-e7340b93c494/IMG-20240417-WA0004.jpg
-       desired image in backend = "/static/images/users/22732379/profile_image.jpg"
-    */
+      /*
+        saved image in backend = /data/user/0/com.example.nocoffeenocure/cache/731e839f-ef76-43cc-a78f-e7340b93c494/IMG-20240417-WA0004.jpg
+        desired image in backend = "/static/images/users/22732379/profile_image.jpg"
+      */
       final url = onlineBackendURL + '/api/update_user';
       String imageBase64 = await getImageBase64(singletonUser.profileImage!);
       final Map<String, dynamic> data = {

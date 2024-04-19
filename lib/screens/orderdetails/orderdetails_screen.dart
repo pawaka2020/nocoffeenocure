@@ -44,7 +44,7 @@ class OrderDetailsScreen extends StatelessWidget {
             Expanded(
               child: ListView(
                 children: [
-                  ...currentOrder!.cartItems.map((item) => ODItemCard(item)),
+                  ...currentOrder.cartItems.map((item) => ODItemCard(item)),
                   if (currentOrder.specialRequest != '')
                     buildODSpecialRequest(currentOrder.specialRequest!),
                   if (currentOrder.packageString != '')
