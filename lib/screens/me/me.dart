@@ -36,19 +36,6 @@ class MeScreen extends StatefulWidget {
 class _MeState extends State<MeScreen> {
 
   Future<void> loginUser() async {
-    //using offline demo backend
-    // setState(() {
-    //UserRepo().loginUser();
-    //   widget.adjustCartCountTracking();
-    //   printToast("Successfully logged in");
-    // });
-
-    //using online Flask backend
-    // Navigator.of(context).push(MaterialPageRoute(
-    //   builder: (context) => LoginScreen(),
-    // ));
-
-
     //try to use setState
     bool login = await Navigator.of(context).push(MaterialPageRoute(
       builder: (context) => LoginScreen(),
@@ -69,8 +56,7 @@ class _MeState extends State<MeScreen> {
   }
 
   void editProfile() async {
-    bool saveChanges = false;
-    saveChanges = await Navigator.of(context).push(MaterialPageRoute(
+    bool saveChanges = await Navigator.of(context).push(MaterialPageRoute(
       builder: (context) => EditProfileScreen(),
     ));
     if (saveChanges == true) {
@@ -78,13 +64,6 @@ class _MeState extends State<MeScreen> {
 
       });
     }
-
-    // await Navigator.of(context).push(MaterialPageRoute(
-    //   builder: (context) => EditProfileScreen(),
-    // )).then((_) {
-    //   setState(() {});
-    // });
-
   }
 
   @override
@@ -92,7 +71,7 @@ class _MeState extends State<MeScreen> {
     return Scaffold(
       body: ListView(
           padding: EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0, top: 28.0,),
-        children: [
+          children: [
           singletonUser.guest == true
               ? buildGuestCard(loginUser)
               : buildLoggedUserCard(context, 55, 100, logoutUser, editProfile),
@@ -105,9 +84,8 @@ class _MeState extends State<MeScreen> {
           buildMeCard(context, 'Our Bean', Icons.local_cafe, OurBeanScreen()),
           buildMeCard(context, 'Locations', Icons.location_on, StoreLocationScreen()),
           buildMeCard(context, 'Settings', Icons.settings, SettingsScreen()),
-        ]
+        ],
       ),
-
     );
   }
 

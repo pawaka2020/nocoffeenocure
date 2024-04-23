@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../common.dart';
+import '../../main.dart';
 
 Future<String> showImageSelectionDialog(BuildContext context) async {
   return await showDialog(
@@ -66,6 +67,7 @@ Widget buildImageSelection(BuildContext context, String image, Future<void> Func
   }
   else {
     profileDisplay = FileImage(File(image));;
+    //profileDisplay = FileImage(File(singletonUser.profileImage!));
     iconDisplay = null;
   }
   return InkWell(

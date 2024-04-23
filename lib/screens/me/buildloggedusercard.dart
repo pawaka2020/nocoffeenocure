@@ -104,10 +104,6 @@ Widget loadingBar(int currentPoints, int totalPoints) {
 Widget buildLoggedUserCard(BuildContext context, int currentPoints,
     int totalPoints, void Function() logout, void Function() editProfile) {
 
-  /*
-  Some logic
-
-  */
   Card membershipDisplayCard = Card(
     elevation: 4.0,
     margin: EdgeInsets.symmetric(vertical: 8.0),
@@ -189,9 +185,9 @@ Widget buildLoggedUserCard(BuildContext context, int currentPoints,
       child: Column(
         children: [
           Row(
-            children: [ //change this
-              buildUserPhotoDisplay(context, singletonUser.profileImage!),
-              SizedBox(width: 16),
+            children: [
+              //buildUserPhotoDisplay(context, singletonUser.profileImage!),
+              //SizedBox(width: 16),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -203,10 +199,6 @@ Widget buildLoggedUserCard(BuildContext context, int currentPoints,
                         //fontWeight: FontWeight.bold,
                       ),
                     ),
-                    // Text(
-                    //   '${singletonUser.phoneNumber}',
-                    //   style: TextStyle(fontSize: 12),
-                    // ),
                     SizedBox(height: 10),
                     Align(
                       alignment: Alignment.centerLeft,
@@ -228,15 +220,6 @@ Widget buildLoggedUserCard(BuildContext context, int currentPoints,
             children: [
               InkWell(
                 onTap: () async {
-                  //Handle Edit Profile
-                  // Navigator.of(context).push(MaterialPageRoute(
-                  //   builder: (context) => EditProfileScreen(),
-                  // ));
-
-
-                  //if (editProfile) {}
-
-                  //update(saveChanges);
                   editProfile();
                 },
                 child: Text(
@@ -304,8 +287,9 @@ Future<bool> showLogoffConfirmationDialog(BuildContext context, void Function() 
 }
 
 Widget buildUserPhotoDisplay(BuildContext context, String image) {
-  final profileDisplay;
-  final iconDisplay;
+  var profileDisplay;
+  var iconDisplay;
+
   if (image == '') {
     profileDisplay = null;
     iconDisplay = Icon(
@@ -315,7 +299,7 @@ Widget buildUserPhotoDisplay(BuildContext context, String image) {
     );
   }
   else {
-    profileDisplay = FileImage(File(image));;
+    profileDisplay = FileImage(File(storedProfileImage));
     iconDisplay = null;
   }
   return Align(
@@ -327,5 +311,42 @@ Widget buildUserPhotoDisplay(BuildContext context, String image) {
       child: iconDisplay,
     ),
   );
-
 }
+
+// Widget buildUserPhotoDisplay2(BuildContext context, String image) {
+//   if (image == '') {
+//     return Align(
+//       alignment: Alignment.center,
+//       child: CircleAvatar(
+//         radius: 32, //40
+//         backgroundColor: Colors.black12,
+//         child: Icon(
+//           Icons.person,
+//           size: 42, //50
+//           color: Colors.grey,
+//         ),
+//       ),
+//     );
+//   } else {
+//     return Align(
+//       alignment: Alignment.center,
+//       child: CircleAvatar(
+//         radius: 32, //40
+//         backgroundColor: Colors.black12,
+//         child: FutureBuilder(
+//           future: Image.network(onlineBackendURL + image).image,
+//           builder: (context, snapshot) {
+//             if (snapshot.connectionState == ConnectionState.done) {
+//               return CircleAvatar(
+//                 radius: 32, //40
+//                 backgroundImage: NetworkImage(onlineBackendURL + image),
+//               );
+//             } else {
+//               return CircularProgressIndicator(); // Or any other loading indicator
+//             }
+//           },
+//         ),
+//       ),
+//     );
+//   }
+// }

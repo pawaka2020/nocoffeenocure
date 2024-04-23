@@ -96,7 +96,7 @@ class MenuItemOnline {
       }
     }
     catch (e) {
-      print('Error fetching menuitem: $e');
+      print('Error fetching menuitem: $e. Consider turning on wifi and matching ip address to the connection the backend is hosted on');
       menuitemLoaded = false;
       return [];
     }

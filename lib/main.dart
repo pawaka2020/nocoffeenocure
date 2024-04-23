@@ -10,6 +10,7 @@ Singletons
 */
 late ObjectBox objectbox;
 late UserOB singletonUser; //user created
+late String storedProfileImage;
 
 enum BackendSource {
   dummy,

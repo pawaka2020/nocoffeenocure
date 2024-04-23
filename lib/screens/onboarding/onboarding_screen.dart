@@ -28,6 +28,7 @@ class OnboardingScreen extends StatelessWidget {
             Expanded(
               child: Image.network(
                   image,
+                  fit: BoxFit.fill,
               ),
             ),
           ],

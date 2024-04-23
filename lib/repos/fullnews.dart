@@ -6,7 +6,6 @@ import '../models/fullnews.dart';
 class FullNewsRepo {
   final box = objectbox.fullNewsBox;
   late final newData;
-  List<FullNewsOB> newData2 = [];
 
   Future<void> update(BackendSource source) async {
 
@@ -17,7 +16,6 @@ class FullNewsRepo {
     }
     else if (source == BackendSource.online) {
       newData = await FullNewsOnline().get();
-      newData2 = await FullNewsOnline().get();
     }
     // currentData = box.getAll();
     //
@@ -30,11 +28,8 @@ class FullNewsRepo {
     //   print("adding for FullNewsOB");
     //   box.putMany(newData);
     // }
-
-
     box.removeAll(); //the id of 'box' does not reset to 0.
     box.putMany(newData);
-
   }
 
   Future<List<FullNewsOB>> load() {

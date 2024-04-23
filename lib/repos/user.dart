@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'package:path_provider/path_provider.dart';
+
 import '../backend/dummy/user.dart';
 import '../common.dart';
 import '../main.dart';
@@ -8,6 +10,8 @@ import '../models/user.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 import '../models/voucher.dart';
 
@@ -133,21 +137,18 @@ class UserRepo {
       ..newUser = decodedToken['new_user']
       ..setDefaultAddress = decodedToken['set_default_address']
     ;
-
-    // var _cartItems = CartItemOB.listFromJson(decodedToken['cart_items']);
-
     loggedinUser.cartItems.addAll(CartItemOB.listFromJson(decodedToken['cart_items'])); //CartItemOB.listFromJson(decodedToken['cart_items'])
     loggedinUser.vouchers.addAll(VoucherOB.listFromJson(decodedToken['vouchers']));
-    //loggedinUser.vouchers.addAll([]);//VoucherOB.listFromJson(decodedToken['vouchers'])
     loggedinUser.reviews.addAll([]);
 
     //the rest here is the same
     UserOB guestUser = users.firstWhere((user) => user.guest == true);
-
     guestUser.isLoggedIn = false;
     box.put(guestUser);
-    //box.put(loggedinUser); //do not disable this. It will cause crash.
+
     singletonUser = loggedinUser!;
+
+    //storedProfileImage = storeProfileImage();
   }
 
   Future<void> logoutUserBackend() async {
@@ -214,15 +215,64 @@ class UserRepo {
     return box.getAll();
   }
 
+  Future<void> update(String profileImage, String name, String email,
+      DateTime birthday, String address, bool setDefaultAddress) async {
+    final url = onlineBackendURL + '/api/update_user';
+    String imageBase64 = await getImageBase64(profileImage);
+    
+    singletonUser.profileImage = (profileImage == '') ? '' : 'static/images/users/' + singletonUser.userId! + '/profile_image.jpg';
+    singletonUser.name = name;
+    singletonUser.email = email;
+    singletonUser.birthday = birthday;
+    singletonUser.address = address;
+    singletonUser.setDefaultAddress = setDefaultAddress;
+
+    final Map<String, dynamic> data = {
+      'user_id': singletonUser.userId,
+      'name': singletonUser.name,
+      'email': singletonUser.email,
+      'birthday': singletonUser.birthday!.toIso8601String(), //Converting object to an encodable object failed: Instance of 'DateTime'
+      'phone_number': singletonUser.phoneNumber,
+      'address': singletonUser.address,
+      'profile_image': singletonUser.profileImage,
+      //'profile_image': 'static/images/users/' + singletonUser.userId! + '/profile_image.jpg',
+      'coins': singletonUser.coins,
+      'guest': singletonUser.guest,
+      'is_logged_in': singletonUser.isLoggedIn,
+      'new_user': singletonUser.newUser,
+      'set_default_address': singletonUser.setDefaultAddress,
+      // child objects
+      'cart_items': singletonUser.cartItems.map((review) => review.toJson()).toList(),
+      'image_base_64': imageBase64,
+    };
+    final jsonData = json.encode(data);
+    try {
+      final response = await http.post(
+        Uri.parse(url),
+        headers: <String, String> {
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonData,
+      );
+      if (response.statusCode == 200) {
+        //(TODO) save images to app's storage here.
+        //UserRepo().storeProfileImage();
+        storedProfileImage = profileImage;
+
+        printToast('User updated successfully');
+      }
+      else {
+        printToast('Failed to update user: ${response.statusCode}');
+      }
+    }
+    catch (e) {
+      printToast('Exception caught while updating user: $e');
+    }
+  }
+
   void updateLoggedinUser(String profileImage, String name, String email,
     DateTime birthday, String address, bool setDefaultAddress) {
-    //List<UserOB> users = box.getAll();
-    //UserOB registeredUser = users.firstWhere((user) => user.guest == false);
-    //
-    //print("before, address 1 = ${address}");
-    //print("before, name 1 = ${name}");
     UserOB registeredUser = singletonUser; //16/4/2024
-
 
     registeredUser.profileImage = profileImage;
     //registeredUser.profileImage = '/static/images/users/' + singletonUser.userId! + '/profile_image.jpg';
@@ -232,12 +282,12 @@ class UserRepo {
     registeredUser.address = address;
     registeredUser.setDefaultAddress = setDefaultAddress;
 
-    //box.put(registeredUser); //16/4/2024
-    print("after, address 1 = ${registeredUser.address}");
-    print("after, name 1 = ${registeredUser.name}");
-    singletonUser = registeredUser;
-
+    //singletonUser = registeredUser;
     updateBackendUser();
+    //4/19/2023
+    //singletonUser.profileImage = 'static/images/users/' + singletonUser.userId! + '/profile_image.jpg';
+
+
   }
 
   Future<void> updateBackendUser() async {
@@ -256,8 +306,8 @@ class UserRepo {
         'birthday': singletonUser.birthday?.toIso8601String(), //Converting object to an encodable object failed: Instance of 'DateTime'
         'phone_number': singletonUser.phoneNumber,
         'address': singletonUser.address,
-        //'profile_image': singletonUser.profileImage,
-        'profile_image': 'static/images/users/' + singletonUser.userId! + '/profile_image.jpg',
+        'profile_image': singletonUser.profileImage,
+        //'profile_image': 'static/images/users/' + singletonUser.userId! + '/profile_image.jpg',
         'coins': singletonUser.coins,
         'guest': singletonUser.guest,
         'is_logged_in': singletonUser.isLoggedIn,
@@ -307,7 +357,6 @@ class UserRepo {
 
       return imageBase64;
     }
-
   }
 
   Future<void> putOrderBackend() async {
@@ -315,5 +364,31 @@ class UserRepo {
       final url = onlineBackendURL + '/api/update_user';
     }
     else return ;
+  }
+
+  // returns the path to the image after it has been stored.
+  // use it like this:
+  // String image = await storeProfileImage();
+  // FileImage(File(image));
+  Future<void> storeProfileImage() async {
+    if (singletonUser.profileImage! == '') {
+      storedProfileImage = '';
+      return ;
+    }
+
+    var response = await http.get(Uri.parse(onlineBackendURL + singletonUser.profileImage!));
+
+    if (response.statusCode == 200) {
+      Directory directory = await getApplicationDocumentsDirectory();
+      String directoryPath = '${directory.path}/backend/images/users/${singletonUser.userId}/';
+      Directory(directoryPath).createSync(recursive: true); // Ensure directory exists
+      String filePath = directoryPath + 'profile_image.jpg';
+      File file = File(filePath);
+      await file.writeAsBytes(response.bodyBytes);
+      storedProfileImage =  filePath;
+    }
+    else {
+      storedProfileImage = '';
+    }
   }
 }

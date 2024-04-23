@@ -109,6 +109,7 @@ class _LoginScreenState extends State<LoginScreen> {
       final jsonResponse = jsonDecode(response.body);
       final authToken = jsonResponse['auth_token'];
       UserRepo().loginUserBackend(authToken);
+      UserRepo().storeProfileImage();
       printToast("Login successful");
       Navigator.of(context).pop(true);
     }

@@ -65,7 +65,7 @@ class FAQScreenState extends State<FAQScreen> {
         children: [
           SizedBox(height: 20),
           buildFAQCard(
-              "Doe you offer decaffeinated coffee?",
+              "Do you offer decaffeinated coffee?",
               "Certainly! We provide decaffeinated coffee options for those who prefer to limit their caffeine intake."),
           buildFAQCard(
               "Can I customize my coffee order?",

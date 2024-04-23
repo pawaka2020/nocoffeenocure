@@ -36,8 +36,9 @@ class EditProfileState extends State<EditProfileScreen> {
   TextEditingController _emailController = TextEditingController();
   TextEditingController _addressController = TextEditingController();
   TextEditingController _birthdayController = TextEditingController();
-  String _profileImage = singletonUser.profileImage!;
-  late XFile file;
+  //String _profileImage = singletonUser.profileImage!;
+  String _profileImage = storedProfileImage;
+  //late XFile file; //4/23/2024
   //bool newlyRegistered = singletonUser.newlyRegistered;
   //bool? newUser = singletonUser.newUser;
 
@@ -67,12 +68,11 @@ class EditProfileState extends State<EditProfileScreen> {
 
   void updateBirthday(DateTime birthday) {
     //printToast("birthday updated to ${_birthday.toString()}");
-    setState((){
+    setState(() {
       _birthday = birthday;
       //printToast("birthday updated to ${_birthday.toString()}");
     });
     //_birthday = birthday;
-
   }
 
   void updateAddress(String address) {
@@ -91,7 +91,6 @@ class EditProfileState extends State<EditProfileScreen> {
   Future<void> _initializeCamera() async {
     final cameras = await availableCameras();
     final firstCamera = cameras.first;
-    //printToast("camera found = ${firstCamera.toString()}");
     _controller = CameraController(
       firstCamera,
       ResolutionPreset.medium,
@@ -106,6 +105,9 @@ class EditProfileState extends State<EditProfileScreen> {
     if (image != null) {
       setState(() {
         _profileImage = image.path;
+        //
+        //storedProfileImage = image.path;
+        //print("!!!!!!!!! before edit, saved photo = ${_profileImage}");
       });
     }
   }
@@ -116,6 +118,9 @@ class EditProfileState extends State<EditProfileScreen> {
       if (image != null && mounted) {
         setState(() {
           _profileImage = image.path;
+          //
+          //storedProfileImage = image.path;
+          //print("!!!!!!!!! before edit, saved photo = ${_profileImage}");
         });
       }
       else return;
@@ -167,9 +172,17 @@ class EditProfileState extends State<EditProfileScreen> {
       result = await checkAddress(_address);
       if (result == false) return ;
     }
-    UserRepo().updateLoggedinUser(_profileImage, _name, _email, _birthday, _address,
+    // UserRepo().updateLoggedinUser(_profileImage, _name, _email, _birthday, _address,
+    //     _setDefaultAddress);
+
+    //storedProfileImage = _profileImage;
+
+    UserRepo().update(_profileImage, _name, _email, _birthday, _address,
         _setDefaultAddress);
     printToast("Changes saved");
+    storedProfileImage = _profileImage;
+    //print("!!!!!!!!! after edit, saved photo = ${storedProfileImage}");
+    //print("after saveChanges, profile image = ${singletonUser.profileImage}");
     //do the same for photo, email, birthday, address, setting delivery address
     Navigator.of(context).pop(true);
   }
