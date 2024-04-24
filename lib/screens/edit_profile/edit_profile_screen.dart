@@ -105,9 +105,6 @@ class EditProfileState extends State<EditProfileScreen> {
     if (image != null) {
       setState(() {
         _profileImage = image.path;
-        //
-        //storedProfileImage = image.path;
-        //print("!!!!!!!!! before edit, saved photo = ${_profileImage}");
       });
     }
   }
@@ -118,9 +115,6 @@ class EditProfileState extends State<EditProfileScreen> {
       if (image != null && mounted) {
         setState(() {
           _profileImage = image.path;
-          //
-          //storedProfileImage = image.path;
-          //print("!!!!!!!!! before edit, saved photo = ${_profileImage}");
         });
       }
       else return;
@@ -168,9 +162,9 @@ class EditProfileState extends State<EditProfileScreen> {
   void saveChanges(BuildContext context) async {
 
     if (_setDefaultAddress == true) {
-      bool result = true;
-      result = await checkAddress(_address);
-      if (result == false) return ;
+        bool result = true;
+        result = await checkAddress(_address);
+        if (result == false) return ;
     }
     // UserRepo().updateLoggedinUser(_profileImage, _name, _email, _birthday, _address,
     //     _setDefaultAddress);
@@ -178,18 +172,16 @@ class EditProfileState extends State<EditProfileScreen> {
     //storedProfileImage = _profileImage;
 
     UserRepo().update(_profileImage, _name, _email, _birthday, _address,
-        _setDefaultAddress);
-    printToast("Changes saved");
-    storedProfileImage = _profileImage;
-    //print("!!!!!!!!! after edit, saved photo = ${storedProfileImage}");
-    //print("after saveChanges, profile image = ${singletonUser.profileImage}");
-    //do the same for photo, email, birthday, address, setting delivery address
-    Navigator.of(context).pop(true);
+        _setDefaultAddress).then((_){
+        printToast("Changes saved");
+        storedProfileImage = _profileImage;
+        Navigator.of(context).pop(true);
+    });
   }
 
   @override
   void dispose() {
-    super.dispose();
+      super.dispose();
   }
 
   @override

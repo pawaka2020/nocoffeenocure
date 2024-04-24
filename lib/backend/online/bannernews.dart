@@ -32,7 +32,7 @@ class BannerNewsOnline {
       }
     }
     catch (e) {
-      print('Error fetching banner news: $e. Consider turning on wifi and matching ip address to the connection the backend is hosted on');
+      print('Error fetching banner news: $e. Consider matching ip address to backend or ensure the backend has been launched first');
       bannernewsLoaded = false;
       return [];
     }

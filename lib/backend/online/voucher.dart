@@ -35,7 +35,7 @@ class VoucherOnline {
       }
     }
     catch (e) {
-      print('Error fetching voucher: $e. Consider turning on wifi and matching ip address to the connection the backend is hosted on');
+      print('Error fetching voucher: $e. Consider matching ip address to backend or ensure the backend has been launched first');
       voucherLoaded = false;
       return [];
     }

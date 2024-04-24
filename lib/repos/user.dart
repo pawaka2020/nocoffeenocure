@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:camera/camera.dart';
 import 'package:path_provider/path_provider.dart';
 
 import '../backend/dummy/user.dart';
@@ -256,8 +257,8 @@ class UserRepo {
       );
       if (response.statusCode == 200) {
         //(TODO) save images to app's storage here.
-        //UserRepo().storeProfileImage();
-        storedProfileImage = profileImage;
+        storeProfileImage2();
+        //storedProfileImage = profileImage;
 
         printToast('User updated successfully');
       }
@@ -270,77 +271,77 @@ class UserRepo {
     }
   }
 
-  void updateLoggedinUser(String profileImage, String name, String email,
-    DateTime birthday, String address, bool setDefaultAddress) {
-    UserOB registeredUser = singletonUser; //16/4/2024
+  // void updateLoggedinUser(String profileImage, String name, String email,
+  //   DateTime birthday, String address, bool setDefaultAddress) {
+  //   UserOB registeredUser = singletonUser; //16/4/2024
+  //
+  //   registeredUser.profileImage = profileImage;
+  //   //registeredUser.profileImage = '/static/images/users/' + singletonUser.userId! + '/profile_image.jpg';
+  //   registeredUser.name = name;
+  //   registeredUser.email = email;
+  //   registeredUser.birthday = birthday;
+  //   registeredUser.address = address;
+  //   registeredUser.setDefaultAddress = setDefaultAddress;
+  //
+  //   //singletonUser = registeredUser;
+  //   updateBackendUser();
+  //   //4/19/2023
+  //   //singletonUser.profileImage = 'static/images/users/' + singletonUser.userId! + '/profile_image.jpg';
+  //
+  //
+  // }
 
-    registeredUser.profileImage = profileImage;
-    //registeredUser.profileImage = '/static/images/users/' + singletonUser.userId! + '/profile_image.jpg';
-    registeredUser.name = name;
-    registeredUser.email = email;
-    registeredUser.birthday = birthday;
-    registeredUser.address = address;
-    registeredUser.setDefaultAddress = setDefaultAddress;
-
-    //singletonUser = registeredUser;
-    updateBackendUser();
-    //4/19/2023
-    //singletonUser.profileImage = 'static/images/users/' + singletonUser.userId! + '/profile_image.jpg';
-
-
-  }
-
-  Future<void> updateBackendUser() async {
-    if (singletonUser.guest == false) {
-      //print("in updateBackendUser, address 2 = ${singletonUser.address}");
-      /*
-        saved image in backend = /data/user/0/com.example.nocoffeenocure/cache/731e839f-ef76-43cc-a78f-e7340b93c494/IMG-20240417-WA0004.jpg
-        desired image in backend = "/static/images/users/22732379/profile_image.jpg"
-      */
-      final url = onlineBackendURL + '/api/update_user';
-      String imageBase64 = await getImageBase64(singletonUser.profileImage!);
-      final Map<String, dynamic> data = {
-        'user_id': singletonUser.userId,
-        'name': singletonUser.name,
-        'email': singletonUser.email,
-        'birthday': singletonUser.birthday?.toIso8601String(), //Converting object to an encodable object failed: Instance of 'DateTime'
-        'phone_number': singletonUser.phoneNumber,
-        'address': singletonUser.address,
-        'profile_image': singletonUser.profileImage,
-        //'profile_image': 'static/images/users/' + singletonUser.userId! + '/profile_image.jpg',
-        'coins': singletonUser.coins,
-        'guest': singletonUser.guest,
-        'is_logged_in': singletonUser.isLoggedIn,
-        'new_user': singletonUser.newUser,
-        'set_default_address': singletonUser.setDefaultAddress,
-        // child objects
-        'cart_items': singletonUser.cartItems.map((review) => review.toJson()).toList(),
-        'image_base_64': imageBase64,
-      };
-      // Encode data to JSON
-      final jsonData = json.encode(data);
-      try
-      {
-        final response = await http.post(
-          Uri.parse(url),
-          headers: <String, String> {
-            'Content-Type': 'application/json; charset=UTF-8',
-          },
-          body: jsonData,
-        );
-        if (response.statusCode == 200) {
-          printToast('User updated successfully');
-        }
-        else {
-          printToast('Failed to update user: ${response.statusCode}');
-        }
-      }
-      catch (e) {
-        printToast('Exception caught while updating user: $e');
-      }
-    }
-    else return ;
-  }
+  // Future<void> updateBackendUser() async {
+  //   if (singletonUser.guest == false) {
+  //     //print("in updateBackendUser, address 2 = ${singletonUser.address}");
+  //     /*
+  //       saved image in backend = /data/user/0/com.example.nocoffeenocure/cache/731e839f-ef76-43cc-a78f-e7340b93c494/IMG-20240417-WA0004.jpg
+  //       desired image in backend = "/static/images/users/22732379/profile_image.jpg"
+  //     */
+  //     final url = onlineBackendURL + '/api/update_user';
+  //     String imageBase64 = await getImageBase64(singletonUser.profileImage!);
+  //     final Map<String, dynamic> data = {
+  //       'user_id': singletonUser.userId,
+  //       'name': singletonUser.name,
+  //       'email': singletonUser.email,
+  //       'birthday': singletonUser.birthday?.toIso8601String(), //Converting object to an encodable object failed: Instance of 'DateTime'
+  //       'phone_number': singletonUser.phoneNumber,
+  //       'address': singletonUser.address,
+  //       'profile_image': singletonUser.profileImage,
+  //       //'profile_image': 'static/images/users/' + singletonUser.userId! + '/profile_image.jpg',
+  //       'coins': singletonUser.coins,
+  //       'guest': singletonUser.guest,
+  //       'is_logged_in': singletonUser.isLoggedIn,
+  //       'new_user': singletonUser.newUser,
+  //       'set_default_address': singletonUser.setDefaultAddress,
+  //       // child objects
+  //       'cart_items': singletonUser.cartItems.map((review) => review.toJson()).toList(),
+  //       'image_base_64': imageBase64,
+  //     };
+  //     // Encode data to JSON
+  //     final jsonData = json.encode(data);
+  //     try
+  //     {
+  //       final response = await http.post(
+  //         Uri.parse(url),
+  //         headers: <String, String> {
+  //           'Content-Type': 'application/json; charset=UTF-8',
+  //         },
+  //         body: jsonData,
+  //       );
+  //       if (response.statusCode == 200) {
+  //         printToast('User updated successfully');
+  //       }
+  //       else {
+  //         printToast('Failed to update user: ${response.statusCode}');
+  //       }
+  //     }
+  //     catch (e) {
+  //       printToast('Exception caught while updating user: $e');
+  //     }
+  //   }
+  //   else return ;
+  // }
 
   Future<String> getImageBase64(String image_path) async {
     print("profile image = ${image_path}");
@@ -370,25 +371,48 @@ class UserRepo {
   // use it like this:
   // String image = await storeProfileImage();
   // FileImage(File(image));
-  Future<void> storeProfileImage() async {
-    if (singletonUser.profileImage! == '') {
+  // Future<void> storeProfileImage() async {
+  //   if (singletonUser.profileImage! == '') {
+  //     storedProfileImage = '';
+  //     return ;
+  //   }
+  //
+  //   final source = onlineBackendURL + singletonUser.profileImage!;
+  //
+  //   var response = await http.get(Uri.parse(source));
+  //
+  //   if (response.statusCode == 200) {
+  //     Directory directory = await getApplicationDocumentsDirectory();
+  //     String directoryPath = '${directory.path}/backend/images/users/${singletonUser.userId}/';
+  //     Directory(directoryPath).createSync(recursive: true); // Ensure directory exists
+  //     String filePath = directoryPath + 'profile_image.jpg';
+  //     File file = File(filePath);
+  //     await file.writeAsBytes(response.bodyBytes);
+  //     storedProfileImage =  filePath;
+  //   }
+  //
+  //   else {
+  //     storedProfileImage = '';
+  //   }
+  // }
+
+  Future<void> storeProfileImage2() async {
+    if (singletonUser.profileImage == '') {
       storedProfileImage = '';
       return ;
     }
 
-    var response = await http.get(Uri.parse(onlineBackendURL + singletonUser.profileImage!));
+    final source = onlineBackendURL + singletonUser.profileImage!;
+    var response = await http.get(Uri.parse(source));
 
     if (response.statusCode == 200) {
-      Directory directory = await getApplicationDocumentsDirectory();
-      String directoryPath = '${directory.path}/backend/images/users/${singletonUser.userId}/';
-      Directory(directoryPath).createSync(recursive: true); // Ensure directory exists
-      String filePath = directoryPath + 'profile_image.jpg';
+      Directory directory = await getTemporaryDirectory();
+      String filePath = '${directory.path}/profile_image.jpg';
       File file = File(filePath);
       await file.writeAsBytes(response.bodyBytes);
-      storedProfileImage =  filePath;
-    }
-    else {
-      storedProfileImage = '';
+      storedProfileImage =  XFile(filePath).path;
+    } else {
+      storedProfileImage =  '';
     }
   }
 }

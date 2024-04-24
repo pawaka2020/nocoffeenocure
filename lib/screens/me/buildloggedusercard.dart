@@ -6,6 +6,7 @@ import 'package:nocoffeenocure/widgets/partial_divider.dart';
 import 'dart:io';
 import '../../common.dart';
 import '../../main.dart';
+import '../../repos/user.dart';
 import '../edit_profile/edit_profile_screen.dart';
 import '../membership/membership_screen.dart';
 
@@ -161,7 +162,6 @@ Widget buildLoggedUserCard(BuildContext context, int currentPoints,
                   Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => RewardsScreen()
                   ));
-
                 },
                 child: Text(
                   "Redeem",
@@ -186,8 +186,8 @@ Widget buildLoggedUserCard(BuildContext context, int currentPoints,
         children: [
           Row(
             children: [
-              //buildUserPhotoDisplay(context, singletonUser.profileImage!),
-              //SizedBox(width: 16),
+              buildUserPhotoDisplay(context, singletonUser.profileImage!),
+              SizedBox(width: 16),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -300,6 +300,9 @@ Widget buildUserPhotoDisplay(BuildContext context, String image) {
   }
   else {
     profileDisplay = FileImage(File(storedProfileImage));
+
+    //profileDisplay = Image.network(onlineBackendURL + singletonUser.profileImage!).image;
+    //profileDisplay = FileImage(File(UserRepo().storeProfileImage2()));;
     iconDisplay = null;
   }
   return Align(

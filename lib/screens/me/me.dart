@@ -56,14 +56,14 @@ class _MeState extends State<MeScreen> {
   }
 
   void editProfile() async {
-    bool saveChanges = await Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) => EditProfileScreen(),
-    ));
-    if (saveChanges == true) {
-      setState(() {
+      bool saveChanges = await Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => EditProfileScreen(),
+      ));
+      if (saveChanges == true) {
+        setState(() {
 
-      });
-    }
+        });
+      }
   }
 
   @override

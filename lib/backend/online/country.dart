@@ -24,7 +24,7 @@ class CountryOnline {
       }
     }
     catch (e) {
-      print('Error fetching countries: $e. Consider turning on wifi and matching ip address to the connection the backend is hosted on');
+      print('Error fetching countries: $e. Consider matching ip address to backend or ensure the backend has been launched first');
       countriesLoaded = false;
       return [];
     }

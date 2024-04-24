@@ -28,7 +28,7 @@ class FullNewsOnline {
       }
     }
     catch (e) {
-      print('Error fetching full news: $e. Consider turning on wifi and matching ip address to the connection the backend is hosted on');
+      print('Error fetching full news: $e. Consider matching ip address to backend or ensure the backend has been launched first');
       fullnewsLoaded = false;
       return [];
     }
