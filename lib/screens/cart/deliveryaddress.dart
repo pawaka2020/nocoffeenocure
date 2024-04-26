@@ -29,23 +29,10 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
   Timer? _debounce;
   late TextEditingController _addressController;
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   _addressController =
-  //       TextEditingController(text: _onSitePickup ? storeAddress : _userInput);
-  // }
-
   @override
   Widget build(BuildContext context) {
     bool _onSitePickup = widget.onsitePickup;
-    // if (singletonUser.setDefaultAddress == true) {
-    //   _userInput = singletonUser.address!;
-    // }
     String _userInput = widget.address;
-    //userInput = "Nopadodo";
-
-
     _addressController =
         TextEditingController(text: _onSitePickup ? storeAddress : _userInput);
     return Padding(
@@ -67,19 +54,13 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
                 child: TextField(
                   controller: _addressController,
                   onChanged: (value) {
-                    // Store user input separately
                     _userInput = value;
-                    //widget.onSpecialRequestChanged(_userInput);
-                    // Clear existing debounce timer
                     if (_debounce != null) {
                       _debounce!.cancel();
                     }
-                    // Create a new debounce timer
                     _debounce = Timer(Duration(seconds: 2), () {
-                      // Call updateAddress to fetch autocomplete results
                       updateAddress(value);
                     });
-
                   },
                   style: TextStyle(
                     fontSize: 12,
@@ -102,18 +83,12 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
             setState(() {
               if (value != null) {
                 _onSitePickup = value;
-
-                // If on-site pickup is selected, set the store address
                 if (_onSitePickup) {
                   _addressController.text = storeAddress;
                 } else {
-                  // If on-site pickup is deselected, clear the text field
                   _addressController.text = '';
                 }
-
-                // Unfocus the text field
                 FocusScope.of(context).unfocus();
-
                 widget.updateOnsitePickup(value);
                 widget.updateAddress(_addressController.text);
                 _autocompleteResults = [];
@@ -133,10 +108,8 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
                 return ListTile(
                   title: Text(_autocompleteResults[index]),
                   onTap: () {
-                    // Update the text field with the selected address
                     _addressController.text = _autocompleteResults[index];
                     widget.updateAddress(_addressController.text);
-                    // Optionally, you can clear the autocomplete results after selecting
                     setState(() {
                       _autocompleteResults.clear();
                     });
@@ -165,7 +138,6 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
             fontSize: 12,
           ),
         ),
-        //Spacer(),
       ],
     );
   }
@@ -183,8 +155,6 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
       final response = await http.get(Uri.parse(apiUrl));
 
       if (response.statusCode == 200) {
-        //widget.updateAddress(userInput);
-        // Parse the JSON response and extract address names
         final List<dynamic> data = json.decode(response.body);
         List<String> addresses =
         data.map((result) => result['display_name'] as String).toList();

@@ -28,7 +28,6 @@ Widget buildPhoneNumber(String phoneNumber, Function(String) onSpecialRequestCha
                   FilteringTextInputFormatter.digitsOnly,
                   // Add any additional formatters if needed
                 ],
-                //maxLength: 11,
                 decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.grey),
@@ -47,41 +46,3 @@ Widget buildPhoneNumber(String phoneNumber, Function(String) onSpecialRequestCha
     ),
   );
 }
-
-
-// Widget buildPhoneNumber0(Function(String) onSpecialRequestChanged) {
-//   String phoneNumber = '';
-//   return Padding(
-//     padding: EdgeInsets.only(left: 16, right: 16, top: 8, bottom: 8),
-//     child: Column(
-//         crossAxisAlignment: CrossAxisAlignment.start,
-//         children: [
-//           Text("Phone Number"),
-//           SizedBox(height: 10),
-//           TextField(
-//             onChanged: onSpecialRequestChanged,
-//             style: TextStyle(
-//                 fontSize: 12,
-//                 color:Colors.blue
-//             ),
-//             keyboardType: TextInputType.number, //phone, number
-//             inputFormatters: [
-//               FilteringTextInputFormatter.digitsOnly,
-//               // Add any additional formatters if needed
-//             ],
-//             maxLength: 11,
-//             decoration: InputDecoration(
-//                 enabledBorder: OutlineInputBorder(
-//                   borderSide: BorderSide(color: Colors.grey),
-//                 ),
-//                 focusedBorder: OutlineInputBorder(
-//                   borderSide: BorderSide(color: Colors.grey),
-//                 ),
-//                 hintText: 'Eg. 60193446789',
-//                 hintStyle: TextStyle(fontSize: 10) // Temporary placeholder text
-//             ),
-//           )
-//         ]
-//     ),
-//   );
-// }

@@ -9,6 +9,12 @@ import 'package:flutter/material.dart';
 import 'package:nocoffeenocure/screens/home_screen/home_screen.dart';
 import '../../repos/fullnews.dart';
 
+/*
+Displays 'fullnews' items ie an image of greeting for Hari Raya
+or news of new store opening that fills the whole of the phone screen.
+There is a timer in place to make the screen automatically move to the next one
+within 3 seconds.
+*/
 class OnboardingScreen extends StatelessWidget {
   final image = FullNewsRepo().getAll()[0].name!;
 

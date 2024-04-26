@@ -7,8 +7,11 @@ import '../../widgets/partial_divider.dart';
 import '../home_screen/selection_bar.dart';
 import '../home_screen/top_banner.dart';
 import 'dart:io';
-//line 157 for navigation
-//load the repos here.
+
+/*
+  Shows all menu items arranged into categories
+  Leads to MenuDetailsPage when tapping either of the menu items on screen
+*/
 class MenuPage extends StatefulWidget {
   void Function(int) updateCartCount;
   MenuPage(this.updateCartCount);

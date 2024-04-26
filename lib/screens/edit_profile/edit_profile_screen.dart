@@ -13,8 +13,6 @@ import '../../widgets/partial_divider.dart';
 import '../cart/specialrequest.dart';
 import 'addressfield.dart';
 import 'birthdayfield.dart';
-import 'buildbirthdayfield.dart';
-import 'editnamefield.dart';
 import 'imageselection.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';

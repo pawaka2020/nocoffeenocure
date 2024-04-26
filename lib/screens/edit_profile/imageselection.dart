@@ -67,7 +67,6 @@ Widget buildImageSelection(BuildContext context, String image, Future<void> Func
   }
   else {
     profileDisplay = FileImage(File(image));;
-    //profileDisplay = FileImage(File(singletonUser.profileImage!));
     iconDisplay = null;
   }
   return InkWell(

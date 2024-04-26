@@ -148,7 +148,7 @@ class UserRepo {
     box.put(guestUser);
 
     singletonUser = loggedinUser!;
-
+    storeProfileImage2();
     //storedProfileImage = storeProfileImage();
   }
 
@@ -366,36 +366,8 @@ class UserRepo {
     }
     else return ;
   }
-
-  // returns the path to the image after it has been stored.
-  // use it like this:
-  // String image = await storeProfileImage();
-  // FileImage(File(image));
-  // Future<void> storeProfileImage() async {
-  //   if (singletonUser.profileImage! == '') {
-  //     storedProfileImage = '';
-  //     return ;
-  //   }
-  //
-  //   final source = onlineBackendURL + singletonUser.profileImage!;
-  //
-  //   var response = await http.get(Uri.parse(source));
-  //
-  //   if (response.statusCode == 200) {
-  //     Directory directory = await getApplicationDocumentsDirectory();
-  //     String directoryPath = '${directory.path}/backend/images/users/${singletonUser.userId}/';
-  //     Directory(directoryPath).createSync(recursive: true); // Ensure directory exists
-  //     String filePath = directoryPath + 'profile_image.jpg';
-  //     File file = File(filePath);
-  //     await file.writeAsBytes(response.bodyBytes);
-  //     storedProfileImage =  filePath;
-  //   }
-  //
-  //   else {
-  //     storedProfileImage = '';
-  //   }
-  // }
-
+  
+  // stores in app the profile image obtained from online backend
   Future<void> storeProfileImage2() async {
     if (singletonUser.profileImage == '') {
       storedProfileImage = '';

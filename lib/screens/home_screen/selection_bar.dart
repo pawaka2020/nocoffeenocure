@@ -19,7 +19,6 @@ class SelectionBar extends StatelessWidget {
             for (String category in categories)
               GestureDetector(
                 onTap: () {
-                  // Call the callback function to notify the parent widget of the category selection
                   onCategorySelected(category);
                 },
                 child: Container(

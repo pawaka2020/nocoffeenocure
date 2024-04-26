@@ -80,15 +80,6 @@ class _PackagingState extends State<Packaging> {
     );
   }
 
-  // double setPackagePrice() {
-  //   double packagePrice = 0;
-  //   for (var item in _packageItems) {
-  //     if (item.selected == true) packagePrice += item.price;
-  //   }
-  //
-  //   return packagePrice;
-  // }
-
   double setPackagePrice() {
     return _packageItems
         .where((item) => item.selected)

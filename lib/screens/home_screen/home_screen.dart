@@ -16,7 +16,7 @@ import '../order/order_screen.dart';
 import 'cartnavybaritem.dart';
 
 /*
-Main screen of app.
+The screen that users will mainly see.
 This app has 3 main components:
 1 - A banner at the top to show [news] items in a auto rotation.
 2 - Menu items at the middle.
@@ -54,8 +54,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
     });
     await changePage(pageIndex);
-    // _tracking = value;
-    // await changePage(pageIndex);
   }
 
   Future<void> changePage(int index) async {
@@ -92,9 +90,9 @@ class _HomeScreenState extends State<HomeScreen> {
         controller: _pageController,
         physics: const NeverScrollableScrollPhysics(),
         children: [
-          MenuPage(updateCartCount), //put updateCartCount here
+          MenuPage(updateCartCount),
           NewsPage(),
-          CartScreen(updateCartCount, placeOrder, _tracking), //put updateCartCount here
+          CartScreen(updateCartCount, placeOrder, _tracking),
           TrackScreen(_tracking, setTracking),
           MeScreen(adjustCartCountTracking),
         ],

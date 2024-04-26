@@ -61,7 +61,6 @@ class _AddressFieldState extends State<AddressField> {
                   },
                   style: TextStyle(
                     fontSize: 12,
-                    //color: _onSitePickup ? Colors.grey : Colors.blue,
                     color: Colors.blue,
                   ),
                   decoration: InputDecoration(
@@ -134,7 +133,6 @@ class _AddressFieldState extends State<AddressField> {
             fontSize: 12,
           ),
         ),
-        //Spacer(),
       ],
     );
   }

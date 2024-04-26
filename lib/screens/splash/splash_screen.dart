@@ -8,9 +8,10 @@ import '../../repos/voucher.dart';
 import '../onboarding/onboarding_screen.dart';
 import 'dart:async';
 import 'package:connectivity/connectivity.dart';
+
 /*
-Shows No Coffee No Cure's company logo for 3 seconds before moving to the next
-screen.
+Preloads data from online backend to Objectbox for offline persistence.
+Preloading allows smoother UX experience from reduced disruption by poor internet connection.
 */
 Future<void> preLoadFromBackend(BuildContext context) async {
   var connectivityResult = await Connectivity().checkConnectivity();
@@ -41,10 +42,14 @@ Future<void> preLoadFromBackend(BuildContext context) async {
   await UserRepo().loginAppStart(BackendSource.dummy); //
   await VoucherRepo().update(BackendSource.online); //
   await MenuItemRepo().update(BackendSource.online); // dummy
-
   print("Data pre-loaded");
 }
 
+/*
+This screen shows the splash company logo, but also as a space to pre-load data
+from the backend and saves the pre-loaded data onto Objectbox
+Moves to the next screen OnboardingScreen only when the pre-loading is done
+*/
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
   @override

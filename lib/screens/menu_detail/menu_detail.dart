@@ -8,7 +8,13 @@ import '../../repos/cartitem.dart';
 import '../../widgets/partial_divider.dart';
 import '../login/login_screen.dart';
 
-/*stateful widget version*/
+/*
+  Shows the details of a menu item.
+  Everything is placed in one page. If you want to better modularize this page
+  on your own, feel free to.
+  User will be taken to CartScreen after tapping the button at the bottom of this
+  page, but only if the user had logged in first.
+*/
 class MenuDetailsPage extends StatefulWidget {
   final MenuItem menuItem;
   final bool editMode;

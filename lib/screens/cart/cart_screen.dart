@@ -38,18 +38,23 @@ class Price {
   Price();
 }
 
+/*
+  Views all menu items added to the present cart.
+  Includes options to edit or delete a menu item in the cart.
+  Includes option to include vouchers as well ie Hari Raya special, new user, birthday voucher, etc
+  An address auto-selection feature is in place to help users fill out a full address
+  or simply opt for self-pickup at store's address.
+  Payment is skipped for now until this app is properly made for a real F&B store
+  in the future.
+*/
 class CartScreen extends StatefulWidget {
   void Function(int) updateCartCount;
   void Function(int) placeOrder;
   bool tracking;
-  //void Function(bool, int) setTracking;
-  CartScreen(this.updateCartCount, this.placeOrder,  this.tracking);
-  //var cartItems = CartItemRepo().getAll() ?? [];
-  //List<CartItemOB> cartItems =  [];
-  List<CartItemOB> cartItems = CartItemRepo().getAll() ?? [];
 
+  CartScreen(this.updateCartCount, this.placeOrder,  this.tracking);
+  List<CartItemOB> cartItems = CartItemRepo().getAll() ?? [];
   var vouchers = VoucherRepo().getAll();
-  //List<VoucherOB> vouchers =  [];
 
   @override
   State<StatefulWidget> createState() => _CartScreenState();
@@ -133,8 +138,6 @@ class _CartScreenState extends State<CartScreen> {
       setState(() {
         CartItemRepo().remove(id);
         CartItemRepo().deleteBackend(id);
-        //UserRepo().updateBackendUser();
-
         widget.cartItems = CartItemRepo().getAll();
         widget.updateCartCount(-1);
         printToast("Item removed from cart");
@@ -163,21 +166,14 @@ class _CartScreenState extends State<CartScreen> {
     if (updatedCartItem != null) {
       setState(() {
         CartItemRepo().editBackend(updatedCartItem);
-
-        //CartItemRepo().box.put(updatedCartItem); //replace this? 12/3/2024
-        //CartItemRepo().put(updatedCartItem); //this causes addition 4/1/2024
-        //UserRepo().updateBackendUser();
         UserOB? currentUser = UserRepo().getLoggedInUser(); //29/3/2024
         currentUser?.cartItems.add(cartItem);
         print("current user id is ${currentUser?.userId}");
         UserRepo().box.put(currentUser);
-        //singletonUser.cartItems[targetId] = updatedCartItem;
         int index = cartItems.indexWhere((item) => item.id == targetId);
-        // If the cartItem is found, replace it with the new object
         if (index != -1) {
           singletonUser.cartItems[index] = updatedCartItem;
         }
-
         widget.cartItems = CartItemRepo().getAll();
         adjustPrice();
         printToast("Cart item updated");
@@ -187,24 +183,18 @@ class _CartScreenState extends State<CartScreen> {
       print("Error: Cart item not received");
   }
 
-  //special requests
   void updateSpecialRequest(String newSpecialRequest) {
     _specialRequest = newSpecialRequest;
   }
 
   void updatePhoneNumber(String phoneNumber) {
-    // setState(() {
-    //   _phoneNumber = phoneNumber;
-    //   adjustPrice();
-    // });
     _phoneNumber = phoneNumber;
   }
 
-  void updateAddress(String address) {//
+  void updateAddress(String address) {
     setState(() {
       _address = address;
     });
-    //_address = address;
   }
 
   void updateOnsitePickup(bool onsitePickup) {
@@ -228,20 +218,6 @@ class _CartScreenState extends State<CartScreen> {
   }
 
   void addVoucher() async {
-    // final activated = await Navigator.of(context).push(MaterialPageRoute(
-    //   builder: (context) => SelectUnusedVoucherScreen(widget.vouchers, _selectedVoucherIds, context),
-    // ));
-    // if (activated) {
-    //
-    //   print("!!!! _selectedVoucherIds = ${_selectedVoucherIds.toString()}");
-    //
-    //   setState(() {
-    //     _usedList = VoucherRepo()
-    //         .getFromIdList(widget.vouchers, _selectedVoucherIds);
-    //   });
-    // }
-    // else print("Error in adding new voucher");
-
     final addedVoucher = await Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => SelectUnusedVoucherScreen(widget.vouchers, _selectedVoucherIds, context),
     ));
@@ -251,28 +227,24 @@ class _CartScreenState extends State<CartScreen> {
         _selectedVoucherIds.add(addedVoucher);
       });
     }
-
-
-    //print("addedVoucher = ${addedVoucher}");
-    //print("_usedList length = ${_usedList.length.toString()}");
   }
 
   void removeVoucher(int id) async {
     bool confirmation = await showDeleteConfirmationDialog(
         context, 'Confirm Deletion', 'Are you sure you want to remove this voucher?');
     if (confirmation) {
-      // setState(() {
-      //   _selectedVoucherIds.remove(id);
-      //   _usedList = VoucherRepo()
-      //       .getFromIdList(widget.vouchers, _selectedVoucherIds);
-      // });
-      //printToast("id = ${id.toString()}");
-
       setState(() {
         _selectedVoucherIds.remove(id);
         _usedList.removeWhere((voucher) => voucher.voucher_id == id);
       });
     }
+  }
+
+  /*
+    Not yet imp
+  */
+  bool processPayment() {
+    return true;
   }
 
   Future<void> placeOrder() async {
@@ -281,20 +253,25 @@ class _CartScreenState extends State<CartScreen> {
       return ;
     }
     if (await checkOrderErrors(widget.tracking, _address, _onsitePickup)) {
-      addOrder(_selectedVoucherIds, _usedList, widget.cartItems, _specialRequest,
-          _packageString, _address, _onsitePickup, _phoneNumber, _paymentMethod, price);
-      _selectedVoucherIds = [];
-      widget.placeOrder(widget.cartItems.length);
+
+      bool paymentProcessed = processPayment();
+
+      if (paymentProcessed) {
+        addOrder(_selectedVoucherIds, _usedList, widget.cartItems, _specialRequest,
+            _packageString, _address, _onsitePickup, _phoneNumber, _paymentMethod, price);
+        _selectedVoucherIds = [];
+        widget.placeOrder(widget.cartItems.length);
+      }
+      else {
+        printToast("Error: Payment processing failed");
+        return ;
+      }
     };
   }
 
   @override
   Widget build(BuildContext context) {
     widget.vouchers = VoucherRepo().getAll();
-
-    //print("_selectedVoucherIds = ${_selectedVoucherIds.toString()}");
-
-    //List<VoucherOB> _usedList = VoucherRepo().getFromIdList(widget.vouchers, _selectedVoucherIds);
     adjustPrice();
 
     if (widget.cartItems.isEmpty) {
@@ -320,7 +297,6 @@ class _CartScreenState extends State<CartScreen> {
                 PartialDivider(40, 10),
                 DeliveryAddress(_address, _onsitePickup, updateAddress, updateOnsitePickup),
                 // PartialDivider(40, 10),
-                // buildPhoneNumber(_phoneNumber, updatePhoneNumber),
                 SizedBox(height: 10),
                 PartialDivider(40, 10),
                 PaymentMethods(_paymentMethod, updatePaymentMethod),

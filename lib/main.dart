@@ -6,18 +6,18 @@ import 'objectboxrepo.dart';
 import 'screens/splash/splash_screen.dart';
 
 /*
-Singletons
+Singletons :
+Objectbox instance to enable use of an offline persistence database for preloading data
+User as a singleton, fields obtained from backend.
 */
 late ObjectBox objectbox;
 late UserOB singletonUser; //user created
 late String storedProfileImage;
 
 enum BackendSource {
-  dummy,
+  dummy, //this is no longer working since the Flutter app has fully migrated to an online server.
   online,
 }
-final deepLink = 'nocoffeenocureapp://login';
-late final supabaseClient;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

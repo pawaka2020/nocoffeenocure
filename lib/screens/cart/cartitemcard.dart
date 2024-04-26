@@ -5,15 +5,6 @@ import '../../common.dart';
 import '../../models/cartitem.dart';
 import '../../models/menuitem.dart';
 
-String lorem = """
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris. 
-Nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate. 
-Velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non. 
-Proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-""";
-
 class CartItemCard extends StatelessWidget {
   CartItemOB cartItem;
   final void Function(int) deleteCallback;
@@ -36,11 +27,8 @@ class CartItemCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String image = cartItem.menuItemOB[0].imagePath!;
-    //String image = '';
     String name = cartItem.menuItemOB[0].title!;
-    //String name = '';
     String content = getContent(cartItem.menuItemOB[0].additions)!;
-    //String content = '';
 
     return Padding(
       padding: EdgeInsets.only(left: 16, right: 16, top: 8, bottom: 8),
@@ -59,14 +47,6 @@ class CartItemCard extends StatelessWidget {
                 Container(
                   width: 80,
                   height: double.infinity,
-                  // child: Image.asset(
-                  //   image,
-                  //   fit: BoxFit.cover,
-                  // ),
-                  // child: Image.file(
-                  //   File(image),
-                  //   fit: BoxFit.cover,
-                  // ),
                   child: Image.network(
                     image,
                     fit: BoxFit.cover,
@@ -154,8 +134,4 @@ class CartItemCard extends StatelessWidget {
       ),
     );
   }
-
-
-
-
 }

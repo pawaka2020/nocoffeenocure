@@ -31,19 +31,9 @@ class TakePhotoState extends State<TakePhotoScreen> {
   void _takePhoto() async {
     try {
       await _initializeCamera();
-
-      // The camera is now initialized.
-      // You can put any logic related to taking a photo here.
-      //printToast("Camera initialized");
-
       final image = await _controller.takePicture();
-      //printToast("image taken as ${image.toString()}");
       Navigator.of(context).pop(image);
       if (!mounted) return;
-
-      // Now that the photo is taken, you can proceed with any additional logic,
-      // for example, navigating to a new screen to display the captured image.
-
     } catch (e) {
       print("Error taking photo: $e");
     }
