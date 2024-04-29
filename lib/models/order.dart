@@ -45,6 +45,4 @@ class OrderOB {
   final vouchers = ToMany<VoucherOB>();
 
   final user = ToOne<UserOB>();
-
-
 }

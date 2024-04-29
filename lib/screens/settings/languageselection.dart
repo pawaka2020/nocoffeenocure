@@ -14,60 +14,6 @@ Widget buildLanguageSelection(List<String> languages, String selectedLanguage,
           fontSize: 16.0,
         ),
       ),
-      //SizedBox(width: 8),
-      // DropdownButtonHideUnderline(
-      //   child: DropdownButton2<String>(
-      //     isExpanded: true,
-      //     items: languages
-      //         .map((String item) => DropdownMenuItem<String>(
-      //       value: item,
-      //       child: Text(
-      //         item,
-      //         style: const TextStyle(
-      //           fontStyle: FontStyle.italic,
-      //           fontSize: 16,
-      //         ),
-      //       ),
-      //     ))
-      //         .toList(),
-      //     value: selectedLanguage,
-      //     onChanged: (String? value) {
-      //       // setState(() {
-      //       //   selectedLanguage = value!;
-      //       // });
-      //       changeLanguage(value);
-      //     },
-      //     buttonStyleData: const ButtonStyleData(
-      //       padding: EdgeInsets.symmetric(horizontal: 16),
-      //       height: 40,
-      //       width: 140,
-      //     ),
-      //     menuItemStyleData: const MenuItemStyleData(
-      //       height: 40,
-      //     ),
-      //   ),
-      // ),
-      // DropdownButton<String>(
-      //   value: selectedLanguage,
-      //   icon: Icon(Icons.arrow_downward),
-      //   iconSize: 24,
-      //   elevation: 16,
-      //   style: TextStyle(
-      //     color: Colors.black,
-      //     fontSize: 16,
-      //     fontFamily: 'Orbitron'
-      //   ),
-      //   onChanged: (String? value) {
-      //     changeLanguage(value);
-      //   },
-      //   items: languages
-      //       .map<DropdownMenuItem<String>>((String value) {
-      //     return DropdownMenuItem<String>(
-      //       value: value,
-      //       child: Text(value),
-      //     );
-      //   }).toList(),
-      // ),
       PopupMenuButton<String>(
         onSelected: (String value) {
           changeLanguage(value);

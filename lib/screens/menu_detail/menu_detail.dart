@@ -482,9 +482,7 @@ class QuantityDisplay extends StatelessWidget {
             IconButton(
               icon: Icon(Icons.add),
               onPressed: () {
-                //print("button add pressed");
                 increaseQuantity();
-                // decreaseFactor();
               } // Call the onIncrease function when the button is pressed
             ),
           ]
@@ -506,13 +504,11 @@ class AddToCartButton extends StatelessWidget {
       builder: (context) {
         return AlertDialog(
           title: Text("User login is required"),
-          //content: Text("User login is required"),
           actions: [
             TextButton(
               child: Text('Log in or sign up'),
               onPressed: () {
                 loginUser();
-                //Navigator.of(context).pop(false);
               },
             ),
             TextButton(
@@ -540,7 +536,6 @@ class AddToCartButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: () {
-       // checks for login first.
         if (singletonUser.guest == true)
           showLoginDialog(context, loginUser);
         else

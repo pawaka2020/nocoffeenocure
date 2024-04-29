@@ -61,7 +61,6 @@ Widget buildSelectVoucherCard(VoucherOB voucher, BuildContext context, List<int>
           borderRadius: BorderRadius.circular(4.0),
           child: InkWell(
             onTap: () {
-              // Navigate to the screen to select a voucher
               SelectVoucher(context, voucher, selectedVoucherIds);
             },
             child: Row(

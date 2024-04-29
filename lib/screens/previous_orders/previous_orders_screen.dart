@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
-
-
+/*
+Still WIP.
+This screen can only be implemented if payment gateway is fully implemented first.
+*/
 class PreviousOrdersScreen extends StatelessWidget {
 
   @override

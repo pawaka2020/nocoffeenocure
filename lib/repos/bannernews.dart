@@ -16,16 +16,7 @@ class BannerNewsRepo {
     else if (source == BackendSource.online) {
       newData = await BannerNewsOnline().get();
     }
-    // currentData = box.getAll();
-    // if (currentData.isNotEmpty) {
-    //   print("replacing for BannerNewsOB");
-    //   box.removeAll(); //the id of 'box' does not reset to 0.
-    //   box.putMany(newData);
-    // }
-    // else {
-    //   print("adding for FullNewsOB");
-    //   box.putMany(newData);
-    // }
+
     box.removeAll(); //the id of 'box' does not reset to 0.
     box.putMany(newData);
   }

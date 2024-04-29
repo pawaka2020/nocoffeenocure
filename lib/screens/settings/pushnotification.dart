@@ -45,7 +45,6 @@ Widget buildPushNotification2(bool notificationToggle, void Function(bool value)
           setNotification(value);
         },
       ),
-      //SizedBox(width: 0)
     ],
   );
 }

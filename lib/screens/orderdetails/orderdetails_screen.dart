@@ -20,12 +20,6 @@ class OrderDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     UserOB? currentUser = singletonUser;
     OrderOB? currentOrder = currentUser.orders.firstWhere((order) => order.active == true);
-    //List<CartItemOB> cartItems = currentOrder?.cartItems;
-    print("in order details, singleton order length = ${singletonUser.orders.length.toString()}");
-    print('in order details, singleton order cart length = ${singletonUser.orders[0].cartItems.length.toString()}');
-    print('in order details, singleton vouchers length = ${currentUser.orders[0].vouchers.length.toString()}');
-    print('in order details, payment method = ${currentUser.orders[0].paymentMethod}');
-    print('in order details, payment total = ${currentUser.orders[0].totalPrice}');
 
     return Scaffold(
       appBar: AppBar(
@@ -59,9 +53,6 @@ class OrderDetailsScreen extends StatelessWidget {
                   if (currentOrder.paymentMethod != '')
                     buildODPaymentMethod(currentOrder.paymentMethod!),
                   buildODPaymentDetails(currentOrder),
-
-                  //payment details
-                  //total price display
                 ]
               )
             ),

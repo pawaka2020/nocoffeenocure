@@ -17,15 +17,12 @@ Future<void> sendPhoneNumber(String phoneNumber) async {
     );
     if (response.statusCode == 200) {
       print('Phone number sent successfully: $phoneNumber');
-      // Handle response if needed
     }
     else {
       print('Failed to send phone number: ${response.statusCode}');
-      // Handle error if needed
     }
   }
   catch (e) {
     print('Error sending phone number: $e');
-    // Handle error if needed
   }
 }

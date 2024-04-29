@@ -10,7 +10,6 @@ import '../bottom_nav_bar/bottom_nav_bar.dart';
 import '../cart/cart_screen.dart';
 import '../menu/menu.dart';
 import 'package:nocoffeenocure/screens/me/me.dart';
-
 import '../news/newspage.dart';
 import '../order/order_screen.dart';
 import 'cartnavybaritem.dart';
@@ -33,14 +32,11 @@ class _HomeScreenState extends State<HomeScreen> {
   bool _tracking = false;
   PageController _pageController = PageController(initialPage: 0);
 
-  void adjustCartCountTracking() {
-    setState(() {
-      _cartCount = singletonUser.cartItems.length;
-      if (singletonUser.orders.length != 0) _tracking = true;
-      else _tracking = false;
-    });
-  }
-
+  /*
+  Used inside MenuPage
+  meant to be used inside placeOrder
+  : updates cart count
+  */
   void updateCartCount(int adjustment) {
     setState(() {
       _cartCount = _cartCount + adjustment;
@@ -48,22 +44,11 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  void setTracking(bool value, int pageIndex) async {
-    setState(() {
-      _tracking = value;
-
-    });
-    await changePage(pageIndex);
-  }
-
-  Future<void> changePage(int index) async {
-    await _pageController.animateToPage(
-      index,
-      duration: Duration(milliseconds: 1),
-      curve: Curves.ease,
-    );
-  }
-
+  /*
+  Used inside MenuPage
+  meant to be used inside placeOrder
+  :
+  */
   Future<void> placeOrder(int length) async {
     _tracking = true;
     await changePage(3);
@@ -72,9 +57,40 @@ class _HomeScreenState extends State<HomeScreen> {
     printToast("Order placed");
   }
 
-  Future<void> removeOrder(int length) async {
-    _tracking = false;
-    await changePage(0);
+  /*
+  Used in TrackScreen
+  :
+  */
+  void setTracking(bool value, int pageIndex) async {
+    setState(() {
+      _tracking = value;
+
+    });
+    await changePage(pageIndex);
+  }
+
+  /*
+  Used inside MeScreen
+  :
+  */
+  void adjustCartCountTracking() {
+    setState(() {
+      _cartCount = singletonUser.cartItems.length;
+      if (singletonUser.orders.length != 0) _tracking = true;
+      else _tracking = false;
+    });
+  }
+
+  /*
+  Used inside bottomNavigationBar
+  :
+  */
+  Future<void> changePage(int index) async {
+    await _pageController.animateToPage(
+      index,
+      duration: Duration(milliseconds: 1),
+      curve: Curves.ease,
+    );
   }
 
   @override
@@ -107,6 +123,9 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
+/*
+
+*/
 Widget buildBottomNavigationBar(int currentIndex, int cartCount, bool tracking,
     Future<void> Function(int) changePage) {
   return BottomNavyBar(
@@ -140,4 +159,7 @@ Widget buildBottomNavigationBar(int currentIndex, int cartCount, bool tracking,
   );
 }
 
-
+// Future<void> removeOrder(int length) async {
+//   _tracking = false;
+//   await changePage(0);
+// }

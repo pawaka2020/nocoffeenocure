@@ -8,7 +8,7 @@ import 'dart:convert' as convert;
 //online backend is implemented, for security reasons.
 
 //I just wanna see how it works first before I properly implement this
-String secretKey = 'blahblahblah';
+String secretKey = '12355333';
 
 //creates a token that will be then decoded to a UserOB object representing a newly created user
 String generateNewUserToken() {

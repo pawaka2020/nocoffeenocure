@@ -2,38 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 
-/*
-Level 1 - Coffee Taster
-- Welcome discount on the first coffee order
-- Access to discount vouchers
-- Free delivery on the first 5 orders.
-Level 2 - Coffee Lover
-- 15% discount on all purchases
-- Early access to seasonal coffee offerings
-- Priority notification on new arrivals and popular blends
-Level 3 - Coffee Connoisseur
-- Exclusive access to limited edition coffee blends
-- Early access to new coffee releases
-- Personalized recommendations based on taste preferences
-Level 4 - Coffee Aficionado
-- 25% discount on all purchases
-- Free tasting and review on new coffee releases
-- Quarterly coffee tasting events with industry experts
-Level 5 - Coffee Maestro
-- Customized coffee subscriptions with unique blends
-- Invitations to behind-the-scenes tours of top coffee roasteries
-- Special edition app features, such as personalized brewing guides
-
-How to gain XP?
-- Daily check-ins [+2xp]
-- Purchase of new items [+20xp]
-- Writing reviews after purchase of new items [+4xp]
-- Achieving milestones [+30 xp]
-*/
-
 Widget loadingBar(int currentPoints, int totalPoints) {
   double progress = currentPoints / totalPoints;
-
   return Container(
     width: 200,
     padding: EdgeInsets.symmetric(vertical: 8.0),
@@ -135,7 +105,6 @@ Widget buildCardLevelConnector() {
 Widget buildHowGetXPCard() => Card(
     elevation: 4.0,
     margin: EdgeInsets.symmetric(vertical: 8.0),
-    //color: Colors.orange,
     child: Padding(
         padding: EdgeInsets.all(16),
         child: Column(
@@ -144,11 +113,8 @@ Widget buildHowGetXPCard() => Card(
                 alignment: Alignment.centerLeft,
                 child: Text("How to gain XP?",
                   style: TextStyle(
-                    //color: Colors.white,
                     fontSize: 18,
-                    //fontWeight: FontWeight.bold,
                   ),
-
                 ),
               ),
               SizedBox(height: 20),
@@ -156,9 +122,7 @@ Widget buildHowGetXPCard() => Card(
                 alignment: Alignment.centerLeft,
                 child: Text("- Daily check-ins [+2xp].",
                   style: TextStyle(
-                    //color: Colors.white,
                     fontSize: 14,
-                    //fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
@@ -166,9 +130,7 @@ Widget buildHowGetXPCard() => Card(
                 alignment: Alignment.centerLeft,
                 child: Text("- Purchase of new items [+20xp].",
                   style: TextStyle(
-                    //color: Colors.white,
                     fontSize: 14,
-                    //fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
@@ -176,9 +138,7 @@ Widget buildHowGetXPCard() => Card(
                 alignment: Alignment.centerLeft,
                 child: Text("- Writing reviews after purchase of new items [+4xp].",
                   style: TextStyle(
-                    //color: Colors.white,
                     fontSize: 14,
-                    //fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
@@ -186,9 +146,7 @@ Widget buildHowGetXPCard() => Card(
                 alignment: Alignment.centerLeft,
                 child: Text("- Achieving milestones [+30 xp].",
                   style: TextStyle(
-                    //color: Colors.white,
                     fontSize: 14,
-                    //fontWeight: FontWeight.bold,
                   ),
                 ),
               ),

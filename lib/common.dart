@@ -23,13 +23,6 @@ void printToast(String message) {
   );
 }
 
-void handleDeepLink(String? link) {
-  print("Deep link handle activated, $link");
-  // if (link == 'yourapp://hello') {
-  //   print('Hello World');
-  // }
-}
-
 /*
 Gets an image from online backend and saves it to Flutter app.
 Returns the value to be saved in local object

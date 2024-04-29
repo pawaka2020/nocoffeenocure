@@ -15,91 +15,26 @@ class CartItemRepo {
   final box = objectbox.cartItemBox;
 
   Future<void> update(BackendSource source) async {
-    // late final newData;
-    // late final currentData;
-    //
-    // if (source == BackendSource.dummy) {
-    //   newData = await CartItemDummy().get();
-    // }
-    // currentData = box.getAll();
-    // if (currentData.isNotEmpty) {
-    //   print("replacing for CartItemOB");
-    //   box.removeAll(); //the id of 'box' does not reset to 0.
-    //   box.putMany(newData);
-    // }
-    // else {
-    //   print("adding for CartItemOB");
-    //   box.putMany(newData);
-    // }
-    //testPrint();
 
-    //List<CartItemOB> ordercartitems = box2.getAll();
-    //printToast("ordercartitems length = ${ordercartitems.length}");
-    // List<CartItemOB> ordercartitems = box.getAll();
-    // printToast("ordercartitems length = ${ordercartitems.length}");
-    // UserOB? currentUser = UserRepo().getLoggedInUser();
-    // if (currentUser?.orders.length != 0) {
-    //   OrderOB? currentorder = OrderRepo().getCurrentOrder();
-    //   currentorder?.cartItems.addAll(ordercartitems);
-    // }
-    //UserOB? currentUser = UserRepo().getLoggedInUser();
-    // if (currentUser?.cartItems.length != 0) {
-    //   printToast("cart items length = ${currentUser?.cartItems.length}");
-    // }
-    // else {
-    //   printToast("cart items zero");
-    // }
-    // for (var item in currentUser!.cartItems) {
-    //   if (item.user.target != null)
-    //     printToast("cart item attached to user detected");
-    // }
   }
 
   //called by cartScreen.
   List<CartItemOB> getAll() {
-    //return box.getAll();
-
-    //old code
-    //UserOB? currentUser = UserRepo().getLoggedInUser();
-    //List<CartItemOB> cartItems = currentUser!.cartItems;
-
-    //return cartItems;
-
     //new code (3/27/2024)
     return singletonUser.cartItems;
   }
 
   //called by menu_details
   void put(CartItemOB cartItem) {
-    //box.put(cartItem);
-    //MenuItemRepo().put(cartItem.menuItemOB[0]);
-    //currentUser.orders.add(newOrder);
-    //final users = box.getAll();
-    //UserOB? currentUser =  users.firstWhere((user) => (user.isLoggedIn == true) && (user.userId == singletonUser.userId));
-
     UserOB currentUser = singletonUser;
-    //UserOB? currentUser = UserRepo().getLoggedInUser(); //29/3/2024
     currentUser?.cartItems.add(cartItem);
     print("current user id is ${currentUser?.userId}");
     UserRepo().box.put(currentUser);
-
-    //11/3/2024 I need to update the singleton as well.
     singletonUser = currentUser!;
-    //13/3/2024
-    // UserOB currentUser = singletonUser;
-    // currentUser?.cartItems.add(cartItem);
-    // print("current user id is ${currentUser?.userId}");
-    // UserRepo().box.put(currentUser);
-    //
-    // //11/3/2024 I need to update the singleton as well.
-    // singletonUser = currentUser!;
-
   }
 
   Future<void> putBackend(CartItemOB cartItem) async {
-    //printToast("cartItem id = ${cartItem.id}");
     if (singletonUser.guest == false) {
-      //final url = onlineBackendURL + 'add_cart_user';
       final url = onlineBackendURL + 'add_cartitem';
 
       final Map<String, dynamic> data = {
@@ -110,10 +45,7 @@ class CartItemRepo {
         'menuitem_id' : cartItem.menuItem_id,
         'menuitem': cartItem.menuItemOB.map((menuitem)=> menuitem.toJson()).toList(),
       };
-
-      // Encode data to JSON
       final jsonData = json.encode(data);
-
       try
       {
         final response = await http.post(
@@ -133,13 +65,11 @@ class CartItemRepo {
       catch (e) {
         print('Exception caught while updating user: $e');
       }
-
     }
   }
 
   Future<void> editBackend(CartItemOB cartItem) async {
     if (singletonUser.guest == false) {
-      //final url = onlineBackendURL + 'edit_cart_user';
       final url = onlineBackendURL + 'edit_cartitem';
       final Map<String, dynamic> data = {
         'user_id': singletonUser.userId.toString(),
@@ -148,11 +78,8 @@ class CartItemRepo {
         'quantity': cartItem.quantity,
         'menuitem_id': cartItem.menuItem_id,
         'menuitem': cartItem.menuItemOB.map((menuitem)=> menuitem.toJson()).toList(),
-        // cartitem child objects (TODO)
       };
-      // Encode data to JSON
       final jsonData = json.encode(data);
-
       try
       {
         final response = await http.post(
@@ -164,7 +91,6 @@ class CartItemRepo {
         );
         if (response.statusCode == 200) {
           print('Cartitem added to backend successfully');
-          //singletonUser.cartItems = cartItem;
         }
         else {
           print('Failed to update user: ${response.statusCode}');
@@ -222,11 +148,7 @@ class CartItemRepo {
     List<CartItemOB> list = getAll();
     for (var item in list) {
       print('Cart Item ID: ${item.id}');
-      // print('Image: ${item.menuItemOB[0].imagePath ?? 'N/A'}');
-      // print('Name: ${item.menuItemOB[0]. ?? 'N/A'}');
-      // print('Content: ${item.content ?? 'N/A'}');
       print('Quantity: ${item.quantity ?? 0}');
-      // print('MenuItem ID: ${item.menuItem_id ?? 0}');
       print('---------------------------');
     }
   }

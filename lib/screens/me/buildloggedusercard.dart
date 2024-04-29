@@ -300,9 +300,6 @@ Widget buildUserPhotoDisplay(BuildContext context, String image) {
   }
   else {
     profileDisplay = FileImage(File(storedProfileImage));
-
-    //profileDisplay = Image.network(onlineBackendURL + singletonUser.profileImage!).image;
-    //profileDisplay = FileImage(File(UserRepo().storeProfileImage2()));;
     iconDisplay = null;
   }
   return Align(
@@ -315,41 +312,3 @@ Widget buildUserPhotoDisplay(BuildContext context, String image) {
     ),
   );
 }
-
-// Widget buildUserPhotoDisplay2(BuildContext context, String image) {
-//   if (image == '') {
-//     return Align(
-//       alignment: Alignment.center,
-//       child: CircleAvatar(
-//         radius: 32, //40
-//         backgroundColor: Colors.black12,
-//         child: Icon(
-//           Icons.person,
-//           size: 42, //50
-//           color: Colors.grey,
-//         ),
-//       ),
-//     );
-//   } else {
-//     return Align(
-//       alignment: Alignment.center,
-//       child: CircleAvatar(
-//         radius: 32, //40
-//         backgroundColor: Colors.black12,
-//         child: FutureBuilder(
-//           future: Image.network(onlineBackendURL + image).image,
-//           builder: (context, snapshot) {
-//             if (snapshot.connectionState == ConnectionState.done) {
-//               return CircleAvatar(
-//                 radius: 32, //40
-//                 backgroundImage: NetworkImage(onlineBackendURL + image),
-//               );
-//             } else {
-//               return CircularProgressIndicator(); // Or any other loading indicator
-//             }
-//           },
-//         ),
-//       ),
-//     );
-//   }
-// }

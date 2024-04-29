@@ -1,19 +1,5 @@
-// class Country {
-//   final int id;
-//   final String name;
-//
-//   Country({required this.id, required this.name});
-//
-//   factory Country.fromJson(Map<String, dynamic> json) {
-//     return Country(
-//       id: json['id'],
-//       name: json['name'],
-//     );
-//   }
-// }
-
 /*
-Test class
+This is just a placeholder class to test out backend connections.
 */
 import 'package:objectbox/objectbox.dart';
 
@@ -26,7 +12,6 @@ class CountryOB {
   CountryOB();
   factory CountryOB.fromJson(Map<String, dynamic> json) {
     return CountryOB()
-      //..id = json['id']
       ..name = json['name'];
   }
 }

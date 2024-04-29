@@ -12,8 +12,7 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsScreen> {
-  bool notificationToggle = true; // Default value for notification toggle
-   // Set default language
+  bool notificationToggle = true;
   final List<String> languages = [
     'English',
     'Bahasa', // replacing 'Malay' with 'Bahasa'

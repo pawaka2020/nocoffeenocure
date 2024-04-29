@@ -36,7 +36,6 @@ class MeScreen extends StatefulWidget {
 class _MeState extends State<MeScreen> {
 
   Future<void> loginUser() async {
-    //try to use setState
     bool login = await Navigator.of(context).push(MaterialPageRoute(
       builder: (context) => LoginScreen(),
     ));
@@ -49,7 +48,6 @@ class _MeState extends State<MeScreen> {
   void logoutUser() {
     setState(() {
       UserRepo().logoutUser();
-      //UserRepo().logoutUserBackend();
       widget.adjustCartCountTracking();
       printToast('Successfully logged out');
     });
@@ -61,7 +59,6 @@ class _MeState extends State<MeScreen> {
       ));
       if (saveChanges == true) {
         setState(() {
-
         });
       }
   }
@@ -186,22 +183,4 @@ Widget buildGuestCard(void Function() func) {
       ),
     ),
   );
-}
-
-void sendWhatsapp(BuildContext context) async {
-  printToast("What happened?");
-  String phone = "+601133019914";
-  String messageTest = "Hello World";
-  String message = "Hi No Coffee No Cure, I need my cure now!";
-  final url = Uri.parse('https://wa.me/$phone?text=${Uri.encodeFull(message)}');
-  String? urlResponse;
-
-  if (!await launchUrl(url)) {
-    throw Exception('Could not launch $url');
-  }
-  // else {
-  //   //capture url link when user clicks on the URL response presented by Whatsapp Business API.
-  //   //urlResponse = ??
-  // }
-
 }

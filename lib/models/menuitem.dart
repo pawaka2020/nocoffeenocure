@@ -31,20 +31,6 @@ class MenuItem {
     return data;
   }
 
-  // factory MenuItem.fromJson(Map<String, dynamic> json) {
-  //   return MenuItem(
-  //     json['imagePath'],
-  //     json['title'],
-  //     json['price'].toDouble(),
-  //     json['category'],
-  //     json['description'],
-  //     (json['userReviews'] as List).map((review) => UserReview.fromJson(review)).toList(),
-  //     (json['additions'] as List).map((addition) => Addition.fromJson(addition)).toList(),
-  //     (json['ingredients'] as List).map((ingredient) => Ingredient.fromJson(ingredient)).toList(),
-  //     json['available'],
-  //   );
-  // }
-
   //conversion functions
   MenuItemOB toMenuItemOB() {
     final menuItemOB = MenuItemOB()
@@ -131,8 +117,6 @@ class Addition {
   final List<AdditionDetail> additionDetails;
 
   //new variable. Let's see if adding this variable won't change things.
-
-
   Addition(this.title, this.selectedIndex, this.selectedPrice, this.additionDetails);
 
   Map<String, dynamic> toJson() {
@@ -142,9 +126,6 @@ class Addition {
     };
   }
 
-// factory Addition.fromJson(Map<String, dynamic> json) {
-//   return Addition(json['title'], (json['additionDetails'] as List).map((detail) => AdditionDetail.fromJson(detail)).toList());
-// }
 }
 
 class AdditionDetail {
@@ -220,17 +201,6 @@ class MenuItemOB {
     );
   }
 
-  // 'menuitem': cartItem.menuItemOB.map((item) => {
-  // 'imagepath': item.imagePath,
-  // 'title': item.title,
-  // 'price': item.price,
-  // 'category': item.category,
-  // 'description': item.description,
-  // 'available': item.available,
-  // 'userreviews': item.userReviews.map((review) => review.toJson()).toList(),
-  // 'additions': item.additions.map((addition) => addition.toJson()).toList(),
-  // 'ingredients': item.ingredients.map((ingredient) => ingredient.toJson()).toList(),
-  // }).toList(),
   Map<String, dynamic> toJson() {
     return {
       'imagepath': imagePath,
@@ -244,13 +214,10 @@ class MenuItemOB {
       'ingredients': ingredients.map((ingredient) => ingredient.toJson()).toList(),
     };
   }
-
-
   MenuItemOB();
 
   // Define a fromJson method to create a MenuItemOB instance from JSON data
   factory MenuItemOB.fromJson(Map<String, dynamic> json) {
-
     MenuItemOB menuItem = MenuItemOB()
       ..id = json['id'] ?? 0
       ..imagePath = json['imagepath']
@@ -266,21 +233,6 @@ class MenuItemOB {
     menuItem.ingredients.addAll(IngredientOB.listFromJson(json['ingredients'] ?? [])); //IngredientOB.listFromJson(json['ingredients'] ?? [])
 
     return menuItem;
-
-    // return MenuItemOB()
-    //   ..id = json['id'] ?? 0
-    //   ..imagePath = json['imagePath']
-    //   ..title = json['title']
-    //   ..price = json['price'] ?? 0
-    //   ..category = json['category']
-    //   ..description = json['description']
-    //   ..available = json['available'] ?? false
-    //   // ..userReviews = UserReviewOB.listFromJson(json['userreviews'] ?? [])
-    //   // ..additions = AdditionOB.listFromJson(json['additions'] ?? [])
-    //   // ..ingredients = IngredientOB.listFromJson(json['ingredients'] ?? [])
-    // ;
-    // }
-
   }
 
   // Define a listFromJson method to create a list of MenuItemOB instances from a list of JSON data
@@ -474,8 +426,6 @@ class IngredientOB {
     return items;
   }
 
-
-
   Map<String, dynamic> toJson() {
     return {
       'name': name,
@@ -490,6 +440,9 @@ class IngredientOB {
   }
 }
 
+/*
+ for debugging purposes only.
+*/
 void printMenuItemOB(MenuItemOB menuItem) {
   print('MenuItemOB:');
   print('ID: ${menuItem.id}');

@@ -3,7 +3,6 @@ import 'package:http/http.dart' as http;
 import '../../common.dart';
 
 Future<void> sendEmail(String email) async {
-  //String url = onlineBackendURL + 'api/verify_email';
   String url = onlineBackendURL + 'api/request_code';
 
   Map<String, dynamic> data = {

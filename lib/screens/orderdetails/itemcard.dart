@@ -18,7 +18,6 @@ class ODItemCard extends StatelessWidget {
   ODItemCard(this.cartItem);
 
   String getContent(List<AdditionOB> additions) {
-
     final List<String> contentList = [];
     for (var addition in additions) {
       contentList.add(
@@ -31,11 +30,9 @@ class ODItemCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     String image = cartItem.menuItemOB[0].imagePath!;
     String name = cartItem.menuItemOB[0].title!;
     String content = getContent(cartItem.menuItemOB[0].additions);
-
     return Padding(
       padding: EdgeInsets.only(left: 16, right: 16, top: 8, bottom: 8),
       child: Container(
@@ -97,8 +94,7 @@ class ODItemCard extends StatelessWidget {
                       ),
                     ],
                   ),
-                ),
-                 //delete
+                ), //delete
               ],
             ),
           ),
@@ -106,8 +102,4 @@ class ODItemCard extends StatelessWidget {
       ),
     );
   }
-
-
-
-
 }

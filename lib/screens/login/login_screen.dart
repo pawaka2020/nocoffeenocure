@@ -13,12 +13,6 @@ import '../login/builddisclaimertext.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-//Future<void> sendEmail(String email) async {
-//   String url = onlineBackendURL + 'api/verify_email';
-
-// Future<void> verifyCode(String enteredCode, String email) async {
-//   String url = onlineBackendURL + 'api/verify_email_code';
-
 enum AuthStage {
   login,
   verification,
@@ -38,14 +32,10 @@ class _LoginScreenState extends State<LoginScreen> {
     setState(() {
       _phoneNumber = phoneNumber;
     });
-    //_phoneNumber = phoneNumber;
   }
 
   String _email = '';
   void updateEmail(String email) {
-    // setState(() {
-    //   _phoneNumber = phoneNumber;
-    // });
     _email = email;
   }
 
@@ -55,24 +45,6 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void getVerificationCode() async {
-    // if (_phoneNumber.length > 11 || _phoneNumber.length < 10)
-    //   printToast("Error : phone number must be 10 or 11 characters.");
-    // else {
-    //   try {
-    //     await sendPhoneNumber(_phoneNumber);
-    //     setState(() {
-    //       authStage = AuthStage.verification;
-    //     });
-    //   }
-    //   catch (e) {
-    //     print('Error getting verification code: $e');
-    //   }
-    // }
-
-    // setState(() {
-    //   authStage = AuthStage.verification;
-    // });
-
     try {
       await sendEmail(_email);
       setState(() {
@@ -85,19 +57,12 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future<void> verifyCode(String enteredCode, String email) async {
-    //String url = onlineBackendURL + 'api/verify_email_code';
     String url = onlineBackendURL + 'api/verify_code';
 
     Map<String, dynamic> data = {
       'email': email ?? '',
       'entered_code' : enteredCode ?? 0,
     };
-    // try {
-    //
-    // }
-    // catch (e) {
-    //   print('Error sending verification code: $e');
-    // }
     final response = await http.post(
       Uri.parse(url),
       body: json.encode(data), // Encode the data as JSON
@@ -115,7 +80,6 @@ class _LoginScreenState extends State<LoginScreen> {
     }
     else if (response.statusCode == 400)  {
       printToast('Error: verification code incorrect');
-      // Handle error if needed
     }
     else {
       printToast("ERROR: ERROR");
@@ -142,7 +106,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 SizedBox(height: 24),
-                //buildPhoneNumber(_phoneNumber, updatePhoneNumber),
                 buildEmailField(_email, updateEmail),
                 SizedBox(height: 24),
                 ElevatedButton(
@@ -331,7 +294,6 @@ Widget buildEmailField(String email, Function(String) onEmailChanged) {
   );
 }
 
-
 class SlopedHillPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
@@ -349,153 +311,3 @@ class SlopedHillPainter extends CustomPainter {
     return false;
   }
 }
-
-// class _LoginScreenState2 extends State<LoginScreen> {
-//
-//   var authStage = AuthStage.login;
-//
-//   String _phoneNumber = '';
-//   void updatePhoneNumber(String phoneNumber) {
-//     setState(() {
-//       _phoneNumber = phoneNumber;
-//     });
-//     //_phoneNumber = phoneNumber;
-//   }
-//
-//   String _enteredCode = '';
-//   void setEnteredCode(String enteredCode) {
-//     _enteredCode = enteredCode;
-//   }
-//
-//   void getVerificationCode() async {
-//     if (_phoneNumber.length > 11 || _phoneNumber.length < 10)
-//       printToast("Error : phone number must be 10 or 11 characters.");
-//     else {
-//       try {
-//         await sendPhoneNumber(_phoneNumber);
-//         Navigator.of(context).push(MaterialPageRoute(
-//           builder: (context) => VerificationScreen(_phoneNumber),
-//         ));
-//       }
-//       catch (e) {
-//         print('Error getting verification code: $e');
-//       }
-//     }
-//   }
-//
-//   Widget buildPhoneNumber(String phoneNumber, Function(String) onPhoneNumberChanged) {
-//     return Column(
-//       crossAxisAlignment: CrossAxisAlignment.start,
-//       children: [
-//         Text(
-//           "Phone Number",
-//           style: TextStyle(fontSize: 14),
-//         ),
-//         SizedBox(height: 8),
-//         Row(
-//           children: [
-//             Text(
-//               "+60",
-//               style: TextStyle(fontSize: 12),
-//             ),
-//             SizedBox(width: 8),
-//             Expanded(
-//               child: TextFormField(
-//                 onChanged: onPhoneNumberChanged,
-//                 style: TextStyle(fontSize: 14, color: Colors.black),
-//                 keyboardType: TextInputType.phone,
-//                 inputFormatters: [
-//                   FilteringTextInputFormatter.digitsOnly,
-//                   LengthLimitingTextInputFormatter(11), // Adjust the limit as needed
-//                 ],
-//                 decoration: InputDecoration(
-//                   contentPadding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-//                   focusedBorder: OutlineInputBorder(
-//                     borderSide: BorderSide(color: Colors.blue, width: 1.5),
-//                   ),
-//                   enabledBorder: OutlineInputBorder(
-//                     borderSide: BorderSide(color: Colors.grey, width: 1.0),
-//                   ),
-//                   hintText: 'Eg. 0193446789',
-//                   hintStyle: TextStyle(fontSize: 12),
-//                 ),
-//               ),
-//             ),
-//           ],
-//         ),
-//       ],
-//     );
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//         appBar: AppBar(
-//           title: Text(
-//             'Log in or Sign up',
-//             style: TextStyle(
-//               color: Colors.white,
-//             ),
-//           ),
-//           iconTheme: IconThemeData(
-//             color: Colors.white,
-//           ),
-//         ),
-//         body: ListView(
-//             children: [
-//               Padding(
-//                   padding: EdgeInsets.fromLTRB(24, 24, 24, 0),
-//                   child: Column(
-//                     children: [
-//                       Card(
-//                         elevation: 4.0,
-//                         shape: RoundedRectangleBorder(
-//                           borderRadius: BorderRadius.circular(4.0),
-//                         ),
-//                         child: ClipRRect(
-//                           borderRadius: BorderRadius.circular(4.0),
-//                           child: Image.asset(
-//                             'assets/images/ncnclogo.png',
-//                             fit: BoxFit.fill,
-//                           ),
-//                         ),
-//                       ),
-//                       SizedBox(height: 24),
-//                       buildPhoneNumber(_phoneNumber, updatePhoneNumber),
-//                       SizedBox(height: 24),
-//                       ElevatedButton(
-//                         onPressed: () {
-//                           getVerificationCode();
-//                         },
-//                         style: ElevatedButton.styleFrom(
-//                           backgroundColor: Colors.orange,
-//                           shape: RoundedRectangleBorder(
-//                             borderRadius: BorderRadius.circular(10.0),
-//                           ),
-//                         ),
-//                         child: Container(
-//                           width: double.infinity,
-//                           child: Center(
-//                             child: Text(
-//                               "Get Verification Code",
-//                               style: TextStyle(
-//                                 color: Colors.white,
-//                                 fontSize: 16,
-//                               ),
-//                             ),
-//                           ),
-//                         ),
-//                       ),
-//                       SizedBox(height: 133), //135
-//                     ],
-//                   )
-//               ),
-//               CustomPaint(
-//                 size: Size(MediaQuery.of(context).size.width, 100), //change this '50' to a height value that fills the rest of the unoccupied screen's height
-//                 painter: SlopedHillPainter(),
-//               ),
-//             ]
-//         )
-//     );
-//   }
-// }

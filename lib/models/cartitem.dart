@@ -34,10 +34,6 @@ class CartItemOB {
     };
   }
 
-  //code fromJson() here (TODO)
-
-  //code listFromJson() here (TODO)
-
   // Define a fromJson method to create a CartItemOB instance from JSON data
   factory CartItemOB.fromJson(Map<String, dynamic> json) {
     final cartitem = CartItemOB()

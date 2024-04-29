@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
-//import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:nocoffeenocure/screens/order/pickupmap.dart';
 import '../../common.dart';
@@ -76,7 +75,6 @@ class TrackLocationState extends State<TrackLocationScreen> {
     if (coordinates != null) {
       setState(() {
         _location = coordinates;
-        // Call _loadRoadPath here to ensure it's executed after _loadLocation
         _loadRoadPath(_location!, _location2);
       });
     }
